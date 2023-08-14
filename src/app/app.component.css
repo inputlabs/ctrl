@@ -1,0 +1,12 @@
+.terminal {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    padding-left: 20px;
+}
+
+/* .terminal span {
+    margin: 0;
+    padding: 0;
+    display: inline;
+} */
