@@ -1,12 +1,6 @@
-<h3>Alpakka WebUSB</h3>
-<div>
-  <button (click)="requestDevice()">Connect</button>
-  &nbsp; &nbsp;
-  Auto-reconnect <input type='checkbox'/>
-</div>
-
-<pre class="terminal">
-  <span *ngFor='let line of logs'>{{line}}</span>
-</pre>
-
+<app-header/>
+<content>
+  <app-sidebar/>
+  <app-main/>
+</content>
 <router-outlet></router-outlet>
