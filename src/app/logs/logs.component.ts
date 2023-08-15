@@ -1,3 +1,4 @@
+/// <reference types="w3c-web-usb" />
 import { Component } from '@angular/core';
 
 @Component({
@@ -43,8 +44,8 @@ export class LogsComponent {
     try {
       const response = await this.device.transferIn(4, 64)
       const data = new TextDecoder().decode(response.data)
-      this.logs.unshift(data)
-      // console.log(data)
+      if (!this.logs[0] || this.logs[0]?.endsWith('\n')) this.logs.unshift(data)
+      else this.logs[0] += data
     } catch (error:any) {
       if (error.message.includes('The device was disconnected')) {
         console.warn(error)

@@ -1,4 +1,3 @@
-/// <reference types="w3c-web-usb" />
 import { Component } from '@angular/core'
 
 @Component({

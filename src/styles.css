@@ -33,3 +33,16 @@ body {
     padding: 0;
     font-family: Inter;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --purple: hsl(280, 100%, 50%);
+    --blue:   hsl(180, 100%, 50%);
+    --green:  hsl(160, 100%, 50%);
+    --yellow: hsl( 40, 100%, 50%);
+    --red:    hsl(  0, 100%, 50%);
+    --pink:   hsl(320, 100%, 50%);
+}
