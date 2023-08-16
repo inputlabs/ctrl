@@ -25,7 +25,7 @@ export class SidebarComponent {
   }
 
   isTools() {
-    return this.route.startsWith('/tools')
+    return this.route == '/' || this.route.startsWith('/tools')
   }
 
   isProfiles() {

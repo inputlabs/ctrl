@@ -9,11 +9,10 @@ import { LogsComponent } from './logs';
 import { WipComponent } from './wip';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/tools/logs', pathMatch: 'full' },
-  {path: 'tools', redirectTo: '/tools/logs', pathMatch: 'full' },
-  {path: 'profiles', redirectTo: '/profiles/0', pathMatch: 'full' },
-  {path: 'tools/logs', component: LogsComponent},
+
+  {path: '', component: LogsComponent},
   {path: 'tools/tester', component: WipComponent},
+  {path: 'tools/fw_update', component: WipComponent},
   {path: 'profiles/0', component: WipComponent},
   {path: 'profiles/1', component: WipComponent},
   {path: 'profiles/2', component: WipComponent},
@@ -27,7 +26,15 @@ const routes: Routes = [
   {path: 'profiles/10', component: WipComponent},
   {path: 'profiles/11', component: WipComponent},
   {path: 'profiles/12', component: WipComponent},
-  {path: 'settings', component: WipComponent},
+  {path: 'settings/protocol', component: WipComponent},
+  {path: 'settings/deadzone', component: WipComponent},
+  {path: 'settings/touch_sens', component: WipComponent},
+  {path: 'settings/mouse_sens', component: WipComponent},
+  {path: 'settings/advanced', component: WipComponent},
+  {path: 'settings/app', component: WipComponent},
+  // Redirects
+  {path: 'profiles', redirectTo: '/profiles/0', pathMatch: 'full' },
+  {path: 'settings', redirectTo: '/settings/protocol', pathMatch: 'full' },
 ];
 
 export const appConfig: ApplicationConfig = {
