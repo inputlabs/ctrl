@@ -1,0 +1,30 @@
+<div *ngIf='this.isTools()'>
+    <a
+        routerLink='tools/logs'
+        routerLinkActive='active'
+        >
+        Logs and commands
+    </a>
+    <a
+        routerLink='tools/tester'
+        routerLinkActive='active'
+        >
+        Tester
+    </a>
+</div>
+
+<div *ngIf='this.isProfiles()'>
+    <a routerLink='profiles/0' routerLinkActive='active'>Home</a>
+    <a routerLink='profiles/1' routerLinkActive='active'>FPS Fusion</a>
+    <a routerLink='profiles/2' routerLinkActive='active'>FPS WASD</a>
+    <a routerLink='profiles/3' routerLinkActive='active'>Racing</a>
+    <a routerLink='profiles/4' routerLinkActive='active'>Flight</a>
+    <a routerLink='profiles/5' routerLinkActive='active'>Console</a>
+    <a routerLink='profiles/6' routerLinkActive='active'>Console legacy</a>
+    <a routerLink='profiles/7' routerLinkActive='active'>Desktop</a>
+    <a routerLink='profiles/8' routerLinkActive='active'>RTS</a>
+    <a routerLink='profiles/9' routerLinkActive='active'>Custom 1</a>
+    <a routerLink='profiles/10' routerLinkActive='active'>Custom 2</a>
+    <a routerLink='profiles/11' routerLinkActive='active'>Custom 3</a>
+    <a routerLink='profiles/12' routerLinkActive='active'>Custom 4</a>
+</div>

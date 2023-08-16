@@ -1,11 +1,11 @@
 <h3>Logs</h3>
 
-<div *ngIf="!this.device">
-  <button (click)="requestDevice()">Connect</button>
-</div>
-
-<div *ngIf="this.device" class="terminal">
+<div class="terminal">
     <pre>
         <span *ngFor='let line of logs'>{{line}}</span>
     </pre>
+</div>
+
+<div *ngIf="!this.device">
+  <button (click)="requestDevice()">Connect</button>
 </div>
