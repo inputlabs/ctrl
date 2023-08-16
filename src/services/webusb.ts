@@ -12,6 +12,11 @@ export class WebusbService {
 
   constructor() {
     this.logs = []
+    this.getDevices().then((devices) => {
+      this.logs = []
+      this.device = devices[0]
+      this.openDevice()
+    })
     navigator.usb.addEventListener("connect", (event:any) => {
       this.logs = []
       this.device = event.device
