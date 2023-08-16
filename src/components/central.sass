@@ -1,10 +1,40 @@
+@use '../styles' as *
+
 :host
     flex-grow: 1
     display: flex
-    flex-direction: row
-    display: block
+    flex-direction: column
     background: hsl(0deg, 0%, 15%)
     padding: 50px
     padding-top: 30px
     color: white
+
+    .centered
+        flex-grow: 1
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+
+    .widget
+        text-align: center
+        *
+            margin-top: 10px
+        .icon span
+            font-size: 100px
+        .title
+            font-size: 24px
+            font-weight: bold
+            text-transform: uppercase
+        button
+            background-color: black
+            border: 0
+            border-radius: 5px
+            padding: 10px 22px
+            font-family: Poppins
+            font-weight: bold
+            font-size: 18px
+            // &:hover
+            color: $green
+
 

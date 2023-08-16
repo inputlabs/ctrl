@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet} from '@angular/router';
+import { WebusbService } from 'src/services/webusb'
 
 @Component({
   selector: 'app-central',
@@ -13,5 +14,5 @@ import { RouterOutlet} from '@angular/router';
   styleUrls: ['./central.sass']
 })
 export class CentralComponent {
-
+  constructor(public webusb: WebusbService) {}
 }

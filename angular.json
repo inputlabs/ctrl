@@ -60,7 +60,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "node_modules/material-icons/iconfont/material-icons.css"
             ],
             "scripts": []
           },

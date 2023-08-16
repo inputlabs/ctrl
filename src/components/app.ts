@@ -9,7 +9,6 @@ import { LogsComponent } from './logs';
 import { WipComponent } from './wip';
 
 const routes: Routes = [
-
   {path: '', component: LogsComponent},
   {path: 'tools/tester', component: WipComponent},
   {path: 'tools/fw_update', component: WipComponent},

@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<router-outlet *ngIf='this.webusb.isConnected'></router-outlet>
+<div *ngIf='!this.webusb.isConnected' class='centered'>
+    <div class='widget'>
+        <div class='icon'>
+            <span class='material-icons'>videogame_asset_off</span>
+        </div>
+        <div class='title'>Controller not found</div>
+        <div class='msg'>Connect a paired controller</div>
+        <div class='msg'>or</div>
+        <button (click)='this.webusb.requestDevice()'>Pair a new controller</button>
+    <div>
+</div>
+
+
+<span class="material-symbols-outlined">
