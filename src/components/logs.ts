@@ -11,4 +11,6 @@ import { WebusbService } from 'src/services/webusb'
 })
 export class LogsComponent {
   constructor(public webusb: WebusbService) {}
+
+  noop() {}
 }

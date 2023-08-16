@@ -1,7 +1,15 @@
-<h2>Logs</h2>
-
-<div class="terminal">
+<div class='terminal'>
+    <h2>Firmware logs</h2>
     <pre>
         <span *ngFor='let line of this.webusb.logs'>{{line}}</span>
     </pre>
+</div>
+
+<div class='panel'>
+    <h2>Commands</h2>
+    <button (click)='this.noop()'>Restart</button>
+    <button (click)='this.noop()'>Restart in bootsel mode</button>
+    <button (click)='this.noop()'>Download logs</button>
+    <button (click)='this.noop()'>Calibrate</button>
+    <button (click)='this.noop()'>Reset to factory defaults</button>
 </div>
