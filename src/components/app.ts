@@ -1,12 +1,12 @@
-import { Component, ApplicationConfig } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, provideRouter} from '@angular/router';
+import { Component, ApplicationConfig } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { Routes, provideRouter} from '@angular/router'
 
-import { HeaderComponent } from './header';
-import { SidebarComponent } from './sidebar';
-import { CentralComponent } from './central';
-import { LogsComponent } from './logs';
-import { WipComponent } from './wip';
+import { HeaderComponent } from './header'
+import { SidebarComponent } from './sidebar'
+import { CentralComponent } from './central'
+import { LogsComponent } from './logs'
+import { WipComponent } from './wip'
 
 const routes: Routes = [
   {path: '', component: LogsComponent},
@@ -34,11 +34,11 @@ const routes: Routes = [
   // Redirects
   {path: 'profiles', redirectTo: '/profiles/0', pathMatch: 'full' },
   {path: 'settings', redirectTo: '/settings/protocol', pathMatch: 'full' },
-];
+]
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes)]
-};
+}
 
 @Component({
   selector: 'app-root',
