@@ -14,6 +14,7 @@ export class WebusbService {
     this.logs = []
     this.getDevices().then((devices) => {
       this.logs = []
+      if (!devices.length) return
       this.device = devices[0]
       this.openDevice()
     })
