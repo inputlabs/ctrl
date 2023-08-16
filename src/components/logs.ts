@@ -1,10 +1,13 @@
 /// <reference types="w3c-web-usb" />
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-logs',
-  templateUrl: './logs.component.html',
-  styleUrls: ['./logs.component.sass']
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './logs.html',
+  styleUrls: ['./logs.sass']
 })
 export class LogsComponent {
   device: any
