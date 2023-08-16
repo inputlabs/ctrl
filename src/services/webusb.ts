@@ -25,7 +25,7 @@ export class WebusbService {
     navigator.usb.addEventListener("disconnect", (event:any) => {
       this.logs = []
       this.device = null
-      delay(1000).then(() => {
+      delay(2000).then(() => {
         // Do not blink while restarting the controller.
         if (!this.device) this.isConnected = false
       })
