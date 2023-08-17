@@ -1,7 +1,9 @@
 <div class='terminal'>
     <h2>Firmware logs</h2>
     <pre>
-        <span *ngFor='let line of this.webusb.logs'>{{line}}</span>
+        <span class='filler'></span>
+        <span *ngIf='!webusb.logs.length'>There are no logs yet, use the restart button</span>
+        <span *ngFor='let line of webusb.logs'>{{line}}</span>
     </pre>
 </div>
 
