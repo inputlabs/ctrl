@@ -1,8 +1,9 @@
 <div class='terminal'>
     <h2>Firmware logs</h2>
     <pre>
-        <span class='filler'></span>
-        <span *ngIf='!webusb.logs.length'>There are no logs yet, use the restart button</span>
+        <div class='filler'></div>
+        <span *ngIf='!webusb.logs.length'>Try using the restart button</span>
+        <span *ngIf='!webusb.logs.length'>No logs in here</span>
         <span *ngFor='let line of webusb.logs'>{{line}}</span>
     </pre>
 </div>
@@ -11,6 +12,7 @@
     <h2>Commands</h2>
     <button (click)='webusb.sendRestart()'>Restart</button>
     <button (click)='webusb.sendBootsel()'>Restart in bootsel mode</button>
+    <button (click)='webusb.clearLogs()'>Clear logs</button>
     <button (click)='downloadLogs()'>Download logs</button>
     <button (click)='webusb.sendCalibrate()'>Calibrate</button>
     <button (click)='showDialogFactory()'>Reset to factory defaults</button>

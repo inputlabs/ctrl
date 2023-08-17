@@ -75,6 +75,10 @@ export class WebusbService {
     await this.listen()
   }
 
+  clearLogs() {
+    this.logs = []
+  }
+
   message_proc(proc: number) {
     const data = new Uint8Array(64)
     data[0] = 1
