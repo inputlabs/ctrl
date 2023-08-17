@@ -4,10 +4,17 @@
         routerLinkActive='active'
         [routerLinkActiveOptions]='{exact: true}'
         >
+        <span class='material-icons'>terminal</span>
         Logs and commands
     </a>
-    <a routerLink='tools/tester' routerLinkActive='active'>Output tester</a>
-    <a routerLink='tools/fw_update' routerLinkActive='active'>Firmware update</a>
+    <a routerLink='tools/tester' routerLinkActive='active'>
+        <span class='material-icons'>sports_esports</span>
+        Output tester
+    </a>
+    <a routerLink='tools/fw_update' routerLinkActive='active'>
+        <span class='material-icons'>install_mobile</span>
+        Firmware update
+    </a>
 </div>
 
 <div *ngIf='this.isProfiles()'>
@@ -27,10 +34,28 @@
 </div>
 
 <div *ngIf='this.isSettings()'>
-    <a routerLink='settings/protocol' routerLinkActive='active'>Protocol</a>
-    <a routerLink='settings/deadzone' routerLinkActive='active'>Thumbstick deadzone</a>
-    <a routerLink='settings/touch_sens' routerLinkActive='active'>Touch sensitivity</a>
-    <a routerLink='settings/mouse_sens' routerLinkActive='active'>Mouse sensitivity</a>
-    <a routerLink='settings/advanced' routerLinkActive='active'>Advanced</a>
-    <a routerLink='settings/app' routerLinkActive='active'>Ctrl app</a>
+    <a routerLink='settings/protocol' routerLinkActive='active'>
+        <span class='material-icons'>usb</span>
+        Protocol
+    </a>
+    <a routerLink='settings/deadzone' routerLinkActive='active'>
+        <span class='material-icons'>adjust</span>
+        Thumbstick deadzone
+    </a>
+    <a routerLink='settings/touch_sens' routerLinkActive='active'>
+        <span class='material-icons'>touch_app</span>
+        Touch sensitivity
+    </a>
+    <a routerLink='settings/mouse_sens' routerLinkActive='active'>
+        <span class='material-icons'>mouse</span>
+        Mouse sensitivity
+    </a>
+    <a routerLink='settings/advanced' routerLinkActive='active'>
+        <span class='material-icons'>tune</span>
+        Advanced
+    </a>
+    <a routerLink='settings/app' routerLinkActive='active'>
+        <span class='material-icons'>settings</span>
+        Ctrl app
+    </a>
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { RouterLink, RouterLinkActive, Router } from '@angular/router'
+import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +18,7 @@ export class SidebarComponent {
 
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
-      if (event.type == 1) {  // NavigationEnd
+      if (event instanceof NavigationEnd) {
         this.route = event.urlAfterRedirects
       }
     })
