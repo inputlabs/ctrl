@@ -2,11 +2,11 @@
 <div *ngIf='!this.webusb.isConnected' class='centered'>
     <div class='widget'>
         <div class='icon'>
-            <span class='material-icons'>videogame_asset_off</span>
+            <span class='material-icons'>sports_esports</span>
         </div>
         <div class='title'>Controller not found</div>
-        <div class='msg'>Connect a paired controller</div>
-        <div class='msg'>or</div>
+        <div class='msg'>Plug a paired controller</div>
+        <div class='or'>or</div>
         <button (click)='this.webusb.requestDevice()'>Pair a new controller</button>
     <div>
 </div>
