@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { WebusbService } from 'src/services/webusb'
+import { WebusbService } from '../services/webusb'
 
 @Component({
   selector: 'app-logs',
@@ -10,9 +10,11 @@ import { WebusbService } from 'src/services/webusb'
   styleUrls: ['./logs.sass']
 })
 export class LogsComponent {
-  constructor(public webusb: WebusbService) {}
+  dialogFactory: any
 
-  noop() {}
+  constructor(
+    public webusb: WebusbService,
+  ) {}
 
   downloadLogs() {
     if (this.webusb.logs.length == 0) return
@@ -28,5 +30,16 @@ export class LogsComponent {
     a.click()
     URL.revokeObjectURL(a.href)
     a.remove()
+  }
+
+  showDialogFactory(): boolean {
+    this.dialogFactory = document.getElementById('dialog-factory')
+    this.dialogFactory.showModal()
+    return true
+  }
+
+  hideDialogFactory(): boolean {
+    this.dialogFactory.close()
+    return true
   }
 }

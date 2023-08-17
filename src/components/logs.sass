@@ -8,43 +8,69 @@
     margin: 0px
     padding: 0px
 
-.terminal
-    flex-grow: 1
-    height: 100%
-    color: white
-    display: flex
-    flex-direction: column
-    overflow-y: hidden
-    margin: 0px
-    padding: 50px
-    padding-top: 20px
-
-    pre
+    .terminal
         flex-grow: 1
+        height: 100%
+        color: white
         display: flex
-        flex-direction: column-reverse
-        overflow-y: scroll
-        font-family: monospace
-        background-color: hsl(0deg, 0%, 10%)
+        flex-direction: column
+        overflow-y: hidden
         margin: 0px
-        padding: 30px
+        padding: 50px
+        padding-top: 20px
 
-.panel
-    display: flex
-    flex-direction: column
-    background-color: hsl(0deg, 0%, 20%)
-    min-width: 300px
-    max-width: 300px
-    padding: 30px
-    padding-top: 20px
-    button
-        background-color: black
-        border: 0
-        border-radius: 5px
-        padding: 6px 16px
-        font-family: Poppins
-        font-weight: bold
-        font-size: 14px
-        color: $green
-        margin-bottom: 10px
-        text-align: left
+        pre
+            flex-grow: 1
+            display: flex
+            flex-direction: column-reverse
+            overflow-y: scroll
+            font-family: monospace
+            background-color: hsl(0deg, 0%, 10%)
+            margin: 0px
+            padding: 30px
+
+    .panel
+        display: flex
+        flex-direction: column
+        background-color: hsl(0deg, 0%, 20%)
+        min-width: 300px
+        max-width: 300px
+        padding: 30px
+        padding-top: 20px
+        button
+            background-color: black
+            border: 0
+            border-radius: 5px
+            padding: 6px 16px
+            font-family: Poppins
+            font-weight: bold
+            font-size: 14px
+            color: $green
+            margin-bottom: 10px
+            text-align: left
+
+    dialog
+        width: 400px
+        padding: 20px
+        text-align: center
+        background-color: hsl(0deg, 0%, 15%)
+        &::backdrop
+            background-color: hsla(0deg, 0%, 0%, 75%)
+        h3
+            margin-top: 10px
+        .buttons
+            margin-top: 20px
+        button
+            background-color: black
+            border: 0
+            border-radius: 5px
+            padding: 6px 16px
+            font-family: Poppins
+            font-weight: bold
+            font-size: 14px
+            margin: 0 8px
+            color: $green
+            &.flat
+                color: hsl(0deg, 0%, 80%)
+
+

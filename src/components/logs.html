@@ -7,9 +7,18 @@
 
 <div class='panel'>
     <h2>Commands</h2>
-    <button (click)='this.webusb.sendRestart()'>Restart</button>
-    <button (click)='this.webusb.sendBootsel()'>Restart in bootsel mode</button>
-    <button (click)='this.downloadLogs()'>Download logs</button>
-    <button (click)='this.webusb.sendCalibrate()'>Calibrate</button>
-    <button (click)='this.webusb.sendFactory()'>Reset to factory defaults</button>
+    <button (click)='webusb.sendRestart()'>Restart</button>
+    <button (click)='webusb.sendBootsel()'>Restart in bootsel mode</button>
+    <button (click)='downloadLogs()'>Download logs</button>
+    <button (click)='webusb.sendCalibrate()'>Calibrate</button>
+    <button (click)='showDialogFactory()'>Reset to factory defaults</button>
 </div>
+
+<dialog id='dialog-factory'>
+    <h3>Reset to factory defaults</h3>
+    <div> All config values will be discarded (calibration, protocol mode, sensitivities, etc)</div>
+    <div class='buttons'>
+        <button (click)='hideDialogFactory()' class='flat'>Cancel</button>
+        <button (click)='hideDialogFactory() && webusb.sendFactory()'>Ok</button>
+    </div>
+</dialog>
