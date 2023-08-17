@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { RouterLink, RouterLinkActive } from '@angular/router'
+import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
 
 @Component({
   selector: 'app-header',
@@ -14,5 +14,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
   styleUrls: ['./header.sass']
 })
 export class HeaderComponent {
+  route: string = ''
 
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.route = event.urlAfterRedirects
+      }
+    })
+  }
+
+  routeIsTools() {
+    return this.route == '/' || this.route.startsWith('/tools')  ? 'active' : ''
+  }
 }
