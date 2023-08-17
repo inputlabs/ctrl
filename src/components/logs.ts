@@ -10,6 +10,7 @@ import { WebusbService } from '../services/webusb'
   styleUrls: ['./logs.sass']
 })
 export class LogsComponent {
+  dialogCalibrate: any
   dialogFactory: any
 
   constructor(
@@ -32,10 +33,19 @@ export class LogsComponent {
     a.remove()
   }
 
-  showDialogFactory(): boolean {
+  showDialogCalibrate() {
+    this.dialogCalibrate = document.getElementById('dialog-calibrate')
+    this.dialogCalibrate.showModal()
+  }
+
+  hideDialogCalibrate(): boolean {
+    this.dialogCalibrate.close()
+    return true
+  }
+
+  showDialogFactory() {
     this.dialogFactory = document.getElementById('dialog-factory')
     this.dialogFactory.showModal()
-    return true
   }
 
   hideDialogFactory(): boolean {

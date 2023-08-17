@@ -14,15 +14,31 @@
     <button (click)='webusb.sendBootsel()'>Restart in bootsel mode</button>
     <button (click)='webusb.clearLogs()'>Clear logs</button>
     <button (click)='downloadLogs()'>Download logs</button>
-    <button (click)='webusb.sendCalibrate()'>Calibrate</button>
+    <button (click)='showDialogCalibrate()'>Calibrate</button>
     <button (click)='showDialogFactory()'>Reset to factory defaults</button>
 </div>
 
+<dialog id='dialog-calibrate'>
+    <h3>Controller calibration</h3>
+    <div>
+        The gyroscopes, accelerometers, and thumbstick will be calibrated,
+        leave the controller on a flat surface and wait until the procedure
+        is completed.
+    </div>
+    <div class='buttons'>
+        <button (click)='hideDialogCalibrate()' class='flat'>Cancel</button>
+        <button (click)='hideDialogCalibrate() && webusb.sendCalibrate()'>Start</button>
+    </div>
+</dialog>
+
 <dialog id='dialog-factory'>
     <h3>Reset to factory defaults</h3>
-    <div> All config values will be discarded (calibration, protocol mode, sensitivities, etc)</div>
+    <div>
+        All config values will be discarded (calibration, protocol mode, sensitivities, etc).
+        The controller will restart in the default Windows mode.
+    </div>
     <div class='buttons'>
         <button (click)='hideDialogFactory()' class='flat'>Cancel</button>
-        <button (click)='hideDialogFactory() && webusb.sendFactory()'>Ok</button>
+        <button (click)='hideDialogFactory() && webusb.sendFactory()'>Reset</button>
     </div>
 </dialog>
