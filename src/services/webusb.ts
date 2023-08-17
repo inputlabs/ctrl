@@ -55,6 +55,7 @@ export class WebusbService {
     await this.device.claimInterface(1)
     console.log('Device connected')
     this.isConnected = true;
+    this.sendEmpty()
     this.listen()
   }
 
@@ -81,6 +82,11 @@ export class WebusbService {
     data[2] = MESSAGE_PROC
     data[3] = proc
     return data
+  }
+
+  async sendEmpty() {
+    const data = new Uint8Array(64)
+    await this.device.transferOut(4, data)
   }
 
   async sendRestart() {
