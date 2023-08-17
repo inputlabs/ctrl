@@ -2,6 +2,13 @@
 import { Injectable } from '@angular/core';
 import { delay } from '../shared'
 
+const ALPAKKA_ID = 1
+const MESSAGE_PROC = 2
+const PROC_CALIBRATE = 220
+const PROC_RESTART = 221
+const PROC_BOOTSEL = 222
+const PROC_FACTORY = 223
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +19,7 @@ export class WebusbService {
 
   constructor() {
     this.logs = []
-    this.getDevices().then((devices) => {
+    navigator.usb.getDevices().then((devices) => {
       this.logs = []
       if (!devices.length) return
       this.device = devices[0]
@@ -67,7 +74,32 @@ export class WebusbService {
     await this.listen()
   }
 
-  async getDevices() {
-    return await navigator.usb.getDevices()
+  message_proc(proc: number) {
+    const data = new Uint8Array(64)
+    data[0] = 1
+    data[1] = ALPAKKA_ID
+    data[2] = MESSAGE_PROC
+    data[3] = proc
+    return data
+  }
+
+  async sendRestart() {
+    const data = this.message_proc(PROC_RESTART)
+    await this.device.transferOut(4, data)
+  }
+
+  async sendBootsel() {
+    const data = this.message_proc(PROC_BOOTSEL)
+    await this.device.transferOut(4, data)
+  }
+
+  async sendCalibrate() {
+    const data = this.message_proc(PROC_CALIBRATE)
+    await this.device.transferOut(4, data)
+  }
+
+  async sendFactory() {
+    const data = this.message_proc(PROC_FACTORY)
+    await this.device.transferOut(4, data)
   }
 }

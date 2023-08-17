@@ -7,9 +7,9 @@
 
 <div class='panel'>
     <h2>Commands</h2>
-    <button (click)='this.noop()'>Restart</button>
-    <button (click)='this.noop()'>Restart in bootsel mode</button>
+    <button (click)='this.webusb.sendRestart()'>Restart</button>
+    <button (click)='this.webusb.sendBootsel()'>Restart in bootsel mode</button>
     <button (click)='this.downloadLogs()'>Download logs</button>
-    <button (click)='this.noop()'>Calibrate</button>
-    <button (click)='this.noop()'>Reset to factory defaults</button>
+    <button (click)='this.webusb.sendCalibrate()'>Calibrate</button>
+    <button (click)='this.webusb.sendFactory()'>Reset to factory defaults</button>
 </div>
