@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./led.sass']
 })
 export class LedComponent {
-  @Input('on') maskOn: number[] = [0,0,0,0]  // Angular do not like 0b0000 -style numbers.
-  @Input('blink') maskBlink: number[] = [0,0,0,0]
+  @Input('on') maskOn =  0b0000
+  @Input('blink') maskBlink = 0b0000
 
   constructor(private element: ElementRef) {}
 
@@ -23,21 +23,20 @@ export class LedComponent {
     leds[2] = this.element.nativeElement.getElementsByClassName('i2')[0] as HTMLElement
     leds[3] = this.element.nativeElement.getElementsByClassName('i3')[0] as HTMLElement
     leds[0].style.left = h*0.5 + 'px'
-    leds[0].style.top = h*0.25 + 'px'
     leds[1].style.left = h*0.75 + 'px'
-    leds[1].style.top = h*0.5 + 'px'
     leds[2].style.left = h*0.5 + 'px'
-    leds[2].style.top = h*0.75 + 'px'
     leds[3].style.left = h*0.25 + 'px'
+    leds[0].style.top = h*0.25 + 'px'
+    leds[1].style.top = h*0.5 + 'px'
+    leds[2].style.top = h*0.75 + 'px'
     leds[3].style.top = h*0.5 + 'px'
-
-    leds[0].style.backgroundColor = this.maskOn[0] ? 'white' : 'black'
-    leds[1].style.backgroundColor = this.maskOn[1] ? 'white' : 'black'
-    leds[2].style.backgroundColor = this.maskOn[2] ? 'white' : 'black'
-    leds[3].style.backgroundColor = this.maskOn[3] ? 'white' : 'black'
+    leds[0].style.backgroundColor = (0b0001 & this.maskOn) ? 'white' : 'black'
+    leds[1].style.backgroundColor = (0b0010 & this.maskOn) ? 'white' : 'black'
+    leds[2].style.backgroundColor = (0b0100 & this.maskOn) ? 'white' : 'black'
+    leds[3].style.backgroundColor = (0b1000 & this.maskOn) ? 'white' : 'black'
 
     for(let i of [0,1,2,3]) {
-      if (this.maskBlink[i]) {
+      if (1<<i & this.maskBlink) {
         setInterval(() => {
           leds[i].style.backgroundColor = leds[i].style.backgroundColor=='black' ? '#888' : 'black'
         }, 200)

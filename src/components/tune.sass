@@ -26,12 +26,9 @@
                 margin-top: 15px
                 margin-right: 40px
                 text-align: center
-                .title
+                .name
                     font-size: 18px
                     font-weight: bold
-                .subtitle
-                    font-size: 16px
-                    margin-top: 5px
                 .leds
                     width: 100px
                     height: 100px
@@ -47,6 +44,10 @@
                     background: black
                     padding: 5px 10px
                     border-radius: 5px
+                .desc
+                    font-size: 14px
+                    margin-top: 10px
+                    color: hsl(0deg, 0%, 50%)
                 &.selected
                     .leds
                         border: 2px solid white
@@ -59,14 +60,5 @@
         max-width: 300px
         padding: 30px
         padding-top: 20px
-        button
-            background-color: black
-            border: 0
-            border-radius: 5px
-            padding: 6px 16px
-            font-family: Poppins
-            font-weight: bold
-            font-size: 14px
-            color: $green
-            margin-bottom: 10px
-            text-align: left
+        div
+            font-size: 15px

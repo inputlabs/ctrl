@@ -1,31 +1,32 @@
 <div class='tune'>
-    <h2>{{title}}</h2>
+    <h2>{{mode.title}}</h2>
     <div class='presets'>
         <div class='preset' [ngClass]='isActive(0)'>
-            <div class='title'>Low</div>
-            <div class='subtitle'>1080p</div>
-            <app-led class='leds' *ngIf='isActive(0)' (click)='setActive(0)' [on]='[0,0,1,0]' [blink]='[0,0,0,1]'></app-led>
-            <app-led class='leds' *ngIf='!isActive(0)' (click)='setActive(0)' [on]='[0,0,1,0]' [blink]='[0,0,0,0]'></app-led>
-            <div class='value'>1x</div>
+            <div class='name'>{{mode.presets[0].name}}</div>
+            <app-led class='leds' *ngIf='isActive(0)' (click)='setActive(0)' [on]='mode.presets[0].leds' [blink]='mode.presets[0].blink'></app-led>
+            <app-led class='leds' *ngIf='!isActive(0)' (click)='setActive(0)' [on]='mode.presets[0].leds'></app-led>
+            <div class='value' *ngIf='mode.presets[0].value'>{{mode.presets[0].value}}</div>
+            <div class='desc'>{{mode.presets[0].desc}}</div>
         </div>
         <div class='preset' [ngClass]='isActive(1)'>
-            <div class='title'>Mid</div>
-            <div class='subtitle'>1440p</div>
-            <app-led class='leds' *ngIf='isActive(1)' (click)='setActive(1)' [on]='[0,0,1,0]' [blink]='[1,0,0,0]'></app-led>
-            <app-led class='leds' *ngIf='!isActive(1)' (click)='setActive(1)' [on]='[0,0,1,0]' [blink]='[0,0,0,0]'></app-led>
-            <div class='value'>1.5x</div>
+            <div class='name'>{{mode.presets[1].name}}</div>
+            <app-led class='leds' *ngIf='isActive(1)' (click)='setActive(1)' [on]='mode.presets[1].leds' [blink]='mode.presets[1].blink'></app-led>
+            <app-led class='leds' *ngIf='!isActive(1)' (click)='setActive(1)' [on]='mode.presets[1].leds'></app-led>
+            <div class='value' *ngIf='mode.presets[1].value'>{{mode.presets[1].value}}</div>
+            <div class='desc'>{{mode.presets[1].desc}}</div>
         </div>
         <div class='preset' [ngClass]='isActive(2)'>
-            <div class='title'>High</div>
-            <div class='subtitle'>4K</div>
-            <app-led class='leds' *ngIf='isActive(2)' (click)='setActive(2)' [on]='[0,0,1,0]' [blink]='[0,1,0,0]'></app-led>
-            <app-led class='leds' *ngIf='!isActive(2)' (click)='setActive(2)' [on]='[0,0,1,0]' [blink]='[0,0,0,0]'></app-led>
-            <div class='value'>2x</div>
+            <div class='name'>{{mode.presets[2].name}}</div>
+            <app-led class='leds' *ngIf='isActive(2)' (click)='setActive(2)' [on]='mode.presets[2].leds' [blink]='mode.presets[2].blink'></app-led>
+            <app-led class='leds' *ngIf='!isActive(2)' (click)='setActive(2)' [on]='mode.presets[2].leds'></app-led>
+            <div class='value' *ngIf='mode.presets[2].value'>{{mode.presets[2].value}}</div>
+            <div class='desc'>{{mode.presets[2].desc}}</div>
         </div>
     </div>
 </div>
 
 <div class='panel'>
     <h2>Edit values</h2>
-    <div>Coming soon</div>
+    <div *ngIf='modeName=="protocol"'>Protocol values cannot be modified</div>
+    <div *ngIf='modeName!="protocol"'>Coming soon</div>
 </div>
