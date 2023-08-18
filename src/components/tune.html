@@ -1,22 +1,25 @@
 <div class='tune'>
     <h2>{{title}}</h2>
     <div class='presets'>
-        <div class='preset selected'>
+        <div class='preset' [ngClass]='isActive(0)'>
             <div class='title'>Low</div>
             <div class='subtitle'>1080p</div>
-            <div class='img'></div>
+            <app-led class='leds' *ngIf='isActive(0)' (click)='setActive(0)' [on]='[0,0,1,0]' [blink]='[0,0,0,1]'></app-led>
+            <app-led class='leds' *ngIf='!isActive(0)' (click)='setActive(0)' [on]='[0,0,1,0]' [blink]='[0,0,0,0]'></app-led>
             <div class='value'>1x</div>
         </div>
-        <div class='preset'>
+        <div class='preset' [ngClass]='isActive(1)'>
             <div class='title'>Mid</div>
             <div class='subtitle'>1440p</div>
-            <div class='img'></div>
+            <app-led class='leds' *ngIf='isActive(1)' (click)='setActive(1)' [on]='[0,0,1,0]' [blink]='[1,0,0,0]'></app-led>
+            <app-led class='leds' *ngIf='!isActive(1)' (click)='setActive(1)' [on]='[0,0,1,0]' [blink]='[0,0,0,0]'></app-led>
             <div class='value'>1.5x</div>
         </div>
-        <div class='preset'>
+        <div class='preset' [ngClass]='isActive(2)'>
             <div class='title'>High</div>
             <div class='subtitle'>4K</div>
-            <div class='img'></div>
+            <app-led class='leds' *ngIf='isActive(2)' (click)='setActive(2)' [on]='[0,0,1,0]' [blink]='[0,1,0,0]'></app-led>
+            <app-led class='leds' *ngIf='!isActive(2)' (click)='setActive(2)' [on]='[0,0,1,0]' [blink]='[0,0,0,0]'></app-led>
             <div class='value'>2x</div>
         </div>
     </div>
@@ -24,4 +27,5 @@
 
 <div class='panel'>
     <h2>Edit values</h2>
+    <div>Coming soon</div>
 </div>

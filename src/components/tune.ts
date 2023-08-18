@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { LedComponent } from './led';
 
 @Component({
   selector: 'app-tune',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    LedComponent
+  ],
   templateUrl: './tune.html',
   styleUrls: ['./tune.sass']
 })
 export class TuneComponent {
   sub?: string
   title?: string
+  active: number = 0
 
   constructor(private activatedRoute: ActivatedRoute) {
     activatedRoute.data.subscribe((data) => {
@@ -25,5 +30,13 @@ export class TuneComponent {
       mouse_sens: "Mouse Sensitivity"
     }
     this.title = titles[this.sub as string]
+  }
+
+  setActive(index: number) {
+    this.active = index
+  }
+
+  isActive(index: number) {
+    return index === this.active ? 'selected' : ''
   }
 }
