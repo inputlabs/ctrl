@@ -1,26 +1,29 @@
 <div class='tune'>
     <h2>{{mode.title}}</h2>
     <div class='presets'>
-        <div class='preset' [ngClass]='isActive(0)'>
-            <div class='name'>{{mode.presets[0].name}}</div>
-            <app-led class='leds' *ngIf='isActive(0)' (click)='setActive(0)' [on]='mode.presets[0].leds' [blink]='mode.presets[0].blink'></app-led>
-            <app-led class='leds' *ngIf='!isActive(0)' (click)='setActive(0)' [on]='mode.presets[0].leds'></app-led>
-            <div class='value' *ngIf='mode.presets[0].value'>{{mode.presets[0].value}}</div>
-            <div class='desc'>{{mode.presets[0].desc}}</div>
-        </div>
-        <div class='preset' [ngClass]='isActive(1)'>
-            <div class='name'>{{mode.presets[1].name}}</div>
-            <app-led class='leds' *ngIf='isActive(1)' (click)='setActive(1)' [on]='mode.presets[1].leds' [blink]='mode.presets[1].blink'></app-led>
-            <app-led class='leds' *ngIf='!isActive(1)' (click)='setActive(1)' [on]='mode.presets[1].leds'></app-led>
-            <div class='value' *ngIf='mode.presets[1].value'>{{mode.presets[1].value}}</div>
-            <div class='desc'>{{mode.presets[1].desc}}</div>
-        </div>
-        <div class='preset' [ngClass]='isActive(2)'>
-            <div class='name'>{{mode.presets[2].name}}</div>
-            <app-led class='leds' *ngIf='isActive(2)' (click)='setActive(2)' [on]='mode.presets[2].leds' [blink]='mode.presets[2].blink'></app-led>
-            <app-led class='leds' *ngIf='!isActive(2)' (click)='setActive(2)' [on]='mode.presets[2].leds'></app-led>
-            <div class='value' *ngIf='mode.presets[2].value'>{{mode.presets[2].value}}</div>
-            <div class='desc'>{{mode.presets[2].desc}}</div>
+        <div *ngFor='let i of [0,1,2]' class='preset' [ngClass]='isActive(i)'>
+            <div class='name'>{{mode.presets[i].name}}</div>
+            <app-led
+                class='leds'
+                *ngIf='isActive(i)'
+                (click)='setActive(i)'
+                [size]='100'
+                [dotsize]='8'
+                [on]='mode.presets[i].leds'
+                [blink]='mode.presets[i].blink'
+                >
+            </app-led>
+            <app-led
+                class='leds'
+                *ngIf='!isActive(i)'
+                (click)='setActive(i)'
+                [size]='100'
+                [dotsize]='8'
+                [on]='mode.presets[i].leds'
+                >
+            </app-led>
+            <div class='value' *ngIf='mode.presets[i].value'>{{mode.presets[i].value}}</div>
+            <div class='desc'>{{mode.presets[i].desc}}</div>
         </div>
     </div>
 </div>

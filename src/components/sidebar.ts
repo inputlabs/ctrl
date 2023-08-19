@@ -1,22 +1,28 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
+import { LedComponent, LED } from './led'
 
 @Component({
   selector: 'app-sidebar',
+  templateUrl: './sidebar.html',
+  styleUrls: ['./sidebar.sass'],
   standalone: true,
   imports: [
     CommonModule,
     RouterLink,
     RouterLinkActive,
-  ],
-  templateUrl: './sidebar.html',
-  styleUrls: ['./sidebar.sass']
+    LedComponent,
+  ]
 })
 export class SidebarComponent {
   route: string = ''
+  ledColorOff = '#555'
+  LED = LED
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.route = event.urlAfterRedirects

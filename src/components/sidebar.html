@@ -18,19 +18,58 @@
 </div>
 
 <div *ngIf='this.isProfiles()'>
-    <a routerLink='profiles/0' routerLinkActive='active'>Home</a>
-    <a routerLink='profiles/1' routerLinkActive='active'>FPS Fusion</a>
-    <a routerLink='profiles/2' routerLinkActive='active'>FPS WASD</a>
-    <a routerLink='profiles/3' routerLinkActive='active'>Racing</a>
-    <a routerLink='profiles/4' routerLinkActive='active'>Flight</a>
-    <a routerLink='profiles/5' routerLinkActive='active'>Console</a>
-    <a routerLink='profiles/6' routerLinkActive='active'>Console legacy</a>
-    <a routerLink='profiles/7' routerLinkActive='active'>Desktop</a>
-    <a routerLink='profiles/8' routerLinkActive='active'>RTS</a>
-    <a routerLink='profiles/9' routerLinkActive='active'>Custom 1</a>
-    <a routerLink='profiles/10' routerLinkActive='active'>Custom 2</a>
-    <a routerLink='profiles/11' routerLinkActive='active'>Custom 3</a>
-    <a routerLink='profiles/12' routerLinkActive='active'>Custom 4</a>
+    <a routerLink='profiles/0' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.ALL'></app-led>
+        Home
+    </a>
+    <a routerLink='profiles/1' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.UP'></app-led>
+        FPS Fusion
+    </a>
+    <a routerLink='profiles/2' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT'></app-led>
+        Racing
+    </a>
+    <a routerLink='profiles/3' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.DOWN'></app-led>
+        Console
+    </a>
+    <a routerLink='profiles/4' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.LEFT'></app-led>
+        Desktop
+    </a>
+    <a routerLink='profiles/5' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.UP+LED.LEFT+LED.RIGHT'></app-led>
+        FPS WASD
+    </a>
+    <a routerLink='profiles/6' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT+LED.UP+LED.DOWN'></app-led>
+        Flight
+    </a>
+    <a routerLink='profiles/7' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.DOWN+LED.LEFT+LED.RIGHT'></app-led>
+        Console legacy
+    </a>
+    <a routerLink='profiles/8' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.LEFT+LED.DOWN+LED.UP'></app-led>
+        RTS
+    </a>
+    <a routerLink='profiles/9' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.UP+LED.RIGHT'></app-led>
+        Custom 1
+    </a>
+    <a routerLink='profiles/10' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT+LED.DOWN'></app-led>
+        Custom 2
+    </a>
+    <a routerLink='profiles/11' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.DOWN+LED.LEFT'></app-led>
+        Custom 3
+    </a>
+    <a routerLink='profiles/12' routerLinkActive='active'>
+        <app-led [colorOff]='ledColorOff' [on]='LED.LEFT+LED.UP'></app-led>
+        Custom 4
+    </a>
 </div>
 
 <div *ngIf='this.isSettings()'>
