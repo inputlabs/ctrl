@@ -46,7 +46,7 @@ export class WebusbService {
       {vendorId:0x045E, productId:0x028E},
     ]
     this.device = await navigator.usb.requestDevice({filters})
-    this.openDevice()
+    await this.openDevice()
   }
 
   async openDevice() {
