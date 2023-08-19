@@ -3,25 +3,25 @@
     <div class='presets'>
         <div *ngFor='let i of [0,1,2]' class='preset' [ngClass]='isActive(i)'>
             <div class='name'>{{mode.presets[i].name}}</div>
-            <app-led
-                class='leds'
-                *ngIf='isActive(i)'
-                (click)='setActive(i)'
-                [size]='100'
-                [dotsize]='8'
-                [on]='mode.presets[i].leds'
-                [blink]='mode.presets[i].blink'
-                >
-            </app-led>
-            <app-led
-                class='leds'
-                *ngIf='!isActive(i)'
-                (click)='setActive(i)'
-                [size]='100'
-                [dotsize]='8'
-                [on]='mode.presets[i].leds'
-                >
-            </app-led>
+            <div class='leds'>
+                <app-led
+                    *ngIf='isActive(i)'
+                    (click)='setActive(i)'
+                    [size]='80'
+                    [dotsize]='8'
+                    [on]='mode.presets[i].leds'
+                    [blink]='mode.presets[i].blink'
+                    >
+                </app-led>
+                <app-led
+                    *ngIf='!isActive(i)'
+                    (click)='setActive(i)'
+                    [size]='80'
+                    [dotsize]='8'
+                    [on]='mode.presets[i].leds'
+                    >
+                </app-led>
+            </div>
             <div class='value' *ngIf='mode.presets[i].value'>{{mode.presets[i].value}}</div>
             <div class='desc'>{{mode.presets[i].desc}}</div>
         </div>
