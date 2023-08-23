@@ -13,12 +13,15 @@ const PROC_FACTORY = 223
   providedIn: 'root'
 })
 export class WebusbService {
+  browserIsCompatible = false
   device: any = null
   logs: string[] = []
   isConnected: boolean = false
 
   constructor() {
     this.logs = []
+    this.browserIsCompatible = this.checkBrowser()
+    if (!this.browserIsCompatible) return
     navigator.usb.getDevices().then((devices) => {
       this.logs = []
       if (!devices.length) return
@@ -38,6 +41,10 @@ export class WebusbService {
         if (!this.device) this.isConnected = false
       })
     })
+  }
+
+  checkBrowser() {
+    return !!navigator.usb
   }
 
   async requestDevice() {
