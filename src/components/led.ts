@@ -29,7 +29,19 @@ export class LedComponent {
   constructor(private element: ElementRef) {}
 
   ngOnInit() {
-    // const size = this.size - this.dotsize
+    this.update()
+  }
+
+  ngOnChanges() {
+    this.update()
+  }
+
+  ngOnDestroy() {
+    this.clear()
+  }
+
+  update() {
+    this.clear()
     const leds: HTMLElement[] = []
     leds[0] = this.element.nativeElement.getElementsByClassName('i0')[0] as HTMLElement
     leds[1] = this.element.nativeElement.getElementsByClassName('i1')[0] as HTMLElement
@@ -67,7 +79,7 @@ export class LedComponent {
     }
   }
 
-  ngOnDestroy() {
+  clear() {
     for(let id of this.blinkers) {
       clearInterval(id)
     }

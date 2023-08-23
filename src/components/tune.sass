@@ -18,43 +18,51 @@
         margin: 0px
         padding: 50px
         padding-top: 20px
-        .presets
+        .leds
             display: flex
+            margin-top: 10px
+            justify-content: center
+            align-items: center
+            width: 100px
+            height: 100px
+            background-color: hsl(0deg, 0%, 20%)
+            border-radius: 5px
+        .presets
+            margin-top: 20px
             .preset
-                width: 100px
-                height: 100px
-                margin-top: 15px
-                margin-right: 40px
-                text-align: center
-                .name
-                    font-size: 18px
-                    font-weight: bold
-                .leds
+                display: flex
+                flex-direction: row
+                .button
                     display: flex
-                    justify-content: center
-                    align-items: center
-                    width: 100px
-                    height: 100px
-                    margin-top: 10px
-                    margin-bottom: 10px
-                    background-color: hsl(0deg, 0%, 20%)
-                    border-radius: 5px
+                    width: 230px
+                    height: 40px
+                    margin-bottom: 15px
+                    margin-right: 10px
+                    padding-left: 16px
+                    text-align: center
                     cursor: pointer
-                    box-sizing: initial
+                    background-color: hsl(0deg, 0%, 20%)
                     border: 2px solid transparent
+                    border-radius: 5px
+                    .name
+                        line-height: 36px
+                        font-size: 16px
+                        font-weight: bold
+                    .desc
+                        line-height: 37px
+                        padding-left: 10px
+                        font-size: 14px
+                        color: hsl(0deg, 0%, 50%)
+                    &.selected
+                        border: 2px solid $green
                 .value
-                    display: inline-block
+                    width: 70px
+                    height: 40px
                     font-size: 16px
                     background: black
-                    padding: 5px 10px
+                    padding-top: 10px
                     border-radius: 5px
-                .desc
-                    font-size: 14px
-                    margin-top: 10px
-                    color: hsl(0deg, 0%, 50%)
-                &.selected
-                    .leds
-                        border: 2px solid white
+                    text-align: center
 
     .panel
         display: flex

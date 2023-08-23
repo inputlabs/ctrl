@@ -1,35 +1,31 @@
 <div class='tune'>
-    <h2>{{mode?.title}}</h2>
+    <h2>{{mode.title}}</h2>
+    <div class="leds">
+        <app-led
+        [size]='100'
+        [dotsize]='9'
+        [on]='active.leds'
+        [blink]='active.blink'
+        >
+        </app-led>
+    </div>
     <div class='presets'>
-        <div *ngFor='let preset of mode?.presets' class='preset' [ngClass]='isActive(preset)'>
-            <div class='name'>{{preset.name}}</div>
-            <div class='leds'>
-                <app-led
-                    *ngIf='isActive(preset)'
-                    (click)='setActive(preset)'
-                    [size]='80'
-                    [dotsize]='8'
-                    [on]='preset.leds'
-                    [blink]='preset.blink'
-                    >
-                </app-led>
-                <app-led
-                    *ngIf='!isActive(preset)'
-                    (click)='setActive(preset)'
-                    [size]='80'
-                    [dotsize]='8'
-                    [on]='preset.leds'
-                    >
-                </app-led>
+        <div
+            class='preset'
+            (click)='setActive(preset)'
+            *ngFor='let preset of mode?.presets'
+            >
+            <div class='button' [ngClass]='isActive(preset)'>
+                <div class='name'>{{preset.name}}</div>
+                <div class='desc'>{{preset.desc}}</div>
             </div>
             <div class='value' *ngIf='preset.value'>{{preset.value}}</div>
-            <div class='desc'>{{preset.desc}}</div>
         </div>
     </div>
 </div>
 
-<div class='panel'>
+<!-- <div class='panel'>
     <h2>Edit values</h2>
-    <div *ngIf='mode?.title=="protocol"'>Protocol values cannot be modified</div>
-    <div *ngIf='mode?.title!="protocol"'>Coming soon</div>
-</div>
+    <div *ngIf='mode.url=="protocol"'>Protocol values cannot be modified</div>
+    <div *ngIf='mode.url!="protocol"'>Coming soon</div>
+</div> -->
