@@ -1,35 +1,35 @@
 <div class='tune'>
-    <h2>{{mode.title}}</h2>
+    <h2>{{mode?.title}}</h2>
     <div class='presets'>
-        <div *ngFor='let i of [0,1,2]' class='preset' [ngClass]='isActive(i)'>
-            <div class='name'>{{mode.presets[i].name}}</div>
+        <div *ngFor='let preset of mode?.presets' class='preset' [ngClass]='isActive(preset)'>
+            <div class='name'>{{preset.name}}</div>
             <div class='leds'>
                 <app-led
-                    *ngIf='isActive(i)'
-                    (click)='setActive(i)'
+                    *ngIf='isActive(preset)'
+                    (click)='setActive(preset)'
                     [size]='80'
                     [dotsize]='8'
-                    [on]='mode.presets[i].leds'
-                    [blink]='mode.presets[i].blink'
+                    [on]='preset.leds'
+                    [blink]='preset.blink'
                     >
                 </app-led>
                 <app-led
-                    *ngIf='!isActive(i)'
-                    (click)='setActive(i)'
+                    *ngIf='!isActive(preset)'
+                    (click)='setActive(preset)'
                     [size]='80'
                     [dotsize]='8'
-                    [on]='mode.presets[i].leds'
+                    [on]='preset.leds'
                     >
                 </app-led>
             </div>
-            <div class='value' *ngIf='mode.presets[i].value'>{{mode.presets[i].value}}</div>
-            <div class='desc'>{{mode.presets[i].desc}}</div>
+            <div class='value' *ngIf='preset.value'>{{preset.value}}</div>
+            <div class='desc'>{{preset.desc}}</div>
         </div>
     </div>
 </div>
 
 <div class='panel'>
     <h2>Edit values</h2>
-    <div *ngIf='modeName=="protocol"'>Protocol values cannot be modified</div>
-    <div *ngIf='modeName!="protocol"'>Coming soon</div>
+    <div *ngIf='mode?.title=="protocol"'>Protocol values cannot be modified</div>
+    <div *ngIf='mode?.title!="protocol"'>Coming soon</div>
 </div>
