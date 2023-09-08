@@ -3,13 +3,14 @@ import { Routes } from '@angular/router'
 import { LogsComponent } from './components/logs'
 import { WipComponent } from './components/wip'
 import { TuneComponent } from './components/tune'
+import { ProfileComponent } from './components/profile'
 
 export const routes: Routes = [
     {path: '', component: LogsComponent},
     {path: 'tools/tester', component: WipComponent},
     {path: 'tools/fw_update', component: WipComponent},
-    {path: 'profiles/0', component: WipComponent},
-    {path: 'profiles/1', component: WipComponent},
+    {path: 'profiles/0', component: ProfileComponent},
+    {path: 'profiles/1', component: ProfileComponent},
     {path: 'profiles/2', component: WipComponent},
     {path: 'profiles/3', component: WipComponent},
     {path: 'profiles/4', component: WipComponent},
