@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { LedComponent } from './led';
+import { Component } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { ActivatedRoute } from '@angular/router'
+import { LedComponent } from './led'
+import { WebusbService } from '../services/webusb'
+import { ConfigIndex } from 'src/lib/ctrl'
 
 interface Modes  {
   [key: string]: Mode
@@ -34,7 +36,7 @@ interface Preset {
 export class TuneComponent {
   mode: Mode
   title: string = ''
-  active: Preset
+  active: Preset | null = null
   modes: Modes = {
     protocol: {
       url: 'protocol',
@@ -76,12 +78,22 @@ export class TuneComponent {
     }
   }
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    public webusb: WebusbService,
+  ) {
     this.mode = this.modes['protocol']  // Default to avoid compiler complains.
-    this.active = this.modes['protocol'].presets[0]  // Default to avoid compiler complains.
+    // this.active = this.modes['protocol'].presets[0]  // Default to avoid compiler complains.
     activatedRoute.data.subscribe((data) => {
       this.mode = this.modes[data['mode'] as string]
-      this.active = this.mode.presets[0]
+      // this.active = this.mode.presets[0]
+      this.getActive()
+    })
+  }
+
+  getActive() {
+    this.webusb.getConfig(ConfigIndex.SENS_MOUSE).then((ctrl) => {
+      console.log(ctrl)
     })
   }
 

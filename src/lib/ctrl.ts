@@ -6,7 +6,10 @@ enum DeviceId {
 
 enum MessageType {
     LOG = 1,
-    PROC = 2,
+    PROC,
+    CONFIG_GET,
+    CONFIG_GIVE,
+    CONFIG_SET,
 }
 
 export enum Proc {
@@ -14,6 +17,13 @@ export enum Proc {
     RESTART = 221,
     BOOTSEL = 222,
     FACTORY = 223,
+}
+
+export enum ConfigIndex {
+    PROTOCOL = 1,
+    SENS_MOUSE,
+    SENS_TOUCH,
+    DEADZONE,
 }
 
 export class Ctrl {
@@ -39,7 +49,14 @@ export class Ctrl {
             return new CtrlLog(
                 data[0],
                 data[1],
-                new TextDecoder().decode(data.slice(3, PACKAGE_SIZE)))
+                new TextDecoder().decode(data.slice(3, PACKAGE_SIZE))
+            )
+        }
+        if (data[2] == MessageType.CONFIG_GIVE) {
+            return new CtrlConfigGive(
+                data[3],
+                data[4],
+            )
         }
         return false
     }
@@ -60,5 +77,22 @@ export class CtrlProc extends Ctrl {
         public proc: Proc
     ) {
         super(1, DeviceId.ALPAKKA, MessageType.PROC, proc)
+    }
+}
+
+export class CtrlConfigGet extends Ctrl {
+    constructor(
+        index: ConfigIndex
+    ) {
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET, index)
+    }
+}
+
+export class CtrlConfigGive extends Ctrl {
+    constructor(
+        public index: ConfigIndex,
+        public value: number,
+    ) {
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GIVE, value)
     }
 }

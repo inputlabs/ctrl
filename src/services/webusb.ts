@@ -1,7 +1,17 @@
 /// <reference types="w3c-web-usb" />
 import { Injectable } from '@angular/core';
+import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { delay } from '../lib/delay'
-import { Ctrl, CtrlLog, CtrlProc, Proc, PACKAGE_SIZE } from '../lib/ctrl'
+import {
+  Ctrl,
+  CtrlLog,
+  CtrlProc,
+  Proc,
+  ConfigIndex,
+  PACKAGE_SIZE,
+  CtrlConfigGet,
+  CtrlConfigGive,
+} from '../lib/ctrl'
 
 const ADDR_IN = 3
 const ADDR_OUT = 4
@@ -14,6 +24,7 @@ export class WebusbService {
   device: any = null
   logs: string[] = []
   isConnected: boolean = false
+  pending: Subject<Ctrl> = new Subject()
 
   constructor() {
     this.logs = []
@@ -74,7 +85,11 @@ export class WebusbService {
       // console.log('Listening...')
       const response = await this.device.transferIn(ADDR_IN, PACKAGE_SIZE)
       const ctrl = Ctrl.decode(response.data)
+      // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
+      if (ctrl instanceof CtrlConfigGive) {
+        this.pending.next(ctrl)
+      }
     } catch (error:any) {
       console.warn(error)
       return
@@ -97,30 +112,45 @@ export class WebusbService {
 
   async sendEmpty() {
     const data = new Uint8Array(64)
-    await this.send(data)
+    await this.device.transferOut(ADDR_OUT, data)  // TODO: use send()
   }
 
   async sendRestart() {
-    const data = new CtrlProc(Proc.RESTART).encode()
+    const data = new CtrlProc(Proc.RESTART)
     await this.send(data)
   }
 
   async sendBootsel() {
-    const data = new CtrlProc(Proc.BOOTSEL).encode()
+    const data = new CtrlProc(Proc.BOOTSEL)
     await this.send(data)
   }
 
   async sendCalibrate() {
-    const data = new CtrlProc(Proc.CALIBRATE).encode()
+    const data = new CtrlProc(Proc.CALIBRATE)
     await this.send(data)
   }
 
   async sendFactory() {
-    const data = new CtrlProc(Proc.FACTORY).encode()
+    const data = new CtrlProc(Proc.FACTORY)
     await this.send(data)
   }
 
-  async send(data: any) {
-    await this.device.transferOut(ADDR_OUT, data)
+  async send(ctrl: CtrlProc | CtrlConfigGet) {
+    console.log('send', ctrl)
+    await this.device.transferOut(ADDR_OUT, ctrl.encode())
+  }
+
+  async getConfig(index: ConfigIndex) {
+    console.log('getConfig')
+    const ctrlOut = new CtrlConfigGet(index)
+    await this.send(ctrlOut)
+    return new Promise((resolve, reject) => {
+      this.pending.subscribe({
+        next: (ctrlIn) => {
+          console.log('next2', ctrlIn)
+          resolve(ctrlIn)
+        }
+      })
+    })
   }
 }

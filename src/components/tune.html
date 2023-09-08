@@ -2,6 +2,7 @@
     <h2>{{mode.title}}</h2>
     <div class="leds">
         <app-led
+        *ngIf='active'
         [size]='100'
         [dotsize]='9'
         [on]='active.leds'
