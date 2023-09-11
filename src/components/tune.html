@@ -13,7 +13,7 @@
     <div class='presets'>
         <div
             class='preset'
-            (click)='setActive(preset)'
+            (click)='setPreset(preset)'
             *ngFor='let preset of mode?.presets'
             >
             <div class='button' [ngClass]='isActive(preset)'>

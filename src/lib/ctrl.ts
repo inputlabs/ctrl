@@ -8,8 +8,8 @@ enum MessageType {
     LOG = 1,
     PROC,
     CONFIG_GET,
-    CONFIG_GIVE,
     CONFIG_SET,
+    CONFIG_GIVE,
 }
 
 export enum Proc {
@@ -31,31 +31,41 @@ export class Ctrl {
         public protocolVersion: number,
         public deviceId: number,
         public messageType: MessageType,
+        public payloadSize: number,
         public payload: any,
     ) {}
 
     encode() {
         const data = new Uint8Array(PACKAGE_SIZE)
+        // console.log(data)
         data[0] = this.protocolVersion
         data[1] = this.deviceId
         data[2] = this.messageType
-        data[3] = this.payload
+        data[3] = this.payloadSize
+        if (Array.isArray(this.payload)) {
+            for (let [i, value] of this.payload.entries()) {
+                data[4+i] = value
+            }
+        } else {
+            data[4] = this.payload
+        }
         return data
     }
 
     static decode(data: any) {
         data = new Uint8Array(data.buffer)
+        // console.log(data)
         if (data[2] == MessageType.LOG) {
             return new CtrlLog(
                 data[0],
                 data[1],
-                new TextDecoder().decode(data.slice(3, PACKAGE_SIZE))
+                new TextDecoder().decode(data.slice(4, PACKAGE_SIZE))
             )
         }
         if (data[2] == MessageType.CONFIG_GIVE) {
             return new CtrlConfigGive(
-                data[3],
                 data[4],
+                data[5],
             )
         }
         return false
@@ -68,7 +78,7 @@ export class CtrlLog extends Ctrl {
         public override deviceId: number,
         public logMessage: string
     ) {
-        super(protocolVersion, deviceId, MessageType.LOG, logMessage)
+        super(protocolVersion, deviceId, MessageType.LOG, logMessage.length, logMessage)
     }
 }
 
@@ -76,7 +86,7 @@ export class CtrlProc extends Ctrl {
     constructor(
         public proc: Proc
     ) {
-        super(1, DeviceId.ALPAKKA, MessageType.PROC, proc)
+        super(1, DeviceId.ALPAKKA, MessageType.PROC, 1, [proc])
     }
 }
 
@@ -84,7 +94,17 @@ export class CtrlConfigGet extends Ctrl {
     constructor(
         cfgIndex: ConfigIndex
     ) {
-        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET, cfgIndex)
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET, 1, [cfgIndex])
+    }
+}
+
+export class CtrlConfigSet extends Ctrl {
+    constructor(
+        cfgIndex: ConfigIndex,
+        public value: number,
+    ) {
+        const payload = [cfgIndex, value]
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SET, 2, payload)
     }
 }
 
@@ -93,6 +113,7 @@ export class CtrlConfigGive extends Ctrl {
         public cfgIndex: ConfigIndex,
         public value: number,
     ) {
-        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GIVE, [cfgIndex, value])
+        const payload = [cfgIndex, value]
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GIVE, 2, payload)
     }
 }

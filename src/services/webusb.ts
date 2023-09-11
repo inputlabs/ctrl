@@ -1,6 +1,6 @@
 /// <reference types="w3c-web-usb" />
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, AsyncSubject } from 'rxjs';
 import { delay } from '../lib/delay'
 import {
   Ctrl,
@@ -10,6 +10,7 @@ import {
   ConfigIndex,
   PACKAGE_SIZE,
   CtrlConfigGet,
+  CtrlConfigSet,
   CtrlConfigGive,
 } from '../lib/ctrl'
 
@@ -24,7 +25,7 @@ export class WebusbService {
   device: any = null
   logs: string[] = []
   isConnected: boolean = false
-  pending: Subject<CtrlConfigGive> | undefined
+  pending: AsyncSubject<CtrlConfigGive> | undefined
 
   constructor() {
     this.logs = []
@@ -105,7 +106,7 @@ export class WebusbService {
     } else {
       this.logs[0] += ctrl.logMessage
     }
-    // console.log(ctrl.logMessage.length, ctrl.logMessage)
+    // console.log(ctrl.logMessage)
   }
 
   clearLogs() {
@@ -143,8 +144,21 @@ export class WebusbService {
   }
 
   async getConfig(index: ConfigIndex): Promise<number> {
-    this.pending = new Subject()
+    this.pending = new AsyncSubject()
     const ctrlOut = new CtrlConfigGet(index)
+    await this.send(ctrlOut)
+    return new Promise((resolve, reject) => {
+      this.pending?.subscribe({
+        next: (ctrlIn) => {
+          resolve(ctrlIn.value)
+        }
+      })
+    })
+  }
+
+  async setConfig(index: ConfigIndex, preset: number): Promise<number> {
+    this.pending = new AsyncSubject()
+    const ctrlOut = new CtrlConfigSet(index, preset)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
       this.pending?.subscribe({

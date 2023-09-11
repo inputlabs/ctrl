@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router'
 import { LedComponent } from './led'
 import { WebusbService } from '../services/webusb'
-import { ConfigIndex } from 'src/lib/ctrl'
+import { ConfigIndex, CtrlConfigSet } from 'src/lib/ctrl'
+import { delay } from 'src/lib/delay'
 
 interface Modes  {
   [key: string]: Mode
@@ -55,10 +56,10 @@ export class TuneComponent {
       url: 'touch_sens',
       title: 'Touch sensitivity',
       presets: [
-        {index: 4, name: 'Ultra', desc: 'Very responsive', value: '2 μs', leds:0b0010, blink:0b0001},
-        {index: 3, name: 'High', desc: '', value: '3 μs', leds:0b0010, blink:0b1001},
-        {index: 2, name: 'Mid', desc: '', value: '5 μs', leds:0b0010, blink:0b1000},
-        {index: 1, name: 'Low', desc: 'Very numb', value: '8 μs', leds:0b0010, blink:0b1100},
+        {index: 4, name: 'Ultra', desc: 'Very responsive', value: '10 μs', leds:0b0010, blink:0b0001},
+        {index: 3, name: 'High', desc: '', value: '15 μs', leds:0b0010, blink:0b1001},
+        {index: 2, name: 'Mid', desc: '', value: '25 μs', leds:0b0010, blink:0b1000},
+        {index: 1, name: 'Low', desc: 'Very numb', value: '40 μs', leds:0b0010, blink:0b1100},
         {index: 0, name: 'Auto', desc: 'Self adjusting', value: '', leds:0b0010, blink:0b0100},
       ]
     },
@@ -91,17 +92,22 @@ export class TuneComponent {
     this.mode = this.modes['protocol']  // Default to avoid compiler complains.
     activatedRoute.data.subscribe((data) => {
       this.mode = this.modes[data['mode'] as string]
-      this.getActivePreset()
+      this.getPreset()
     })
   }
 
-  async getActivePreset() {
+  async getPreset() {
     const presetIndex = await this.webusb.getConfig(this.mode.configIndex)
-    this.active = this.mode.presets.filter((preset) => preset.index == presetIndex).pop() as Preset
+    this.setPresetFromIndex(presetIndex)
   }
 
-  setActive(preset: Preset) {
-    this.active = preset
+  async setPreset(preset: Preset) {
+    const presetIndex = await this.webusb.setConfig(this.mode.configIndex, preset.index)
+    this.setPresetFromIndex(presetIndex)
+  }
+
+  setPresetFromIndex(index: number) {
+    this.active = this.mode.presets.filter((preset) => preset.index == index).pop() as Preset
   }
 
   isActive(preset: Preset) {
