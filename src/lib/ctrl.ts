@@ -21,8 +21,8 @@ export enum Proc {
 
 export enum ConfigIndex {
     PROTOCOL = 1,
-    SENS_MOUSE,
     SENS_TOUCH,
+    SENS_MOUSE,
     DEADZONE,
 }
 
@@ -82,17 +82,17 @@ export class CtrlProc extends Ctrl {
 
 export class CtrlConfigGet extends Ctrl {
     constructor(
-        index: ConfigIndex
+        cfgIndex: ConfigIndex
     ) {
-        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET, index)
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET, cfgIndex)
     }
 }
 
 export class CtrlConfigGive extends Ctrl {
     constructor(
-        public index: ConfigIndex,
+        public cfgIndex: ConfigIndex,
         public value: number,
     ) {
-        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GIVE, value)
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GIVE, [cfgIndex, value])
     }
 }

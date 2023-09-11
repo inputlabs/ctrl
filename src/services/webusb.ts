@@ -1,6 +1,6 @@
 /// <reference types="w3c-web-usb" />
 import { Injectable } from '@angular/core';
-import { Observable, Subject, lastValueFrom } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { delay } from '../lib/delay'
 import {
   Ctrl,
@@ -24,7 +24,7 @@ export class WebusbService {
   device: any = null
   logs: string[] = []
   isConnected: boolean = false
-  pending: Subject<Ctrl> = new Subject()
+  pending: Subject<CtrlConfigGive> | undefined
 
   constructor() {
     this.logs = []
@@ -75,8 +75,8 @@ export class WebusbService {
     console.log('Configuration selected')
     await this.device.claimInterface(1)
     console.log('Interface claimed')
+    await this.sendEmpty()
     this.isConnected = true;
-    this.sendEmpty()
     this.listen()
   }
 
@@ -87,8 +87,10 @@ export class WebusbService {
       const ctrl = Ctrl.decode(response.data)
       // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
-      if (ctrl instanceof CtrlConfigGive) {
+      if (ctrl instanceof CtrlConfigGive && this.pending) {
         this.pending.next(ctrl)
+        this.pending.complete()
+        this.pending = undefined
       }
     } catch (error:any) {
       console.warn(error)
@@ -140,15 +142,14 @@ export class WebusbService {
     await this.device.transferOut(ADDR_OUT, ctrl.encode())
   }
 
-  async getConfig(index: ConfigIndex) {
-    console.log('getConfig')
+  async getConfig(index: ConfigIndex): Promise<number> {
+    this.pending = new Subject()
     const ctrlOut = new CtrlConfigGet(index)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
-      this.pending.subscribe({
+      this.pending?.subscribe({
         next: (ctrlIn) => {
-          console.log('next2', ctrlIn)
-          resolve(ctrlIn)
+          resolve(ctrlIn.value)
         }
       })
     })
