@@ -74,3 +74,14 @@
         padding-top: 20px
         div
             font-size: 15px
+
+    [data-tooltip]::before
+        position : absolute
+        content : attr(data-tooltip)
+        opacity : 0
+    [data-tooltip]:hover::before
+        opacity : 1
+    [data-tooltip]:not([data-tooltip-persistent])::before
+        padding-left: 70px
+        font-size: 14px
+        color: hsl(0deg, 0%, 40%)

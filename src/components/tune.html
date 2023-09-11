@@ -13,14 +13,13 @@
     <div class='presets'>
         <div
             class='preset'
-            (click)='setPreset(preset)'
             *ngFor='let preset of mode?.presets'
             >
-            <div class='button' [ngClass]='isActive(preset)'>
+            <div class='button' [ngClass]='isActive(preset)' (click)='setPreset(preset)'>
                 <div class='name'>{{preset.name}}</div>
                 <div class='desc'>{{preset.desc}}</div>
             </div>
-            <div class='value' *ngIf='preset.value'>{{preset.value}}</div>
+            <div class='value' *ngIf='preset.value' data-tooltip='Not editable yet'>{{preset.value}}</div>
         </div>
     </div>
 </div>
