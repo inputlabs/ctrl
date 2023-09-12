@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { RouterOutlet} from '@angular/router'
+import { Router, RouterOutlet, RouterLink} from '@angular/router'
 import { WebusbService } from 'src/services/webusb'
 
 @Component({
@@ -9,10 +9,19 @@ import { WebusbService } from 'src/services/webusb'
   imports: [
     CommonModule,
     RouterOutlet,
+    RouterLink,
   ],
   templateUrl: './central.html',
   styleUrls: ['./central.sass']
 })
 export class CentralComponent {
-  constructor(public webusb: WebusbService) {}
+  constructor(
+    public webusb: WebusbService,
+    private router: Router,
+  ) {}
+
+  mustHaveController() {
+    const isHelp = this.router.url.startsWith('/help')
+    return !isHelp
+  }
 }

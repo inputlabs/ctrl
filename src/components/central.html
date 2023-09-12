@@ -1,19 +1,26 @@
-<router-outlet *ngIf='webusb.isConnected'></router-outlet>
+<router-outlet
+    *ngIf='!mustHaveController() || webusb.isConnected'
+    >
+</router-outlet>
 
-<div *ngIf='webusb.browserIsCompatible && !webusb.isConnected' class='centered'>
+<div
+    *ngIf='mustHaveController() && webusb.browserIsCompatible && !webusb.isConnected'
+    class='centered'
+    >
     <div class='widget'>
         <div class='icon'>
             <span class='material-icons'>sports_esports</span>
         </div>
         <div class='title'>Controller not found</div>
-        <div>&nbsp;</div>
-        <div class='msg'>Plug a paired controller</div>
-        <div class='or'>or</div>
         <button (click)='webusb.requestDevice()'>Pair a new controller</button>
+        <div class='link'><a routerLink='help/webusb'>Help</a></div>
     </div>
 </div>
 
-<div *ngIf='!webusb.browserIsCompatible' class='centered'>
+<div
+    *ngIf='!webusb.browserIsCompatible'
+    class='centered'
+    >
     <div class='widget'>
         <div class='icon'>
             <span class='material-icons'>report</span>

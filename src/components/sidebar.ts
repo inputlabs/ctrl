@@ -41,4 +41,8 @@ export class SidebarComponent {
   isSettings() {
     return this.route.startsWith('/settings')
   }
+
+  isHelp() {
+    return this.route.startsWith('/help')
+  }
 }

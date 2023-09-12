@@ -98,3 +98,10 @@
         App settings
     </a>
 </div>
+
+<div *ngIf='this.isHelp()'>
+    <a routerLink='help/webusb' routerLinkActive='active'>
+        <span class='material-icons'>usb</span>
+        Setting up WebUSB
+    </a>
+</div>
