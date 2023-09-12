@@ -1,5 +1,6 @@
 /// <reference types="w3c-web-usb" />
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router'
 import { Observable, AsyncSubject } from 'rxjs';
 import { delay } from '../lib/delay'
 import {
@@ -27,7 +28,9 @@ export class WebusbService {
   isConnected: boolean = false
   pending: AsyncSubject<CtrlConfigGive> | undefined
 
-  constructor() {
+  constructor(
+    private router: Router,
+  ) {
     this.logs = []
     this.browserIsCompatible = this.checkBrowser()
     if (!this.browserIsCompatible) return
@@ -88,6 +91,7 @@ export class WebusbService {
       const ctrl = Ctrl.decode(response.data)
       // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
+      if (ctrl instanceof CtrlProc) this.handleCtrlProc(ctrl)
       if (ctrl instanceof CtrlConfigGive && this.pending) {
         this.pending.next(ctrl)
         this.pending.complete()
@@ -107,6 +111,17 @@ export class WebusbService {
       this.logs[0] += ctrl.logMessage
     }
     // console.log(ctrl.logMessage)
+  }
+
+  handleCtrlProc(ctrl: CtrlProc) {
+    // Only procedure from controller to app is to "refresh" while tune
+    // settings are being changed directly in the controller.
+    const url = this.router.url
+    if (url.startsWith('/settings')) {
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([url])
+      })
+    }
   }
 
   clearLogs() {
