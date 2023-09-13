@@ -4,7 +4,7 @@
 </div>
 
 <div class='nav'>
-    <div>
+    <div class='tab'>
         <a
             routerLink=''
             [ngClass]='this.routeIsTools()'
@@ -12,7 +12,7 @@
             Tools
         </a>
     </div>
-    <div>
+    <div class='tab'>
         <a
             routerLink='profiles'
             routerLinkActive='active'
@@ -20,7 +20,7 @@
             Profiles
         </a>
     </div>
-    <div>
+    <div class='tab'>
         <a
             routerLink='settings'
             routerLinkActive='active'
@@ -28,7 +28,7 @@
             Settings
         </a>
     </div>
-    <div>
+    <div class='tab'>
         <a
             routerLink='help'
             routerLinkActive='active'
@@ -36,5 +36,29 @@
             Help
         </a>
     </div>
+
     <div class=filler></div>
+
+    <div class='connection'>
+        <div *ngIf='!webusb.isConnectedRaw' (click)='webusb.requestDevice()'>
+            Not connected
+            <span class='material-icons'>usb_off</span>
+        </div>
+        <div *ngIf='webusb.isConnectedRaw' class='active' (click)='showDialogForget()'>
+            {{webusb.device.productName}}
+            <span class='material-icons'>usb</span>
+        </div>
+    </div>
 </div>
+
+<dialog id='dialog-forget'>
+    <h3>Unpair controller</h3>
+    <div>
+        Do you want this app to disconnect and forget the currently connected controller?<br/>
+        ({{webusb.device?.manufacturerName}} {{webusb.device?.productName}})
+    </div>
+    <div class='buttons'>
+        <button (click)='hideDialogForget()' class='flat'>Cancel</button>
+        <button (click)='hideDialogForget() && webusb.forgetDevice()'>Unpair</button>
+    </div>
+</dialog>

@@ -26,6 +26,7 @@ export class WebusbService {
   device: any = null
   logs: string[] = []
   isConnected: boolean = false
+  isConnectedRaw: boolean = false
   pending: AsyncSubject<CtrlConfigGive> | undefined
 
   constructor(
@@ -35,7 +36,7 @@ export class WebusbService {
     this.browserIsCompatible = this.checkBrowser()
     if (!this.browserIsCompatible) return
     navigator.usb.getDevices().then((devices) => {
-      console.log('Devices found:', devices.length)
+      console.log('Devices found:', devices)
       this.logs = []
       if (!devices.length) return
       this.device = devices[0]
@@ -51,6 +52,7 @@ export class WebusbService {
       console.log('Device disconnected')
       this.logs = []
       this.device = null
+      this.isConnectedRaw = false
       delay(2000).then(() => {
         // Do not flicker while restarting the controller.
         if (!this.device) this.isConnected = false
@@ -68,7 +70,14 @@ export class WebusbService {
       {vendorId:0x045E, productId:0x028E},
     ]
     this.device = await navigator.usb.requestDevice({filters});
+    console.log('Request device:', this.device)
     await this.openDevice()
+  }
+
+  async forgetDevice() {
+    this.device.forget()
+    // Nuclear option since otherwise the same device cannot be requested again.
+    window.location.reload()
   }
 
   async openDevice() {
@@ -81,6 +90,7 @@ export class WebusbService {
     console.log('Interface claimed')
     await this.sendEmpty()
     this.isConnected = true;
+    this.isConnectedRaw = true;
     this.listen()
   }
 

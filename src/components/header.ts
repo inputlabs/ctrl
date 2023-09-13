@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
+import { WebusbService } from '../services/webusb'
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,12 @@ import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/ro
 })
 export class HeaderComponent {
   route: string = ''
+  dialogForget: any
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    public webusb: WebusbService,
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.route = event.urlAfterRedirects
@@ -26,5 +31,15 @@ export class HeaderComponent {
 
   routeIsTools() {
     return this.route == '/' || this.route.startsWith('/tools')  ? 'active' : ''
+  }
+
+  showDialogForget() {
+    this.dialogForget = document.getElementById('dialog-forget')
+    this.dialogForget.showModal()
+  }
+
+  hideDialogForget(): boolean {
+    this.dialogForget.close()
+    return true
   }
 }

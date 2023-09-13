@@ -7,13 +7,13 @@
     color: white
     min-height: 100px
     font-family: Poppins
-    font-size: 24px
-    font-weight: bold
 
     .logo
         min-width: 300px
         display: flex
         flex-direction: row
+        font-size: 24px
+        font-weight: bold
         .image
             img
                 margin-top: 14px
@@ -31,8 +31,10 @@
         padding-right: 20px
         .filler
             flex-grow: 1
-        div
+        .tab
             margin-top: 30px
+            font-size: 24px
+            font-weight: bold
             &:first-child
                 margin-left: 40px
             a
@@ -47,5 +49,27 @@
                     color: black
                     border-radius: 5px
                     margin: 0 10px
+
+        .connection
+            display: flex
+            align-items: center
+            margin: 0
+            font-size: 24px
+            font-weight: bold
+            color: hsl(0deg, 0%, 30%)
+            font-size: 20px
+            &>div
+                margin: 0
+                display: flex
+                align-items: center
+                cursor: pointer
+            .material-icons
+                padding-left: 10px
+                padding-right: 10px
+                font-size: 50px
+            .active
+                margin: 0
+                color: $green
+
 
 
