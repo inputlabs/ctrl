@@ -101,11 +101,14 @@ export class WebusbService {
       const ctrl = Ctrl.decode(response.data)
       // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
-      if (ctrl instanceof CtrlProc) this.handleCtrlProc(ctrl)
-      if (ctrl instanceof CtrlConfigGive && this.pending) {
-        this.pending.next(ctrl)
-        this.pending.complete()
-        this.pending = undefined
+      if (ctrl instanceof CtrlConfigGive) {
+        if (this.pending) {
+          this.pending.next(ctrl)
+          this.pending.complete()
+          this.pending = undefined
+        } else {
+          this.handleCtrlGive(ctrl)
+        }
       }
     } catch (error:any) {
       console.warn(error)
@@ -123,9 +126,9 @@ export class WebusbService {
     // console.log(ctrl.logMessage)
   }
 
-  handleCtrlProc(ctrl: CtrlProc) {
-    // Only procedure from controller to app is to "refresh" while tune
-    // settings are being changed directly in the controller.
+  handleCtrlGive(ctrl: CtrlConfigGive) {
+    // If there is no pending receiver for the config change we assume it is a
+    // change made on the controller via shortcuts, and refresh the components.
     const url = this.router.url
     if (url.startsWith('/settings')) {
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {

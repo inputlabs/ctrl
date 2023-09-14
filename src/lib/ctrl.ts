@@ -62,9 +62,6 @@ export class Ctrl {
                 new TextDecoder().decode(data.slice(4, PACKAGE_SIZE))
             )
         }
-        if (data[2] == MessageType.PROC) {
-            return new CtrlProc(data[4])
-        }
         if (data[2] == MessageType.CONFIG_GIVE) {
             return new CtrlConfigGive(data[4], data[5])
         }
