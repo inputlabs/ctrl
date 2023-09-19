@@ -3,12 +3,26 @@
 <hr/>
 
 <h2>Debian / Ubuntu</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum a arcu cursus vitae congue mauris rhoncus aenean. Tortor at risus viverra adipiscing at in tellus integer. Mauris augue neque gravida in. Tristique senectus et netus et. Dui faucibus in ornare quam viverra orci sagittis. Vel pretium lectus quam id</p>
+<p>Create a file with udev rules:</p>
+<span class='code'>sudo touch /etc/udev/rules.d/99-alpakka.rules</span>
+<p>Add 2 lines to the file:</p>
+<span class='code'>{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", MODE="0660", GROUP="plugdev", SYMLINK+="webusb"'}}</span>
+<span class='code'>{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="0170", MODE="0660", GROUP="plugdev", SYMLINK+="webusb"'}}</span>
+<p>Reconnect the controller and verify the rule has been loaded by checking if <span class='code'>/dev/webusb</span> exist.</p>
 <hr/>
 
-<h2>Steam Deck / Arch Linux</h2>
-<p>A diam maecenas sed enim ut sem. Scelerisque fermentum dui faucibus in ornare quam viverra. Nibh mauris cursus mattis molestie a iaculis at erat pellentesque. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Amet mattis vulputate enim nulla aliquet. Eget lorem dolor sed viverra ipsum nunc.</p>
-<p>Sed euismod nisi porta lorem mollis. Diam sit amet nisl suscipit adipiscing bibendum est ultricies integer. Sed egestas egestas fringilla phasellus faucibus. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque</p>
+<h2>Steam Deck</h2>
+<p>Go into desktop mode.</p>
+<p>In the terminal app, set a password for your user:</p>
+<span class='code'>passwd</span>
+<p>Type a new password (it won't be visible while typing). Do not lose this password, you may need in the future and it is not easy to recover!.</p>
+<p>Create a file with udev rules:</p>
+<span class='code'>sudo touch /etc/udev/rules.d/99-alpakka.rules</span>
+<p>Add 2 lines to the file:</p>
+<span class='code'>{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", MODE="0660", GROUP="deck", SYMLINK+="webusb"'}}</span>
+<span class='code'>{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="0170", MODE="0660", GROUP="deck", SYMLINK+="webusb"'}}</span>
+<p>Reconnect the controller and verify the rule has been loaded by checking if <span class='code'>/dev/webusb</span> exist.</p>
+<p>Known issues: The controller has to be connected before starting Chrome/Chromium, if the controller is restarted then the browser must be restarted too. If you are an Arch expert and figure out go to fix this please let us know.</p>
 <hr/>
 
 <h2>Other platforms</h2>
