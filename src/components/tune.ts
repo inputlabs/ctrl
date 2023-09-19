@@ -40,6 +40,8 @@ export class TuneComponent {
   mode: Mode
   title: string = ''
   active: Preset | null = null
+  dialogProtocol: any
+  dialogProtocolConfirmFunc: any
   modes: Modes = {
     protocol: {
       configIndex: ConfigIndex.PROTOCOL,
@@ -101,6 +103,14 @@ export class TuneComponent {
     this.setPresetFromIndex(presetIndex)
   }
 
+  setPresetConfirm(preset: Preset) {
+    if (this.mode.configIndex == ConfigIndex.PROTOCOL) {
+      this.dialogProtocolConfirmFunc = () => this.setPreset(preset)
+      this.showDialogProtocol()
+    }
+    else this.setPreset(preset)
+  }
+
   async setPreset(preset: Preset) {
     const presetIndex = await this.webusb.setConfig(this.mode.configIndex, preset.index)
     this.setPresetFromIndex(presetIndex)
@@ -112,5 +122,19 @@ export class TuneComponent {
 
   isActive(preset: Preset) {
     return preset === this.active ? 'selected' : ''
+  }
+
+  showDialogProtocol() {
+    this.dialogProtocol = document.getElementById('dialog-protocol')
+    this.dialogProtocol.showModal()
+  }
+
+  hideDialogProtocol(): boolean {
+    this.dialogProtocol.close()
+    return true
+  }
+
+  confirmDialogProtocol() {
+    this.dialogProtocolConfirmFunc()
   }
 }

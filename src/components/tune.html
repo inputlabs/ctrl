@@ -15,7 +15,7 @@
             class='preset'
             *ngFor='let preset of mode?.presets'
             >
-            <div class='button' [ngClass]='isActive(preset)' (click)='setPreset(preset)'>
+            <div class='button' [ngClass]='isActive(preset)' (click)='setPresetConfirm(preset)'>
                 <div class='name'>{{preset.name}}</div>
                 <div class='desc'>{{preset.desc}}</div>
             </div>
@@ -24,8 +24,13 @@
     </div>
 </div>
 
-<!-- <div class='panel'>
-    <h2>Edit values</h2>
-    <div *ngIf='mode.url=="protocol"'>Protocol values cannot be modified</div>
-    <div *ngIf='mode.url!="protocol"'>Coming soon</div>
-</div> -->
+<dialog id='dialog-protocol'>
+    <h3>Protocol change</h3>
+    <div>
+        The controller will restart using a different protocol, you may have to pair the controller again, or revert back to the current protocol via button shotcuts.
+    </div>
+    <div class='buttons'>
+        <button (click)='hideDialogProtocol()' class='flat'>Cancel</button>
+        <button (click)='hideDialogProtocol() && confirmDialogProtocol()'>Change</button>
+    </div>
+</dialog>
