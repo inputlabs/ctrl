@@ -54,8 +54,8 @@
 <dialog id='dialog-forget'>
     <h3>Unpair controller</h3>
     <div>
-        Do you want this app to disconnect and forget the currently connected controller?<br/>
-        ({{webusb.device?.manufacturerName}} {{webusb.device?.productName}})
+        The current controller ({{webusb.device?.manufacturerName}} {{webusb.device?.productName}})
+        will be disconnected and removed from the list of paired devices.
     </div>
     <div class='buttons'>
         <button (click)='hideDialogForget()' class='flat'>Cancel</button>
