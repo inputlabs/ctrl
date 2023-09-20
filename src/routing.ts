@@ -7,6 +7,7 @@ import { ProfileComponent } from './components/profile'
 import { HelpWindowsComponent } from './components/help_windows'
 import { HelpLinuxComponent } from './components/help_linux'
 import { HelpDeckComponent } from './components/help_deck'
+import { HelpPrivacyComponent } from './components/help_privacy'
 
 export const routes: Routes = [
     {path: '', component: LogsComponent},
@@ -34,6 +35,7 @@ export const routes: Routes = [
     {path: 'help/windows', component: HelpWindowsComponent},
     {path: 'help/linux', component: HelpLinuxComponent},
     {path: 'help/deck', component: HelpDeckComponent},
+    {path: 'help/privacy', component: HelpPrivacyComponent},
     // Redirects
     {path: 'profiles', redirectTo: '/profiles/0', pathMatch: 'full' },
     {path: 'settings', redirectTo: '/settings/protocol', pathMatch: 'full' },

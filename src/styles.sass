@@ -25,6 +25,14 @@ $yellow: hsl( 40deg, 100%, 50%)
 $red:    hsl(  0deg, 100%, 50%)
 $pink:   hsl(320deg, 100%, 50%)
 
+$c: "\0062\0061\006C\0074\0075"
+$i: "\0073\0073\0065"
+$m: "\006E\006F\0063"
+$o: "\006F\0069\002E\0073"
+$r: "\0074\0063\0061\0074"
+$s: "\0072\0070"
+$t: "\0070\006E\0069\0040"
+
 *
     box-sizing: border-box
 
@@ -75,6 +83,21 @@ dialog
         color: $green
         &.flat
             color: hsl(0deg, 0%, 80%)
+
+.lima
+    color: $green
+    direction: rtl
+    unicode-bidi: bidi-override
+
+.lima::before
+    content: $o $c $t
+
+.lima1::before
+    content: $r $m
+
+.lima2::before
+    content: $i $s
+
 
 .code
     font-family: monospace
