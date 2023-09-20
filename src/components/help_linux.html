@@ -1,0 +1,38 @@
+<h2>Setup in Debian / Ubuntu</h2>
+<hr/>
+
+<h3>Compatible browsers</h3>
+<ul>
+    <li>Chrome / Chromium.</li>
+</ul>
+<hr/>
+
+<h3>Protocol mode</h3>
+<ul>
+    <li>Controller must be either in <span class='code'>Linux XInput</span> mode, or in <span class='code'>Generic</span> mode.</li>
+    <li>Each mode have to be paired individually.</li>
+</ul>
+<hr/>
+
+<h3>OS configuration</h3>
+<p>Create a file with udev rules:</p>
+<p><span class='code'>sudo nano /etc/udev/rules.d/99-alpakka.rules</span></p>
+<div class='code'>
+    <pre>
+{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", MODE="0660", GROUP="plugdev", SYMLINK+="webusb"'}}
+{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="0170", MODE="0660", GROUP="plugdev", SYMLINK+="webusb"'}}</pre>
+</div>
+<p>Reconnect the controller and verify the rule has been loaded by checking if <span class='code'>/dev/webusb</span> exist.</p>
+<p>If Chromium was installed using <span class='code'>Snap</span>, it may require additional permissions to access USB devices:</p>
+<span class='code'>snap connect chromium:raw-usb</span>
+<hr/>
+
+<h3>Pair controller</h3>
+<p>Click this button and select <span class='code'>Alpakka</span> or <span class='code'>Kapybara</span> from the list.</p>
+<button class='buttonBig' (click)='webusb.requestDevice()'>Pair a new controller</button>
+<hr/>
+
+<h3>Known issues</h3>
+<p>The controller may have to be <span class='code'>unplugged and plugged at least once</span> after opening the browser.</p>
+
+

@@ -4,7 +4,9 @@ import { LogsComponent } from './components/logs'
 import { WipComponent } from './components/wip'
 import { TuneComponent } from './components/tune'
 import { ProfileComponent } from './components/profile'
-import { HelpWebusbComponent } from './components/help_webusb'
+import { HelpWindowsComponent } from './components/help_windows'
+import { HelpLinuxComponent } from './components/help_linux'
+import { HelpDeckComponent } from './components/help_deck'
 
 export const routes: Routes = [
     {path: '', component: LogsComponent},
@@ -29,9 +31,11 @@ export const routes: Routes = [
     {path: 'settings/mouse_sens', component: TuneComponent, data: {mode:'mouse_sens'}},
     {path: 'settings/advanced', component: WipComponent},
     {path: 'settings/app', component: WipComponent},
-    {path: 'help/webusb', component: HelpWebusbComponent},
+    {path: 'help/windows', component: HelpWindowsComponent},
+    {path: 'help/linux', component: HelpLinuxComponent},
+    {path: 'help/deck', component: HelpDeckComponent},
     // Redirects
     {path: 'profiles', redirectTo: '/profiles/0', pathMatch: 'full' },
     {path: 'settings', redirectTo: '/settings/protocol', pathMatch: 'full' },
-    {path: 'help', redirectTo: '/help/webusb', pathMatch: 'full' },
+    {path: 'help', redirectTo: '/help/windows', pathMatch: 'full' },
   ]

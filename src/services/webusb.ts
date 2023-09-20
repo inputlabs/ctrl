@@ -92,6 +92,7 @@ export class WebusbService {
     this.isConnected = true;
     this.isConnectedRaw = true;
     this.listen()
+    if (this.router.url.startsWith('/help')) this.router.navigate([''])
   }
 
   async listen() {

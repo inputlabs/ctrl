@@ -1,0 +1,43 @@
+<h2>Setup in Steam Deck / Arch Linux</h2>
+<hr/>
+
+<h3>Compatible browsers</h3>
+<ul>
+    <li>Chrome / Chromium.</li>
+</ul>
+<hr/>
+
+<h3>Protocol mode</h3>
+<ul>
+    <li>Controller must be either in <span class='code'>Linux Xinput</span> mode, or in <span class='code'>Generic</span> mode.</li>
+    <li>Each mode have to be paired individually.</li>
+</ul>
+<hr/>
+
+<h3>OS configuration</h3>
+<p>Go into desktop mode, in the terminal app set a password for your user:</p>
+<span class='code'>passwd</span>
+<p>Type a new password (it won't be visible while typing).</p>
+
+<p>Create a file with udev rules:</p>
+<p><span class='code'>sudo nano /etc/udev/rules.d/99-alpakka.rules</span></p>
+<div class='code'>
+    <pre>
+{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", MODE="0660", GROUP="deck", SYMLINK+="webusb"'}}
+{{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="0170", MODE="0660", GROUP="deck", SYMLINK+="webusb"'}}</pre>
+</div>
+<p>Reconnect the controller and verify the rule has been loaded by checking if <span class='code'>/dev/webusb</span> exist.</p>
+<hr/>
+
+<h3>Pair controller</h3>
+<p>Click this button and select <span class='code'>Alpakka</span> or <span class='code'>Kapybara</span> from the list.</p>
+<button class='buttonBig' (click)='webusb.requestDevice()'>Pair a new controller</button>
+<hr/>
+
+<h3>Known issues</h3>
+<ul>
+    <li>The controller has to be connected <span class='code'>before opening the browser</span>.</li>
+    <li>If the controller is restarted, the browser must be re-opened too.</li>
+</ul>
+
+
