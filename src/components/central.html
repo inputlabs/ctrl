@@ -4,7 +4,7 @@
 </router-outlet>
 
 <div
-    *ngIf='mustHaveController() && webusb.browserIsCompatible && !webusb.isConnected'
+    *ngIf='mustHaveController() && webusb.browserIsCompatible && !webusb.isConnected && !webusb.failed'
     class='centered'
     >
     <div class='widget'>
@@ -12,6 +12,20 @@
             <span class='material-icons'>sports_esports</span>
         </div>
         <div class='title'>Controller not found</div>
+        <button routerLink='help/windows'>How to setup</button>
+    </div>
+</div>
+
+<div
+    *ngIf='mustHaveController() && webusb.browserIsCompatible && !webusb.isConnected && webusb.failed'
+    class='centered'
+    >
+    <div class='widget'>
+        <div class='icon'>
+            <span class='material-icons'>heart_broken</span>
+        </div>
+        <div class='title'>There was a problem</div>
+        <div><span class='code slim'>{{webusb.failedError}}</span></div>
         <button routerLink='help/windows'>How to setup</button>
     </div>
 </div>

@@ -25,9 +25,11 @@ export class WebusbService {
   browserIsCompatible = false
   device: any = null
   logs: string[] = []
-  isConnected: boolean = false
-  isConnectedRaw: boolean = false
-  pending: AsyncSubject<CtrlConfigGive> | undefined
+  isConnected = false
+  isConnectedRaw = false
+  failed = false
+  failedError?: Error
+  pending?: AsyncSubject<CtrlConfigGive>
 
   constructor(
     private router: Router,
@@ -81,18 +83,26 @@ export class WebusbService {
   }
 
   async openDevice() {
-    (<any>window).device = this.device
-    await this.device.open()
-    console.log('Device opened')
-    await this.device.selectConfiguration(1)
-    console.log('Configuration selected')
-    await this.device.claimInterface(1)
-    console.log('Interface claimed')
-    await this.sendEmpty()
-    this.isConnected = true;
-    this.isConnectedRaw = true;
+    try {
+      this.failed = false;
+      (<any>window).device = this.device
+      await this.device.open()
+      console.log('Device opened')
+      await this.device.selectConfiguration(1)
+      console.log('Configuration selected')
+      await this.device.claimInterface(1)
+      console.log('Interface claimed')
+      await this.sendEmpty()
+      this.isConnected = true;
+      this.isConnectedRaw = true;
+    } catch (error) {
+      this.failed = true
+      this.failedError = error as Error
+      throw error
+    } finally {
+      if (this.router.url.startsWith('/help')) this.router.navigate([''])
+    }
     this.listen()
-    if (this.router.url.startsWith('/help')) this.router.navigate([''])
   }
 
   async listen() {
