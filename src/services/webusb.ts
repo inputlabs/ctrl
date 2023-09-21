@@ -66,6 +66,14 @@ export class WebusbService {
     return !!navigator.usb
   }
 
+  getFailedHint() {
+    if (this.failedError?.message.includes('Access')) {
+      return 'Missing Udev rules?'
+    } else {
+      return 'Try re-plugging the controller.'
+    }
+  }
+
   async requestDevice() {
     const filters = [
       {vendorId:0x0170},
