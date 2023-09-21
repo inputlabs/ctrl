@@ -1,5 +1,7 @@
-import { Routes } from '@angular/router'
+// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (C) 2023, Input Labs Oy.
 
+import { Routes } from '@angular/router'
 import { LogsComponent } from './components/logs'
 import { WipComponent } from './components/wip'
 import { TuneComponent } from './components/tune'

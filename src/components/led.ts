@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (C) 2023, Input Labs Oy.
+
 import { Component, Input, ElementRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
 

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (C) 2023, Input Labs Oy.
+
 /// <reference types="w3c-web-usb" />
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
