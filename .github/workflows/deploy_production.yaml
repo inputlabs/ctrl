@@ -11,8 +11,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'npm'
-      - run: sed -i "s|0.0.0|${GITHUB_REF}" src/lib/version.ts
-      - run: sed -i "s|abcdef0123456789abcd|${GITHUB_SHA}" src/lib/version.ts
+      - run: |
+          echo -e "\
+          export const version = '${GITHUB_REF}'
+          export const commit = '${GITHUB_SHA}'
+          " > src/lib/version.ts
       - run: npm ci
       - run: npm install @angular/cli
       - run: npx ng build
