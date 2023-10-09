@@ -4,6 +4,8 @@
 @use '../styles' as *
 
 :host
+    display: flex
+    flex-direction: column
     min-width: 300px
     max-width: 300px
     padding-top: 10px
@@ -27,3 +29,12 @@
             background-color: hsl(0deg, 0%, 15%)
             color: $green
             border-radius: 5px
+
+    .spacer
+        flex-grow: 1
+
+    .version
+        font-family: monospace
+        font-size: 14px
+        padding: 30px
+        color: hsl(0deg, 0%, 35%)

@@ -1,9 +1,7 @@
 name: Deploy production
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy_production:
@@ -14,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'npm'
+      - run: sed -i "s/0.0.0/${GITHUB_REF}" src/lib/version.ts
+      - run: sed -i "s/abcdef0123456789abcd/${GITHUB_SHA}" src/lib/version.ts
       - run: npm ci
       - run: npm install @angular/cli
       - run: npx ng build
