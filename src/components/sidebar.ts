@@ -23,8 +23,8 @@ export class SidebarComponent {
   route: string = ''
   ledColorOff = '#555'
   LED = LED
-  version = version
-  commit = commit
+  version = version.split('/').pop()
+  commit = commit.slice(0, 20)
 
   constructor(
     private router: Router
