@@ -15,7 +15,7 @@ jobs:
         with:
           cache: 'npm'
       - run: npm ci
-      - run: npm install @angular/cli @angular/compiler-cli
+      - run: npm install @angular/compiler-cli@^16.2.0
       - run: ng build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
