@@ -18,13 +18,21 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='presets'>
         <div
             class='preset'
-            *ngFor='let preset of mode?.presets'
+            *ngFor='let preset of getPresets()'
             >
             <div class='button' [ngClass]='isActive(preset)' (click)='setPresetConfirm(preset)'>
                 <div class='name'>{{preset.name}}</div>
                 <div class='desc'>{{preset.desc}}</div>
             </div>
-            <div class='value' *ngIf='preset.value' data-tooltip='Not editable yet'>{{preset.value}}</div>
+            <input
+                type='text'
+                class='value'
+                [ngClass]="preset.invalid ? 'invalid' : ''"
+                *ngIf='preset.value'
+                value={{mode.format(preset.value)}}
+                (input)='setValues(preset, $event)'
+                [readonly]='!mode.editable'
+            />
         </div>
     </div>
 </div>

@@ -16,6 +16,10 @@ interface Modes  {
 interface Mode {
   url: string,
   title: string,
+  editable: boolean,
+  format: (value: any) => string,
+  parse: (value: string) => number | null,
+  displayReversed: boolean,
   configIndex: ConfigIndex,
   presets: Preset[]
 }
@@ -24,7 +28,8 @@ interface Preset {
   index: number,
   name: string,
   desc: string,
-  value: string,
+  value?: string,
+  invalid?: boolean,
   leds: number,
   blink: number,
 }
@@ -50,42 +55,78 @@ export class TuneComponent {
       configIndex: ConfigIndex.PROTOCOL,
       url: 'protocol',
       title: 'Communication protocol',
+      displayReversed: false,
+      editable: false,
+      format: (x) => `${x}`,
+      parse: (x) => Number(x),
       presets: [
-        {index: 0, name: 'Windows', desc:'', value:'XInput', leds:0b0001, blink:0b1000},
-        {index: 1, name: 'Linux', desc:'and Steam Deck', value:'XPad', leds:0b0001, blink:0b0100},
-        {index: 2, name: 'Generic', desc:'aka DirectInput', value:'HID', leds:0b0001, blink:0b0010},
+        {index: 0, name: 'Windows', desc:'',                value:'XInput', leds:0b0001, blink:0b1000},
+        {index: 1, name: 'Linux',   desc:'and Steam Deck',  value:'XPad',   leds:0b0001, blink:0b0100},
+        {index: 2, name: 'Generic', desc:'aka DirectInput', value:'HID',    leds:0b0001, blink:0b0010},
       ]
     },
     touch_sens: {
       configIndex: ConfigIndex.SENS_TOUCH,
       url: 'touch_sens',
       title: 'Touch sensitivity',
+      displayReversed: true,
+      editable: true,
+      format: (x) => `${x} μs`,
+      parse: (x) => {
+        const re = RegExp('^([0-9]{1,3}) μs$').exec(x)
+        if (re) {
+          let value = Number(re[1])
+          if (value < 256) return value
+        }
+        return null
+      },
       presets: [
-        {index: 4, name: 'Ultra', desc: 'Very responsive', value: '10 μs', leds:0b0010, blink:0b0001},
-        {index: 3, name: 'High', desc: '', value: '15 μs', leds:0b0010, blink:0b1001},
-        {index: 2, name: 'Mid', desc: '', value: '25 μs', leds:0b0010, blink:0b1000},
-        {index: 1, name: 'Low', desc: 'Very numb', value: '40 μs', leds:0b0010, blink:0b1100},
-        {index: 0, name: 'Auto', desc: 'Self adjusting', value: '', leds:0b0010, blink:0b0100},
+        {index: 0, name: 'Auto',  desc: 'Self adjusting',  leds:0b0010, blink:0b0100},
+        {index: 1, name: 'Low',   desc: 'Less responsive', leds:0b0010, blink:0b1100},
+        {index: 2, name: 'Mid',   desc: '',                leds:0b0010, blink:0b1000},
+        {index: 3, name: 'High',  desc: '',                leds:0b0010, blink:0b1001},
+        {index: 4, name: 'Ultra', desc: 'More responsive', leds:0b0010, blink:0b0001},
       ]
     },
     mouse_sens: {
       configIndex: ConfigIndex.SENS_MOUSE,
       url: 'mouse_sens',
       title: 'Mouse sensitivity',
+      displayReversed: true,
+      editable: true,
+      format: (x) => `${x}`,
+      parse: (x) => {
+        const re = RegExp('^([0-9]{1,3})$').exec(x)
+        if (re) {
+          let value = Number(re[1])
+          if (value < 256) return value
+        }
+        return null
+      },
       presets: [
-        {index: 2, name: 'High', desc: '4K', value: '2x', leds:0b0100, blink:0b0010},
-        {index: 1, name: 'Mid', desc: '1440p', value: '1.5x', leds:0b0100, blink:0b0001},
-        {index: 0, name: 'Low', desc: '1080p', value: '1x', leds:0b0100, blink:0b1000},
+        {index: 0, name: 'Low',  desc: '1080p', leds:0b0100, blink:0b1000},
+        {index: 1, name: 'Mid',  desc: '1440p', leds:0b0100, blink:0b0001},
+        {index: 2, name: 'High', desc: '4K',    leds:0b0100, blink:0b0010},
       ]
     },
     deadzone: {
       configIndex: ConfigIndex.DEADZONE,
       url: 'deadzone',
       title: 'Thumbstick deadzone',
+      displayReversed: true,
+      editable: true,
+      format: (x) => `${x} %`,
+      parse: (x) => {
+        const re = RegExp('^([0-9]{1,2}) %$').exec(x)
+        if (re) {
+          return Number(re[1])
+        }
+        return null
+      },
       presets: [
-        {index: 2, name: 'High', desc: 'Bigger center radius', value: '15%', leds:0b1000, blink:0b0001},
-        {index: 1, name: 'Mid', desc: '', value: '10%', leds:0b1000, blink:0b0010},
-        {index: 0, name: 'Low', desc: 'Smaller center radius', value: '7%', leds:0b1000, blink:0b0100},
+        {index: 0, name: 'Low',  desc: 'Smaller center radius', leds:0b1000, blink:0b0100},
+        {index: 1, name: 'Mid',  desc: '',                      leds:0b1000, blink:0b0010},
+        {index: 2, name: 'High', desc: 'Bigger center radius',  leds:0b1000, blink:0b0001},
       ]
     }
   }
@@ -101,8 +142,18 @@ export class TuneComponent {
     })
   }
 
+  getPresets() {
+    if (this.mode.displayReversed) return this.mode.presets.reverse()
+    else return this.mode.presets
+  }
+
   async getPreset() {
-    const presetIndex = await this.webusb.getConfig(this.mode.configIndex)
+    const [presetIndex, values] = await this.webusb.getConfig(this.mode.configIndex)
+    if (this.mode.url != 'protocol') {
+      for(let i in Array.from(Array(5))) {
+        this.mode.presets[i] && (this.mode.presets[i].value = values[i])
+      }
+    }
     this.setPresetFromIndex(presetIndex)
   }
 
@@ -115,12 +166,27 @@ export class TuneComponent {
   }
 
   async setPreset(preset: Preset) {
-    const presetIndex = await this.webusb.setConfig(this.mode.configIndex, preset.index)
+    const presetIndex = await this.webusb.setConfig(
+      this.mode.configIndex,
+      preset.index,
+      this.mode.presets.map((preset) => Number(preset.value)),
+    )
     this.setPresetFromIndex(presetIndex)
   }
 
   setPresetFromIndex(index: number) {
     this.active = this.mode.presets.filter((preset) => preset.index == index).pop() as Preset
+  }
+
+  setValues(preset:Preset, event: any) {
+    const value = this.mode.parse(event.target.value)
+    if (value === null) {
+      preset.invalid = true
+      return
+    }
+    preset.invalid = false
+    preset.value = value.toString()
+    this.setPreset(preset)
   }
 
   isActive(preset: Preset) {
