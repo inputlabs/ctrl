@@ -5,6 +5,7 @@ import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
 import { LedComponent, LED } from './led'
+import { version, commit } from '../lib/version'
 
 @Component({
   selector: 'app-sidebar',
@@ -22,6 +23,8 @@ export class SidebarComponent {
   route: string = ''
   ledColorOff = '#555'
   LED = LED
+  version = version.split('/').pop()
+  commit = commit.slice(0, 12)
 
   constructor(
     private router: Router
