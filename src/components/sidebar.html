@@ -10,116 +10,116 @@ Copyright (C) 2023, Input Labs Oy.
         [routerLinkActiveOptions]='{exact: true}'
         >
         <span class='material-icons'>terminal</span>
-        Logs and commands
+        <div>Logs and commands</div>
     </a>
     <a routerLink='tools/tester' routerLinkActive='active'>
         <span class='material-icons'>sports_esports</span>
-        Output tester
+        <div>Output tester</div>
     </a>
     <a routerLink='tools/fw_update' routerLinkActive='active'>
         <span class='material-icons'>install_mobile</span>
-        Firmware update
+        <div>Firmware update</div>
     </a>
 </div>
 
 <div *ngIf='this.isProfiles()'>
     <a routerLink='profiles/0' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.ALL'></app-led>
-        Home
+        <div>Home</div>
     </a>
     <a routerLink='profiles/1' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP'></app-led>
-        FPS Fusion
+        <div>FPS Fusion</div>
     </a>
     <a routerLink='profiles/2' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT'></app-led>
-        Racing
+        <div>Racing</div>
     </a>
     <a routerLink='profiles/3' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.DOWN'></app-led>
-        Console
+        <div>Console</div>
     </a>
     <a routerLink='profiles/4' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.LEFT'></app-led>
-        Desktop
+        <div>Desktop</div>
     </a>
     <a routerLink='profiles/5' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP+LED.LEFT+LED.RIGHT'></app-led>
-        FPS WASD
+        <div>FPS WASD</div>
     </a>
     <a routerLink='profiles/6' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT+LED.UP+LED.DOWN'></app-led>
-        Flight
+        <div>Flight</div>
     </a>
     <a routerLink='profiles/7' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.DOWN+LED.LEFT+LED.RIGHT'></app-led>
-        Console legacy
+        <div>Console legacy</div>
     </a>
     <a routerLink='profiles/8' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.LEFT+LED.DOWN+LED.UP'></app-led>
-        RTS
+        <div>RTS</div>
     </a>
     <a routerLink='profiles/9' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP+LED.RIGHT'></app-led>
-        Custom 1
+        <div>Custom 1</div>
     </a>
     <a routerLink='profiles/10' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT+LED.DOWN'></app-led>
-        Custom 2
+        <div>Custom 2</div>
     </a>
     <a routerLink='profiles/11' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.DOWN+LED.LEFT'></app-led>
-        Custom 3
+        <div>Custom 3</div>
     </a>
     <a routerLink='profiles/12' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.LEFT+LED.UP'></app-led>
-        Custom 4
+        <div>Custom 4</div>
     </a>
 </div>
 
 <div *ngIf='this.isSettings()'>
     <a routerLink='settings/protocol' routerLinkActive='active'>
         <span class='material-icons'>usb</span>
-        Protocol
+        <div>Protocol</div>
     </a>
     <a routerLink='settings/touch_sens' routerLinkActive='active'>
         <span class='material-icons'>touch_app</span>
-        Touch sensitivity
+        <div>Touch sensitivity</div>
     </a>
     <a routerLink='settings/mouse_sens' routerLinkActive='active'>
         <span class='material-icons'>mouse</span>
-        Mouse sensitivity
+        <div>Mouse sensitivity</div>
     </a>
     <a routerLink='settings/deadzone' routerLinkActive='active'>
         <span class='material-icons'>adjust</span>
-        Thumbstick deadzone
+        <div>Thumbstick deadzone</div>
     </a>
     <a routerLink='settings/advanced' routerLinkActive='active'>
         <span class='material-icons'>tune</span>
-        Advanced
+        <div>Advanced</div>
     </a>
     <a routerLink='settings/app' routerLinkActive='active'>
         <span class='material-icons'>screenshot_monitor</span>
-        App settings
+        <div>App settings</div>
     </a>
 </div>
 
 <div *ngIf='this.isHelp()'>
     <a routerLink='help/windows' routerLinkActive='active'>
         <span class='material-icons'>laptop</span>
-        Setup in Windows
+        <div>Setup in Windows</div>
     </a>
     <a routerLink='help/linux' routerLinkActive='active'>
         <span class='material-icons'>laptop</span>
-        Setup in Linux
+        <div>Setup in Linux</div>
     </a>
     <a routerLink='help/deck' routerLinkActive='active'>
         <span class='material-icons'>stay_current_landscape</span>
-        Setup in Steam Deck
+        <div>Setup in Steam Deck</div>
     </a>
     <a routerLink='help/privacy' routerLinkActive='active'>
         <span class='material-icons'>verified_user</span>
-        Privacy policy
+        <div>Privacy policy</div>
     </a>
 </div>
 
