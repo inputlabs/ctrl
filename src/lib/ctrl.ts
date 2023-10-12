@@ -56,20 +56,20 @@ export class Ctrl {
     }
 
     static decode(data: any) {
+        // See: https://github.com/inputlabs/alpakka_firmware/blob/main/docs/ctrl_protocol.md
         data = new Uint8Array(data.buffer)
-        // console.log(data)
         if (data[2] == MessageType.LOG) {
             return new CtrlLog(
-                data[0],
-                data[1],
-                new TextDecoder().decode(data.slice(4, PACKAGE_SIZE))
+                data[0],  // ProtocolVersion.
+                data[1],  // DeviceId.
+                new TextDecoder().decode(data.slice(4, PACKAGE_SIZE))  // Log message.
             )
         }
         if (data[2] == MessageType.CONFIG_SHARE) {
             return new CtrlConfigShare(
-                data[4],
-                data[5],
-                [data[6], data[7], data[8], data[9], data[10]],
+                data[4],  // ConfigIndex.
+                data[5],  // Preset.
+                [data[6], data[7], data[8], data[9], data[10]],  // Values.
             )
         }
         return false

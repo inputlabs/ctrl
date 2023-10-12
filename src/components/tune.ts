@@ -75,7 +75,7 @@ export class TuneComponent {
       parse: (x) => {
         const re = RegExp('^([0-9]{1,3}) μs$').exec(x)
         if (re) {
-          let value = Number(re[1])
+          let value = Number(re[1])  // Group 1.
           if (value < 256) return value
         }
         return null
@@ -98,7 +98,7 @@ export class TuneComponent {
       parse: (x) => {
         const re = RegExp('^([0-9]{1,3})$').exec(x)
         if (re) {
-          let value = Number(re[1])
+          let value = Number(re[1])  // Group 1.
           if (value < 256) return value
         }
         return null
@@ -119,7 +119,7 @@ export class TuneComponent {
       parse: (x) => {
         const re = RegExp('^([0-9]{1,2}) %$').exec(x)
         if (re) {
-          return Number(re[1])
+          return Number(re[1])  // Group 1.
         }
         return null
       },
@@ -148,13 +148,13 @@ export class TuneComponent {
   }
 
   async getPreset() {
-    const [presetIndex, values] = await this.webusb.getConfig(this.mode.configIndex)
+    const presetWithValues = await this.webusb.getConfig(this.mode.configIndex)
     if (this.mode.url != 'protocol') {
-      for(let i in Array.from(Array(5))) {
-        this.mode.presets[i] && (this.mode.presets[i].value = values[i])
+      for(let [index, preset] of  this.mode.presets.entries()) {
+        preset.value = presetWithValues.values[index].toString()
       }
     }
-    this.setPresetFromIndex(presetIndex)
+    this.setPresetFromIndex(presetWithValues.presetIndex)
   }
 
   setPresetConfirm(preset: Preset) {

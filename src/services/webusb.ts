@@ -21,6 +21,11 @@ import {
 const ADDR_IN = 3
 const ADDR_OUT = 4
 
+interface PresetWithValues {
+  presetIndex: number,
+  values: number[],
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -194,14 +199,14 @@ export class WebusbService {
     await this.device.transferOut(ADDR_OUT, ctrl.encode())
   }
 
-  async getConfig(index: ConfigIndex): Promise<any> {
+  async getConfig(index: ConfigIndex): Promise<PresetWithValues> {
     this.pending = new AsyncSubject()
     const ctrlOut = new CtrlConfigGet(index)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
       this.pending?.subscribe({
         next: (ctrlIn) => {
-          resolve([ctrlIn.preset, ctrlIn.values])
+          resolve({presetIndex: ctrlIn.preset, values: ctrlIn.values})
         }
       })
     })
