@@ -12,7 +12,7 @@ enum MessageType {
     PROC,
     CONFIG_GET,
     CONFIG_SET,
-    CONFIG_GIVE,
+    CONFIG_SHARE,
 }
 
 export enum Proc {
@@ -56,17 +56,21 @@ export class Ctrl {
     }
 
     static decode(data: any) {
+        // See: https://github.com/inputlabs/alpakka_firmware/blob/main/docs/ctrl_protocol.md
         data = new Uint8Array(data.buffer)
-        // console.log(data)
         if (data[2] == MessageType.LOG) {
             return new CtrlLog(
-                data[0],
-                data[1],
-                new TextDecoder().decode(data.slice(4, PACKAGE_SIZE))
+                data[0],  // ProtocolVersion.
+                data[1],  // DeviceId.
+                new TextDecoder().decode(data.slice(4, PACKAGE_SIZE))  // Log message.
             )
         }
-        if (data[2] == MessageType.CONFIG_GIVE) {
-            return new CtrlConfigGive(data[4], data[5])
+        if (data[2] == MessageType.CONFIG_SHARE) {
+            return new CtrlConfigShare(
+                data[4],  // ConfigIndex.
+                data[5],  // Preset.
+                [data[6], data[7], data[8], data[9], data[10]],  // Values.
+            )
         }
         return false
     }
@@ -101,19 +105,21 @@ export class CtrlConfigGet extends Ctrl {
 export class CtrlConfigSet extends Ctrl {
     constructor(
         cfgIndex: ConfigIndex,
-        public value: number,
+        public preset: number,
+        public values: number[],
     ) {
-        const payload = [cfgIndex, value]
-        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SET, 2, payload)
+        const payload = [cfgIndex, preset, ...values]
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SET, 7, payload)
     }
 }
 
-export class CtrlConfigGive extends Ctrl {
+export class CtrlConfigShare extends Ctrl {
     constructor(
         public cfgIndex: ConfigIndex,
-        public value: number,
+        public preset: number,
+        public values: number[],
     ) {
-        const payload = [cfgIndex, value]
-        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GIVE, 2, payload)
+        const payload = [cfgIndex, preset, values]
+        super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SHARE, 7, payload)
     }
 }

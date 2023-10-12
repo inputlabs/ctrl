@@ -15,11 +15,16 @@ import {
   PACKAGE_SIZE,
   CtrlConfigGet,
   CtrlConfigSet,
-  CtrlConfigGive,
+  CtrlConfigShare,
 } from '../lib/ctrl'
 
 const ADDR_IN = 3
 const ADDR_OUT = 4
+
+interface PresetWithValues {
+  presetIndex: number,
+  values: number[],
+}
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +37,7 @@ export class WebusbService {
   isConnectedRaw = false
   failed = false
   failedError?: Error
-  pending?: AsyncSubject<CtrlConfigGive>
+  pending?: AsyncSubject<CtrlConfigShare>
 
   constructor(
     private router: Router,
@@ -123,13 +128,14 @@ export class WebusbService {
       const ctrl = Ctrl.decode(response.data)
       // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
-      if (ctrl instanceof CtrlConfigGive) {
+      if (ctrl instanceof CtrlConfigShare) {
+        console.log(ctrl)
         if (this.pending) {
           this.pending.next(ctrl)
           this.pending.complete()
           this.pending = undefined
         } else {
-          this.handleCtrlGive(ctrl)
+          this.handleCtrlShare(ctrl)
         }
       }
     } catch (error:any) {
@@ -148,7 +154,7 @@ export class WebusbService {
     // console.log(ctrl.logMessage)
   }
 
-  handleCtrlGive(ctrl: CtrlConfigGive) {
+  handleCtrlShare(ctrl: CtrlConfigShare) {
     // If there is no pending receiver for the config change we assume it is a
     // change made on the controller via shortcuts, and refresh the components.
     const url = this.router.url
@@ -189,31 +195,31 @@ export class WebusbService {
   }
 
   async send(ctrl: CtrlProc | CtrlConfigGet) {
-    console.log('send', ctrl)
+    console.log(ctrl)
     await this.device.transferOut(ADDR_OUT, ctrl.encode())
   }
 
-  async getConfig(index: ConfigIndex): Promise<number> {
+  async getConfig(index: ConfigIndex): Promise<PresetWithValues> {
     this.pending = new AsyncSubject()
     const ctrlOut = new CtrlConfigGet(index)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
       this.pending?.subscribe({
         next: (ctrlIn) => {
-          resolve(ctrlIn.value)
+          resolve({presetIndex: ctrlIn.preset, values: ctrlIn.values})
         }
       })
     })
   }
 
-  async setConfig(index: ConfigIndex, preset: number): Promise<number> {
+  async setConfig(index: ConfigIndex, preset: number, values: number[]): Promise<number> {
     this.pending = new AsyncSubject()
-    const ctrlOut = new CtrlConfigSet(index, preset)
+    const ctrlOut = new CtrlConfigSet(index, preset, values)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
       this.pending?.subscribe({
         next: (ctrlIn) => {
-          resolve(ctrlIn.value)
+          resolve(ctrlIn.preset)
         }
       })
     })
