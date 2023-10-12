@@ -16,7 +16,6 @@ interface Modes  {
 interface Mode {
   url: string,
   title: string,
-  editable: boolean,
   format: (value: any) => string,
   parse: (value: string) => number | null,
   displayReversed: boolean,
@@ -32,6 +31,8 @@ interface Preset {
   invalid?: boolean,
   leds: number,
   blink: number,
+  readonly?: boolean,
+  hidden?: boolean,
 }
 
 @Component({
@@ -56,13 +57,12 @@ export class TuneComponent {
       url: 'protocol',
       title: 'Communication protocol',
       displayReversed: false,
-      editable: false,
       format: (x) => `${x}`,
       parse: (x) => Number(x),
       presets: [
-        {index: 0, name: 'Windows', desc:'',                value:'XInput', leds:0b0001, blink:0b1000},
-        {index: 1, name: 'Linux',   desc:'and Steam Deck',  value:'XPad',   leds:0b0001, blink:0b0100},
-        {index: 2, name: 'Generic', desc:'aka DirectInput', value:'HID',    leds:0b0001, blink:0b0010},
+        {index: 0, name: 'Windows', desc:'',                value:'XInput', leds:0b0001, blink:0b1000, readonly:true},
+        {index: 1, name: 'Linux',   desc:'and Steam Deck',  value:'XPad',   leds:0b0001, blink:0b0100, readonly:true},
+        {index: 2, name: 'Generic', desc:'aka DirectInput', value:'HID',    leds:0b0001, blink:0b0010, readonly:true},
       ]
     },
     touch_sens: {
@@ -70,7 +70,6 @@ export class TuneComponent {
       url: 'touch_sens',
       title: 'Touch sensitivity',
       displayReversed: true,
-      editable: true,
       format: (x) => `${x} μs`,
       parse: (x) => {
         const re = RegExp('^([0-9]{1,3}) μs$').exec(x)
@@ -81,7 +80,7 @@ export class TuneComponent {
         return null
       },
       presets: [
-        {index: 0, name: 'Auto',  desc: 'Self adjusting',  leds:0b0010, blink:0b0100},
+        {index: 0, name: 'Auto',  desc: 'Self adjusting',  leds:0b0010, blink:0b0100, hidden:true},
         {index: 1, name: 'Low',   desc: 'Less responsive', leds:0b0010, blink:0b1100},
         {index: 2, name: 'Mid',   desc: '',                leds:0b0010, blink:0b1000},
         {index: 3, name: 'High',  desc: '',                leds:0b0010, blink:0b1001},
@@ -93,7 +92,6 @@ export class TuneComponent {
       url: 'mouse_sens',
       title: 'Mouse sensitivity',
       displayReversed: true,
-      editable: true,
       format: (x) => `${x}`,
       parse: (x) => {
         const re = RegExp('^([0-9]{1,3})$').exec(x)
@@ -114,7 +112,6 @@ export class TuneComponent {
       url: 'deadzone',
       title: 'Thumbstick deadzone',
       displayReversed: true,
-      editable: true,
       format: (x) => `${x} %`,
       parse: (x) => {
         const re = RegExp('^([0-9]{1,2}) %$').exec(x)

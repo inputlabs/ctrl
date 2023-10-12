@@ -28,10 +28,10 @@ Copyright (C) 2023, Input Labs Oy.
                 type='text'
                 class='value'
                 [ngClass]="preset.invalid ? 'invalid' : ''"
-                *ngIf='preset.value'
+                *ngIf='preset.value && !preset.hidden'
                 value={{mode.format(preset.value)}}
                 (input)='setValues(preset, $event)'
-                [readonly]='!mode.editable'
+                [readonly]='preset.readonly'
             />
         </div>
     </div>
