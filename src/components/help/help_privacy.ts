@@ -3,17 +3,13 @@
 
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { WebusbService } from 'src/services/webusb'
 
 @Component({
-  selector: 'app-help-deck',
+  selector: 'app-help-privacy',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './help_deck.html',
+  templateUrl: './help_privacy.html',
   styleUrls: ['./help.sass']
 })
-export class HelpDeckComponent {
-  constructor(
-    public webusb: WebusbService
-  ) {}
+export class HelpPrivacyComponent {
 }

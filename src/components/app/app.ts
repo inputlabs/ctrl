@@ -5,10 +5,10 @@ import { Component, ApplicationConfig } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { provideRouter} from '@angular/router'
 
-import { routes } from '../routing'
-import { HeaderComponent } from './header'
-import { SidebarComponent } from './sidebar'
-import { CentralComponent } from './central'
+import { routes } from 'routing'
+import { HeaderComponent } from 'components/header/header'
+import { SidebarComponent } from 'components/sidebar/sidebar'
+import { CentralComponent } from 'components/central/central'
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes)]

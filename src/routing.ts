@@ -2,14 +2,14 @@
 // Copyright (C) 2023, Input Labs Oy.
 
 import { Routes } from '@angular/router'
-import { LogsComponent } from './components/logs'
-import { WipComponent } from './components/wip'
-import { TuneComponent } from './components/tune'
-import { ProfileComponent } from './components/profile'
-import { HelpWindowsComponent } from './components/help_windows'
-import { HelpLinuxComponent } from './components/help_linux'
-import { HelpDeckComponent } from './components/help_deck'
-import { HelpPrivacyComponent } from './components/help_privacy'
+import { LogsComponent } from 'components/logs/logs'
+import { WipComponent } from 'components/wip/wip'
+import { TuneComponent } from 'components/tune/tune'
+import { ProfileComponent } from 'components/profile/profile'
+import { HelpWindowsComponent } from 'components/help/help_windows'
+import { HelpLinuxComponent } from 'components/help/help_linux'
+import { HelpDeckComponent } from 'components/help/help_deck'
+import { HelpPrivacyComponent } from 'components/help/help_privacy'
 
 export const routes: Routes = [
   {path: '', component: LogsComponent},

@@ -3,16 +3,16 @@
 
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { WebusbService } from 'src/services/webusb'
+import { WebusbService } from 'services/webusb'
 
 @Component({
-  selector: 'app-help-linux',
+  selector: 'app-help-windows',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './help_linux.html',
+  templateUrl: './help_windows.html',
   styleUrls: ['./help.sass']
 })
-export class HelpLinuxComponent {
+export class HelpWindowsComponent {
   constructor(
     public webusb: WebusbService
   ) {}

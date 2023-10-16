@@ -3,7 +3,7 @@
 
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { WebusbService } from '../services/webusb'
+import { WebusbService } from 'services/webusb'
 
 @Component({
   selector: 'app-logs',

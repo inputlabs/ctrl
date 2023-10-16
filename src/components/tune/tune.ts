@@ -4,10 +4,9 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router'
-import { LedComponent } from './led'
-import { WebusbService } from '../services/webusb'
-import { ConfigIndex, CtrlConfigSet } from 'src/lib/ctrl'
-import { delay } from 'src/lib/delay'
+import { LedComponent } from 'components/led/led'
+import { WebusbService } from 'services/webusb'
+import { ConfigIndex } from 'lib/ctrl'
 
 interface Modes  {
   [key: string]: Mode

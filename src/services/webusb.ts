@@ -4,8 +4,8 @@
 /// <reference types="w3c-web-usb" />
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
-import { Observable, AsyncSubject } from 'rxjs';
-import { delay } from '../lib/delay'
+import { AsyncSubject } from 'rxjs';
+import { delay } from 'lib/delay'
 import {
   Ctrl,
   CtrlLog,
@@ -16,7 +16,7 @@ import {
   CtrlConfigGet,
   CtrlConfigSet,
   CtrlConfigShare,
-} from '../lib/ctrl'
+} from 'lib/ctrl'
 
 const ADDR_IN = 3
 const ADDR_OUT = 4

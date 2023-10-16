@@ -4,7 +4,7 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
-import { WebusbService } from '../services/webusb'
+import { WebusbService } from 'services/webusb'
 
 @Component({
   selector: 'app-header',
