@@ -4,8 +4,8 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
-import { LedComponent, LED } from './led'
-import { version, commit } from '../lib/version'
+import { LedComponent, LED } from 'components/led/led'
+import { version, commit } from 'lib/version'
 
 @Component({
   selector: 'app-sidebar',

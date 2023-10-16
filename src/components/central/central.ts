@@ -4,7 +4,7 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterOutlet, RouterLink} from '@angular/router'
-import { WebusbService } from 'src/services/webusb'
+import { WebusbService } from 'services/webusb'
 
 @Component({
   selector: 'app-central',
