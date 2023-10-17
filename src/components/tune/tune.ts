@@ -139,7 +139,7 @@ export class TuneComponent {
   }
 
   getPresets() {
-    if (this.mode.displayReversed) return this.mode.presets.reverse()
+    if (this.mode.displayReversed) return this.mode.presets.slice().reverse()
     else return this.mode.presets
   }
 
