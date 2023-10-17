@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
-import { Component, Input, ElementRef } from '@angular/core'
+import { Component, Input, ElementRef, ViewChild } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
 export const LED = {
@@ -20,6 +20,10 @@ export const LED = {
   imports: [CommonModule],
 })
 export class LedComponent {
+  @ViewChild('led_0', {static: true}) led_0?: ElementRef
+  @ViewChild('led_1', {static: true}) led_1?: ElementRef
+  @ViewChild('led_2', {static: true}) led_2?: ElementRef
+  @ViewChild('led_3', {static: true}) led_3?: ElementRef
   @Input('size') size =  26
   @Input('dotsize') dotsize =  5
   @Input('on') maskOn =  0b0000
@@ -29,9 +33,7 @@ export class LedComponent {
   @Input('colorBlink') colorBlink = '#888'
   blinkers: any[] = []
 
-  constructor(private element: ElementRef) {}
-
-  ngOnInit() {
+  ngAfterViewInit() {
     this.update()
   }
 
@@ -45,11 +47,12 @@ export class LedComponent {
 
   update() {
     this.clear()
-    const leds: HTMLElement[] = []
-    leds[0] = this.element.nativeElement.getElementsByClassName('i0')[0] as HTMLElement
-    leds[1] = this.element.nativeElement.getElementsByClassName('i1')[0] as HTMLElement
-    leds[2] = this.element.nativeElement.getElementsByClassName('i2')[0] as HTMLElement
-    leds[3] = this.element.nativeElement.getElementsByClassName('i3')[0] as HTMLElement
+    const leds: HTMLElement[] = [
+      this.led_0?.nativeElement,
+      this.led_1?.nativeElement,
+      this.led_2?.nativeElement,
+      this.led_3?.nativeElement,
+    ]
     leds[0].style.left = this.size * 0.5  - (this.dotsize/2) + 'px'
     leds[1].style.left = this.size * 0.75 - (this.dotsize/2) + 'px'
     leds[2].style.left = this.size * 0.5  - (this.dotsize/2) + 'px'
@@ -63,7 +66,7 @@ export class LedComponent {
     leds[2].style.backgroundColor = (0b0100 & this.maskOn) ? this.colorOn : this.colorOff
     leds[3].style.backgroundColor = (0b1000 & this.maskOn) ? this.colorOn : this.colorOff
 
-    for(let i of [0,1,2,3]) {
+    for(let [i, led] of leds.entries()) {
       if (1<<i & this.maskBlink) {
         const id = setInterval(() => {
           // TODO: Install an actual color library.
@@ -71,12 +74,12 @@ export class LedComponent {
           const G = Number('0x' + this.colorOff[2])
           const B = Number('0x' + this.colorOff[3])
           const colorOff = `rgb(${R}, ${G}, ${B})`
-          leds[i].style.backgroundColor = (
-            leds[i].style.backgroundColor==colorOff ?
+          led.style.backgroundColor = (
+            led.style.backgroundColor==colorOff ?
             this.colorBlink :
             this.colorOff
           )
-        }, 200)
+        }, 300)
         this.blinkers.push(id)
       }
     }
