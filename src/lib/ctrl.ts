@@ -13,6 +13,9 @@ enum MessageType {
     CONFIG_GET,
     CONFIG_SET,
     CONFIG_SHARE,
+    PROFILE_GET,
+    PROFILE_SET,
+    PROFILE_SHARE,
 }
 
 export enum Proc {
@@ -27,6 +30,13 @@ export enum ConfigIndex {
     SENS_TOUCH,
     SENS_MOUSE,
     DEADZONE,
+}
+
+export enum SectionIndex {
+    A = 10,
+    B,
+    X,
+    Y,
 }
 
 export class Ctrl {
@@ -70,6 +80,13 @@ export class Ctrl {
                 data[4],  // ConfigIndex.
                 data[5],  // Preset.
                 [data[6], data[7], data[8], data[9], data[10]],  // Values.
+            )
+        }
+        if (data[2] == MessageType.PROFILE_SHARE) {
+            return new CtrlProfileShare(
+                data[4],  // ProfileIndex.
+                data[5],  // SectionIndex.
+                data.slice(6, 16),  // Values.
             )
         }
         return false
@@ -121,5 +138,25 @@ export class CtrlConfigShare extends Ctrl {
     ) {
         const payload = [cfgIndex, preset, values]
         super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SHARE, 7, payload)
+    }
+}
+
+export class CtrlProfileGet extends Ctrl {
+    constructor(
+        profileIndex: number,
+        sectionIndex: SectionIndex,
+    ) {
+        super(1, DeviceId.ALPAKKA, MessageType.PROFILE_GET, 1, [profileIndex, sectionIndex])
+    }
+}
+
+export class CtrlProfileShare extends Ctrl {
+    constructor(
+        public profileIndex: number,
+        public sectionIndex: SectionIndex,
+        public values: number[],
+    ) {
+        const payload = [profileIndex, sectionIndex, values]
+        super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
     }
 }
