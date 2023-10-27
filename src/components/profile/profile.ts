@@ -5,12 +5,16 @@ import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
+import { ButtonComponent } from 'components/button/button'
 import { HID } from 'lib/hid'
 
 @Component({
   selector: 'app-wip',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ButtonComponent,
+  ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.sass']
 })
@@ -27,14 +31,8 @@ export class ProfileComponent {
     this.profileService.getProfile(this.profileIndex)
   }
 
-  displayKeys() {
-    const profile = this.profileService.profiles[this.profileIndex]
-    return [
-      HID[profile.a.actions_primary[0]],
-      HID[profile.b.actions_primary[0]],
-      HID[profile.x.actions_primary[0]],
-      HID[profile.y.actions_primary[0]],
-    ]
+  getMapping() {
+    return this.profileService.profiles[this.profileIndex]
   }
 }
 

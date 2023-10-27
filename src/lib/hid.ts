@@ -4,11 +4,11 @@
 // Definitions ported from:
 // https://github.com/inputlabs/alpakka_firmware/blob/main/src/headers/hid.h
 
-const MODIFIER_INDEX = 120
-const MOUSE_INDEX = 140
-const GAMEPAD_INDEX = 160
-const GAMEPAD_AXIS_INDEX = 180
-const PROC_INDEX = 200
+export const MODIFIER_INDEX = 120
+export const MOUSE_INDEX = 140
+export const GAMEPAD_INDEX = 160
+export const GAMEPAD_AXIS_INDEX = 180
+export const PROC_INDEX = 200
 
 export const HID: Array<string> = []
 

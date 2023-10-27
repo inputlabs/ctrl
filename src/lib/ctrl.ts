@@ -37,6 +37,21 @@ export enum SectionIndex {
     B,
     X,
     Y,
+    DPAD_LEFT,
+    DPAD_RIGHT,
+    DPAD_UP,
+    DPAD_DOWN,
+    SELECT_1,
+    SELECT_2,
+    START_1,
+    START_2,
+    L1,
+    L2,
+    L4,
+    R1,
+    R2,
+    R4,
+
 }
 
 export class Ctrl {

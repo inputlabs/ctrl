@@ -1,22 +1,86 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
+@use '../../styles' as *
+
 :host
     flex-grow: 1
     display: flex
     .template
         flex-grow: 1
         display: flex
-        flex-direction: column
-        padding: 50px
+        flex-shrink: 1
+        justify-content: center
+        padding: 10px
         padding-top: 20px
         padding-bottom: 10px
-        .crop
-            flex-grow: 1
-            background-image: url("/assets/profile_template.png")
-            background-size: contain
-            background-repeat: no-repeat
-            background-position: center
+        .crop_h
+            display: flex
+            flex-direction: column
+            aspect-ratio: 3180 / 2455
+            max-width: 99% !important
+            .crop_v
+                aspect-ratio: 3180 / 2455
+                background-image: url("/assets/profile_template.png")
+                background-position: top
+                background-repeat: no-repeat
+                background-size: contain
+                position: relative
+                div
+                    position: absolute
+                    margin-left: 25px
+                    margin-top: -12px
+                $col1: 2.7%
+                $col9: 87%
+                $row1: 2.2%
+                $row2: 8.8%
+                $row3: 18.6%
+                $row4: 25.2%
+                $row5: 31.7%
+                $row6: 38.2%
+                $row7: 55.8%
+                .l2
+                    top: $row1
+                    left: $col1
+                .l1
+                    top: $row2
+                    left: $col1
+                .dpad_up
+                    top: $row3
+                    left: $col1
+                .dpad_right
+                    top: $row4
+                    left: $col1
+                .dpad_left
+                    top: $row5
+                    left: $col1
+                .dpad_down
+                    top: $row6
+                    left: $col1
+                .l4
+                    top: $row7
+                    left: $col1
+                .r2
+                    top: $row1
+                    left: $col9
+                .r1
+                    top: $row2
+                    left: $col9
+                .y
+                    top: $row3
+                    left: $col9
+                .x
+                    top: $row4
+                    left: $col9
+                .b
+                    top: $row5
+                    left: $col9
+                .a
+                    top: $row6
+                    left: $col9
+                .r4
+                    top: $row7
+                    left: $col9
 
     .panel
         width: 300px
