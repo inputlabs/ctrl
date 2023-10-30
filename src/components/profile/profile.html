@@ -6,20 +6,13 @@ Copyright (C) 2023, Input Labs Oy.
 <div class="template">
     <div class="crop_h">
         <div class='crop_v'>
-            <div class='b'><app-button [mapping]='getMapping().b'/></div>
-            <div class='a'><app-button [mapping]='getMapping().a'/></div>
-            <div class='x'><app-button [mapping]='getMapping().x'/></div>
-            <div class='y'><app-button [mapping]='getMapping().y'/></div>
-            <div class='dpad_left'><app-button [mapping]='getMapping().dpad_left'/></div>
-            <div class='dpad_right'><app-button [mapping]='getMapping().dpad_right'/></div>
-            <div class='dpad_up'><app-button [mapping]='getMapping().dpad_up'/></div>
-            <div class='dpad_down'><app-button [mapping]='getMapping().dpad_down'/></div>
-            <div class='l1'><app-button [mapping]='getMapping().l1'/></div>
-            <div class='l2'><app-button [mapping]='getMapping().l2'/></div>
-            <div class='l4'><app-button [mapping]='getMapping().l4'/></div>
-            <div class='r1'><app-button [mapping]='getMapping().r1'/></div>
-            <div class='r2'><app-button [mapping]='getMapping().r2'/></div>
-            <div class='r4'><app-button [mapping]='getMapping().r4'/></div>
+            <div
+                *ngFor='let mapping of getMappings()'
+                [ngClass]='mapping.cls'
+                (click)='mapping.click()'
+                >
+                <app-button [mapping]='mapping.button'/>
+            </div>
         </div>
     </div>
 </div>

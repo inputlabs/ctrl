@@ -14,6 +14,8 @@
         padding: 10px
         padding-top: 20px
         padding-bottom: 10px
+        .selected
+            background-color: hsla(0deg, 0%, 0%, 0.4)
         .crop_h
             display: flex
             flex-direction: column
@@ -26,61 +28,35 @@
                 background-repeat: no-repeat
                 background-size: contain
                 position: relative
-                div
+                &>div
                     position: absolute
-                    margin-left: 25px
-                    margin-top: -12px
-                $col1: 2.7%
-                $col9: 87%
-                $row1: 2.2%
-                $row2: 8.8%
-                $row3: 18.6%
-                $row4: 25.2%
-                $row5: 31.7%
-                $row6: 38.2%
-                $row7: 55.8%
-                .l2
-                    top: $row1
-                    left: $col1
-                .l1
-                    top: $row2
-                    left: $col1
-                .dpad_up
-                    top: $row3
-                    left: $col1
-                .dpad_right
-                    top: $row4
-                    left: $col1
-                .dpad_left
-                    top: $row5
-                    left: $col1
-                .dpad_down
-                    top: $row6
-                    left: $col1
-                .l4
-                    top: $row7
-                    left: $col1
-                .r2
-                    top: $row1
-                    left: $col9
-                .r1
-                    top: $row2
-                    left: $col9
-                .y
-                    top: $row3
-                    left: $col9
-                .x
-                    top: $row4
-                    left: $col9
-                .b
-                    top: $row5
-                    left: $col9
-                .a
-                    top: $row6
-                    left: $col9
-                .r4
-                    top: $row7
-                    left: $col9
+                    margin-left: -25px
+                    padding-left: 50px
+                    margin-top: -22px
+                    cursor: pointer
+                .column1
+                    left: 2.7%
+                .column4
+                    left: 37.0%
+                .column6
+                    left: 52.2%
+                .column9
+                    left: 87%
+                .row1
+                    top: 2.4%
+                .row2
+                    top: 8.8%
+                .row3
+                    top: 18.6%
+                .row4
+                    top: 25.2%
+                .row5
+                    top: 31.7%
+                .row6
+                    top: 38.2%
+                .row7
+                    top: 56.2%
+
 
     .panel
         width: 300px

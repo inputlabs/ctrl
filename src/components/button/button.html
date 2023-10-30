@@ -3,12 +3,16 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
-<span class='block primary' [ngClass]='mapping.cls' *ngFor='let mapping of getPrimary()'>
-    <span *ngIf='mapping.icon' class='material'>{{mapping.icon}}</span>
-    <span *ngIf='!mapping.icon'>{{mapping.text}}</span>
-</span>
+<div class='group'>
+    <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getPrimary()'>
+        <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
+        <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
+    </span>
+</div>
 
-<span class='block secondary' [ngClass]='mapping.cls' *ngFor='let mapping of getSecondary()'>
-    <span *ngIf='mapping.icon' class='material'>{{mapping.icon}}</span>
-    <span *ngIf='!mapping.icon'>{{mapping.text}}</span>
-</span>
+<div class='group'>
+    <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getSecondary()'>
+        <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
+        <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
+    </span>
+</div>
