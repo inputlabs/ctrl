@@ -15,7 +15,7 @@
         padding-top: 20px
         padding-bottom: 10px
         .selected
-            background-color: hsla(0deg, 0%, 0%, 0.4)
+            background-color: hsla(0deg, 0%, 100%, 0.1)
         .crop_h
             display: flex
             flex-direction: column
@@ -27,36 +27,14 @@
                 background-position: top
                 background-repeat: no-repeat
                 background-size: contain
-                position: relative
+                cursor: pointer
+                display: grid
+                $v: 6.55%
+                $h: 15.3%
+                grid-template-rows: 6% $v 3.0% $v $v $v $v 11.3% $v
+                grid-template-columns: $h $h 4.6% 7% 3.3% 4.55% 4.55% 3.3% 7% 4.6% $h $h
                 &>div
-                    position: absolute
-                    margin-left: -25px
-                    padding-left: 50px
-                    margin-top: -22px
-                    cursor: pointer
-                .column1
-                    left: 2.7%
-                .column4
-                    left: 37.0%
-                .column6
-                    left: 52.2%
-                .column9
-                    left: 87%
-                .row1
-                    top: 2.4%
-                .row2
-                    top: 8.8%
-                .row3
-                    top: 18.6%
-                .row4
-                    top: 25.2%
-                .row5
-                    top: 31.7%
-                .row6
-                    top: 38.2%
-                .row7
-                    top: 56.2%
-
+                    padding-left: 30%
 
     .panel
         width: 300px

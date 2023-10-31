@@ -36,36 +36,48 @@ export class ProfileComponent {
     this.selected = button
   }
 
+  getSelected() {
+    return {
+      section: SectionIndex[(<Button>this.selected).section],
+      button: this.selected,
+    }
+  }
+
+  getSectionName() {
+    return SectionIndex[(<Button>this.selected).section]
+  }
+
   getMappings() {
     const table = [
-      {section: SectionIndex.A,          row: 6, column: 9},
-      {section: SectionIndex.L2,         row: 1, column: 1},
-      {section: SectionIndex.L1,         row: 2, column: 1},
-      {section: SectionIndex.DPAD_UP,    row: 3, column: 1},
-      {section: SectionIndex.DPAD_RIGHT, row: 4, column: 1},
-      {section: SectionIndex.DPAD_LEFT,  row: 5, column: 1},
-      {section: SectionIndex.DPAD_DOWN,  row: 6, column: 1},
-      {section: SectionIndex.L4,         row: 7, column: 1},
-      {section: SectionIndex.R2,         row: 1, column: 9},
-      {section: SectionIndex.R1,         row: 2, column: 9},
-      {section: SectionIndex.Y,          row: 3, column: 9},
-      {section: SectionIndex.X,          row: 4, column: 9},
-      {section: SectionIndex.B,          row: 5, column: 9},
-      {section: SectionIndex.A,          row: 6, column: 9},
-      {section: SectionIndex.R4,         row: 7, column: 9},
-      {section: SectionIndex.SELECT_1,   row: 1, column: 4},
-      {section: SectionIndex.SELECT_2,   row: 2, column: 4},
-      {section: SectionIndex.START_1,    row: 1, column: 6},
-      {section: SectionIndex.START_2,    row: 2, column: 6},
+      {section: SectionIndex.L2,         column: 1,      row: 1 },
+      {section: SectionIndex.L1,         column: 1,      row: 2 },
+      {section: SectionIndex.DPAD_UP,    column: 1,      row: 4 },
+      {section: SectionIndex.DPAD_RIGHT, column: 1,      row: 5 },
+      {section: SectionIndex.DPAD_LEFT,  column: 1,      row: 6 },
+      {section: SectionIndex.DPAD_DOWN,  column: 1,      row: 7 },
+      {section: SectionIndex.L4,         column: 1,      row: 9 },
+      {section: SectionIndex.SELECT_1,   column: '4/7',  row: 1 },
+      {section: SectionIndex.SELECT_2,   column: '4/7',  row: 2 },
+      {section: SectionIndex.START_1,    column: '7/10', row: 1 },
+      {section: SectionIndex.START_2,    column: '7/10', row: 2 },
+      {section: SectionIndex.R2,         column: 12,     row: 1 },
+      {section: SectionIndex.R1,         column: 12,     row: 2 },
+      {section: SectionIndex.Y,          column: 12,     row: 4 },
+      {section: SectionIndex.X,          column: 12,     row: 5 },
+      {section: SectionIndex.B,          column: 12,     row: 6 },
+      {section: SectionIndex.A,          column: 12,     row: 7 },
+      {section: SectionIndex.R4,         column: 12,     row: 9 },
     ]
     return this.profileService.profiles[this.profileIndex].buttons
       .map((button: Button) => {
         const tableEntry = table.filter((x) => x.section==button.section)[0]
-        let cls = `row${tableEntry.row} column${tableEntry.column}`
+        let cls = ''
+        let style = {'grid-column': tableEntry.column, 'grid-row': tableEntry.row}
         if (button.section == this.selected?.section) cls += ' selected'
         return {
           button,
           cls,
+          style,
           click: () => this.setSelected(button),
         }
       })

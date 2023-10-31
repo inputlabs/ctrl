@@ -9,6 +9,7 @@ Copyright (C) 2023, Input Labs Oy.
             <div
                 *ngFor='let mapping of getMappings()'
                 [ngClass]='mapping.cls'
+                [ngStyle]='mapping.style'
                 (click)='mapping.click()'
                 >
                 <app-button [mapping]='mapping.button'/>
@@ -18,6 +19,9 @@ Copyright (C) 2023, Input Labs Oy.
 </div>
 
 <div class='panel'>
-    <h2>Selected button properties</h2>
-    WORK IN PROGRESS
+    <div *ngIf='this.selected'>
+        <h2>{{this.getSectionName()}}</h2>
+        <div>MODE = {{this.selected.mode}}</div>
+        <div *ngFor='let action of this.selected.actions_primary'>{{action}}</div>
+    </div>
 </div>

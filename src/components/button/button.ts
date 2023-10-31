@@ -23,11 +23,14 @@ export class ButtonComponent {
     if (label == 'ESCAPE') return 'Esc'
     if (label == 'TAB') return 'Tab'
     if (label == 'DELETE') return 'Del'
+    // Modifiers.
     if (['LEFT_CONTROL', 'RIGHT_CONTROL'].includes(label)) label = 'Ctrl'
     if (['LEFT_SHIFT',   'RIGHT_SHIFT']  .includes(label)) label = 'Shift'
     if (['LEFT_ALT',     'RIGHT_ALT']    .includes(label)) label = 'Alt'
     if (['LEFT_SUPER',   'RIGHT_SUPER']  .includes(label)) label = 'Win'
     // Proc.
+    if (label == 'PROC_BOOTSEL') return 'Boot mode'
+    if (label == 'PROC_CALIBRATE') return 'Calibrate'
     if (label.startsWith('PROC_PROFILE')) label = label.split('_')[2]
     if (label.startsWith('PROC')) label = label.replace('PROC_', '')
     // Gamepad.
@@ -48,8 +51,8 @@ export class ButtonComponent {
       icon = 'sports_esports'
       showLabel = true
     }
-    if (hid.startsWith('GAMEPAD_AXIS')) {
-      icon = 'control_camera'
+    if (['GAMEPAD_AXIS_LZ', 'GAMEPAD_AXIS_RZ'].includes(hid)) {
+      icon = 'height'
       showLabel = true
     }
     if (hid == 'KEY_SPACE') icon = 'space_bar'
@@ -70,7 +73,6 @@ export class ButtonComponent {
     if (hid.startsWith('KEY')) cls = 'square round'
     if (hid.startsWith('MOUSE')) cls = 'square round'
     if (hid.startsWith('GAMEPAD')) cls = 'circle'
-    if (hid.startsWith('PROC')) cls = 'square'
     if (icon.icon && !icon.showLabel) cls += ' icon fixed'
     if (!icon.icon && text.length == 1) cls += ' fixed'
     return cls
