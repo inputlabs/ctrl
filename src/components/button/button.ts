@@ -23,6 +23,7 @@ export class ButtonComponent {
     if (label == 'ESCAPE') return 'Esc'
     if (label == 'TAB') return 'Tab'
     if (label == 'DELETE') return 'Del'
+    if (label == 'BACKQUOTE') return '~'
     // Modifiers.
     if (['LEFT_CONTROL', 'RIGHT_CONTROL'].includes(label)) label = 'Ctrl'
     if (['LEFT_SHIFT',   'RIGHT_SHIFT']  .includes(label)) label = 'Shift'
@@ -31,14 +32,23 @@ export class ButtonComponent {
     // Proc.
     if (label == 'PROC_BOOTSEL') return 'Boot mode'
     if (label == 'PROC_CALIBRATE') return 'Calibrate'
+    if (label == 'PROC_TUNE_OS') return 'OS'
+    if (label == 'PROC_TUNE_TOUCH_THRESHOLD') return 'Touch'
+    if (label == 'PROC_TUNE_SENSITIVITY') return 'Mouse'
+    if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
     if (label.startsWith('PROC_PROFILE')) label = label.split('_')[2]
+    if (label.startsWith('PROC_ROTARY_MODE')) label = label.split('_')[3]
     if (label.startsWith('PROC')) label = label.replace('PROC_', '')
     // Gamepad.
-    if (label.startsWith('GAMEPAD_AXIS')) label = label.split('_')[2]
     label = label.replace('GAMEPAD_L1', 'LB')
     label = label.replace('GAMEPAD_R1', 'RB')
     label = label.replace('GAMEPAD_L3', 'LS')
     label = label.replace('GAMEPAD_R3', 'RS')
+    if (label.startsWith('GAMEPAD_AXIS')) {
+      label = label.replace('GAMEPAD_AXIS_', '')
+      if (label.endsWith('NEG')) label = label.replace('_NEG', '-')
+      else label += '+'
+    }
     label = label.replace('GAMEPAD_', '')
     return label
   }
@@ -51,8 +61,12 @@ export class ButtonComponent {
       icon = 'sports_esports'
       showLabel = true
     }
-    if (['GAMEPAD_AXIS_LZ', 'GAMEPAD_AXIS_RZ'].includes(hid)) {
-      icon = 'height'
+    if (hid.startsWith('PROC_TUNE')) {
+      icon = 'settings'
+      showLabel = true
+    }
+    if (hid.startsWith('PROC_ROTARY_MODE')) {
+      icon = 'screen_record'
       showLabel = true
     }
     if (hid == 'KEY_SPACE') icon = 'space_bar'

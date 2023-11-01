@@ -33,7 +33,8 @@ export enum ConfigIndex {
 }
 
 export enum SectionIndex {
-    A = 10,
+    NAME,
+    A,
     B,
     X,
     Y,
@@ -51,7 +52,15 @@ export enum SectionIndex {
     R1,
     R2,
     R4,
-
+    DHAT_LEFT = 31,
+    DHAT_RIGHT,
+    DHAT_UP,
+    DHAT_DOWN,
+    DHAT_UL,
+    DHAT_UR,
+    DHAT_DL,
+    DHAT_DR,
+    DHAT_PUSH,
 }
 
 export class Ctrl {

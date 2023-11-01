@@ -19,20 +19,27 @@
         .crop_h
             display: flex
             flex-direction: column
-            aspect-ratio: 3180 / 2455
+            aspect-ratio: 3160 / 2600
             max-width: 99% !important
             .crop_v
-                aspect-ratio: 3180 / 2455
+                aspect-ratio: 3160 / 2600
                 background-image: url("/assets/profile_template.png")
                 background-position: top
                 background-repeat: no-repeat
                 background-size: contain
                 cursor: pointer
                 display: grid
-                $v: 6.55%
-                $h: 15.3%
-                grid-template-rows: 6% $v 3.0% $v $v $v $v 11.3% $v
-                grid-template-columns: $h $h 4.6% 7% 3.3% 4.55% 4.55% 3.3% 7% 4.6% $h $h
+                $v: calc((100% / 2600) * 40)
+                $h: calc((100% / 3160) * 40)
+                $v2: calc($v * 2)
+                $v3: calc($v * 3)
+                $v4: calc($v * 4)
+                $v7: calc($v * 7)
+                $h3: calc($h * 3)
+                $h9: calc($h * 9)
+                $h12: calc($h * 12)
+                grid-template-rows: $v4 $v4 $v2 $v4 $v4 $v4 $v4 $v7 $v4 $v3 $v4 $v4 $v4
+                grid-template-columns: $h12 $h12 $h3 $h3 $h3 $h3 $h3 $h $h3 $h3 $h3 $h3 $h3 $h12 $h12
                 &>div
                     padding-left: 30%
 
