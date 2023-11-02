@@ -44,7 +44,6 @@ export class ProfileService {
         Array.from(section.values.slice(5,9)),  // Actions secondary.
       )
       this.profiles[profileIndex].buttons.push(button)
-      console.log(button)
     }
     await parse(SectionIndex.A)
     await parse(SectionIndex.B)
