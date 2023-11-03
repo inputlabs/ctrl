@@ -8,6 +8,7 @@ Copyright (C) 2023, Input Labs Oy.
         <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
         <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
     </span>
+    <span *ngIf='getPrimaryHint()' class='hint'>{{getPrimaryHint()}}</span>
 </div>
 
 <div class='group'>
@@ -15,4 +16,5 @@ Copyright (C) 2023, Input Labs Oy.
         <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
         <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
     </span>
+    <span *ngIf='getSecondaryHint()' class='hint'>{{getSecondaryHint()}}</span>
 </div>

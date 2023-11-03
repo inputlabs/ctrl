@@ -119,4 +119,12 @@ export class ButtonComponent {
         return {cls, text, icon}
       })
   }
+
+  getPrimaryHint() {
+    return this.mapping.hint_primary == '' ? null : this.mapping.hint_primary
+  }
+
+  getSecondaryHint() {
+    return this.mapping.hint_secondary == '' ? null : this.mapping.hint_secondary
+  }
 }

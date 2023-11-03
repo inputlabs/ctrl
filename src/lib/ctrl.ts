@@ -110,7 +110,7 @@ export class Ctrl {
             return new CtrlProfileShare(
                 data[4],  // ProfileIndex.
                 data[5],  // SectionIndex.
-                data.slice(6, 16),  // Values.
+                data.slice(6, 64),  // Values.
             )
         }
         return false

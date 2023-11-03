@@ -11,6 +11,8 @@ export class Button {
     public mode: number = 0,
     public actions_primary: number[] = [],
     public actions_secondary: number[] = [],
+    public hint_primary: string = '',
+    public hint_secondary: string = '',
   ) {}
 }
 
@@ -37,11 +39,19 @@ export class ProfileService {
   async getProfile(profileIndex: number) {
     const parse = async (sectionIndex: SectionIndex) => {
       let section = await this.webusb.getSection(profileIndex, sectionIndex)
+      const hint_primary = Array.from(section.values.slice(10, 30))
+        .map((x) => String.fromCharCode(<number>x))
+        .join('')
+      const hint_secondary = Array.from(section.values.slice(30, 50))
+        .map((x) => String.fromCharCode(<number>x))
+        .join('')
       let button = new Button(
         sectionIndex,
-        section.values[0],                      // Mode.
-        Array.from(section.values.slice(1,5)),  // Actions primary.
-        Array.from(section.values.slice(5,9)),  // Actions secondary.
+        section.values[0],                       // Mode.
+        Array.from(section.values.slice(1, 5)),  // Actions primary.
+        Array.from(section.values.slice(5, 9)),  // Actions secondary.
+        hint_primary,
+        hint_secondary,
       )
       this.profiles[profileIndex].buttons.push(button)
     }

@@ -139,7 +139,7 @@ export class WebusbService {
           this.pendingConfig.complete()
           this.pendingConfig = undefined
         } else {
-          this.handleCtrlShare(ctrl)
+          this.handleCtrlConfigShare(ctrl)
         }
       }
       if (ctrl instanceof CtrlProfileShare) {
@@ -166,7 +166,7 @@ export class WebusbService {
     // console.log(ctrl.logMessage)
   }
 
-  handleCtrlShare(ctrl: CtrlConfigShare) {
+  handleCtrlConfigShare(ctrl: CtrlConfigShare) {
     // If there is no pending receiver for the config change we assume it is a
     // change made on the controller via shortcuts, and refresh the components.
     const url = this.router.url
