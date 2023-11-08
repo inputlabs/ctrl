@@ -5,7 +5,7 @@ import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
-import { ButtonComponent } from 'components/button/button'
+import { ButtonComponent } from 'components/keygroup/keygroup'
 import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
 
 @Component({
@@ -48,10 +48,17 @@ export class ProfileComponent {
     return SectionIndex[selected.sectionIndex]
   }
 
+  getSelectedAsButton(): Array<CtrlButton> {
+    if(!this.selected) return []
+    const index = this.selected.sectionIndex
+    if (index >= 2 && index <= 28) return [this.selected as CtrlButton]
+    return []
+  }
+
   getMappingButton(button: CtrlButton) {
-    const tableEntry = table.filter((x) => x.section==button.sectionIndex)[0]
+    const pos = position.filter((x) => x.section==button.sectionIndex)[0]
     let cls = ''
-    let style = {'grid-column': tableEntry.column, 'grid-row': tableEntry.row}
+    let style = {'grid-column': pos.column, 'grid-row': pos.row}
     if (button.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
       mode: button.mode,
@@ -66,9 +73,9 @@ export class ProfileComponent {
   }
 
   getMappingRotary(rotary: CtrlRotary) {
-    const rup_entry = table.filter((x) => x.section==rotary.sectionIndex)[0]
+    const pos = position.filter((x) => x.section==rotary.sectionIndex)[0]
     let cls = 'doublewidth'
-    let style = {'grid-column': rup_entry.column, 'grid-row': rup_entry.row}
+    let style = {'grid-column': pos.column, 'grid-row': pos.row}
     if (rotary.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
       mode: 0,
@@ -95,7 +102,7 @@ export class ProfileComponent {
   }
 }
 
-const table = [
+const position = [
   {section: SectionIndex.NONE,        column: 0,       row: 0 },
   {section: SectionIndex.L2,          column: 1,       row: 1 },
   {section: SectionIndex.L1,          column: 1,       row: 2 },

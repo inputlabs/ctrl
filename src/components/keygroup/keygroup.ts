@@ -6,11 +6,11 @@ import { CommonModule } from '@angular/common'
 import { HID, GAMEPAD_INDEX, GAMEPAD_AXIS_INDEX } from 'lib/hid'
 
 @Component({
-  selector: 'app-button',
+  selector: 'app-keygroup',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './button.html',
-  styleUrls: ['./button.sass']
+  templateUrl: './keygroup.html',
+  styleUrls: ['./keygroup.sass']
 })
 export class ButtonComponent {
   @Input() mode: number = 0
