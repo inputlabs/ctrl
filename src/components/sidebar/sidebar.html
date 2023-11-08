@@ -25,55 +25,55 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='this.isProfiles()'>
     <a routerLink='profiles/0' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.ALL'></app-led>
-        <div>{{profileService.profiles[0].name.name}}</div>
+        <div>{{profileService.getProfileName(0)}}</div>
     </a>
     <a routerLink='profiles/1' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP'></app-led>
-        <div>{{profileService.profiles[1].name.name}}</div>
+        <div>{{profileService.getProfileName(1)}}</div>
     </a>
     <a routerLink='profiles/2' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT'></app-led>
-        <div>Racing</div>
+        <div>{{profileService.getProfileName(2)}}</div>
     </a>
     <a routerLink='profiles/3' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.DOWN'></app-led>
-        <div>Console</div>
+        <div>{{profileService.getProfileName(3)}}</div>
     </a>
     <a routerLink='profiles/4' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.LEFT'></app-led>
-        <div>Desktop</div>
+        <div>{{profileService.getProfileName(4)}}</div>
     </a>
     <a routerLink='profiles/5' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP+LED.LEFT+LED.RIGHT'></app-led>
-        <div>FPS WASD</div>
+        <div>{{profileService.getProfileName(5)}}</div>
     </a>
     <a routerLink='profiles/6' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT+LED.UP+LED.DOWN'></app-led>
-        <div>Flight</div>
+        <div>{{profileService.getProfileName(6)}}</div>
     </a>
     <a routerLink='profiles/7' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.DOWN+LED.LEFT+LED.RIGHT'></app-led>
-        <div>Console legacy</div>
+        <div>{{profileService.getProfileName(7)}}</div>
     </a>
     <a routerLink='profiles/8' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.LEFT+LED.DOWN+LED.UP'></app-led>
-        <div>RTS</div>
+        <div>{{profileService.getProfileName(8)}}</div>
     </a>
     <a routerLink='profiles/9' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP+LED.RIGHT'></app-led>
-        <div>Custom 1</div>
+        <div>{{profileService.getProfileName(9)}}</div>
     </a>
     <a routerLink='profiles/10' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT+LED.DOWN'></app-led>
-        <div>Custom 2</div>
+        <div>{{profileService.getProfileName(10)}}</div>
     </a>
     <a routerLink='profiles/11' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.DOWN+LED.LEFT'></app-led>
-        <div>Custom 3</div>
+        <div>{{profileService.getProfileName(11)}}</div>
     </a>
     <a routerLink='profiles/12' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.LEFT+LED.UP'></app-led>
-        <div>Custom 4</div>
+        <div>{{profileService.getProfileName(12)}}</div>
     </a>
 </div>
 

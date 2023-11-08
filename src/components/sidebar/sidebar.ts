@@ -53,4 +53,8 @@ export class SidebarComponent {
   isHelp() {
     return this.route.startsWith('/help')
   }
+
+  getProfileName(index: number) {
+    return this.profileService.profiles[index].name.name
+  }
 }

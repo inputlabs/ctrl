@@ -11,12 +11,16 @@ import {
 } from 'lib/ctrl'
 
 export class Profile {
+  name: CtrlSectionName
+
   constructor (
-    public name: CtrlSectionName = new CtrlSectionName(0, 0, '') ,
+    name: string,
     public buttons: CtrlButton[] = [],
     public rotary_up: CtrlRotary = new CtrlRotary(0, 0),
     public rotary_down: CtrlRotary = new CtrlRotary(0, 0),
-  ) {}
+  ) {
+    this.name = new CtrlSectionName(0, 0, name)
+  }
 }
 
 @Injectable({
@@ -24,19 +28,19 @@ export class Profile {
 })
 export class ProfileService {
   profiles: Profile[] = []
+  namesInitialized = false
 
   constructor(
     private webusb: WebusbService,
   ) {
-    for(let i of Array(12).keys()) {
-      this.profiles[i] = new Profile()
-    }
+    this.profiles[0] = new Profile('Home')
+    for(let i of Array(8).keys()) this.profiles[i+1] = new Profile(`Profile ${i+1}`)
+    for(let i of Array(4).keys()) this.profiles[i+9] = new Profile(`Custom ${i+9}`)
   }
 
   async getProfile(profileIndex: number) {
-    // Name.
-    const sectionName = await this.webusb.getSection(profileIndex, SectionIndex.NAME) as CtrlSectionName
-    this.profiles[profileIndex].name = sectionName
+    // Name(s).
+    await this.updateProfileNames()
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
@@ -74,6 +78,20 @@ export class ProfileService {
     const rotary_down = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_DOWN) as CtrlRotary
     this.profiles[profileIndex].rotary_up = rotary_up
     this.profiles[profileIndex].rotary_down = rotary_down
+  }
 
+  getProfileName(profile: number) {
+    return this.profiles[profile].name.name
+  }
+
+  async updateProfileNames() {
+    while (!this.namesInitialized && !this.webusb.isConnected) {
+      return
+    }
+    for(let profile of Array(9).keys()) {
+      const section = await this.webusb.getSection(profile, SectionIndex.NAME)
+      this.profiles[profile].name = section as CtrlSectionName
+    }
+    this.namesInitialized = true
   }
 }

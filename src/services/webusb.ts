@@ -208,7 +208,7 @@ export class WebusbService {
     await this.send(data)
   }
 
-  async send(ctrl: CtrlProc | CtrlConfigGet) {
+  async send(ctrl: CtrlProc | CtrlConfigGet | CtrlProfileGet) {
     console.log(ctrl)
     await this.device.transferOut(ADDR_OUT, ctrl.encode())
   }
@@ -242,7 +242,7 @@ export class WebusbService {
   async getSection(
     profileIndex: number,
     sectionIndex: SectionIndex,
-  ): Promise<CtrlSection> {  // TODO fix any
+  ): Promise<CtrlSection> {
     this.pendingProfile = new AsyncSubject()
     const ctrlOut = new CtrlProfileGet(profileIndex, sectionIndex)
     await this.send(ctrlOut)
