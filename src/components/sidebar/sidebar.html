@@ -25,11 +25,11 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='this.isProfiles()'>
     <a routerLink='profiles/0' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.ALL'></app-led>
-        <div>Home</div>
+        <div>{{profileService.profiles[0].name.name}}</div>
     </a>
     <a routerLink='profiles/1' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.UP'></app-led>
-        <div>FPS Fusion</div>
+        <div>{{profileService.profiles[1].name.name}}</div>
     </a>
     <a routerLink='profiles/2' routerLinkActive='active'>
         <app-led [colorOff]='ledColorOff' [on]='LED.RIGHT'></app-led>

@@ -5,6 +5,7 @@ import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
 import { LedComponent, LED } from 'components/led/led'
+import { ProfileService } from 'services/profiles'
 import { version, commit } from 'lib/version'
 
 @Component({
@@ -27,7 +28,8 @@ export class SidebarComponent {
   commit = commit.slice(0, 12)
 
   constructor(
-    private router: Router
+    private router: Router,
+    public profileService: ProfileService,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

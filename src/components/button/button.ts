@@ -13,17 +13,24 @@ import { HID, GAMEPAD_INDEX, GAMEPAD_AXIS_INDEX } from 'lib/hid'
   styleUrls: ['./button.sass']
 })
 export class ButtonComponent {
-  @Input() mapping: any
+  @Input() mode: number = 0
+  @Input() actions_primary: number[] = []
+  @Input() actions_secondary: number[] = []
+  @Input() hint_primary: string = ''
+  @Input() hint_secondary: string = ''
 
   getText(action: number) {
     let label = HID[action]
-    // Keys and mouse.
+    // Keys.
     label = label.replace('KEY_', '')
-    label = label.replace('MOUSE_', 'Mouse ')
     if (label == 'ESCAPE') return 'Esc'
     if (label == 'TAB') return 'Tab'
     if (label == 'DELETE') return 'Del'
     if (label == 'BACKQUOTE') return '~'
+    // Mouse.
+    if (label == 'MOUSE_SCROLL_UP') return 'Scroll'
+    if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll'
+    label = label.replace('MOUSE_', 'Mouse ')
     // Modifiers.
     if (['LEFT_CONTROL', 'RIGHT_CONTROL'].includes(label)) label = 'Ctrl'
     if (['LEFT_SHIFT',   'RIGHT_SHIFT']  .includes(label)) label = 'Shift'
@@ -36,6 +43,8 @@ export class ButtonComponent {
     if (label == 'PROC_TUNE_TOUCH_THRESHOLD') return 'Touch'
     if (label == 'PROC_TUNE_SENSITIVITY') return 'Mouse'
     if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
+    if (label == 'PROC_TUNE_UP') return 'Tune up'
+    if (label == 'PROC_TUNE_DOWN') return 'Tune down'
     if (label.startsWith('PROC_PROFILE')) label = label.split('_')[2]
     if (label.startsWith('PROC_ROTARY_MODE')) label = label.split('_')[3]
     if (label.startsWith('PROC')) label = label.replace('PROC_', '')
@@ -69,6 +78,14 @@ export class ButtonComponent {
       icon = 'screen_record'
       showLabel = true
     }
+    if (hid.startsWith('MOUSE_SCROLL_UP')) {
+      icon = 'stat_2'
+      showLabel = true
+    }
+    if (hid.startsWith('MOUSE_SCROLL_DOWN')) {
+      icon = 'stat_minus_2'
+      showLabel = true
+    }
     if (hid == 'KEY_SPACE') icon = 'space_bar'
     if (hid == 'KEY_BACKSPACE') icon = 'backspace'
     if (hid == 'KEY_ENTER') icon = 'keyboard_return'
@@ -93,8 +110,8 @@ export class ButtonComponent {
   }
 
   getPrimary() {
-    const mode = this.mapping.mode
-    return this.mapping.actions_primary
+    const mode = this.mode
+    return this.actions_primary
       .filter((action: number) => action > 0)
       .map((action: number) => {
         const text = this.getText(action)
@@ -105,8 +122,8 @@ export class ButtonComponent {
   }
 
   getSecondary() {
-    const mode = this.mapping.mode
-    return this.mapping.actions_secondary
+    const mode = this.mode
+    return this.actions_secondary
       .filter((action: number) => action > 0)
       .map((action: number) => {
         const text = this.getText(action)
@@ -121,10 +138,10 @@ export class ButtonComponent {
   }
 
   getPrimaryHint() {
-    return this.mapping.hint_primary == '' ? null : this.mapping.hint_primary
+    return this.hint_primary == '' ? null : this.hint_primary
   }
 
   getSecondaryHint() {
-    return this.mapping.hint_secondary == '' ? null : this.mapping.hint_secondary
+    return this.hint_secondary == '' ? null : this.hint_secondary
   }
 }

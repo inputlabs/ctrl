@@ -3,22 +3,19 @@
 
 import { Injectable } from '@angular/core'
 import { WebusbService } from 'services/webusb'
-import { CtrlProfileShare, SectionIndex } from 'lib/ctrl'
-
-export class Button {
-  constructor (
-    public section: SectionIndex,
-    public mode: number = 0,
-    public actions_primary: number[] = [],
-    public actions_secondary: number[] = [],
-    public hint_primary: string = '',
-    public hint_secondary: string = '',
-  ) {}
-}
+import {
+  SectionIndex,
+  CtrlSectionName,
+  CtrlButton,
+  CtrlRotary,
+} from 'lib/ctrl'
 
 export class Profile {
   constructor (
-    public buttons: Button[] = []
+    public name: CtrlSectionName = new CtrlSectionName(0, 0, '') ,
+    public buttons: CtrlButton[] = [],
+    public rotary_up: CtrlRotary = new CtrlRotary(0, 0),
+    public rotary_down: CtrlRotary = new CtrlRotary(0, 0),
   ) {}
 }
 
@@ -37,50 +34,46 @@ export class ProfileService {
   }
 
   async getProfile(profileIndex: number) {
-    const parse = async (sectionIndex: SectionIndex) => {
-      let section = await this.webusb.getSection(profileIndex, sectionIndex)
-      const hint_primary = Array.from(section.values.slice(10, 30))
-        .map((x) => String.fromCharCode(<number>x))
-        .join('')
-      const hint_secondary = Array.from(section.values.slice(30, 50))
-        .map((x) => String.fromCharCode(<number>x))
-        .join('')
-      let button = new Button(
-        sectionIndex,
-        section.values[0],                       // Mode.
-        Array.from(section.values.slice(1, 5)),  // Actions primary.
-        Array.from(section.values.slice(5, 9)),  // Actions secondary.
-        hint_primary,
-        hint_secondary,
-      )
+    // Name.
+    const sectionName = await this.webusb.getSection(profileIndex, SectionIndex.NAME) as CtrlSectionName
+    this.profiles[profileIndex].name = sectionName
+    // Buttons.
+    const getButton = async (sectionIndex: SectionIndex) => {
+      const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
       this.profiles[profileIndex].buttons.push(button)
     }
-    await parse(SectionIndex.A)
-    await parse(SectionIndex.B)
-    await parse(SectionIndex.X)
-    await parse(SectionIndex.Y)
-    await parse(SectionIndex.DPAD_LEFT)
-    await parse(SectionIndex.DPAD_RIGHT)
-    await parse(SectionIndex.DPAD_UP)
-    await parse(SectionIndex.DPAD_DOWN)
-    await parse(SectionIndex.SELECT_1)
-    await parse(SectionIndex.SELECT_2)
-    await parse(SectionIndex.START_1)
-    await parse(SectionIndex.START_2)
-    await parse(SectionIndex.L1)
-    await parse(SectionIndex.L2)
-    await parse(SectionIndex.L4)
-    await parse(SectionIndex.R1)
-    await parse(SectionIndex.R2)
-    await parse(SectionIndex.R4)
-    await parse(SectionIndex.DHAT_LEFT)
-    await parse(SectionIndex.DHAT_RIGHT)
-    await parse(SectionIndex.DHAT_UP)
-    await parse(SectionIndex.DHAT_DOWN)
-    await parse(SectionIndex.DHAT_UL)
-    await parse(SectionIndex.DHAT_UR)
-    await parse(SectionIndex.DHAT_DL)
-    await parse(SectionIndex.DHAT_DR)
-    await parse(SectionIndex.DHAT_PUSH)
+    await getButton(SectionIndex.A)
+    await getButton(SectionIndex.B)
+    await getButton(SectionIndex.X)
+    await getButton(SectionIndex.Y)
+    await getButton(SectionIndex.DPAD_LEFT)
+    await getButton(SectionIndex.DPAD_RIGHT)
+    await getButton(SectionIndex.DPAD_UP)
+    await getButton(SectionIndex.DPAD_DOWN)
+    await getButton(SectionIndex.SELECT_1)
+    await getButton(SectionIndex.SELECT_2)
+    await getButton(SectionIndex.START_1)
+    await getButton(SectionIndex.START_2)
+    await getButton(SectionIndex.L1)
+    await getButton(SectionIndex.L2)
+    await getButton(SectionIndex.L4)
+    await getButton(SectionIndex.R1)
+    await getButton(SectionIndex.R2)
+    await getButton(SectionIndex.R4)
+    await getButton(SectionIndex.DHAT_LEFT)
+    await getButton(SectionIndex.DHAT_RIGHT)
+    await getButton(SectionIndex.DHAT_UP)
+    await getButton(SectionIndex.DHAT_DOWN)
+    await getButton(SectionIndex.DHAT_UL)
+    await getButton(SectionIndex.DHAT_UR)
+    await getButton(SectionIndex.DHAT_DL)
+    await getButton(SectionIndex.DHAT_DR)
+    await getButton(SectionIndex.DHAT_PUSH)
+    // Rotary.
+    const rotary_up = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_UP) as CtrlRotary
+    const rotary_down = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_DOWN) as CtrlRotary
+    this.profiles[profileIndex].rotary_up = rotary_up
+    this.profiles[profileIndex].rotary_down = rotary_down
+
   }
 }

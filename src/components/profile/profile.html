@@ -12,7 +12,13 @@ Copyright (C) 2023, Input Labs Oy.
                 [ngStyle]='mapping.style'
                 (click)='mapping.click()'
                 >
-                <app-button [mapping]='mapping.button'/>
+                <app-button
+                    [mode]='mapping.mode'
+                    [actions_primary]='mapping.actions_primary'
+                    [actions_secondary]='mapping.actions_secondary'
+                    [hint_primary]='mapping.hint_primary'
+                    [hint_secondary]='mapping.hint_secondary'
+                />
             </div>
         </div>
     </div>
@@ -21,7 +27,7 @@ Copyright (C) 2023, Input Labs Oy.
 <div class='panel'>
     <div *ngIf='this.selected'>
         <h2>{{this.getSectionName()}}</h2>
-        <div>MODE = {{this.selected.mode}}</div>
-        <div *ngFor='let action of this.selected.actions_primary'>{{action}}</div>
+        <!-- <div>MODE = {{this.selected.mode}}</div>
+        <div *ngFor='let action of this.selected.actions_primary'>{{action}}</div> -->
     </div>
 </div>

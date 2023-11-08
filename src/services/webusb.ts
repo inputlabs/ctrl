@@ -19,6 +19,8 @@ import {
   CtrlConfigShare,
   CtrlProfileGet,
   CtrlProfileShare,
+  CtrlSection,
+  isCtrlSection,
 } from 'lib/ctrl'
 
 const ADDR_IN = 3
@@ -41,7 +43,7 @@ export class WebusbService {
   failed = false
   failedError?: Error
   pendingConfig?: AsyncSubject<CtrlConfigShare>
-  pendingProfile?: AsyncSubject<CtrlProfileShare>
+  pendingProfile?: AsyncSubject<CtrlSection>
 
   constructor(
     private router: Router,
@@ -129,7 +131,7 @@ export class WebusbService {
     try {
       // console.log('Listening...')
       const response = await this.device.transferIn(ADDR_IN, PACKAGE_SIZE)
-      const ctrl = Ctrl.decode(response.data)
+      const ctrl = Ctrl.decode(response.data.buffer as ArrayBuffer)
       // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
       if (ctrl instanceof CtrlConfigShare) {
@@ -142,10 +144,10 @@ export class WebusbService {
           this.handleCtrlConfigShare(ctrl)
         }
       }
-      if (ctrl instanceof CtrlProfileShare) {
+      if (isCtrlSection(ctrl)) {
         console.log(ctrl)
         if (this.pendingProfile) {
-          this.pendingProfile.next(ctrl)
+          this.pendingProfile.next(ctrl as CtrlSection)
           this.pendingProfile.complete()
           this.pendingProfile = undefined
         }
@@ -240,18 +242,14 @@ export class WebusbService {
   async getSection(
     profileIndex: number,
     sectionIndex: SectionIndex,
-  ): Promise<any> {  // TODO fix any
+  ): Promise<CtrlSection> {  // TODO fix any
     this.pendingProfile = new AsyncSubject()
     const ctrlOut = new CtrlProfileGet(profileIndex, sectionIndex)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
       this.pendingProfile?.subscribe({
         next: (ctrlIn) => {
-          resolve({
-            profileIndex: ctrlIn.profileIndex,
-            sectionIndex: ctrlIn.sectionIndex,
-            values: ctrlIn.values,
-          })
+          resolve(ctrlIn)
         }
       })
     })
