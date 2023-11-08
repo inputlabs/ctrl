@@ -1,0 +1,80 @@
+<!--
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2023, Input Labs Oy.
+-->
+
+<div *ngFor='let button of getButton()'>
+    <h2>{{getButtonTitle()}}</h2>
+
+    <div class='block'>
+        <div>Button mode:</div>
+        <!-- (change)='selectOption($event.target.value)' -->
+        <select class='wide' [(ngModel)]='button.mode'>
+            <option value='0'>NORMAL</option>
+            <option value='1'>STICKY</option>
+            <option value='2'>HOLD_EXCLUSIVE</option>
+            <option value='3'>HOLD_EXCLUSIVE_LONG</option>
+            <option value='4'>HOLD_OVERLAP</option>
+            <option value='5'>HOLD_OVERLAP_LONG</option>
+            <option value='6'>HOLD_DOUBLE_PRESS</option>
+        </select>
+    </div>
+
+    <div class='block'>
+        <div>On button press:</div>
+        <div *ngFor='let action of button.actions_primary.slice(0, nPrimary)'>
+            <span>
+                <select class='left' [ngModel]='getKeyCategory(action)'>
+                    <option value="NONE">NONE</option>
+                    <option value="KEYS">KEYS</option>
+                    <option value="MODIFIER">MODIFIER</option>
+                    <option value="NUMPAD">NUMPAD</option>
+                    <option value="MOUSE">MOUSE</option>
+                    <option value="GAMEPAD">GAMEPAD</option>
+                    <option value="AXIS">AXIS</option>
+                    <option value="PROC">PROC</option>
+                </select>
+            </span>
+            <span>
+                <select class='right primary' [ngModel]='action'>
+                    <option
+                        *ngFor='let key of getKeyValues()'
+                        value="{{key.value}}">{{key.name}}
+                    </option>
+                </select>
+            </span>
+        </div>
+        <button class='add' (click)='nPrimary=nPrimary+1'>
+            <span class='material'>add</span>
+        </button>
+    </div>
+
+    <div class='block' *ngIf='button.mode!=0'>
+        <div>On button hold:</div>
+        <div *ngFor='let action of button.actions_secondary.slice(0, nSecondary)'>
+            <span>
+                <select class='left' [ngModel]='getKeyCategory(action)'>
+                    <option value="NONE">NONE</option>
+                    <option value="KEYS">KEYS</option>
+                    <option value="MODIFIER">MODIFIER</option>
+                    <option value="NUMPAD">NUMPAD</option>
+                    <option value="MOUSE">MOUSE</option>
+                    <option value="GAMEPAD">GAMEPAD</option>
+                    <option value="AXIS">AXIS</option>
+                    <option value="PROC">PROC</option>
+                </select>
+            </span>
+            <span>
+                <select class='right secondary' [ngModel]='action'>
+                    <option
+                        *ngFor='let key of getKeyValues()'
+                        value="{{key.value}}">{{key.name}}
+                    </option>
+                </select>
+            </span>
+        </div>
+        <button class='add' (click)='nSecondary=nSecondary+1'>
+            <span class='material'>add</span>
+        </button>
+    </div>
+</div>

@@ -26,8 +26,6 @@ Copyright (C) 2023, Input Labs Oy.
 
 <div class='panel'>
     <div *ngFor='let button of getSelectedAsButton()'>
-        <h2>{{this.getSectionName()}}</h2>
-        <div>MODE = {{button.mode}}</div>
-        <div *ngFor='let action of button.actions_primary'>{{action}}</div>
+        <app-section [button]='button'/>
     </div>
 </div>

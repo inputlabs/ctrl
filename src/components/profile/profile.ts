@@ -6,14 +6,16 @@ import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/keygroup/keygroup'
+import { SectionComponent } from 'components/section/section'
 import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
 
 @Component({
-  selector: 'app-wip',
+  selector: 'app-profile',
   standalone: true,
   imports: [
     CommonModule,
     ButtonComponent,
+    SectionComponent,
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.sass']
@@ -41,11 +43,6 @@ export class ProfileComponent {
 
   getSelected() {
     return this.selected
-  }
-
-  getSectionName() {
-    const selected = this.selected as CtrlSection
-    return SectionIndex[selected.sectionIndex]
   }
 
   getSelectedAsButton(): Array<CtrlButton> {
