@@ -21,6 +21,7 @@ import {
   CtrlProfileShare,
   CtrlSection,
   isCtrlSection,
+  CtrlProfileSet,
 } from 'lib/ctrl'
 
 const ADDR_IN = 3
@@ -255,4 +256,14 @@ export class WebusbService {
     })
   }
 
+  async setSection(
+    profileIndex: number,
+    section: CtrlSection,
+  ) {
+    this.pendingProfile = new AsyncSubject()
+    section.updatePayload()
+    const ctrlOut = new CtrlProfileSet(profileIndex, section.sectionIndex, section.payload)
+    await this.send(ctrlOut)
+    // TODO: Receive confirmation.
+  }
 }

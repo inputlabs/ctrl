@@ -26,6 +26,9 @@ Copyright (C) 2023, Input Labs Oy.
 
 <div class='panel'>
     <div *ngFor='let button of getSelectedAsButton()'>
-        <app-section [button]='button'/>
+        <app-section
+            [profileIndex]='profileIndex'
+            [button]='button'
+        />
     </div>
 </div>

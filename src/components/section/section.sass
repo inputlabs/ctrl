@@ -10,28 +10,75 @@
     .block
         padding-bottom: 20px
 
+    .subtitle
+        margin-bottom: 5px
+        font-size: 14px
+
     select
-        background-color: hsl(0deg, 0%, 0%)
+        height: 35px
+        background-color: black
         color: hsl(0deg, 0%, 80%)
         border: 0px solid black
-        margin-top: 5px
+        border-radius: 5px
+        font-size: 14px
+        font-weight: bold
         padding: 5px
-        &.left
-            // appearance: none
-            width: 40%
-        &.right
-            width: 60%
-            text-align: center
-            font-weight: bold
+        cursor: pointer
+
+    .action
+        background-color: black
+        font-size: 14px
+        font-weight: bold
+        margin-bottom: -5px
+        padding: 10px
+        border-radius: 5px
+        cursor: pointer
         &.primary
             color: $green
         &.secondary
             color: $pink
+        &.hidden
+            color: hsla(0deg, 0%, 0%, 0)
 
-    .add
-        height: 30px
-        background-color: hsl(0deg, 0%, 15%)
-        color: hsl(0deg, 0%, 80%)
-        border: 0px solid black
-        margin-top: 5px
+    #dialog-keypicker
+        min-width: 900px
+        min-height: 600px
+        user-select: none
+        // background-color: black
+        .keyboard
+            .key
+                display: inline-block
+                background-color: hsl(0deg, 0%, 20%)
+                font-size: 14px
+                font-weight: bold
+                width: 35px
+                height: 35px
+                line-height: 32px
+                border: 1px solid white
+                cursor: pointer
+            .void
+                display: inline-block
+                vertical-align: bottom
+                width: 35px
+                height: 35px
+            .green
+                background-color: $green
+                color: black
+            .pink
+                background-color: $pink
+                color: black
+            .wide15
+                width: calc(35px * 1.5)
+            .wide20
+                width: calc(35px * 2)
+            .wide25
+                width: calc(35px * 2.5)
+            .wide50
+                width: calc(35px * 5)
+            .wide60
+                width: calc(35px * 6)
+            .wide90
+                width: calc(35px * 9)
+            .material
+                vertical-align: middle
 

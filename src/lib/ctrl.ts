@@ -116,24 +116,28 @@ export class Ctrl {
     if (data[2] == MessageType.PROFILE_SHARE) {
       const profile = data[4]
       const section = data[5]
+      // Profile Name.
       if (section == SectionIndex.NAME) {
         return new CtrlSectionName(
           profile,  // ProfileIndex.
           section,  // SectionIndex.
-          string_from_slice(buffer, 6, 64)  // Name.
+          string_from_slice(buffer, 6, 38)  // Name.
         )
       }
-      if (section >= 2 && section <= 28) {  // Buttons.
+      // Buttons.
+      if (section >= 2 && section <= 28) { // TODO
         return new CtrlButton(
           profile,  // ProfileIndex.
           section,  // SectionIndex.
           data[6],  // Mode.
           data.slice(7, 11),
           data.slice(11, 15),
-          string_from_slice(buffer, 15, 35),
-          string_from_slice(buffer, 35, 55),
+          // data.slice(15, 19),
+          string_from_slice(buffer, 19, 39),
+          string_from_slice(buffer, 39, 59),
         )
       }
+      // Rotary.
       if ([SectionIndex.ROTARY_UP, SectionIndex.ROTARY_DOWN].includes(section)) {
         return new CtrlRotary(
           profile,  // ProfileIndex.
@@ -212,6 +216,16 @@ export class CtrlProfileGet extends Ctrl {
   }
 }
 
+export class CtrlProfileSet extends Ctrl {
+  constructor(
+    profileIndex: number,
+    sectionIndex: SectionIndex,
+    payload: number[]
+  ) {
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SET, payload.length, payload)
+  }
+}
+
 export class CtrlProfileShare extends Ctrl {
   constructor(
     public profileIndex: number,
@@ -232,6 +246,8 @@ export class CtrlSectionName extends Ctrl {
     const payload = [profileIndex, sectionIndex, name]
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
   }
+
+  updatePayload() {}
 }
 
 export class CtrlButton extends Ctrl {
@@ -254,6 +270,21 @@ export class CtrlButton extends Ctrl {
       hint_secondary,
     ]
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
+  }
+
+  updatePayload() {
+    this.payload = [
+      this.profileIndex,
+      this.sectionIndex,
+      this.mode,
+      ...this.actions_primary,
+      ...this.actions_secondary,
+      ...[0, 0, 0, 0],
+      ...this.hint_primary.split(''),
+      ...this.hint_secondary.split(''),
+    ]
+    this.payloadSize = this.payload.length
+    console.log(this)
   }
 }
 
@@ -288,6 +319,8 @@ export class CtrlRotary extends Ctrl {
     ]
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
   }
+
+  updatePayload() {}
 }
 
 export type CtrlSection = CtrlSectionName | CtrlButton | CtrlRotary
