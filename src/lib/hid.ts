@@ -4,11 +4,17 @@
 // Definitions ported from:
 // https://github.com/inputlabs/alpakka_firmware/blob/main/src/headers/hid.h
 
-export const MODIFIER_INDEX = 120
-export const MOUSE_INDEX = 140
-export const GAMEPAD_INDEX = 160
-export const GAMEPAD_AXIS_INDEX = 180
-export const PROC_INDEX = 200
+export const MODIFIER_INDEX = 154
+export const MOUSE_INDEX = 162
+export const GAMEPAD_INDEX = 174
+export const GAMEPAD_AXIS_INDEX = 190
+export const PROC_INDEX = 202
+
+export const MODIFIER_INDEX_END =  MOUSE_INDEX - 1
+export const MOUSE_INDEX_END =  GAMEPAD_INDEX - 1
+export const GAMEPAD_INDEX_END =  GAMEPAD_AXIS_INDEX - 1
+export const GAMEPAD_AXIS_INDEX_END =  PROC_INDEX - 1
+export const PROC_INDEX_END = 255
 
 export enum HID {
   KEY_NONE = 0,
@@ -40,7 +46,7 @@ export enum HID {
   KEY_Y,
   KEY_Z,
 
-  KEY_1 = 30,
+  KEY_1,
   KEY_2,
   KEY_3,
   KEY_4,
@@ -51,7 +57,7 @@ export enum HID {
   KEY_9,
   KEY_0,
 
-  KEY_ENTER = 40,
+  KEY_ENTER,
   KEY_ESCAPE,
   KEY_BACKSPACE,
   KEY_TAB,
@@ -69,6 +75,9 @@ export enum HID {
   KEY_SLASH,
   KEY_CAPS_LOCK,
 
+  KEY_ISO_1 = 50,
+  KEY_ISO_2 = 100,
+
   KEY_F1 = 58,
   KEY_F2,
   KEY_F3,
@@ -82,37 +91,40 @@ export enum HID {
   KEY_F11,
   KEY_F12,
 
-  KEY_INSERT = 73,
+  KEY_PRINT_SCREEN,
+  KEY_SCROLL_LOCK,
+  KEY_PAUSE,
+  KEY_INSERT,
   KEY_HOME,
   KEY_PAGE_UP,
   KEY_DELETE,
   KEY_END,
   KEY_PAGE_DOWN,
 
-  KEY_RIGHT = 79,
+  KEY_RIGHT,
   KEY_LEFT,
   KEY_DOWN,
   KEY_UP,
 
   KEY_PAD_NUMLOCK = 83,
-  KEY_PAD_SLASH,
-  KEY_PAD_ASTERISK,
-  KEY_PAD_MINUS,
-  KEY_PAD_PLUS,
-  KEY_PAD_ENTER,
-  KEY_PAD_1,
-  KEY_PAD_2,
-  KEY_PAD_3,
-  KEY_PAD_4,
-  KEY_PAD_5,
-  KEY_PAD_6,
-  KEY_PAD_7,
-  KEY_PAD_8,
-  KEY_PAD_9,
-  KEY_PAD_0,
+  KEY_PAD_SLASH ,
+  KEY_PAD_ASTERISK ,
+  KEY_PAD_MINUS ,
+  KEY_PAD_PLUS ,
+  KEY_PAD_ENTER ,
+  KEY_PAD_1 ,
+  KEY_PAD_2 ,
+  KEY_PAD_3 ,
+  KEY_PAD_4 ,
+  KEY_PAD_5 ,
+  KEY_PAD_6 ,
+  KEY_PAD_7 ,
+  KEY_PAD_8 ,
+  KEY_PAD_9 ,
+  KEY_PAD_0 ,
   KEY_PAD_PERIOD,
-  KEY_PAD_BACKSLASH,
-  KEY_PAD_EQUAL = 103,
+
+  KEY_POWER = 102,
 
   KEY_F13 = 104,
   KEY_F14,
@@ -126,6 +138,29 @@ export enum HID {
   KEY_F22,
   KEY_F23,
   KEY_F24,
+
+  KEY_MUTE = 127,
+  KEY_VOLUME_UP,
+  KEY_VOLUME_DOWN,
+
+  KEY_KANJI_1 = 135,
+  KEY_KANJI_2,
+  KEY_KANJI_3,
+  KEY_KANJI_4,
+  KEY_KANJI_5,
+  KEY_KANJI_6,
+  KEY_KANJI_7,
+  KEY_KANJI_8,
+  KEY_KANJI_9,
+  KEY_LANG_1,
+  KEY_LANG_2,
+  KEY_LANG_3,
+  KEY_LANG_4,
+  KEY_LANG_5,
+  KEY_LANG_6,
+  KEY_LANG_7,
+  KEY_LANG_8,
+  KEY_LANG_9,
 
   KEY_LEFT_CONTROL = MODIFIER_INDEX,
   KEY_LEFT_SHIFT,

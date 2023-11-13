@@ -23,22 +23,6 @@ enum Category {
   PROC,
 }
 
-const alphabet: HID[] = []
-const numbers: HID[] = []
-const modifiers: HID[] = []
-const keys: HID[] = []
-const navigation: HID[] = []
-const numpad: HID[] = []
-const func: HID[] = []
-const mouse: HID[] = []
-for(let i=HID.KEY_A; i<=HID.KEY_Z; i++) alphabet.push(i)
-for(let i=HID.KEY_1; i<=HID.KEY_0; i++) numbers.push(i)
-for(let i=HID.KEY_LEFT_CONTROL; i<=HID.KEY_RIGHT_SUPER; i++) modifiers.push(i)
-for(let i=HID.KEY_ENTER; i<=HID.KEY_CAPS_LOCK; i++) keys.push(i)
-for(let i=HID.KEY_INSERT; i<=HID.KEY_UP; i++) navigation.push(i)
-for(let i=HID.KEY_PAD_NUMLOCK; i<=HID.KEY_PAD_EQUAL; i++) numpad.push(i)
-for(let i=HID.KEY_F1; i<=HID.KEY_F12; i++) func.push(i)
-
 @Component({
   selector: 'app-section',
   standalone: true,

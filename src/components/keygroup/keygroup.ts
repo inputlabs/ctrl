@@ -3,7 +3,7 @@
 
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { HID, GAMEPAD_INDEX, GAMEPAD_AXIS_INDEX } from 'lib/hid'
+import { HID } from 'lib/hid'
 
 @Component({
   selector: 'app-keygroup',
@@ -26,7 +26,7 @@ export class ButtonComponent {
     if (label == 'ESCAPE') return 'Esc'
     if (label == 'TAB') return 'Tab'
     if (label == 'DELETE') return 'Del'
-    if (label == 'BACKQUOTE') return '~'
+    if (label == 'BACKQUOTE') return '`'
     // Mouse.
     if (label == 'MOUSE_SCROLL_UP') return 'Scroll'
     if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll'
