@@ -33,12 +33,20 @@ export class ProfileService {
   constructor(
     private webusb: WebusbService,
   ) {
-    this.profiles[0] = new Profile('Home')
-    for(let i of Array(8).keys()) this.profiles[i+1] = new Profile(`Profile ${i+1}`)
-    for(let i of Array(4).keys()) this.profiles[i+9] = new Profile(`Custom ${i+9}`)
+    this.initProfiles()
+  }
+
+  initProfiles() {
+    for(let i of Array(13).keys()) this.resetProfile(i)
+  }
+
+  resetProfile(index: number) {
+    const name = index==0 ? 'Home' : index <= 8 ? `Profile ${index}` : `Custom ${index-8}`
+    this.profiles[index] = new Profile(name)
   }
 
   async getProfile(profileIndex: number) {
+    this.resetProfile(profileIndex)
     // Name(s).
     await this.updateProfileNames()
     // Buttons.

@@ -2,6 +2,7 @@
 // Copyright (C) 2023, Input Labs Oy.
 
 /// <reference types="w3c-web-usb" />
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
 import { AsyncSubject } from 'rxjs';
