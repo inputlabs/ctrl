@@ -32,10 +32,10 @@ export class ButtonComponent {
     if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll'
     label = label.replace('MOUSE_', 'Mouse ')
     // Modifiers.
-    if (['LEFT_CONTROL', 'RIGHT_CONTROL'].includes(label)) label = 'Ctrl'
-    if (['LEFT_SHIFT',   'RIGHT_SHIFT']  .includes(label)) label = 'Shift'
-    if (['LEFT_ALT',     'RIGHT_ALT']    .includes(label)) label = 'Alt'
-    if (['LEFT_SUPER',   'RIGHT_SUPER']  .includes(label)) label = 'Win'
+    if (label.includes('CONTROL')) label = 'Ctrl'
+    if (label.includes('SHIFT')) label = 'Shift'
+    if (label.includes('ALT')) label = 'Alt'
+    if (label.includes('SUPER')) label = 'Win'
     // Proc.
     if (label == 'PROC_BOOTSEL') return 'Boot mode'
     if (label == 'PROC_CALIBRATE') return 'Calibrate'
