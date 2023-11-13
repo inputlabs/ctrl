@@ -10,13 +10,13 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='subtitle'>Button mode:</div>
         <!-- (change)='selectOption($event.target.value)' -->
         <select class='wide' [(ngModel)]='button.mode'>
-            <option value='0'>NORMAL</option>
-            <option value='2'>HOLD_EXCLUSIVE</option>
-            <option value='3'>HOLD_EXCLUSIVE_LONG</option>
-            <option value='4'>HOLD_OVERLAP</option>
-            <option value='5'>HOLD_OVERLAP_LONG</option>
-            <option value='6'>DOUBLE_PRESS_OVERLAP</option>
-            <option value='1'>HOME_REPEAT</option>
+            <option value='0'>Normal</option>
+            <option value='2'>Hold exclusive</option>
+            <option value='3'>Hold exclusive long</option>
+            <option value='4'>Hold overlap</option>
+            <option value='5'>Hold overlap long</option>
+            <option value='6'>Double press overlap</option>
+            <option value='1'>Home repeat</option>
         </select>
     </div>
 
@@ -32,6 +32,13 @@ Copyright (C) 2023, Input Labs Oy.
                 {{HID[action]}}
             </div>
         </div>
+        <input
+            class='inputtext'
+            type='text'
+            placeholder='Action name'
+            [(ngModel)]='button.hint_primary'
+            (change)='save()'
+        />
     </div>
 
     <div class='block' *ngIf='button.mode != 0'>
@@ -46,6 +53,13 @@ Copyright (C) 2023, Input Labs Oy.
                 {{HID[action]}}
             </div>
         </div>
+        <input
+            class='inputtext'
+            type='text'
+            placeholder='Action name'
+            [(ngModel)]='button.hint_secondary'
+            (change)='save()'
+        />
     </div>
 
 </div>
@@ -114,8 +128,8 @@ Copyright (C) 2023, Input Labs Oy.
             <div class='key' [ngClass]='pickCls(HID.KEY_I)' (click)='pick(HID.KEY_I)' >I</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_O)' (click)='pick(HID.KEY_O)' >O</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_P)' (click)='pick(HID.KEY_P)' >P</div>
-            <div class='key' [ngClass]='pickCls(HID.KEY_LEFT_BRACKET)' (click)='pick(HID.KEY_LEFT_BRACKET)' >[</div>
-            <div class='key' [ngClass]='pickCls(HID.KEY_RIGHT_BRACKET)' (click)='pick(HID.KEY_RIGHT_BRACKET)' >]</div>
+            <div class='key' [ngClass]='pickCls(HID.KEY_BRACKET_LEFT)' (click)='pick(HID.KEY_BRACKET_LEFT)' >[</div>
+            <div class='key' [ngClass]='pickCls(HID.KEY_BRACKET_RIGHT)' (click)='pick(HID.KEY_BRACKET_RIGHT)' >]</div>
             <div class='key wide15' [ngClass]='pickCls(HID.KEY_BACKSLASH)' (click)='pick(HID.KEY_BACKSLASH)' >\</div>
             <div class="void">&nbsp;</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_DELETE)' (click)='pick(HID.KEY_DELETE)' >DEL</div>
@@ -149,7 +163,7 @@ Copyright (C) 2023, Input Labs Oy.
             <div class='key talldown' [ngClass]='pickCls(HID.KEY_PAD_PLUS)' (click)='pick(HID.KEY_PAD_PLUS)'>+</div>
         </div>
         <div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_LEFT_SHIFT)' (click)='pick(HID.KEY_LEFT_SHIFT)'><span class='material'>shift</span></div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_SHIFT_LEFT)' (click)='pick(HID.KEY_SHIFT_LEFT)'><span class='material'>shift</span></div>
             <div class='key' [ngClass]='pickCls(HID.KEY_ISO_2)' (click)='pick(HID.KEY_ISO_2)'>&nbsp;</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_Z)' (click)='pick(HID.KEY_Z)'>Z</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_X)' (click)='pick(HID.KEY_X)'>X</div>
@@ -162,7 +176,7 @@ Copyright (C) 2023, Input Labs Oy.
             <div class='key' [ngClass]='pickCls(HID.KEY_PERIOD)' (click)='pick(HID.KEY_PERIOD)'>.</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_SLASH)' (click)='pick(HID.KEY_SLASH)'>/</div>
             <div class='key'>&nbsp;</div>
-            <div class='key wide20' [ngClass]='pickCls(HID.KEY_RIGHT_SHIFT)' (click)='pick(HID.KEY_RIGHT_SHIFT)'><span class='material'>shift</span></div>
+            <div class='key wide20' [ngClass]='pickCls(HID.KEY_SHIFT_RIGHT)' (click)='pick(HID.KEY_SHIFT_RIGHT)'><span class='material'>shift</span></div>
             <div class="void wide20">&nbsp;</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_UP)' (click)='pick(HID.KEY_UP)'><span class='material'>arrow_upward</span></div>
             <div class="void wide20">&nbsp;</div>
@@ -172,13 +186,13 @@ Copyright (C) 2023, Input Labs Oy.
             <div class='key tallup' [ngClass]='pickCls(HID.KEY_PAD_ENTER)' (click)='pick(HID.KEY_PAD_ENTER)'>&nbsp;</div>
         </div>
         <div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_LEFT_CONTROL)' (click)='pick(HID.KEY_LEFT_CONTROL)'>CTRL</div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_LEFT_SUPER)' (click)='pick(HID.KEY_LEFT_SUPER)'>WIN</div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_LEFT_ALT)' (click)='pick(HID.KEY_LEFT_ALT)'>ALT</div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_CONTROL_LEFT)' (click)='pick(HID.KEY_CONTROL_LEFT)'>CTRL</div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_SUPER_LEFT)' (click)='pick(HID.KEY_SUPER_LEFT)'>WIN</div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_ALT_LEFT)' (click)='pick(HID.KEY_ALT_LEFT)'>ALT</div>
             <div class='key wide65' [ngClass]='pickCls(HID.KEY_SPACE)' (click)='pick(HID.KEY_SPACE)'><span class='material'>space_bar</span></div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_RIGHT_ALT)' (click)='pick(HID.KEY_RIGHT_ALT)'>ALT</div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_RIGHT_SUPER)' (click)='pick(HID.KEY_RIGHT_SUPER)'>WIN</div>
-            <div class='key wide15' [ngClass]='pickCls(HID.KEY_RIGHT_CONTROL)' (click)='pick(HID.KEY_RIGHT_CONTROL)'>CTRL</div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_ALT_RIGHT)' (click)='pick(HID.KEY_ALT_RIGHT)'>ALT</div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_SUPER_RIGHT)' (click)='pick(HID.KEY_SUPER_RIGHT)'>WIN</div>
+            <div class='key wide15' [ngClass]='pickCls(HID.KEY_CONTROL_RIGHT)' (click)='pick(HID.KEY_CONTROL_RIGHT)'>CTRL</div>
             <div class="void wide">&nbsp;</div>
             <div class='key' [ngClass]='pickCls(HID.KEY_LEFT)' (click)='pick(HID.KEY_LEFT)'><span class='material'>arrow_back</span></div>
             <div class='key' [ngClass]='pickCls(HID.KEY_DOWN)' (click)='pick(HID.KEY_DOWN)'><span class='material'>arrow_downward</span></div>

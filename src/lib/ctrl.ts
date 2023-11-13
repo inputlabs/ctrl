@@ -273,6 +273,10 @@ export class CtrlButton extends Ctrl {
   }
 
   updatePayload() {
+    const hintBuffer0 = new Uint8Array(20)
+    const hintBuffer1 = new Uint8Array(20)
+    new TextEncoder().encodeInto(this.hint_primary, hintBuffer0)
+    new TextEncoder().encodeInto(this.hint_secondary, hintBuffer1)
     this.payload = [
       this.profileIndex,
       this.sectionIndex,
@@ -280,11 +284,10 @@ export class CtrlButton extends Ctrl {
       ...this.actions_primary,
       ...this.actions_secondary,
       ...[0, 0, 0, 0],
-      ...this.hint_primary.split(''),
-      ...this.hint_secondary.split(''),
+      ...hintBuffer0,
+      ...hintBuffer1,
     ]
     this.payloadSize = this.payload.length
-    console.log(this)
   }
 }
 
