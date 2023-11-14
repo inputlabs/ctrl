@@ -133,11 +133,10 @@ export class Ctrl {
           profile,  // ProfileIndex.
           section,  // SectionIndex.
           data[6],  // Mode.
-          data.slice(7, 11),
-          data.slice(11, 15),
-          // data.slice(15, 19),
-          string_from_slice(buffer, 19, 39),
-          string_from_slice(buffer, 39, 59),
+          data.slice(8, 12),
+          data.slice(12, 16),
+          string_from_slice(buffer, 36, 50),
+          string_from_slice(buffer, 50, 64),
         )
       }
       // Rotary.
@@ -336,17 +335,18 @@ export class CtrlButton extends Ctrl {
   }
 
   override payload() {
-    const hintBuffer0 = new Uint8Array(20)
-    const hintBuffer1 = new Uint8Array(20)
+    const hintBuffer0 = new Uint8Array(14)
+    const hintBuffer1 = new Uint8Array(14)
     new TextEncoder().encodeInto(this.hint_primary, hintBuffer0)
     new TextEncoder().encodeInto(this.hint_secondary, hintBuffer1)
     return [
       this.profileIndex,
       this.sectionIndex,
       this.mode(),
+      0,  // Reserved.
       ...this.actions_primary,
       ...this.actions_secondary,
-      ...[0, 0, 0, 0],
+      ...Array(20).fill(0),  // Reserved.
       ...hintBuffer0,
       ...hintBuffer1,
     ]
