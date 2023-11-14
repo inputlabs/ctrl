@@ -262,8 +262,7 @@ export class WebusbService {
     section: CtrlSection,
   ) {
     this.pendingProfile = new AsyncSubject()
-    section.updatePayload()
-    const ctrlOut = new CtrlProfileSet(profileIndex, section.sectionIndex, section.payload)
+    const ctrlOut = new CtrlProfileSet(profileIndex, section.sectionIndex, section.payload())
     await this.send(ctrlOut)
     // TODO: Receive confirmation.
   }

@@ -58,7 +58,7 @@ export class ProfileComponent {
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
     if (button.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
-      mode: button.mode,
+      mode: button.mode(),
       actions_primary: button.actions_primary,
       actions_secondary: button.actions_secondary,
       hint_primary: button.hint_primary,

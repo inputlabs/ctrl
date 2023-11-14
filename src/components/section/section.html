@@ -7,17 +7,49 @@ Copyright (C) 2023, Input Labs Oy.
     <h2>{{getButtonTitle()}}</h2>
 
     <div class='block'>
-        <div class='subtitle'>Button mode:</div>
-        <!-- (change)='selectOption($event.target.value)' -->
-        <select class='wide' [(ngModel)]='button.mode'>
-            <option value='0'>Normal</option>
-            <option value='2'>Hold exclusive</option>
-            <option value='3'>Hold exclusive long</option>
-            <option value='4'>Hold overlap</option>
-            <option value='5'>Hold overlap long</option>
-            <option value='6'>Double press overlap</option>
-            <option value='1' *ngIf='profileIndex===0'>Home repeat</option>
-        </select>
+        <div
+            class='toggle'
+            *ngIf='!button.homeRepeat'
+            >
+            <span class='name'>Hold</span>
+            <span class='material' (click)='button.hold=!button.hold; save()'>
+                {{button.hold ? 'check_box' : 'check_box_outline_blank'}}
+            </span>
+        </div>
+        <div
+            class='toggle'
+            *ngIf='!button.homeRepeat'
+            >
+            <span class='name'>Double click</span>
+            <span class='material'>select</span>
+        </div>
+        <div
+            class='toggle'
+            *ngIf='button.hold && !button.homeRepeat'
+            >
+            <span class='name'>Overlap</span>
+            <span class='material' (click)='button.overlap=!button.overlap; save()'>
+                {{button.overlap ? 'check_box' : 'check_box_outline_blank'}}
+            </span>
+        </div>
+        <div
+            class='toggle'
+            *ngIf='button.hold && !button.homeRepeat'
+            >
+            <span class='name'>Long press</span>
+            <span class='material' (click)='button.long=!button.long; save()'>
+                {{button.long ? 'check_box' : 'check_box_outline_blank'}}
+            </span>
+        </div>
+        <div
+            class='toggle'
+            *ngIf='profileIndex===0 && !button.hold'
+            >
+            <span class='name'>Home repeat</span>
+            <span class='material' (click)='button.homeRepeat=!button.homeRepeat; save()'>
+                {{button.homeRepeat ? 'check_box' : 'check_box_outline_blank'}}
+            </span>
+        </div>
     </div>
 
     <div class='block'>
@@ -41,7 +73,7 @@ Copyright (C) 2023, Input Labs Oy.
         />
     </div>
 
-    <div class='block' *ngIf='button.mode != 0'>
+    <div class='block' *ngIf='button.hold || button.homeRepeat'>
         <div class='subtitle'>On button hold:</div>
         <div *ngFor='let action of getActions(1); let i=index'>
             <div

@@ -66,6 +66,16 @@ export enum SectionIndex {
   ROTARY_DOWN,
 }
 
+export enum ButtonMode {
+  NORMAL,
+  STICKY,
+  HOLD_EXCLUSIVE,
+  HOLD_EXCLUSIVE_LONG,
+  HOLD_OVERLAP,
+  HOLD_OVERLAP_LONG,
+  HOLD_DOUBLE_PRESS,
+}
+
 function string_from_slice(buffer: ArrayBuffer, start: number, end: number) {
   return new TextDecoder().decode(buffer.slice(start, end)).replace(/\0/g, '')
 }
@@ -75,9 +85,11 @@ export class Ctrl {
     public protocolVersion: number,
     public deviceId: number,
     public messageType: MessageType,
-    public payloadSize: number,
-    public payload: any,
   ) {}
+
+  payload() {
+    return [] as number[]
+  }
 
   encode() {
     const data = new Uint8Array(PACKAGE_SIZE)
@@ -85,13 +97,9 @@ export class Ctrl {
     data[0] = this.protocolVersion
     data[1] = this.deviceId
     data[2] = this.messageType
-    data[3] = this.payloadSize
-    if (Array.isArray(this.payload)) {
-      for (let [i, value] of this.payload.entries()) {
-        data[4+i] = value
-      }
-    } else {
-      data[4] = this.payload
+    data[3] = this.payload().length
+    for (let [i, value] of this.payload().entries()) {
+      data[4+i] = value
     }
     return data
   }
@@ -165,7 +173,11 @@ export class CtrlLog extends Ctrl {
     public override deviceId: number,
     public logMessage: string
   ) {
-    super(protocolVersion, deviceId, MessageType.LOG, logMessage.length, logMessage)
+    super(protocolVersion, deviceId, MessageType.LOG)
+  }
+
+  override payload() {
+    return Array.from(new TextEncoder().encode(this.logMessage))
   }
 }
 
@@ -173,26 +185,37 @@ export class CtrlProc extends Ctrl {
   constructor(
     public proc: Proc
   ) {
-    super(1, DeviceId.ALPAKKA, MessageType.PROC, 1, [proc])
+    super(1, DeviceId.ALPAKKA, MessageType.PROC)
+  }
+
+  override payload() {
+    return [this.proc]
   }
 }
 
 export class CtrlConfigGet extends Ctrl {
   constructor(
-    cfgIndex: ConfigIndex
+    public cfgIndex: ConfigIndex
   ) {
-    super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET, 1, [cfgIndex])
+    super(1, DeviceId.ALPAKKA, MessageType.CONFIG_GET)
+  }
+
+  override payload() {
+    return [this.cfgIndex]
   }
 }
 
 export class CtrlConfigSet extends Ctrl {
   constructor(
-    cfgIndex: ConfigIndex,
+    public cfgIndex: ConfigIndex,
     public preset: number,
     public values: number[],
   ) {
-    const payload = [cfgIndex, preset, ...values]
-    super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SET, 7, payload)
+    super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SET)
+  }
+
+  override payload() {
+    return [this.cfgIndex, this.preset, ...this.values]
   }
 }
 
@@ -203,26 +226,38 @@ export class CtrlConfigShare extends Ctrl {
     public values: number[],
   ) {
     const payload = [cfgIndex, preset, values]
-    super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SHARE, 7, payload)
+    super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SHARE)
+  }
+
+  override payload() {
+    return [this.cfgIndex, this.preset, ...this.values]
   }
 }
 
 export class CtrlProfileGet extends Ctrl {
   constructor(
-    profileIndex: number,
-    sectionIndex: SectionIndex,
+    public profileIndex: number,
+    public sectionIndex: SectionIndex,
   ) {
-    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_GET, 1, [profileIndex, sectionIndex])
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_GET)
+  }
+
+  override payload() {
+    return [this.profileIndex, this.sectionIndex]
   }
 }
 
 export class CtrlProfileSet extends Ctrl {
   constructor(
-    profileIndex: number,
-    sectionIndex: SectionIndex,
-    payload: number[]
+    public profileIndex: number,
+    public sectionIndex: SectionIndex,
+    protected _payload: number[]
   ) {
-    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SET, payload.length, payload)
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SET)
+  }
+
+  override payload() {
+    return this._payload
   }
 }
 
@@ -233,7 +268,11 @@ export class CtrlProfileShare extends Ctrl {
     public values: number[],
   ) {
     const payload = [profileIndex, sectionIndex, values]
-    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
+  }
+
+  override payload() {
+    return [this.profileIndex, this.sectionIndex, ...this.values]
   }
 }
 
@@ -244,50 +283,78 @@ export class CtrlSectionName extends Ctrl {
     public name: string,
   ) {
     const payload = [profileIndex, sectionIndex, name]
-    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
 
-  updatePayload() {}
+  override payload() {
+    return Array.from(new TextEncoder().encode(this.name))
+  }
 }
 
 export class CtrlButton extends Ctrl {
+  hold = false
+  doubleclick = false
+  overlap = false
+  long = false
+  homeRepeat = false
+
   constructor(
     public profileIndex: number,
     public sectionIndex: SectionIndex,
-    public mode: number,
+    private _mode: number,
     public actions_primary: number[],
     public actions_secondary: number[],
     public hint_primary: string,
     public hint_secondary: string,
   ) {
-    const payload = [
-      profileIndex,
-      sectionIndex,
-      mode,
-      actions_primary,
-      actions_secondary,
-      hint_primary,
-      hint_secondary,
-    ]
-    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
+    const payload: number[] = []
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
+    if (_mode == ButtonMode.HOLD_EXCLUSIVE) {
+      this.hold = true
+    }
+    if (_mode == ButtonMode.HOLD_EXCLUSIVE_LONG) {
+      this.hold = true
+      this.long = true
+    }
+    if (_mode == ButtonMode.HOLD_OVERLAP) {
+      this.hold = true
+      this.overlap = true
+    }
+    if (_mode == ButtonMode.HOLD_OVERLAP_LONG) {
+      this.hold = true
+      this.overlap = true
+      this.long = true
+    }
+    if (_mode == ButtonMode.STICKY) {
+      this.homeRepeat = true
+    }
   }
 
-  updatePayload() {
+  mode() {
+    let mode = ButtonMode.NORMAL;
+    if (this.hold && !this.overlap && !this.long) mode = ButtonMode.HOLD_EXCLUSIVE
+    if (this.hold && !this.overlap && this.long) mode = ButtonMode.HOLD_EXCLUSIVE_LONG
+    if (this.hold && this.overlap && !this.long) mode = ButtonMode.HOLD_OVERLAP
+    if (this.hold && this.overlap && this.long) mode = ButtonMode.HOLD_OVERLAP_LONG
+    if (this.homeRepeat) mode = ButtonMode.STICKY
+    return mode
+  }
+
+  override payload() {
     const hintBuffer0 = new Uint8Array(20)
     const hintBuffer1 = new Uint8Array(20)
     new TextEncoder().encodeInto(this.hint_primary, hintBuffer0)
     new TextEncoder().encodeInto(this.hint_secondary, hintBuffer1)
-    this.payload = [
+    return [
       this.profileIndex,
       this.sectionIndex,
-      this.mode,
+      this.mode(),
       ...this.actions_primary,
       ...this.actions_secondary,
       ...[0, 0, 0, 0],
       ...hintBuffer0,
       ...hintBuffer1,
     ]
-    this.payloadSize = this.payload.length
   }
 }
 
@@ -320,10 +387,12 @@ export class CtrlRotary extends Ctrl {
       hint_3,
       hint_4,
     ]
-    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE, 10, payload)
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
 
-  updatePayload() {}
+  override payload() {
+    return [] // TODO
+  }
 }
 
 export type CtrlSection = CtrlSectionName | CtrlButton | CtrlRotary
