@@ -78,14 +78,28 @@
             color: hsla(0deg, 0%, 0%, 0)
 
     #dialog-keypicker
-        min-width: 950px
+        min-width: 935px
         min-height: 600px
         user-select: none
-        // background-color: black
+        $w: 35px
+        padding: $w
+
+        .bigrow
+            display: flex
+            align-items: flex-start
+            &:first-child
+                padding-bottom: $w
+        .green
+            background-color: $green !important
+            color: black !important
+        .pink
+            background-color: $pink !important
+            color: black !important
+
         .keyboard
             .key
                 display: inline-block
-                background-color: hsl(0deg, 0%, 20%)
+                background-color: hsl(0deg, 0%, 0%)
                 font-size: 14px
                 font-weight: bold
                 width: 35px
@@ -99,32 +113,26 @@
                 vertical-align: bottom
                 width: 35px
                 height: 35px
-            .green
-                background-color: $green
-                color: black
-            .pink
-                background-color: $pink
-                color: black
             .wide15
-                width: calc(35px * 1.5)
+                width: calc($w * 1.5)
             .wide20
-                width: calc(35px * 2)
+                width: calc($w * 2)
             .wide25
-                width: calc(35px * 2.5)
+                width: calc($w * 2.5)
             .wide30
-                width: calc(35px * 3)
+                width: calc($w * 3)
             .wide35
-                width: calc(35px * 3.5)
+                width: calc($w * 3.5)
             .wide50
-                width: calc(35px * 5)
+                width: calc($w * 5)
             .wide60
-                width: calc(35px * 6)
+                width: calc($w * 6)
             .wide65
-                width: calc(35px * 6.5)
+                width: calc($w * 6.5)
             .wide70
-                width: calc(35px * 7)
+                width: calc($w * 7)
             .wide90
-                width: calc(35px * 9)
+                width: calc($w * 9)
             .material
                 vertical-align: middle
                 font-variation-settings: 'wght' 300, 'opsz' 20, 'FILL' 0
@@ -132,4 +140,44 @@
                 border-bottom: 1px solid transparent
             .talldown
                 border-top: 1px solid transparent
+            .proc
+                width: calc($w * 3)
+
+        .gamepad
+            background-image: url('/assets/gamepad_outline.png')
+            width: 475px
+            height: 325px
+            // padding-left: 50px
+            $w: 25px
+            .button
+                display: inline-block
+                text-align: center
+                width: $w
+                height: $w
+                border-radius: 12.5px
+                border: 1px solid white
+                line-height: 24px
+                cursor: pointer
+            .material
+                vertical-align: bottom
+            .spacing:
+                display: inline-block
+            .w1
+                display: inline-block
+                width: calc($w * 1)
+            .w2
+                display: inline-block
+                width: calc($w * 2)
+            .w3
+                display: inline-block
+                width: calc($w * 3)
+            .w4
+                display: inline-block
+                width: calc($w * 4)
+            .w7
+                display: inline-block
+                width: calc($w * 7)
+            .w9
+                display: inline-block
+                width: calc($w * 9)
 

@@ -3,6 +3,7 @@
 
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
 
 @Component({
@@ -18,6 +19,10 @@ export class ButtonComponent {
   @Input() actions_secondary: number[] = []
   @Input() hint_primary: string = ''
   @Input() hint_secondary: string = ''
+
+  constructor(
+    public profileService: ProfileService,
+  ) {}
 
   getText(action: number) {
     let label = HID[action]
@@ -45,7 +50,10 @@ export class ButtonComponent {
     if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
     if (label == 'PROC_TUNE_UP') return 'Tune up'
     if (label == 'PROC_TUNE_DOWN') return 'Tune down'
-    if (label.startsWith('PROC_PROFILE')) label = label.split('_')[2]
+    if (label.startsWith('PROC_PROFILE')) {
+      const profileIndex = Number(label.split('_')[2])
+      label = this.profileService.profiles[profileIndex].name.name
+    }
     if (label.startsWith('PROC_ROTARY_MODE')) label = label.split('_')[3]
     if (label.startsWith('PROC')) label = label.replace('PROC_', '')
     // Gamepad.
