@@ -3,15 +3,15 @@
 
 /// <reference types="w3c-web-usb" />
 
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { AsyncSubject } from 'rxjs';
+import { AsyncSubject } from 'rxjs'
 import { delay } from 'lib/delay'
+import { HID } from 'lib/hid'
 import {
   Ctrl,
   CtrlLog,
   CtrlProc,
-  Proc,
   ConfigIndex,
   SectionIndex,
   PACKAGE_SIZE,
@@ -19,7 +19,6 @@ import {
   CtrlConfigSet,
   CtrlConfigShare,
   CtrlProfileGet,
-  CtrlProfileShare,
   CtrlSection,
   isCtrlSection,
   CtrlProfileSet,
@@ -191,22 +190,22 @@ export class WebusbService {
   }
 
   async sendRestart() {
-    const data = new CtrlProc(Proc.RESTART)
+    const data = new CtrlProc(HID.PROC_RESTART)
     await this.send(data)
   }
 
   async sendBootsel() {
-    const data = new CtrlProc(Proc.BOOTSEL)
+    const data = new CtrlProc(HID.PROC_BOOTSEL)
     await this.send(data)
   }
 
   async sendCalibrate() {
-    const data = new CtrlProc(Proc.CALIBRATE)
+    const data = new CtrlProc(HID.PROC_CALIBRATE)
     await this.send(data)
   }
 
   async sendFactory() {
-    const data = new CtrlProc(Proc.FACTORY)
+    const data = new CtrlProc(HID.PROC_FACTORY)
     await this.send(data)
   }
 

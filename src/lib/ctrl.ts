@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
+import { HID } from 'lib/hid'
+
 export const PACKAGE_SIZE = 64
 
 enum DeviceId {
@@ -16,13 +18,6 @@ enum MessageType {
   PROFILE_GET,
   PROFILE_SET,
   PROFILE_SHARE,
-}
-
-export enum Proc {
-  CALIBRATE = 220,
-  RESTART = 221,
-  BOOTSEL = 222,
-  FACTORY = 223,
 }
 
 export enum ConfigIndex {
@@ -183,7 +178,7 @@ export class CtrlLog extends Ctrl {
 
 export class CtrlProc extends Ctrl {
   constructor(
-    public proc: Proc
+    public proc: HID
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROC)
   }
