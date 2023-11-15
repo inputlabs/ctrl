@@ -183,7 +183,7 @@ Copyright (C) 2023, Input Labs Oy.
                 <div class='key tallup' [ngClass]='pickCls(HID.KEY_PAD_PLUS)' (click)='pick(HID.KEY_PAD_PLUS)'>&nbsp;</div>
             </div>
             <div>
-                <div class='key wide20' [ngClass]='pickCls(HID.KEY_CAPS_LOCK)' (click)='pick(HID.KEY_CAPS_LOCK)'>CAP</div>
+                <div class='key wide20' [ngClass]='pickCls(HID.KEY_CAPS_LOCK)' (click)='pick(HID.KEY_CAPS_LOCK)'>CAPS</div>
                 <div class='key' [ngClass]='pickCls(HID.KEY_A)' (click)='pick(HID.KEY_A)'>A</div>
                 <div class='key' [ngClass]='pickCls(HID.KEY_S)' (click)='pick(HID.KEY_S)'>S</div>
                 <div class='key' [ngClass]='pickCls(HID.KEY_D)' (click)='pick(HID.KEY_D)'>D</div>
@@ -249,30 +249,28 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='bigrow'>
 
-        <div class='keyboard'>
-            <div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_PROFILE_1)' (click)='pick(HID.PROC_PROFILE_1)'>PROFILE 0</div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_ROTARY_MODE_0)' (click)='pick(HID.PROC_ROTARY_MODE_0)'>ROTARY 0</div>
+        <div class='keyboard proc'>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)'>CALIBRATE</div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)'>BOOTSEL</div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_OS)' (click)='pick(HID.PROC_TUNE_OS)'><span class='material'>settings</span>OS</div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_DEADZONE)' (click)='pick(HID.PROC_TUNE_DEADZONE)'><span class='material'>settings</span>DZ</div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_SENSITIVITY)' (click)='pick(HID.PROC_TUNE_SENSITIVITY)'><span class='material'>settings</span>MOUSE</div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_TOUCH_THRESHOLD)' (click)='pick(HID.PROC_TUNE_TOUCH_THRESHOLD)'><span class='material'>settings</span>TOUCH</div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_UP)' (click)='pick(HID.PROC_TUNE_UP)'><span class='material'>settings</span><span class='material'>add</span></div>
+            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_DOWN)' (click)='pick(HID.PROC_TUNE_DOWN)'><span class='material'>settings</span><span class='material'>remove</span></div>
+            <div class='key wide35' [ngClass]='pickCls(HID.PROC_PROFILE_1)'>
+                <span class='prev' (click)='pickerProfile=pickerProfile-1'>⏴</span>
+                <span (click)='pick(HID.PROC_PROFILE_1)'>PROFILE {{pickerProfile}}</span>
+                <span class='next' (click)='pickerProfile=pickerProfile+1'>⏵</span>
             </div>
-            <div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)'>CALIBRATE</div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)'>BOOTSEL</div>
-            </div>
-            <div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_TUNE_OS)' (click)='pick(HID.PROC_TUNE_OS)'><span class='material'>settings</span>PROTOCOL</div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_TUNE_DEADZONE)' (click)='pick(HID.PROC_TUNE_DEADZONE)'><span class='material'>settings</span>DEADZONE</div>
-            </div>
-            <div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_TUNE_SENSITIVITY)' (click)='pick(HID.PROC_TUNE_SENSITIVITY)'><span class='material'>settings</span>MOUSE</div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_TUNE_TOUCH_THRESHOLD)' (click)='pick(HID.PROC_TUNE_TOUCH_THRESHOLD)'><span class='material'>settings</span>TOUCH</div>
-            </div>
-            <div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_TUNE_DOWN)' (click)='pick(HID.PROC_TUNE_DOWN)'><span class='material'>settings</span><span class='material'>remove</span></div>
-                <div class='key proc' [ngClass]='pickCls(HID.PROC_TUNE_UP)' (click)='pick(HID.PROC_TUNE_UP)'><span class='material'>settings</span><span class='material'>add</span></div>
+            <div class='key wide35' [ngClass]='pickCls(HID.PROC_ROTARY_MODE_0)' (click)='pick(HID.PROC_ROTARY_MODE_0)'>
+                <span class='prev'>⏴</span>
+                ROTARY 0
+                <span class='next'>⏵</span>
             </div>
         </div>
 
-        <div class='gamepad'>
+        <div class='compact gamepad'>
             <div>
                 <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LZ)' (click)='pick(HID.GAMEPAD_AXIS_LZ)'>LT</div>
                 <div class='spacing w9'></div>
@@ -284,15 +282,15 @@ Copyright (C) 2023, Input Labs Oy.
                 <div class='button' [ngClass]='pickCls(HID.GAMEPAD_R1)' (click)='pick(HID.GAMEPAD_R1)'>RB</div>
             </div>
             <div>
-                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_SELECT)' (click)='pick(HID.GAMEPAD_SELECT)'><span class='material'>stack</span></div>
-                <div class='spacing w3'></div>
-                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_START)' (click)='pick(HID.GAMEPAD_START)'><span class='material'>menu</span></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_SELECT)' (click)='pick(HID.GAMEPAD_SELECT)'><span class='material small'>stack</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_HOME)' (click)='pick(HID.GAMEPAD_HOME)'><span class='material small'>home</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_START)' (click)='pick(HID.GAMEPAD_START)'><span class='material small'>menu</span></div>
             </div>
             <div>
                 <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LY_NEG)' (click)='pick(HID.GAMEPAD_AXIS_LY_NEG)'><span class='material'>keyboard_arrow_up</span></div>
-                <div class='spacing w4'></div>
-                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_HOME)' (click)='pick(HID.GAMEPAD_HOME)'><span class='material'>home</span></div>
-                <div class='spacing w4'></div>
+                <div class='spacing w9'></div>
                 <div class='button' [ngClass]='pickCls(HID.GAMEPAD_Y)' (click)='pick(HID.GAMEPAD_Y)'>Y</div>
             </div>
             <div>
@@ -329,9 +327,44 @@ Copyright (C) 2023, Input Labs Oy.
             </div>
         </div>
 
+        <div class='compact mouse'>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_SCROLL_UP)' (click)='pick(HID.MOUSE_SCROLL_UP)'><span class='material'>stat_2</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_1)' (click)='pick(HID.MOUSE_1)'>1</div>
+                <div class='spacing w07'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_3)' (click)='pick(HID.MOUSE_3)'>3</div>
+                <div class='spacing w07'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_2)' (click)='pick(HID.MOUSE_2)'>2</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_SCROLL_DOWN)' (click)='pick(HID.MOUSE_SCROLL_DOWN)'><span class='material'>stat_minus_2</span></div>
+            </div>
+            <div>
+                <div class='spacing w1'>&nbsp;</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_4)' (click)='pick(HID.MOUSE_4)'>4</div>
+                <div class='spacing w4'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_5)' (click)='pick(HID.MOUSE_5)'>5</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_Y_NEG)' (click)='pick(HID.MOUSE_Y_NEG)'><span class='material'>keyboard_arrow_up</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_X_NEG)' (click)='pick(HID.MOUSE_X_NEG)'><span class='material'>keyboard_arrow_left</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_X)' (click)='pick(HID.MOUSE_X)'><span class='material'>keyboard_arrow_right</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_Y)' (click)='pick(HID.MOUSE_Y)'><span class='material'>keyboard_arrow_down</span></div>
+            </div>
+        </div>
+
     </div>
 
-    <div class='buttons'>
+    <div class='close'>
         <button (click)='hideDialogKeypicker()' class='flat'>Close</button>
     </div>
 </dialog>

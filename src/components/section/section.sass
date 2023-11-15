@@ -83,6 +83,8 @@
         user-select: none
         $w: 35px
         padding: $w
+        padding-bottom: 25px
+        position: relative
 
         .bigrow
             display: flex
@@ -108,6 +110,9 @@
                 border: 1px solid white
                 cursor: pointer
                 // box-sizing: border-box
+            .material.narrow
+                width: 10px
+                margin-left: -10px
             .void
                 display: inline-block
                 vertical-align: bottom
@@ -140,44 +145,74 @@
                 border-bottom: 1px solid transparent
             .talldown
                 border-top: 1px solid transparent
-            .proc
-                width: calc($w * 3)
 
-        .gamepad
-            background-image: url('/assets/gamepad_outline.png')
-            width: 475px
-            height: 325px
-            // padding-left: 50px
+        .proc
+            width: calc($w * 6)
+            height: 290px
+            display: flex
+            flex-direction: column
+            // align-content: end
+            flex-wrap: wrap
+            .prev
+                margin-right: 5px
+            .next
+                margin-left: 5px
+
+        .compact
             $w: 25px
             .button
                 display: inline-block
+                background-color: black
                 text-align: center
                 width: $w
                 height: $w
-                border-radius: 12.5px
                 border: 1px solid white
                 line-height: 24px
                 cursor: pointer
             .material
                 vertical-align: bottom
-            .spacing:
+            .small
+                font-size: 16px
+            .spacing
                 display: inline-block
+            .w07
+                width: calc($w * 0.7)
             .w1
-                display: inline-block
                 width: calc($w * 1)
             .w2
-                display: inline-block
                 width: calc($w * 2)
             .w3
-                display: inline-block
                 width: calc($w * 3)
             .w4
-                display: inline-block
                 width: calc($w * 4)
+            .w5
+                width: calc($w * 5)
             .w7
-                display: inline-block
                 width: calc($w * 7)
             .w9
-                display: inline-block
                 width: calc($w * 9)
+
+        .gamepad
+            background-image: url('/assets/gamepad_outline.png')
+            width: 425px
+            height: 300px
+            margin-top: -15px
+            margin-left: 7px
+            .button
+                border-radius: 12.5px
+
+        .mouse
+            background-image: url('/assets/mouse_outline.png')
+            width: 175px
+            height: 275px
+            margin-top: 10px
+            margin-left: 25px
+            padding-top: $w
+            .button
+                border-radius: 6px
+
+        .close
+            position: absolute
+            bottom: 30px
+            left: 420px
 

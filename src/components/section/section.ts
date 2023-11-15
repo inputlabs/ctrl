@@ -39,6 +39,8 @@ export class SectionComponent {
   HID = HID
   dialogKeyPicker: any
   pickerGroup = 0
+  pickerProfile = 0
+  pickerRotary = 0
 
   constructor(
     public webusbService: WebusbService,
