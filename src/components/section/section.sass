@@ -128,6 +128,8 @@
                 width: calc($w * 3)
             .wide35
                 width: calc($w * 3.5)
+            .wide40
+                width: calc($w * 4)
             .wide50
                 width: calc($w * 5)
             .wide60
@@ -147,16 +149,15 @@
                 border-top: 1px solid transparent
 
         .proc
-            width: calc($w * 6)
+            width: calc($w * 4)
             height: 290px
             display: flex
             flex-direction: column
-            // align-content: end
             flex-wrap: wrap
-            .prev
-                margin-right: 5px
-            .next
-                margin-left: 5px
+            .prevnext
+                display: inline-block
+                height: $w
+                width: 20px
 
         .compact
             $w: 25px
@@ -197,7 +198,7 @@
             width: 425px
             height: 300px
             margin-top: -15px
-            margin-left: 7px
+            margin-left: 77px
             .button
                 border-radius: 12.5px
 
@@ -206,7 +207,7 @@
             width: 175px
             height: 275px
             margin-top: 10px
-            margin-left: 25px
+            margin-left: 40px
             padding-top: $w
             .button
                 border-radius: 6px

@@ -216,8 +216,8 @@ Copyright (C) 2023, Input Labs Oy.
                 <div class='key' [ngClass]='pickCls(HID.KEY_COMMA)' (click)='pick(HID.KEY_COMMA)'>,</div>
                 <div class='key' [ngClass]='pickCls(HID.KEY_PERIOD)' (click)='pick(HID.KEY_PERIOD)'>.</div>
                 <div class='key' [ngClass]='pickCls(HID.KEY_SLASH)' (click)='pick(HID.KEY_SLASH)'>/</div>
-                <div class='key'>&nbsp;</div>
-                <div class='key wide20' [ngClass]='pickCls(HID.KEY_SHIFT_RIGHT)' (click)='pick(HID.KEY_SHIFT_RIGHT)'><span class='material'>shift</span></div>
+                <!-- <div class='key'>&nbsp;</div> -->
+                <div class='key wide30' [ngClass]='pickCls(HID.KEY_SHIFT_RIGHT)' (click)='pick(HID.KEY_SHIFT_RIGHT)'><span class='material'>shift</span></div>
                 <div class="void wide20">&nbsp;</div>
                 <div class='key' [ngClass]='pickCls(HID.KEY_UP)' (click)='pick(HID.KEY_UP)'><span class='material'>arrow_upward</span></div>
                 <div class="void wide20">&nbsp;</div>
@@ -250,24 +250,29 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='bigrow'>
 
         <div class='keyboard proc'>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)'>CALIBRATE</div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)'>BOOTSEL</div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_OS)' (click)='pick(HID.PROC_TUNE_OS)'><span class='material'>settings</span>OS</div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_DEADZONE)' (click)='pick(HID.PROC_TUNE_DEADZONE)'><span class='material'>settings</span>DZ</div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_SENSITIVITY)' (click)='pick(HID.PROC_TUNE_SENSITIVITY)'><span class='material'>settings</span>MOUSE</div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_TOUCH_THRESHOLD)' (click)='pick(HID.PROC_TUNE_TOUCH_THRESHOLD)'><span class='material'>settings</span>TOUCH</div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_UP)' (click)='pick(HID.PROC_TUNE_UP)'><span class='material'>settings</span><span class='material'>add</span></div>
-            <div class='key wide30' [ngClass]='pickCls(HID.PROC_TUNE_DOWN)' (click)='pick(HID.PROC_TUNE_DOWN)'><span class='material'>settings</span><span class='material'>remove</span></div>
-            <div class='key wide35' [ngClass]='pickCls(HID.PROC_PROFILE_1)'>
-                <span class='prev' (click)='pickerProfile=pickerProfile-1'>⏴</span>
-                <span (click)='pick(HID.PROC_PROFILE_1)'>PROFILE {{pickerProfile}}</span>
-                <span class='next' (click)='pickerProfile=pickerProfile+1'>⏵</span>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_PROFILE_0 + pickerProfile)'>
+                <span class='prevnext' (click)='pickProfile(-1)'>⏴</span>
+                <span (click)='pickProfile()'>PROFILE {{pickerProfile}}</span>
+                <span class='prevnext' (click)='pickProfile(+1)'>⏵</span>
             </div>
-            <div class='key wide35' [ngClass]='pickCls(HID.PROC_ROTARY_MODE_0)' (click)='pick(HID.PROC_ROTARY_MODE_0)'>
-                <span class='prev'>⏴</span>
-                ROTARY 0
-                <span class='next'>⏵</span>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_ROTARY_MODE_0 + pickerRotary)'>
+                <span class='prevnext' (click)='pickRotary(-1)'>⏴</span>
+                <span (click)='pickRotary()'>ROTARY {{pickerRotary}}</span>
+                <span class='prevnext' (click)='pickRotary(+1)'>⏵</span>
             </div>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_TUNE_OS + pickerTune)'>
+                <span class='prevnext' (click)='pickTune(-1)'>⏴</span>
+                <span *ngIf='pickerTune==0' (click)='pickTune()'><span class='material'>settings</span>OS</span>
+                <span *ngIf='pickerTune==1' (click)='pickTune()'><span class='material'>settings</span>MOUSE</span>
+                <span *ngIf='pickerTune==2' (click)='pickTune()'><span class='material'>settings</span>DZ</span>
+                <span *ngIf='pickerTune==3' (click)='pickTune()'><span class='material'>settings</span>TOUCH</span>
+                <span class='prevnext' (click)='pickTune(+1)'>⏵</span>
+            </div>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_TUNE_UP)' (click)='pick(HID.PROC_TUNE_UP)'><span class='material'>settings</span><span class='material'>add</span></div>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_TUNE_DOWN)' (click)='pick(HID.PROC_TUNE_DOWN)'><span class='material'>settings</span><span class='material'>remove</span></div>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)'>CALIBRATE</div>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)'>BOOTSEL</div>
+            <div class='key wide40' [ngClass]='pickCls(HID.PROC_THANKS)' (click)='pick(HID.PROC_THANKS)'>THANKS</div>
         </div>
 
         <div class='compact gamepad'>

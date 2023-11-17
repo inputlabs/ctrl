@@ -41,6 +41,7 @@ export class SectionComponent {
   pickerGroup = 0
   pickerProfile = 0
   pickerRotary = 0
+  pickerTune = 0
 
   constructor(
     public webusbService: WebusbService,
@@ -75,6 +76,17 @@ export class SectionComponent {
 
   showDialogKeypicker(pickerGroup: number) {
     this.pickerGroup = pickerGroup
+    for(let action of this.getActions(pickerGroup)) {
+      if (action >= HID.PROC_PROFILE_0 && action <= HID.PROC_PROFILE_8) {
+        this.pickerProfile = action - HID.PROC_PROFILE_0
+      }
+      if (action >= HID.PROC_ROTARY_MODE_0 && action <= HID.PROC_ROTARY_MODE_5) {
+        this.pickerRotary = action - HID.PROC_ROTARY_MODE_0
+      }
+      if (action >= HID.PROC_TUNE_OS && action <= HID.PROC_TUNE_TOUCH_THRESHOLD) {
+        this.pickerTune = action - HID.PROC_TUNE_OS
+      }
+    }
     this.dialogKeyPicker = document.getElementById('dialog-keypicker')
     this.dialogKeyPicker.showModal()
   }
@@ -84,28 +96,92 @@ export class SectionComponent {
     return true
   }
 
-  pickAbstract(actions: HID[], key: HID) {
+  private _pickToggle(actions: HID[], key: HID) {
     if(actions.includes(key)) {
-      actions = actions.filter((x) => x!=key)
+      this._pickRemove(actions, key)
     } else {
-      for(let i in [...Array(4)]) {
-        if(actions[i] != HID.KEY_NONE) continue
-        actions[i] = key
-        break
-      }
+      this._pickAdd(actions, key)
     }
     return actions
   }
 
-  pick(key: HID) {
-    const section = this.button as CtrlButton
-    if(this.pickerGroup == 0) {
-      section.actions_primary = this.pickAbstract(section.actions_primary, key)
-    }
-    if(this.pickerGroup == 1) {
-      section.actions_secondary = this.pickAbstract(section.actions_secondary, key)
+  private _pickAdd(actions: HID[], key: HID) {
+    for(let i in [...Array(4)]) {
+      if(actions[i] != HID.KEY_NONE) continue
+      actions[i] = key
+      break
     }
     this.save()
+  }
+
+  private _pickRemove(actions: HID[], key: HID) {
+    const filtered = actions.filter((x) => x!=key)
+    for(let [i, x] of filtered.entries()) {
+      actions[i] = filtered[i]
+    }
+    this.save()
+  }
+
+  private _pickSelect(
+    increment = 0,
+    procBase: number,
+    nOptions: number,
+    valueGet: number,
+    valueSet: (x:number)=>void,
+  ) {
+    const section = this.button as CtrlButton
+    const targetActions = (
+      this.pickerGroup == 0 ?
+      section.actions_primary :
+      section.actions_secondary
+    )
+    const wrap = ((valueGet + increment) % nOptions + nOptions) % nOptions
+    if (increment == 0) this.pick(procBase + wrap)
+    else {
+      this._pickRemove(targetActions, procBase + valueGet)
+      this._pickAdd(targetActions, procBase + wrap)
+      valueSet(wrap)
+    }
+  }
+
+  pick(key: HID) {
+    const section = this.button as CtrlButton
+    const targetActions = (
+      this.pickerGroup == 0 ?
+      section.actions_primary :
+      section.actions_secondary
+    )
+    this._pickToggle(targetActions, key)
+  }
+
+  pickProfile(increment = 0) {
+    this._pickSelect(
+      increment,
+      HID.PROC_PROFILE_0,
+      8,
+      this.pickerProfile,
+      (x) => this.pickerProfile=x,
+    )
+  }
+
+  pickRotary(increment = 0) {
+    this._pickSelect(
+      increment,
+      HID.PROC_ROTARY_MODE_0,
+      5,
+      this.pickerRotary,
+      (x) => this.pickerRotary=x,
+    )
+  }
+
+  pickTune(increment = 0) {
+    this._pickSelect(
+      increment,
+      HID.PROC_TUNE_OS,
+      4,
+      this.pickerTune,
+      (x) => this.pickerTune=x,
+    )
   }
 
   pickCls(key: HID) {
