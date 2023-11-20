@@ -35,7 +35,7 @@ export class ButtonComponent {
     // Mouse.
     if (label == 'MOUSE_SCROLL_UP') return 'Scroll'
     if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll'
-    label = label.replace('MOUSE_', 'Mouse ')
+    label = label.replace(/^MOUSE_/, 'Mouse ')
     // Modifiers.
     if (label.includes('CONTROL')) label = 'Ctrl'
     if (label.includes('SHIFT')) label = 'Shift'
@@ -45,8 +45,8 @@ export class ButtonComponent {
     if (label == 'PROC_BOOTSEL') return 'Boot mode'
     if (label == 'PROC_CALIBRATE') return 'Calibrate'
     if (label == 'PROC_TUNE_OS') return 'OS'
-    if (label == 'PROC_TUNE_TOUCH_THRESHOLD') return 'Touch'
-    if (label == 'PROC_TUNE_SENSITIVITY') return 'Mouse'
+    if (label == 'PROC_TUNE_MOUSE_SENS') return 'Mouse'
+    if (label == 'PROC_TUNE_TOUCH_SENS') return 'Touch'
     if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
     if (label == 'PROC_TUNE_UP') return 'Tune up'
     if (label == 'PROC_TUNE_DOWN') return 'Tune down'
