@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
-import { CtrlButton, SectionIndex } from 'lib/ctrl'
+import { ActionGroup, CtrlButton, SectionIndex } from 'lib/ctrl'
 import { HID } from 'lib/hid'
 
 enum Category {
@@ -39,7 +39,7 @@ export class SectionComponent {
   HID = HID
   dialogKeyPicker: any
   pickerGroup = 0
-  pickerProfile = 0
+  pickerProfile = 1
   pickerRotary = 0
   pickerTune = 0
 
@@ -69,21 +69,19 @@ export class SectionComponent {
 
   getActions(group: number) {
     const section = this.button as CtrlButton
-    let actions = group==0 ? section.actions_primary : section.actions_secondary
-    while(actions.length < 4) actions.push(HID.KEY_NONE)
-    return actions
+    return group==0 ? section.actions_primary : section.actions_secondary
   }
 
   showDialogKeypicker(pickerGroup: number) {
     this.pickerGroup = pickerGroup
-    for(let action of this.getActions(pickerGroup)) {
+    for(let action of this.getActions(pickerGroup).actions) {
       if (action >= HID.PROC_PROFILE_0 && action <= HID.PROC_PROFILE_8) {
         this.pickerProfile = action - HID.PROC_PROFILE_0
       }
       if (action >= HID.PROC_ROTARY_MODE_0 && action <= HID.PROC_ROTARY_MODE_5) {
         this.pickerRotary = action - HID.PROC_ROTARY_MODE_0
       }
-      if (action >= HID.PROC_TUNE_OS && action <= HID.PROC_TUNE_TOUCH_THRESHOLD) {
+      if (action >= HID.PROC_TUNE_OS && action <= HID.PROC_TUNE_DEADZONE) {
         this.pickerTune = action - HID.PROC_TUNE_OS
       }
     }
@@ -96,8 +94,8 @@ export class SectionComponent {
     return true
   }
 
-  private _pickToggle(actions: HID[], key: HID) {
-    if(actions.includes(key)) {
+  private _pickToggle(actions: ActionGroup, key: HID) {
+    if(actions.has(key)) {
       this._pickRemove(actions, key)
     } else {
       this._pickAdd(actions, key)
@@ -105,27 +103,21 @@ export class SectionComponent {
     return actions
   }
 
-  private _pickAdd(actions: HID[], key: HID) {
-    for(let i in [...Array(4)]) {
-      if(actions[i] != HID.KEY_NONE) continue
-      actions[i] = key
-      break
-    }
+  private _pickAdd(actions: ActionGroup, key: HID) {
+    actions.add(key)
     this.save()
   }
 
-  private _pickRemove(actions: HID[], key: HID) {
-    const filtered = actions.filter((x) => x!=key)
-    for(let [i, x] of filtered.entries()) {
-      actions[i] = filtered[i]
-    }
+  private _pickRemove(actions: ActionGroup, key: HID) {
+    actions.delete(key)
     this.save()
   }
 
   private _pickSelect(
     increment = 0,
     procBase: number,
-    nOptions: number,
+    wrapMin: number,
+    wrapMax: number,
     valueGet: number,
     valueSet: (x:number)=>void,
   ) {
@@ -135,7 +127,9 @@ export class SectionComponent {
       section.actions_primary :
       section.actions_secondary
     )
-    const wrap = ((valueGet + increment) % nOptions + nOptions) % nOptions
+    let wrap = valueGet + increment
+    if (wrap < wrapMin) wrap = wrap + (wrapMax - wrapMin + 1)
+    else if (wrap > wrapMax) wrap = wrap - (wrapMax - wrapMin + 1)
     if (increment == 0) this.pick(procBase + wrap)
     else {
       this._pickRemove(targetActions, procBase + valueGet)
@@ -158,6 +152,7 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_PROFILE_0,
+      1,
       8,
       this.pickerProfile,
       (x) => this.pickerProfile=x,
@@ -168,7 +163,8 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_ROTARY_MODE_0,
-      5,
+      0,
+      4,
       this.pickerRotary,
       (x) => this.pickerRotary=x,
     )
@@ -178,7 +174,8 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_TUNE_OS,
-      4,
+      0,
+      3,
       this.pickerTune,
       (x) => this.pickerTune=x,
     )
@@ -186,17 +183,9 @@ export class SectionComponent {
 
   pickCls(key: HID) {
     const section = this.button as CtrlButton
-    let actions: HID[] = []
-    let cls: string[] = []
-    if (this.pickerGroup == 0) {
-      actions = section.actions_primary
-      cls = ['green']
-    }
-    if (this.pickerGroup == 1) {
-      actions = section.actions_secondary
-      cls = ['pink']
-    }
-    if (actions.includes(key)) return cls
+    const actions = this.pickerGroup==0 ? section.actions_primary : section.actions_secondary
+    const cls = this.pickerGroup==0 ? ['green'] : ['pink']
+    if (actions.has(key)) return cls
     return []
   }
 

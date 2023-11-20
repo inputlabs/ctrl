@@ -5,6 +5,7 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
+import { ActionGroup } from 'lib/ctrl'
 
 @Component({
   selector: 'app-keygroup',
@@ -15,8 +16,8 @@ import { HID } from 'lib/hid'
 })
 export class ButtonComponent {
   @Input() mode: number = 0
-  @Input() actions_primary: number[] = []
-  @Input() actions_secondary: number[] = []
+  @Input() actions_primary: ActionGroup = ActionGroup.empty(4)
+  @Input() actions_secondary: ActionGroup = ActionGroup.empty(4)
   @Input() hint_primary: string = ''
   @Input() hint_secondary: string = ''
 
@@ -119,8 +120,8 @@ export class ButtonComponent {
 
   getPrimary() {
     const mode = this.mode
-    return this.actions_primary
-      .filter((action: number) => action > 0)
+    return this.actions_primary.asArray()
+      // .filter((action: number) => action > 0)
       .map((action: number) => {
         const text = this.getText(action)
         const icon = this.getIcon(action)
@@ -131,8 +132,8 @@ export class ButtonComponent {
 
   getSecondary() {
     const mode = this.mode
-    return this.actions_secondary
-      .filter((action: number) => action > 0)
+    return this.actions_secondary.asArray()
+      // .filter((action: number) => action > 0)
       .map((action: number) => {
         const text = this.getText(action)
         const icon = this.getIcon(action)

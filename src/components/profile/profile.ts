@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/keygroup/keygroup'
 import { SectionComponent } from 'components/section/section'
-import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
+import { ActionGroup, CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
 
 @Component({
   selector: 'app-profile',
@@ -77,7 +77,7 @@ export class ProfileComponent {
     return {
       mode: 0,
       actions_primary: rotary.actions_0,
-      actions_secondary: [],
+      actions_secondary: ActionGroup.empty(4),
       hint_primary: rotary.hint_0,
       hint_secondary: '',
       cls,

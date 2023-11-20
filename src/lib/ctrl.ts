@@ -133,8 +133,8 @@ export class Ctrl {
           profile,  // ProfileIndex.
           section,  // SectionIndex.
           data[6],  // Mode.
-          data.slice(8, 12),
-          data.slice(12, 16),
+          new ActionGroup(data.slice(8, 12)),
+          new ActionGroup(data.slice(12, 16)),
           string_from_slice(buffer, 36, 50),
           string_from_slice(buffer, 50, 64),
         )
@@ -144,11 +144,11 @@ export class Ctrl {
         return new CtrlRotary(
           profile,  // ProfileIndex.
           section,  // SectionIndex.
-          data.slice(6, 10),  // Actions
-          data.slice(10, 14), // Actions
-          data.slice(14, 18), // Actions
-          data.slice(18, 22), // Actions
-          data.slice(22, 26), // Actions
+          new ActionGroup(data.slice(6, 10)),  // Actions
+          new ActionGroup(data.slice(10, 14)), // Actions
+          new ActionGroup(data.slice(14, 18)), // Actions
+          new ActionGroup(data.slice(18, 22)), // Actions
+          new ActionGroup(data.slice(22, 26)), // Actions
           string_from_slice(buffer, 26, 46), // Hint
           string_from_slice(buffer, 46, 50), // Hint
           string_from_slice(buffer, 50, 54), // Hint
@@ -296,8 +296,8 @@ export class CtrlButton extends Ctrl {
     public profileIndex: number,
     public sectionIndex: SectionIndex,
     private _mode: number,
-    public actions_primary: number[],
-    public actions_secondary: number[],
+    public actions_primary: ActionGroup = ActionGroup.empty(4),
+    public actions_secondary: ActionGroup = ActionGroup.empty(4),
     public hint_primary: string,
     public hint_secondary: string,
   ) {
@@ -344,8 +344,8 @@ export class CtrlButton extends Ctrl {
       this.sectionIndex,
       this.mode(),
       0,  // Reserved.
-      ...this.actions_primary,
-      ...this.actions_secondary,
+      ...this.actions_primary.asArrayPadded(),
+      ...this.actions_secondary.asArrayPadded(),
       ...Array(20).fill(0),  // Reserved.
       ...hintBuffer0,
       ...hintBuffer1,
@@ -357,11 +357,11 @@ export class CtrlRotary extends Ctrl {
   constructor(
     public profileIndex: number,
     public sectionIndex: SectionIndex,
-    public actions_0: number[] = [],
-    public actions_1: number[] = [],
-    public actions_2: number[] = [],
-    public actions_3: number[] = [],
-    public actions_4: number[] = [],
+    public actions_0: ActionGroup = ActionGroup.empty(4),
+    public actions_1: ActionGroup = ActionGroup.empty(4),
+    public actions_2: ActionGroup = ActionGroup.empty(4),
+    public actions_3: ActionGroup = ActionGroup.empty(4),
+    public actions_4: ActionGroup = ActionGroup.empty(4),
     public hint_0: string = '',
     public hint_1: string = '',
     public hint_2: string = '',
@@ -397,4 +397,44 @@ export function isCtrlSection(instance: any) {
   if (instance instanceof CtrlButton) return true
   if (instance instanceof CtrlRotary) return true
   return false
+}
+
+export class ActionGroup {
+  actions = new Set<number>()
+  size = 0
+
+  constructor(values: number[]) {
+    this.size = values.length
+    const nonZeroValues = values.filter((x) => x != 0)
+    for(let value of nonZeroValues.values()) {
+      this.actions.add(value)
+    }
+  }
+
+  add(action: HID) {
+    if (this.actions.size >= this.size) return
+    else this.actions.add(action)
+  }
+
+  delete(action: HID) {
+    this.actions.delete(action)
+  }
+
+  has(action: HID) {
+    return this.actions.has(action)
+  }
+
+  asArray() {
+    return Array.from(this.actions)
+  }
+
+  asArrayPadded() {
+    const actions = Array.from(this.actions)
+    const padding = Array(this.size-this.actions.size).fill(0)
+    return [...actions, ...padding]
+  }
+
+  static empty(size: number) {
+    return new ActionGroup(Array(size).fill(0))
+  }
 }
