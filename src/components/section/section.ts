@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
-import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
+import { CtrlButton, CtrlRotary, CtrlSection } from 'lib/ctrl'
+import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actiongroup'
 import { HID } from 'lib/hid'
 
@@ -38,7 +39,9 @@ export class SectionComponent {
   @Input({required:true}) profileIndex: number = 0
   @Input({required:true}) section!: CtrlSection
   HID = HID  // Accessible from template.
-  SectionIndex = SectionIndex  // Accessible from template.
+  SectionName = SectionName  // Accessible from template.
+  SectionButton = SectionButton  // Accessible from template.
+  SectionRotary = SectionRotary  // Accessible from template.
   dialogKeyPicker: any
   pickerGroup = 0
   pickerProfile = 1
@@ -75,19 +78,19 @@ export class SectionComponent {
 
   getSectionTitle() {
     const section = this.section.sectionIndex
-    if (section <= SectionIndex.Y) return 'Button ' + SectionIndex[section]
-    if (section == SectionIndex.DPAD_LEFT)  return 'DPad Left'
-    if (section == SectionIndex.DPAD_RIGHT) return 'DPad Right'
-    if (section == SectionIndex.DPAD_UP)    return 'DPad Up'
-    if (section == SectionIndex.DPAD_DOWN)  return 'DPad Down'
-    if (section == SectionIndex.SELECT_1) return 'Select'
-    if (section == SectionIndex.SELECT_2) return 'Select (2)'
-    if (section == SectionIndex.START_1) return 'Start'
-    if (section == SectionIndex.START_2) return 'Start (2)'
-    if (section <= SectionIndex.R4) return 'Trigger ' + SectionIndex[section]
-    if (section == SectionIndex.ROTARY_UP) return 'Rotary up'
-    if (section == SectionIndex.ROTARY_DOWN) return 'Rotary down'
-    return SectionIndex[section]
+    if (section <= SectionButton.Y) return 'Button ' + SectionButton[section]
+    if (section == SectionButton.DPAD_LEFT)  return 'DPad Left'
+    if (section == SectionButton.DPAD_RIGHT) return 'DPad Right'
+    if (section == SectionButton.DPAD_UP)    return 'DPad Up'
+    if (section == SectionButton.DPAD_DOWN)  return 'DPad Down'
+    if (section == SectionButton.SELECT_1) return 'Select'
+    if (section == SectionButton.SELECT_2) return 'Select (2)'
+    if (section == SectionButton.START_1) return 'Start'
+    if (section == SectionButton.START_2) return 'Start (2)'
+    if (section <= SectionButton.R4) return 'Trigger ' + SectionButton[section]
+    if (section == SectionRotary.ROTARY_UP) return 'Rotary up'
+    if (section == SectionRotary.ROTARY_DOWN) return 'Rotary down'
+    return ''
   }
 
   getActions(group: number) {

@@ -28,10 +28,15 @@ export enum ConfigIndex {
   DEADZONE,
 }
 
-export enum SectionIndex {
+export type SectionIndex = SectionName | SectionButton | SectionRotary
+
+export enum SectionName {
   NONE,
   NAME,
-  A,
+}
+
+export enum SectionButton {
+  A = 2,
   B,
   X,
   Y,
@@ -58,7 +63,10 @@ export enum SectionIndex {
   DHAT_DL,
   DHAT_DR,
   DHAT_PUSH,
-  ROTARY_UP,
+}
+
+export enum SectionRotary {
+  ROTARY_UP = 29,
   ROTARY_DOWN,
 }
 

@@ -7,8 +7,9 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/keygroup/keygroup'
 import { SectionComponent } from 'components/section/section'
-import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actiongroup'
+import { CtrlButton, CtrlRotary, CtrlSection } from 'lib/ctrl'
+import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 
 @Component({
   selector: 'app-profile',
@@ -94,34 +95,34 @@ export class ProfileComponent {
 }
 
 const position = [
-  {section: SectionIndex.NONE,        column: 0,       row: 0 },
-  {section: SectionIndex.L2,          column: 1,       row: 1 },
-  {section: SectionIndex.L1,          column: 1,       row: 2 },
-  {section: SectionIndex.DPAD_UP,     column: 1,       row: 4 },
-  {section: SectionIndex.DPAD_RIGHT,  column: 1,       row: 5 },
-  {section: SectionIndex.DPAD_LEFT,   column: 1,       row: 6 },
-  {section: SectionIndex.DPAD_DOWN,   column: 1,       row: 7 },
-  {section: SectionIndex.L4,          column: 1,       row: 9 },
-  {section: SectionIndex.SELECT_1,    column: '4/8',   row: 1 },
-  {section: SectionIndex.SELECT_2,    column: '4/8',   row: 2 },
-  {section: SectionIndex.START_1,     column: '9/13',  row: 1 },
-  {section: SectionIndex.START_2,     column: '9/13',  row: 2 },
-  {section: SectionIndex.R2,          column: 15,      row: 1 },
-  {section: SectionIndex.R1,          column: 15,      row: 2 },
-  {section: SectionIndex.Y,           column: 15,      row: 4 },
-  {section: SectionIndex.X,           column: 15,      row: 5 },
-  {section: SectionIndex.B,           column: 15,      row: 6 },
-  {section: SectionIndex.A,           column: 15,      row: 7 },
-  {section: SectionIndex.R4,          column: 15,      row: 9 },
-  {section: SectionIndex.DHAT_LEFT,   column: '10/14', row: 12 },
-  {section: SectionIndex.DHAT_RIGHT,  column: 15,      row: 12 },
-  {section: SectionIndex.DHAT_UP,     column: 14,      row: 11 },
-  {section: SectionIndex.DHAT_DOWN,   column: 14,      row: 13 },
-  {section: SectionIndex.DHAT_UL,     column: '10/14', row: 11 },
-  {section: SectionIndex.DHAT_UR,     column: 15,      row: 11 },
-  {section: SectionIndex.DHAT_DL,     column: '10/14', row: 13 },
-  {section: SectionIndex.DHAT_DR,     column: 15,      row: 13 },
-  {section: SectionIndex.DHAT_PUSH,   column: 14,      row: 12 },
-  {section: SectionIndex.ROTARY_UP,   column: '14/16', row: 15 },
-  {section: SectionIndex.ROTARY_DOWN, column: '14/16', row: 16 },
+  {section: 0,        column: 0,       row: 0 },
+  {section: SectionButton.L2,          column: 1,       row: 1 },
+  {section: SectionButton.L1,          column: 1,       row: 2 },
+  {section: SectionButton.DPAD_UP,     column: 1,       row: 4 },
+  {section: SectionButton.DPAD_RIGHT,  column: 1,       row: 5 },
+  {section: SectionButton.DPAD_LEFT,   column: 1,       row: 6 },
+  {section: SectionButton.DPAD_DOWN,   column: 1,       row: 7 },
+  {section: SectionButton.L4,          column: 1,       row: 9 },
+  {section: SectionButton.SELECT_1,    column: '4/8',   row: 1 },
+  {section: SectionButton.SELECT_2,    column: '4/8',   row: 2 },
+  {section: SectionButton.START_1,     column: '9/13',  row: 1 },
+  {section: SectionButton.START_2,     column: '9/13',  row: 2 },
+  {section: SectionButton.R2,          column: 15,      row: 1 },
+  {section: SectionButton.R1,          column: 15,      row: 2 },
+  {section: SectionButton.Y,           column: 15,      row: 4 },
+  {section: SectionButton.X,           column: 15,      row: 5 },
+  {section: SectionButton.B,           column: 15,      row: 6 },
+  {section: SectionButton.A,           column: 15,      row: 7 },
+  {section: SectionButton.R4,          column: 15,      row: 9 },
+  {section: SectionButton.DHAT_LEFT,   column: '10/14', row: 12 },
+  {section: SectionButton.DHAT_RIGHT,  column: 15,      row: 12 },
+  {section: SectionButton.DHAT_UP,     column: 14,      row: 11 },
+  {section: SectionButton.DHAT_DOWN,   column: 14,      row: 13 },
+  {section: SectionButton.DHAT_UL,     column: '10/14', row: 11 },
+  {section: SectionButton.DHAT_UR,     column: 15,      row: 11 },
+  {section: SectionButton.DHAT_DL,     column: '10/14', row: 13 },
+  {section: SectionButton.DHAT_DR,     column: 15,      row: 13 },
+  {section: SectionButton.DHAT_PUSH,   column: 14,      row: 12 },
+  {section: SectionRotary.ROTARY_UP,   column: '14/16', row: 15 },
+  {section: SectionRotary.ROTARY_DOWN, column: '14/16', row: 16 },
 ]

@@ -92,8 +92,8 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='sectionIsRotary() && getSectionAsRotary() as rotary'>
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
-        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_UP'>On scroll up:</div>
-        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_DOWN'>On scroll down:</div>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionRotary.ROTARY_UP'>On scroll up:</div>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionRotary.ROTARY_DOWN'>On scroll down:</div>
         <div *ngIf='getActions(0).actions.size == 0'>
             <div
                 class='action placeholder'
