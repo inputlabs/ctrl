@@ -57,7 +57,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='subtitle' *ngIf='button.hold && button.overlap'>On button press (always):</div>
         <div class='subtitle' *ngIf='button.hold && !button.overlap'>On button click:</div>
         <div class='subtitle' *ngIf='button.homeRepeat'>On the first press, until home is released:</div>
-        <div *ngFor='let action of getActions(0).actions; let i=index'>
+        <div *ngFor='let action of getActions(0).asArrayPadded(); let i=index'>
             <div
                 *ngIf='action!==HID.KEY_NONE || i==0'
                 class='action primary'
@@ -81,7 +81,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='subtitle' *ngIf='button.hold && button.overlap'>On button hold:</div>
         <div class='subtitle' *ngIf='button.hold && !button.overlap'>Otherwise on button hold:</div>
         <div class='subtitle' *ngIf='button.homeRepeat'>On every press:</div>
-        <div *ngFor='let action of getActions(1).actions; let i=index'>
+        <div *ngFor='let action of getActions(1).asArrayPadded(); let i=index'>
             <div
                 *ngIf='action!==HID.KEY_NONE || i==0'
                 class='action'
