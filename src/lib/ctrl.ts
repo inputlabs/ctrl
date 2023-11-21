@@ -117,60 +117,14 @@ export class Ctrl {
   static decode(buffer: ArrayBuffer) {
     // See: https://github.com/inputlabs/alpakka_firmware/blob/main/docs/ctrl_protocol.md
     const data = Array.from(new Uint8Array(buffer))
-    if (data[2] == MessageType.LOG) {
-      return new CtrlLog(
-        data[0],  // ProtocolVersion.
-        data[1],  // DeviceId.
-        string_from_slice(buffer, 4, 64)  // Log message.
-      )
-    }
-    if (data[2] == MessageType.CONFIG_SHARE) {
-      return new CtrlConfigShare(
-        data[4],  // ConfigIndex.
-        data[5],  // Preset.
-        [data[6], data[7], data[8], data[9], data[10]],  // Values.
-      )
-    }
-    if (data[2] == MessageType.PROFILE_SHARE) {
-      const profile = data[4]
+    const msgType = data[2]
+    if (msgType== MessageType.LOG) return CtrlLog.decode(buffer)
+    if (msgType == MessageType.CONFIG_SHARE) return CtrlConfigShare.decode(buffer)
+    if (msgType == MessageType.PROFILE_SHARE) {
       const section = data[5]
-      // Profile Name.
-      if (section == SectionIndex.NAME) {
-        return new CtrlSectionName(
-          profile,  // ProfileIndex.
-          section,  // SectionIndex.
-          string_from_slice(buffer, 6, 38)  // Name.
-        )
-      }
-      // Buttons.
-      if (section >= 2 && section <= 28) { // TODO
-        return new CtrlButton(
-          profile,  // ProfileIndex.
-          section,  // SectionIndex.
-          data[6],  // Mode.
-          new ActionGroup(data.slice(8, 12)),
-          new ActionGroup(data.slice(12, 16)),
-          string_from_slice(buffer, 36, 50),
-          string_from_slice(buffer, 50, 64),
-        )
-      }
-      // Rotary.
-      if ([SectionIndex.ROTARY_UP, SectionIndex.ROTARY_DOWN].includes(section)) {
-        return new CtrlRotary(
-          profile,  // ProfileIndex.
-          section,  // SectionIndex.
-          new ActionGroup(data.slice(6, 10)),  // Actions
-          new ActionGroup(data.slice(10, 14)), // Actions
-          new ActionGroup(data.slice(14, 18)), // Actions
-          new ActionGroup(data.slice(18, 22)), // Actions
-          new ActionGroup(data.slice(22, 26)), // Actions
-          string_from_slice(buffer, 26, 40), // Hint
-          string_from_slice(buffer, 40, 46), // Hint
-          string_from_slice(buffer, 46, 52), // Hint
-          string_from_slice(buffer, 52, 58), // Hint
-          string_from_slice(buffer, 58, 64), // Hint
-        )
-      }
+      if (section == SectionName.NAME) return CtrlSectionName.decode(buffer)
+      if (section in SectionButton) return CtrlButton.decode(buffer)
+      if (section in SectionRotary) return CtrlRotary.decode(buffer)
     }
     return false
   }
@@ -183,6 +137,15 @@ export class CtrlLog extends Ctrl {
     public logMessage: string
   ) {
     super(protocolVersion, deviceId, MessageType.LOG)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlLog(
+      data[0],  // ProtocolVersion.
+      data[1],  // DeviceId.
+      string_from_slice(buffer, 4, 64)  // Log message.
+    )
   }
 
   override payload() {
@@ -236,6 +199,15 @@ export class CtrlConfigShare extends Ctrl {
   ) {
     const payload = [cfgIndex, preset, values]
     super(1, DeviceId.ALPAKKA, MessageType.CONFIG_SHARE)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlConfigShare(
+      data[4],  // ConfigIndex.
+      data[5],  // Preset.
+      [data[6], data[7], data[8], data[9], data[10]],  // Values.
+    )
   }
 
   override payload() {
@@ -295,6 +267,15 @@ export class CtrlSectionName extends Ctrl {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
 
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlSectionName(
+      data[4],  // ProfileIndex.
+      data[5],  // SectionIndex.
+      string_from_slice(buffer, 6, 38)  // Name.
+    )
+  }
+
   override payload() {
     return Array.from(new TextEncoder().encode(this.name))
   }
@@ -349,6 +330,19 @@ export class CtrlButton extends Ctrl {
     return mode
   }
 
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlButton(
+      data[4],  // ProfileIndex.
+      data[5],  // SectionIndex.
+      data[6],  // Mode.
+      new ActionGroup(data.slice(8, 12)),
+      new ActionGroup(data.slice(12, 16)),
+      string_from_slice(buffer, 36, 50),
+      string_from_slice(buffer, 50, 64),
+    )
+  }
+
   override payload() {
     return [
       this.profileIndex,
@@ -380,6 +374,24 @@ export class CtrlRotary extends Ctrl {
     public hint_4: string = '',
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlRotary(
+      data[4],  // ProfileIndex.
+      data[5],  // SectionIndex.
+      new ActionGroup(data.slice(6, 10)),  // Actions
+      new ActionGroup(data.slice(10, 14)), // Actions
+      new ActionGroup(data.slice(14, 18)), // Actions
+      new ActionGroup(data.slice(18, 22)), // Actions
+      new ActionGroup(data.slice(22, 26)), // Actions
+      string_from_slice(buffer, 26, 40), // Hint
+      string_from_slice(buffer, 40, 46), // Hint
+      string_from_slice(buffer, 46, 52), // Hint
+      string_from_slice(buffer, 52, 58), // Hint
+      string_from_slice(buffer, 58, 64), // Hint
+    )
   }
 
   override payload() {
