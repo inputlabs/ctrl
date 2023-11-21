@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
-import { ActionGroup, CtrlButton, SectionIndex } from 'lib/ctrl'
+import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
+import { ActionGroup } from 'lib/actiongroup'
 import { HID } from 'lib/hid'
 
 enum Category {
@@ -34,8 +35,8 @@ enum Category {
   styleUrls: ['./section.sass']
 })
 export class SectionComponent {
-  @Input() profileIndex: number = 0
-  @Input() button?: CtrlButton
+  @Input({required:true}) profileIndex: number = 0
+  @Input({required:true}) section!: CtrlSection
   HID = HID
   dialogKeyPicker: any
   pickerGroup = 0
@@ -47,29 +48,61 @@ export class SectionComponent {
     public webusbService: WebusbService,
     public profileService: ProfileService,
   ) {
+    // this.section = new CtrlButton(0, 0, 0, ActionGroup.empty(1), ActionGroup.empty(1), '', '')
   }
 
   ngAfterContentInit() {
   }
 
-  getButton() {
-    if (this.button) return [this.button]
-    else return []
+  getSection() {
+    return this.section as CtrlSection
   }
 
-  getButtonTitle() {
-    if (!this.button) return ''
-    else {
-      const section = this.button.sectionIndex
-      if (section <= SectionIndex.START_2) return 'Button ' + SectionIndex[section]
-      if (section <= SectionIndex.R4) return 'Trigger ' + SectionIndex[section]
+  getSectionAsButton() {
+    return this.section as CtrlButton
+  }
+
+  sectionIsButton() {
+    return (this.section instanceof CtrlButton)
+  }
+
+  getSectionTitle() {
+    const section = this.section.sectionIndex
+    if (section <= SectionIndex.START_2) return 'Button ' + SectionIndex[section]
+    if (section <= SectionIndex.R4) return 'Trigger ' + SectionIndex[section]
       return SectionIndex[section]
-    }
   }
 
   getActions(group: number) {
-    const section = this.button as CtrlButton
-    return group==0 ? section.actions_primary : section.actions_secondary
+    if (this.section instanceof CtrlButton) {
+      if (group == 0) return this.section.actions_primary
+      if (group == 1) return this.section.actions_secondary
+    }
+    return ActionGroup.empty(4)
+    // TODO
+  }
+
+  isButtonBlockVisible(group: number) {
+    const button = this.getSectionAsButton()
+    if (group == 0) return true
+    if (group == 1 && (button.hold || button.homeCycle)) return true
+    return false
+  }
+
+  getButtonBlockSubtitle(group: number) {
+    const button = this.getSectionAsButton()
+    if (group == 0) {
+      if (!button.hold && !button.homeCycle) return 'On button press:'
+      if (button.hold && button.overlap) return 'On button press (always):'
+      if (button.hold && !button.overlap) return 'On button click:'
+      if (button.homeCycle) return 'On the first press, until home is released:'
+    }
+    if (group == 1) {
+      if (button.hold && button.overlap) return 'On button hold:'
+      if (button.hold && !button.overlap) return 'Otherwise on button hold:'
+      if (button.homeCycle) return 'On every press:'
+    }
+    return ''
   }
 
   showDialogKeypicker(pickerGroup: number) {
@@ -121,12 +154,7 @@ export class SectionComponent {
     valueGet: number,
     valueSet: (x:number)=>void,
   ) {
-    const section = this.button as CtrlButton
-    const targetActions = (
-      this.pickerGroup == 0 ?
-      section.actions_primary :
-      section.actions_secondary
-    )
+    const targetActions = this.getActions(this.pickerGroup)
     let wrap = valueGet + increment
     if (wrap < wrapMin) wrap = wrap + (wrapMax - wrapMin + 1)
     else if (wrap > wrapMax) wrap = wrap - (wrapMax - wrapMin + 1)
@@ -139,12 +167,7 @@ export class SectionComponent {
   }
 
   pick(key: HID) {
-    const section = this.button as CtrlButton
-    const targetActions = (
-      this.pickerGroup == 0 ?
-      section.actions_primary :
-      section.actions_secondary
-    )
+    const targetActions = this.getActions(this.pickerGroup)
     this._pickToggle(targetActions, key)
   }
 
@@ -182,15 +205,13 @@ export class SectionComponent {
   }
 
   pickCls(key: HID) {
-    const section = this.button as CtrlButton
-    const actions = this.pickerGroup==0 ? section.actions_primary : section.actions_secondary
+    const actions = this.getActions(this.pickerGroup)
     const cls = this.pickerGroup==0 ? ['green'] : ['pink']
     if (actions.has(key)) return cls
     return []
   }
 
   save() {
-    const section = this.button as CtrlButton
-    this.webusbService.setSection(this.profileIndex, section)
+    this.webusbService.setSection(this.profileIndex, this.section)
   }
 }

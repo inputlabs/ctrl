@@ -2,6 +2,7 @@
 // Copyright (C) 2023, Input Labs Oy.
 
 import { HID } from 'lib/hid'
+import { ActionGroup } from './actiongroup'
 
 export const PACKAGE_SIZE = 64
 
@@ -290,7 +291,7 @@ export class CtrlButton extends Ctrl {
   doubleclick = false
   overlap = false
   long = false
-  homeRepeat = false
+  homeCycle = false
 
   constructor(
     public profileIndex: number,
@@ -320,7 +321,7 @@ export class CtrlButton extends Ctrl {
       this.long = true
     }
     if (_mode == ButtonMode.STICKY) {
-      this.homeRepeat = true
+      this.homeCycle = true
     }
   }
 
@@ -330,7 +331,7 @@ export class CtrlButton extends Ctrl {
     if (this.hold && !this.overlap && this.long) mode = ButtonMode.HOLD_EXCLUSIVE_LONG
     if (this.hold && this.overlap && !this.long) mode = ButtonMode.HOLD_OVERLAP
     if (this.hold && this.overlap && this.long) mode = ButtonMode.HOLD_OVERLAP_LONG
-    if (this.homeRepeat) mode = ButtonMode.STICKY
+    if (this.homeCycle) mode = ButtonMode.STICKY
     return mode
   }
 
@@ -397,44 +398,4 @@ export function isCtrlSection(instance: any) {
   if (instance instanceof CtrlButton) return true
   if (instance instanceof CtrlRotary) return true
   return false
-}
-
-export class ActionGroup {
-  actions = new Set<number>()
-  size = 0
-
-  constructor(values: number[]) {
-    this.size = values.length
-    const nonZeroValues = values.filter((x) => x != 0)
-    for(let value of nonZeroValues.values()) {
-      this.actions.add(value)
-    }
-  }
-
-  add(action: HID) {
-    if (this.actions.size >= this.size) return
-    else this.actions.add(action)
-  }
-
-  delete(action: HID) {
-    this.actions.delete(action)
-  }
-
-  has(action: HID) {
-    return this.actions.has(action)
-  }
-
-  asArray() {
-    return Array.from(this.actions)
-  }
-
-  asArrayPadded() {
-    const actions = Array.from(this.actions)
-    const padding = Array(this.size-this.actions.size).fill(0)
-    return [...actions, ...padding]
-  }
-
-  static empty(size: number) {
-    return new ActionGroup(Array(size).fill(0))
-  }
 }

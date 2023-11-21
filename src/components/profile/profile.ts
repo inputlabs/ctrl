@@ -7,7 +7,8 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/keygroup/keygroup'
 import { SectionComponent } from 'components/section/section'
-import { ActionGroup, CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
+import { CtrlButton, CtrlRotary, CtrlSection, SectionIndex } from 'lib/ctrl'
+import { ActionGroup } from 'lib/actiongroup'
 
 @Component({
   selector: 'app-profile',
@@ -42,14 +43,7 @@ export class ProfileComponent {
   }
 
   getSelected() {
-    return this.selected
-  }
-
-  getSelectedAsButton(): Array<CtrlButton> {
-    if(!this.selected) return []
-    const index = this.selected.sectionIndex
-    if (index >= 2 && index <= 28) return [this.selected as CtrlButton]
-    return []
+    return this.selected as CtrlSection
   }
 
   getMappingButton(button: CtrlButton) {

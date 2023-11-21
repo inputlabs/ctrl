@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
-import { ActionGroup } from 'lib/ctrl'
+import { ActionGroup } from 'lib/actiongroup'
 
 @Component({
   selector: 'app-keygroup',

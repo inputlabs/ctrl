@@ -25,10 +25,10 @@ Copyright (C) 2023, Input Labs Oy.
 </div>
 
 <div class='panel'>
-    <div *ngFor='let button of getSelectedAsButton()'>
+    <div *ngIf='getSelected()'>
         <app-section
             [profileIndex]='profileIndex'
-            [button]='button'
+            [section]='getSelected()'
         />
     </div>
 </div>

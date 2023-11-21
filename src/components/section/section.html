@@ -3,13 +3,13 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
-<div *ngFor='let button of getButton()'>
-    <h2>{{getButtonTitle()}}</h2>
+<div *ngIf='sectionIsButton() && getSectionAsButton() as button'>
+    <h2>{{getSectionTitle()}}</h2>
 
     <div class='block'>
         <div
             class='toggle'
-            *ngIf='!button.homeRepeat'
+            *ngIf='!button.homeCycle'
             >
             <span class='name'>Hold</span>
             <span class='material' (click)='button.hold=!button.hold; save()'>
@@ -18,14 +18,14 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
         <div
             class='toggle'
-            *ngIf='!button.homeRepeat'
+            *ngIf='!button.homeCycle'
             >
             <span class='name'>Double click</span>
             <span class='material'>select</span>
         </div>
         <div
             class='toggle'
-            *ngIf='button.hold && !button.homeRepeat'
+            *ngIf='button.hold && !button.homeCycle'
             >
             <span class='name'>Overlap</span>
             <span class='material' (click)='button.overlap=!button.overlap; save()'>
@@ -34,7 +34,7 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
         <div
             class='toggle'
-            *ngIf='button.hold && !button.homeRepeat'
+            *ngIf='button.hold && !button.homeCycle'
             >
             <span class='name'>Long press</span>
             <span class='material' (click)='button.long=!button.long; save()'>
@@ -45,61 +45,42 @@ Copyright (C) 2023, Input Labs Oy.
             class='toggle'
             *ngIf='profileIndex===0 && !button.hold'
             >
-            <span class='name'>Home repeat</span>
-            <span class='material' (click)='button.homeRepeat=!button.homeRepeat; save()'>
-                {{button.homeRepeat ? 'check_box' : 'check_box_outline_blank'}}
+            <span class='name'>Home cycle</span>
+            <span class='material' (click)='button.homeCycle=!button.homeCycle; save()'>
+                {{button.homeCycle ? 'check_box' : 'check_box_outline_blank'}}
             </span>
         </div>
     </div>
 
-    <div class='block'>
-        <div class='subtitle' *ngIf='!button.hold && !button.homeRepeat'>On button press:</div>
-        <div class='subtitle' *ngIf='button.hold && button.overlap'>On button press (always):</div>
-        <div class='subtitle' *ngIf='button.hold && !button.overlap'>On button click:</div>
-        <div class='subtitle' *ngIf='button.homeRepeat'>On the first press, until home is released:</div>
-        <div *ngFor='let action of getActions(0).asArrayPadded(); let i=index'>
-            <div
-                *ngIf='action!==HID.KEY_NONE || i==0'
-                class='action primary'
-                [ngClass]="action==HID.KEY_NONE ? 'hidden' : ''"
-                (click)='showDialogKeypicker(0)'
-                >
-                {{HID[action]}}
+    <div class='block' *ngFor='let groupIndex of [0,1]'>
+        <div *ngIf='isButtonBlockVisible(groupIndex)'>
+            <div class='subtitle'>{{getButtonBlockSubtitle(groupIndex)}}</div>
+            <div *ngIf='getActions(groupIndex).actions.size == 0'>
+                <div
+                    class='action placeholder'
+                    (click)='showDialogKeypicker(groupIndex)'
+                    >
+                    Actions
+                </div>
             </div>
-        </div>
-        <input
-            class='inputtext'
-            type='text'
-            placeholder='Action name'
-            maxlength='14'
-            [(ngModel)]='button.hint_primary'
-            (change)='save()'
-        />
-    </div>
-
-    <div class='block' *ngIf='button.hold || button.homeRepeat'>
-        <div class='subtitle' *ngIf='button.hold && button.overlap'>On button hold:</div>
-        <div class='subtitle' *ngIf='button.hold && !button.overlap'>Otherwise on button hold:</div>
-        <div class='subtitle' *ngIf='button.homeRepeat'>On every press:</div>
-        <div *ngFor='let action of getActions(1).asArrayPadded(); let i=index'>
-            <div
-                *ngIf='action!==HID.KEY_NONE || i==0'
-                class='action'
-                [ngClass]="action==HID.KEY_NONE ? 'hidden' : ''"
-                [ngClass]="button.homeRepeat ? 'primary': 'secondary'"
-                (click)='showDialogKeypicker(1)'
-                >
-                {{HID[action]}}
+            <div *ngFor='let action of getActions(groupIndex).actions'>
+                <div
+                    class='action primary'
+                    [ngClass]="groupIndex==1 && !button.homeCycle ? 'secondary' : ''"
+                    (click)='showDialogKeypicker(groupIndex)'
+                    >
+                    {{HID[action]}}
+                </div>
             </div>
+            <input
+                class='inputtext'
+                type='text'
+                placeholder='Label'
+                maxlength='14'
+                [(ngModel)]='groupIndex==0 ? button.hint_primary : button.hint_secondary'
+                (change)='save()'
+            />
         </div>
-        <input
-            class='inputtext'
-            type='text'
-            placeholder='Action name'
-            maxlength='14'
-            [(ngModel)]='button.hint_secondary'
-            (change)='save()'
-        />
     </div>
 
 </div>
