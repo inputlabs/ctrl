@@ -3,9 +3,11 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
+<!-- BUTTONS -->
 <div *ngIf='sectionIsButton() && getSectionAsButton() as button'>
     <h2>{{getSectionTitle()}}</h2>
 
+    <!-- BUTTON FILTERS -->
     <div class='block'>
         <div
             class='toggle'
@@ -52,6 +54,7 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
 
+    <!-- BUTTON ACTIONS -->
     <div class='block' *ngFor='let groupIndex of [0,1]'>
         <div *ngIf='isButtonBlockVisible(groupIndex)'>
             <div class='subtitle'>{{getButtonBlockSubtitle(groupIndex)}}</div>
@@ -85,6 +88,40 @@ Copyright (C) 2023, Input Labs Oy.
 
 </div>
 
+<!-- ROTARY -->
+<div *ngIf='sectionIsRotary() && getSectionAsRotary() as rotary'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_UP'>On scroll up:</div>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_DOWN'>On scroll down:</div>
+        <div *ngIf='getActions(0).actions.size == 0'>
+            <div
+                class='action placeholder'
+                (click)='showDialogKeypicker(0)'
+                >
+                Actions
+            </div>
+        </div>
+        <div *ngFor='let action of getActions(0).actions'>
+            <div
+                class='action primary'
+                (click)='showDialogKeypicker(0)'
+                >
+                {{HID[action]}}
+            </div>
+        </div>
+        <input
+            class='inputtext'
+            type='text'
+            placeholder='Label'
+            maxlength='14'
+            [(ngModel)]='rotary.hint_0'
+            (change)='save()'
+        />
+    </div>
+</div>
+
+<!-- PICKER / BINDING UI -->
 <dialog id='dialog-keypicker'>
     <div class='bigrow'>
         <div class='keyboard'>

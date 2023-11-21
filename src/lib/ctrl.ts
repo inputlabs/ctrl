@@ -76,6 +76,12 @@ function string_from_slice(buffer: ArrayBuffer, start: number, end: number) {
   return new TextDecoder().decode(buffer.slice(start, end)).replace(/\0/g, '')
 }
 
+function string_to_buffer(size: number, str: string) {
+  const buffer = new Uint8Array(size)
+  new TextEncoder().encodeInto(str, buffer)
+  return buffer
+}
+
 export class Ctrl {
   constructor(
     public protocolVersion: number,
@@ -150,11 +156,11 @@ export class Ctrl {
           new ActionGroup(data.slice(14, 18)), // Actions
           new ActionGroup(data.slice(18, 22)), // Actions
           new ActionGroup(data.slice(22, 26)), // Actions
-          string_from_slice(buffer, 26, 46), // Hint
-          string_from_slice(buffer, 46, 50), // Hint
-          string_from_slice(buffer, 50, 54), // Hint
-          string_from_slice(buffer, 54, 58), // Hint
-          string_from_slice(buffer, 58, 62), // Hint
+          string_from_slice(buffer, 26, 40), // Hint
+          string_from_slice(buffer, 40, 46), // Hint
+          string_from_slice(buffer, 46, 52), // Hint
+          string_from_slice(buffer, 52, 58), // Hint
+          string_from_slice(buffer, 58, 64), // Hint
         )
       }
     }
@@ -336,10 +342,6 @@ export class CtrlButton extends Ctrl {
   }
 
   override payload() {
-    const hintBuffer0 = new Uint8Array(14)
-    const hintBuffer1 = new Uint8Array(14)
-    new TextEncoder().encodeInto(this.hint_primary, hintBuffer0)
-    new TextEncoder().encodeInto(this.hint_secondary, hintBuffer1)
     return [
       this.profileIndex,
       this.sectionIndex,
@@ -348,8 +350,8 @@ export class CtrlButton extends Ctrl {
       ...this.actions_primary.asArrayPadded(),
       ...this.actions_secondary.asArrayPadded(),
       ...Array(20).fill(0),  // Reserved.
-      ...hintBuffer0,
-      ...hintBuffer1,
+      ...string_to_buffer(14, this.hint_primary),
+      ...string_to_buffer(14, this.hint_secondary),
     ]
   }
 }
@@ -369,25 +371,24 @@ export class CtrlRotary extends Ctrl {
     public hint_3: string = '',
     public hint_4: string = '',
   ) {
-    const payload = [
-      profileIndex,
-      sectionIndex,
-      actions_0,
-      actions_1,
-      actions_2,
-      actions_3,
-      actions_4,
-      hint_0,
-      hint_1,
-      hint_2,
-      hint_3,
-      hint_4,
-    ]
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
 
   override payload() {
-    return [] // TODO
+    return [
+      this.profileIndex,
+      this.sectionIndex,
+      ...this.actions_0.asArrayPadded(),
+      ...this.actions_1.asArrayPadded(),
+      ...this.actions_2.asArrayPadded(),
+      ...this.actions_3.asArrayPadded(),
+      ...this.actions_4.asArrayPadded(),
+      ...string_to_buffer(14, this.hint_0),
+      ...string_to_buffer(6, this.hint_1),
+      ...string_to_buffer(6, this.hint_2),
+      ...string_to_buffer(6, this.hint_3),
+      ...string_to_buffer(6, this.hint_4),
+    ]
   }
 }
 

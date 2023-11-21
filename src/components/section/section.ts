@@ -37,7 +37,8 @@ enum Category {
 export class SectionComponent {
   @Input({required:true}) profileIndex: number = 0
   @Input({required:true}) section!: CtrlSection
-  HID = HID
+  HID = HID  // Accessible from template.
+  SectionIndex = SectionIndex  // Accessible from template.
   dialogKeyPicker: any
   pickerGroup = 0
   pickerProfile = 1
@@ -47,9 +48,7 @@ export class SectionComponent {
   constructor(
     public webusbService: WebusbService,
     public profileService: ProfileService,
-  ) {
-    // this.section = new CtrlButton(0, 0, 0, ActionGroup.empty(1), ActionGroup.empty(1), '', '')
-  }
+  ) {}
 
   ngAfterContentInit() {
   }
@@ -62,15 +61,33 @@ export class SectionComponent {
     return this.section as CtrlButton
   }
 
+  getSectionAsRotary() {
+    return this.section as CtrlRotary
+  }
+
   sectionIsButton() {
     return (this.section instanceof CtrlButton)
   }
 
+  sectionIsRotary() {
+    return (this.section instanceof CtrlRotary)
+  }
+
   getSectionTitle() {
     const section = this.section.sectionIndex
-    if (section <= SectionIndex.START_2) return 'Button ' + SectionIndex[section]
+    if (section <= SectionIndex.Y) return 'Button ' + SectionIndex[section]
+    if (section == SectionIndex.DPAD_LEFT)  return 'DPad Left'
+    if (section == SectionIndex.DPAD_RIGHT) return 'DPad Right'
+    if (section == SectionIndex.DPAD_UP)    return 'DPad Up'
+    if (section == SectionIndex.DPAD_DOWN)  return 'DPad Down'
+    if (section == SectionIndex.SELECT_1) return 'Select'
+    if (section == SectionIndex.SELECT_2) return 'Select (2)'
+    if (section == SectionIndex.START_1) return 'Start'
+    if (section == SectionIndex.START_2) return 'Start (2)'
     if (section <= SectionIndex.R4) return 'Trigger ' + SectionIndex[section]
-      return SectionIndex[section]
+    if (section == SectionIndex.ROTARY_UP) return 'Rotary up'
+    if (section == SectionIndex.ROTARY_DOWN) return 'Rotary down'
+    return SectionIndex[section]
   }
 
   getActions(group: number) {
@@ -78,8 +95,14 @@ export class SectionComponent {
       if (group == 0) return this.section.actions_primary
       if (group == 1) return this.section.actions_secondary
     }
+    if (this.section instanceof CtrlRotary) {
+      if (group == 0) return this.section.actions_0
+      if (group == 1) return this.section.actions_1
+      if (group == 2) return this.section.actions_2
+      if (group == 3) return this.section.actions_3
+      if (group == 4) return this.section.actions_4
+    }
     return ActionGroup.empty(4)
-    // TODO
   }
 
   isButtonBlockVisible(group: number) {
