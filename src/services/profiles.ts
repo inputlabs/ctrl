@@ -26,7 +26,7 @@ export class Profile {
 })
 export class ProfileService {
   profiles: Profile[] = []
-  synced = false
+  syncedNames = false
 
   constructor(
     private webusb: WebusbService,
@@ -40,7 +40,6 @@ export class ProfileService {
 
   initProfiles() {
     for(let i of Array(13).keys()) this.initProfile(i)
-    this.synced = false
   }
 
   initProfile(index: number) {
@@ -48,23 +47,22 @@ export class ProfileService {
     this.profiles[index] = new Profile(name)
   }
 
-  async getProfiles() {
-    if (this.synced) return
-    await this.getProfilesName()
-    for(let i of Array(9).keys()) {
-      await this.getProfile(i)
+  async fetchProfileNames() {
+    for(let index of Array(9).keys()) {
+      await this.fetchProfileName(index)
     }
-    this.synced = true
+    this.syncedNames = true
   }
 
-  async getProfilesName() {
-    for(let profile of Array(9).keys()) {
-      const section = await this.webusb.getSection(profile, SectionName.NAME)
-      this.profiles[profile].name = section as CtrlSectionName
-    }
+  async fetchProfileName(index: number) {
+    const section = await this.webusb.getSection(index, SectionName.NAME)
+    this.profiles[index].name = section as CtrlSectionName
   }
 
-  async getProfile(profileIndex: number) {
+  async fetchProfile(profileIndex: number) {
+    // Name
+    if (!this.syncedNames) await this.fetchProfileNames()
+    await this.fetchProfileName(profileIndex)
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton

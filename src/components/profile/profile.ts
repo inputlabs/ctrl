@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/keygroup/keygroup'
 import { SectionComponent } from 'components/section/section'
-import { ActionGroup } from 'lib/actiongroup'
 import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary } from 'lib/ctrl'
 import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 
@@ -36,11 +35,17 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
-    this.getProfile()
+    this.init()
   }
 
-  async getProfile() {
-    await this.profileService.getProfiles()
+  async init() {
+    this.initName()  // Display previous name without flickering.
+    await this.profileService.fetchProfileName(this.profileIndex)
+    this.initName()
+    await this.profileService.fetchProfile(this.profileIndex)
+  }
+
+  initName() {
     this.selected = this.profileService.profiles[this.profileIndex].name
   }
 
