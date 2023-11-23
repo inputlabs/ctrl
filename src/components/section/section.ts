@@ -100,18 +100,13 @@ export class SectionComponent {
   }
 
   getActions(group: number) {
-    if (this.section instanceof CtrlButton) {
-      if (group == 0) return this.section.actions_primary
-      if (group == 1) return this.section.actions_secondary
-    }
-    if (this.section instanceof CtrlRotary) {
-      if (group == 0) return this.section.actions_0
-      if (group == 1) return this.section.actions_1
-      if (group == 2) return this.section.actions_2
-      if (group == 3) return this.section.actions_3
-      if (group == 4) return this.section.actions_4
-    }
-    return ActionGroup.empty(4)
+    const section = this.section as (CtrlButton | CtrlRotary)
+    return section.actions[group]
+  }
+
+  getHints() {
+    const section = this.section as (CtrlButton | CtrlRotary)
+    return section.hints
   }
 
   isButtonBlockVisible(group: number) {
@@ -139,7 +134,8 @@ export class SectionComponent {
 
   showDialogKeypicker(pickerGroup: number) {
     this.pickerGroup = pickerGroup
-    for(let action of this.getActions(pickerGroup).actions) {
+    const section = this.section as (CtrlButton | CtrlRotary)
+    for(let action of section.actions[pickerGroup].actions) {
       if (action >= HID.PROC_PROFILE_0 && action <= HID.PROC_PROFILE_8) {
         this.pickerProfile = action - HID.PROC_PROFILE_0
       }

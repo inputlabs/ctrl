@@ -16,10 +16,8 @@ import { ActionGroup } from 'lib/actiongroup'
 })
 export class ButtonComponent {
   @Input() mode: number = 0
-  @Input() actions_primary: ActionGroup = ActionGroup.empty(4)
-  @Input() actions_secondary: ActionGroup = ActionGroup.empty(4)
-  @Input() hint_primary: string = ''
-  @Input() hint_secondary: string = ''
+  @Input() actions: ActionGroup[] = []
+  @Input() hints: string[] = []
 
   constructor(
     public profileService: ProfileService,
@@ -120,8 +118,7 @@ export class ButtonComponent {
 
   getPrimary() {
     const mode = this.mode
-    return this.actions_primary.asArray()
-      // .filter((action: number) => action > 0)
+    return this.actions[0].asArray()
       .map((action: number) => {
         const text = this.getText(action)
         const icon = this.getIcon(action)
@@ -132,8 +129,7 @@ export class ButtonComponent {
 
   getSecondary() {
     const mode = this.mode
-    return this.actions_secondary.asArray()
-      // .filter((action: number) => action > 0)
+    return this.actions[1].asArray()
       .map((action: number) => {
         const text = this.getText(action)
         const icon = this.getIcon(action)
@@ -147,10 +143,10 @@ export class ButtonComponent {
   }
 
   getPrimaryHint() {
-    return this.hint_primary == '' ? null : this.hint_primary
+    return this.hints[0] == '' ? null : this.hints[0]
   }
 
   getSecondaryHint() {
-    return this.hint_secondary == '' ? null : this.hint_secondary
+    return this.hints[1] == '' ? null : this.hints[1]
   }
 }

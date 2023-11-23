@@ -96,7 +96,7 @@ Copyright (C) 2023, Input Labs Oy.
                 type='text'
                 placeholder='Label'
                 maxlength='14'
-                [(ngModel)]='groupIndex==0 ? button.hint_primary : button.hint_secondary'
+                [(ngModel)]='getHints()[groupIndex]'
                 (change)='save()'
             />
         </div>
@@ -131,14 +131,14 @@ Copyright (C) 2023, Input Labs Oy.
             type='text'
             placeholder='Label'
             maxlength='14'
-            [(ngModel)]='rotary.hint_0'
+            [(ngModel)]='getHints()[0]'
             (change)='save()'
         />
     </div>
 </div>
 
 <!-- PICKER / BINDING UI -->
-<dialog id='dialog-keypicker'>
+<dialog id='dialog-keypicker' *ngIf='!sectionIsName()'>
     <div class='bigrow'>
         <div class='keyboard'>
             <div>

@@ -59,10 +59,8 @@ export class ProfileComponent {
     if (button.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
       mode: button.mode(),
-      actions_primary: button.actions_primary,
-      actions_secondary: button.actions_secondary,
-      hint_primary: button.hint_primary,
-      hint_secondary: button.hint_secondary,
+      actions: button.actions,
+      hints: button.hints,
       cls,
       style,
       click: () => this.setSelected(button),
@@ -76,10 +74,8 @@ export class ProfileComponent {
     if (rotary.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
       mode: 0,
-      actions_primary: rotary.actions_0,
-      actions_secondary: ActionGroup.empty(4),
-      hint_primary: rotary.hint_0,
-      hint_secondary: '',
+      actions: rotary.actions,
+      hints: rotary.hints,
       cls,
       style,
       click: () => this.setSelected(rotary),

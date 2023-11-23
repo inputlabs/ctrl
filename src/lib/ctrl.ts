@@ -296,10 +296,8 @@ export class CtrlButton extends Ctrl {
     public profileIndex: number,
     public sectionIndex: SectionIndex,
     private _mode: number,
-    public actions_primary: ActionGroup = ActionGroup.empty(4),
-    public actions_secondary: ActionGroup = ActionGroup.empty(4),
-    public hint_primary: string,
-    public hint_secondary: string,
+    public actions: ActionGroup[] = Array(2).fill(ActionGroup.empty(4)),
+    public hints: string[] = Array(2).fill(''),
   ) {
     const payload: number[] = []
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
@@ -340,10 +338,14 @@ export class CtrlButton extends Ctrl {
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
       data[6],  // Mode.
-      new ActionGroup(data.slice(8, 12)),
-      new ActionGroup(data.slice(12, 16)),
-      string_from_slice(buffer, 36, 50),
-      string_from_slice(buffer, 50, 64),
+      [
+        new ActionGroup(data.slice(8, 12)),
+        new ActionGroup(data.slice(12, 16)),
+      ],
+      [
+        string_from_slice(buffer, 36, 50),
+        string_from_slice(buffer, 50, 64),
+      ]
     )
   }
 
@@ -353,11 +355,11 @@ export class CtrlButton extends Ctrl {
       this.sectionIndex,
       this.mode(),
       0,  // Reserved.
-      ...this.actions_primary.asArrayPadded(),
-      ...this.actions_secondary.asArrayPadded(),
+      ...this.actions[0].asArrayPadded(),
+      ...this.actions[1].asArrayPadded(),
       ...Array(20).fill(0),  // Reserved.
-      ...string_to_buffer(14, this.hint_primary),
-      ...string_to_buffer(14, this.hint_secondary),
+      ...string_to_buffer(14, this.hints[0]),
+      ...string_to_buffer(14, this.hints[1]),
     ]
   }
 }
@@ -366,16 +368,8 @@ export class CtrlRotary extends Ctrl {
   constructor(
     public profileIndex: number,
     public sectionIndex: SectionIndex,
-    public actions_0: ActionGroup = ActionGroup.empty(4),
-    public actions_1: ActionGroup = ActionGroup.empty(4),
-    public actions_2: ActionGroup = ActionGroup.empty(4),
-    public actions_3: ActionGroup = ActionGroup.empty(4),
-    public actions_4: ActionGroup = ActionGroup.empty(4),
-    public hint_0: string = '',
-    public hint_1: string = '',
-    public hint_2: string = '',
-    public hint_3: string = '',
-    public hint_4: string = '',
+    public actions: ActionGroup[] = Array(5).fill(ActionGroup.empty(4)),
+    public hints: string[] = Array(5).fill(''),
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
@@ -385,16 +379,20 @@ export class CtrlRotary extends Ctrl {
     return new CtrlRotary(
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
-      new ActionGroup(data.slice(6, 10)),  // Actions
-      new ActionGroup(data.slice(10, 14)), // Actions
-      new ActionGroup(data.slice(14, 18)), // Actions
-      new ActionGroup(data.slice(18, 22)), // Actions
-      new ActionGroup(data.slice(22, 26)), // Actions
-      string_from_slice(buffer, 26, 40), // Hint
-      string_from_slice(buffer, 40, 46), // Hint
-      string_from_slice(buffer, 46, 52), // Hint
-      string_from_slice(buffer, 52, 58), // Hint
-      string_from_slice(buffer, 58, 64), // Hint
+      [
+        new ActionGroup(data.slice(6, 10)),  // Actions
+        new ActionGroup(data.slice(10, 14)), // Actions
+        new ActionGroup(data.slice(14, 18)), // Actions
+        new ActionGroup(data.slice(18, 22)), // Actions
+        new ActionGroup(data.slice(22, 26)), // Actions
+      ],
+      [
+        string_from_slice(buffer, 26, 40), // Hint
+        string_from_slice(buffer, 40, 46), // Hint
+        string_from_slice(buffer, 46, 52), // Hint
+        string_from_slice(buffer, 52, 58), // Hint
+        string_from_slice(buffer, 58, 64), // Hint
+      ]
     )
   }
 
@@ -402,16 +400,16 @@ export class CtrlRotary extends Ctrl {
     return [
       this.profileIndex,
       this.sectionIndex,
-      ...this.actions_0.asArrayPadded(),
-      ...this.actions_1.asArrayPadded(),
-      ...this.actions_2.asArrayPadded(),
-      ...this.actions_3.asArrayPadded(),
-      ...this.actions_4.asArrayPadded(),
-      ...string_to_buffer(14, this.hint_0),
-      ...string_to_buffer(6, this.hint_1),
-      ...string_to_buffer(6, this.hint_2),
-      ...string_to_buffer(6, this.hint_3),
-      ...string_to_buffer(6, this.hint_4),
+      ...this.actions[0].asArrayPadded(),
+      ...this.actions[1].asArrayPadded(),
+      ...this.actions[2].asArrayPadded(),
+      ...this.actions[3].asArrayPadded(),
+      ...this.actions[4].asArrayPadded(),
+      ...string_to_buffer(14, this.hints[0]),
+      ...string_to_buffer(6, this.hints[1]),
+      ...string_to_buffer(6, this.hints[2]),
+      ...string_to_buffer(6, this.hints[3]),
+      ...string_to_buffer(6, this.hints[4]),
     ]
   }
 }
