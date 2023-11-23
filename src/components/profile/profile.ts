@@ -79,8 +79,8 @@ export class ProfileComponent {
     if (rotary.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
       mode: 0,
-      actions: rotary.actions,
-      hints: rotary.hints,
+      actions: [rotary.actions[0]],
+      hints: [rotary.hints[0]],
       cls,
       style,
       click: () => this.setSelected(rotary),
@@ -90,13 +90,11 @@ export class ProfileComponent {
   getMappings() {
     const buttons = this.profileService.profiles[this.profileIndex].buttons
       .map((button: CtrlButton) => this.getMappingButton(button))
-    const rotary_up = this.getMappingRotary(
-      this.profileService.profiles[this.profileIndex].rotary_up
-    )
-    const rotary_down = this.getMappingRotary(
-      this.profileService.profiles[this.profileIndex].rotary_down
-    )
-    return [...buttons, rotary_up, rotary_down]
+    const ctrlRotaryUp = this.profileService.profiles[this.profileIndex].rotaryUp
+    const ctrlRotaryDown = this.profileService.profiles[this.profileIndex].rotaryDown
+    const rotaryUp = this.getMappingRotary(ctrlRotaryUp)
+    const rotaryDown = this.getMappingRotary(ctrlRotaryDown)
+    return [...buttons, rotaryUp, rotaryDown]
   }
 }
 

@@ -14,8 +14,8 @@ export class Profile {
   constructor (
     name: string,
     public buttons: CtrlButton[] = [],
-    public rotary_up: CtrlRotary = new CtrlRotary(0, 0),
-    public rotary_down: CtrlRotary = new CtrlRotary(0, 0),
+    public rotaryUp: CtrlRotary = new CtrlRotary(0, 0),
+    public rotaryDown: CtrlRotary = new CtrlRotary(0, 0),
   ) {
     this.name = new CtrlSectionName(0, 0, name)
   }
@@ -96,9 +96,9 @@ export class ProfileService {
     await getButton(SectionButton.DHAT_DR)
     await getButton(SectionButton.DHAT_PUSH)
     // Rotary.
-    const rotary_up = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_UP) as CtrlRotary
-    const rotary_down = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_DOWN) as CtrlRotary
-    this.profiles[profileIndex].rotary_up = rotary_up
-    this.profiles[profileIndex].rotary_down = rotary_down
+    const rotaryUp = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_UP) as CtrlRotary
+    const rotaryDown = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_DOWN) as CtrlRotary
+    this.profiles[profileIndex].rotaryUp = rotaryUp
+    this.profiles[profileIndex].rotaryDown = rotaryDown
   }
 }
