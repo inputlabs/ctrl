@@ -8,7 +8,7 @@ import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/keygroup/keygroup'
 import { SectionComponent } from 'components/section/section'
 import { ActionGroup } from 'lib/actiongroup'
-import { CtrlButton, CtrlRotary, CtrlSection } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary } from 'lib/ctrl'
 import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 
 @Component({
@@ -24,7 +24,7 @@ import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 })
 export class ProfileComponent {
   profileIndex: number = 0
-  selected?: CtrlSection
+  selected: CtrlSection = new CtrlSectionName(0, SectionName.NAME, '')
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,7 +36,12 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
-    this.profileService.getProfile(this.profileIndex)
+    this.getProfile()
+  }
+
+  async getProfile() {
+    await this.profileService.getProfiles()
+    this.selected = this.profileService.profiles[this.profileIndex].name
   }
 
   setSelected(section: CtrlSection) {

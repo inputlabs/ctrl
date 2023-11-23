@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
-import { CtrlButton, CtrlRotary, CtrlSection } from 'lib/ctrl'
+import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName } from 'lib/ctrl'
 import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actiongroup'
 import { HID } from 'lib/hid'
@@ -36,28 +36,30 @@ enum Category {
   styleUrls: ['./section.sass']
 })
 export class SectionComponent {
-  @Input({required:true}) profileIndex: number = 0
-  @Input({required:true}) section!: CtrlSection
-  HID = HID  // Accessible from template.
-  SectionName = SectionName  // Accessible from template.
-  SectionButton = SectionButton  // Accessible from template.
-  SectionRotary = SectionRotary  // Accessible from template.
+  @Input() profileIndex: number = 0
+  @Input() section: CtrlSection = new CtrlSectionName(0, SectionName.NAME, '')
   dialogKeyPicker: any
   pickerGroup = 0
   pickerProfile = 1
   pickerRotary = 0
   pickerTune = 0
+  // Template aliases.
+  HID = HID
+  SectionName = SectionName
+  SectionButton = SectionButton
+  SectionRotary = SectionRotary
 
   constructor(
     public webusbService: WebusbService,
     public profileService: ProfileService,
   ) {}
 
-  ngAfterContentInit() {
-  }
-
   getSection() {
     return this.section as CtrlSection
+  }
+
+  getSectionAsName() {
+    return this.section as CtrlSectionName
   }
 
   getSectionAsButton() {
@@ -66,6 +68,10 @@ export class SectionComponent {
 
   getSectionAsRotary() {
     return this.section as CtrlRotary
+  }
+
+  sectionIsName() {
+    return (this.section instanceof CtrlSectionName)
   }
 
   sectionIsButton() {

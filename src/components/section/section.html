@@ -3,6 +3,22 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
+<!-- PROFILE NAME -->
+<div *ngIf='sectionIsName() && getSectionAsName() as name'>
+    <h2>Profile</h2>
+    <div class='block'>
+        <div class='subtitle'>Name:</div>
+        <input
+            class='inputtext'
+            type='text'
+            placeholder='Label'
+            maxlength='24'
+            [(ngModel)]='name.name'
+            (change)='save()'
+        />
+    </div>
+</div>
+
 <!-- BUTTONS -->
 <div *ngIf='sectionIsButton() && getSectionAsButton() as button'>
     <h2>{{getSectionTitle()}}</h2>

@@ -272,12 +272,16 @@ export class CtrlSectionName extends Ctrl {
     return new CtrlSectionName(
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
-      string_from_slice(buffer, 6, 38)  // Name.
+      string_from_slice(buffer, 6, 30)  // Name.
     )
   }
 
   override payload() {
-    return Array.from(new TextEncoder().encode(this.name))
+    return [
+      this.profileIndex,
+      this.sectionIndex,
+      ...string_to_buffer(24, this.name)
+    ]
   }
 }
 

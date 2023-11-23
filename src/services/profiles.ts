@@ -26,7 +26,7 @@ export class Profile {
 })
 export class ProfileService {
   profiles: Profile[] = []
-  namesInitialized = false
+  synced = false
 
   constructor(
     private webusb: WebusbService,
@@ -39,18 +39,32 @@ export class ProfileService {
   }
 
   initProfiles() {
-    for(let i of Array(13).keys()) this.resetProfile(i)
+    for(let i of Array(13).keys()) this.initProfile(i)
+    this.synced = false
   }
 
-  resetProfile(index: number) {
+  initProfile(index: number) {
     const name = index==0 ? 'Home' : index <= 8 ? `Profile ${index}` : `Custom ${index-8}`
     this.profiles[index] = new Profile(name)
   }
 
+  async getProfiles() {
+    if (this.synced) return
+    await this.getProfilesName()
+    for(let i of Array(9).keys()) {
+      await this.getProfile(i)
+    }
+    this.synced = true
+  }
+
+  async getProfilesName() {
+    for(let profile of Array(9).keys()) {
+      const section = await this.webusb.getSection(profile, SectionName.NAME)
+      this.profiles[profile].name = section as CtrlSectionName
+    }
+  }
+
   async getProfile(profileIndex: number) {
-    this.resetProfile(profileIndex)
-    // Name(s).
-    await this.updateProfileNames()
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
@@ -88,20 +102,5 @@ export class ProfileService {
     const rotary_down = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_DOWN) as CtrlRotary
     this.profiles[profileIndex].rotary_up = rotary_up
     this.profiles[profileIndex].rotary_down = rotary_down
-  }
-
-  getProfileName(profile: number) {
-    return this.profiles[profile].name.name
-  }
-
-  async updateProfileNames() {
-    while (!this.namesInitialized && !this.webusb.isConnected) {
-      return
-    }
-    for(let profile of Array(9).keys()) {
-      const section = await this.webusb.getSection(profile, SectionName.NAME)
-      this.profiles[profile].name = section as CtrlSectionName
-    }
-    this.namesInitialized = true
   }
 }
