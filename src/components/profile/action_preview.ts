@@ -5,14 +5,14 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
-import { ActionGroup } from 'lib/actiongroup'
+import { ActionGroup } from 'lib/actions'
 
 @Component({
-  selector: 'app-keygroup',
+  selector: 'app-action-preview',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './keygroup.html',
-  styleUrls: ['./keygroup.sass']
+  templateUrl: './action_preview.html',
+  styleUrls: ['./action_preview.sass']
 })
 export class ButtonComponent {
   @Input() mode: number = 0

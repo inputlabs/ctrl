@@ -2,7 +2,7 @@
 // Copyright (C) 2023, Input Labs Oy.
 
 import { HID } from 'lib/hid'
-import { ActionGroup } from './actiongroup'
+import { ActionGroup } from './actions'
 
 export const PACKAGE_SIZE = 64
 

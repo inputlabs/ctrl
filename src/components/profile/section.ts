@@ -8,7 +8,7 @@ import { ProfileService } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
 import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName } from 'lib/ctrl'
 import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
-import { ActionGroup } from 'lib/actiongroup'
+import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
 
 enum Category {
