@@ -40,7 +40,7 @@ export class ProfileComponent {
 
   async init() {
     this.initName()  // Display previous name without flickering.
-    await this.profileService.fetchProfileName(this.profileIndex)
+    await this.profileService.fetchProfileNames()
     this.initName()
     await this.profileService.fetchProfile(this.profileIndex)
   }

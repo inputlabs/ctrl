@@ -60,9 +60,6 @@ export class ProfileService {
   }
 
   async fetchProfile(profileIndex: number) {
-    // Name
-    if (!this.syncedNames) await this.fetchProfileNames()
-    await this.fetchProfileName(profileIndex)
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
