@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
-import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, SectionIndex } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, SectionIndex, ButtonMode } from 'lib/ctrl'
 
 @Component({
   selector: 'app-profile',
@@ -70,7 +70,7 @@ export class ProfileComponent {
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
     if (section.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
-      mode: 0,
+      mode: section instanceof CtrlRotary ? ButtonMode.NORMAL : section.mode(),
       actions: section instanceof CtrlRotary ? [section.actions[0]] : section.actions,
       hints: section instanceof CtrlRotary ? [section.hints[0]] : section.hints,
       cls,

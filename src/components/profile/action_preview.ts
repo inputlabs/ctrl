@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
 import { ActionGroup } from 'lib/actions'
+import { ButtonMode } from 'lib/ctrl'
 
 @Component({
   selector: 'app-action-preview',
@@ -15,7 +16,7 @@ import { ActionGroup } from 'lib/actions'
   styleUrls: ['./action_preview.sass']
 })
 export class ButtonComponent {
-  @Input() mode: number = 0
+  @Input() mode: ButtonMode = 0
   @Input() actions: ActionGroup[] = []
   @Input() hints: string[] = []
 
@@ -119,7 +120,6 @@ export class ButtonComponent {
   }
 
   getPrimary() {
-    const mode = this.mode
     return this.actions[0].asArray()
       .map((action: number) => {
         const text = this.getText(action)
