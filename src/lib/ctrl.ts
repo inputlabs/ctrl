@@ -28,14 +28,9 @@ export enum ConfigIndex {
   DEADZONE,
 }
 
-export type SectionIndex = SectionName | SectionButton | SectionRotary
-
-export enum SectionName {
+export enum SectionIndex {
   NONE,
   NAME,
-}
-
-export enum SectionButton {
   A = 2,
   B,
   X,
@@ -63,11 +58,16 @@ export enum SectionButton {
   DHAT_DL,
   DHAT_DR,
   DHAT_PUSH,
-}
-
-export enum SectionRotary {
-  ROTARY_UP = 29,
+  ROTARY_UP,
   ROTARY_DOWN,
+  THUMBSTICK,
+  THUMBSTICK_LEFT,
+  THUMBSTICK_RIGHT,
+  THUMBSTICK_UP,
+  THUMBSTICK_DOWN,
+  THUMBSTICK_PUSH,
+  THUMBSTICK_INNER,
+  THUMBSTICK_OUTER,
 }
 
 export enum ButtonMode {
@@ -78,6 +78,36 @@ export enum ButtonMode {
   HOLD_OVERLAP,
   HOLD_OVERLAP_LONG,
   HOLD_DOUBLE_PRESS,
+}
+
+export enum ThumbstickMode {
+  OFF,
+  DIR4,
+  ALPHANUMERIC,
+}
+
+export enum ThumbstickDistanceMode {
+  AXIAL,
+  RADIAL,
+}
+
+export function sectionIsName(section: SectionIndex) {
+  return section == SectionIndex.NAME
+}
+
+export function sectionIsButton(section: SectionIndex) {
+  return (
+    (section >= SectionIndex.A && section <= SectionIndex.DHAT_PUSH) ||
+    (section >= SectionIndex.THUMBSTICK_LEFT && section <= SectionIndex.THUMBSTICK_OUTER)
+  )
+}
+
+export function sectionIsRotary(section: SectionIndex) {
+  return section == SectionIndex.ROTARY_UP || section == SectionIndex.ROTARY_DOWN
+}
+
+export function sectionIsThumbtick(section: SectionIndex) {
+  return section == SectionIndex.THUMBSTICK
 }
 
 function string_from_slice(buffer: ArrayBuffer, start: number, end: number) {
@@ -122,9 +152,10 @@ export class Ctrl {
     if (msgType == MessageType.CONFIG_SHARE) return CtrlConfigShare.decode(buffer)
     if (msgType == MessageType.PROFILE_SHARE) {
       const section = data[5]
-      if (section == SectionName.NAME) return CtrlSectionName.decode(buffer)
-      if (section in SectionButton) return CtrlButton.decode(buffer)
-      if (section in SectionRotary) return CtrlRotary.decode(buffer)
+      if (sectionIsName(section)) return CtrlSectionName.decode(buffer)
+      if (sectionIsButton(section)) return CtrlButton.decode(buffer)
+      if (sectionIsRotary(section)) return CtrlRotary.decode(buffer)
+      if (sectionIsThumbtick(section)) return CtrlThumbstick.decode(buffer)
     }
     return false
   }
@@ -414,7 +445,43 @@ export class CtrlRotary extends Ctrl {
   }
 }
 
-export type CtrlSection = CtrlSectionName | CtrlButton | CtrlRotary
+export class CtrlThumbstick extends Ctrl {
+  constructor(
+    public profileIndex: number,
+    public sectionIndex: SectionIndex,
+    public mode: ThumbstickMode,
+    public distance_mode: ThumbstickDistanceMode,
+    public deadzone: number,
+    public overlap : number,
+  ) {
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlThumbstick(
+      data[4],  // ProfileIndex.
+      data[5],  // SectionIndex.
+      data[6],
+      data[7],
+      data[8],
+      data[9],
+    )
+  }
+
+  override payload() {
+    return [
+      this.profileIndex,
+      this.sectionIndex,
+      this.mode,
+      this.distance_mode,
+      this.deadzone,
+      this.overlap,
+    ]
+  }
+}
+
+export type CtrlSection = CtrlSectionName | CtrlButton | CtrlRotary | CtrlThumbstick
 
 export function isCtrlSection(instance: any) {
   if (instance instanceof CtrlSectionName) return true

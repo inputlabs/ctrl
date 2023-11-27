@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
-import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName } from 'lib/ctrl'
-import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
+import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName, CtrlThumbstick } from 'lib/ctrl'
+import { SectionIndex } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
 
@@ -37,7 +37,7 @@ enum Category {
 })
 export class SectionComponent {
   @Input() profileIndex: number = 0
-  @Input() section: CtrlSection = new CtrlSectionName(0, SectionName.NAME, '')
+  @Input() section: CtrlSection = new CtrlSectionName(0, SectionIndex.NAME, '')
   dialogKeyPicker: any
   pickerGroup = 0
   pickerProfile = 1
@@ -45,58 +45,25 @@ export class SectionComponent {
   pickerTune = 0
   // Template aliases.
   HID = HID
-  SectionName = SectionName
-  SectionButton = SectionButton
-  SectionRotary = SectionRotary
+  SectionIndex = SectionIndex
 
   constructor(
     public webusbService: WebusbService,
     public profileService: ProfileService,
   ) {}
 
-  getSection() {
-    return this.section as CtrlSection
-  }
-
-  getSectionAsName() {
-    return this.section as CtrlSectionName
-  }
-
-  getSectionAsButton() {
-    return this.section as CtrlButton
-  }
-
-  getSectionAsRotary() {
-    return this.section as CtrlRotary
-  }
-
-  sectionIsName() {
-    return (this.section instanceof CtrlSectionName)
-  }
-
-  sectionIsButton() {
-    return (this.section instanceof CtrlButton)
-  }
-
-  sectionIsRotary() {
-    return (this.section instanceof CtrlRotary)
-  }
+  getSection = () => this.section as CtrlSection
+  getSectionAsName = () => this.section as CtrlSectionName
+  getSectionAsButton = () => this.section as CtrlButton
+  getSectionAsRotary = () => this.section as CtrlRotary
+  getSectionAsThumbstick = () => this.section as CtrlThumbstick
+  sectionIsName = () => this.section instanceof CtrlSectionName
+  sectionIsButton = () => this.section instanceof CtrlButton
+  sectionIsRotary = () => this.section instanceof CtrlRotary
+  sectionIsThumbstick = () => this.section instanceof CtrlThumbstick
 
   getSectionTitle() {
-    const section = this.section.sectionIndex
-    if (section <= SectionButton.Y) return 'Button ' + SectionButton[section]
-    if (section == SectionButton.DPAD_LEFT)  return 'DPad Left'
-    if (section == SectionButton.DPAD_RIGHT) return 'DPad Right'
-    if (section == SectionButton.DPAD_UP)    return 'DPad Up'
-    if (section == SectionButton.DPAD_DOWN)  return 'DPad Down'
-    if (section == SectionButton.SELECT_1) return 'Select'
-    if (section == SectionButton.SELECT_2) return 'Select (2)'
-    if (section == SectionButton.START_1) return 'Start'
-    if (section == SectionButton.START_2) return 'Start (2)'
-    if (section <= SectionButton.R4) return 'Trigger ' + SectionButton[section]
-    if (section == SectionRotary.ROTARY_UP) return 'Rotary up'
-    if (section == SectionRotary.ROTARY_DOWN) return 'Rotary down'
-    return ''
+    return sectionTitles[this.section.sectionIndex]
   }
 
   getActions(group: number) {
@@ -242,4 +209,47 @@ export class SectionComponent {
   save() {
     this.webusbService.setSection(this.profileIndex, this.section)
   }
+}
+
+interface SectionTitles {
+  [index: number]: string
+}
+const sectionTitles: SectionTitles = {
+  [SectionIndex.A]:           'Button A',
+  [SectionIndex.B]:           'Button B',
+  [SectionIndex.X]:           'Button X',
+  [SectionIndex.Y]:           'Button Y',
+  [SectionIndex.DPAD_LEFT]:   'DPad Left',
+  [SectionIndex.DPAD_RIGHT]:  'DPad Right',
+  [SectionIndex.DPAD_UP]:     'DPad Up',
+  [SectionIndex.DPAD_DOWN]:   'DPad Down',
+  [SectionIndex.SELECT_1]:    'Select',
+  [SectionIndex.SELECT_2]:    'Select (2)',
+  [SectionIndex.START_1]:     'Start',
+  [SectionIndex.START_2]:     'Start (2)',
+  [SectionIndex.L1]:          'Trigger L1',
+  [SectionIndex.L2]:          'Trigger L2',
+  [SectionIndex.L4]:          'Trigger L4',
+  [SectionIndex.R1]:          'Trigger R1',
+  [SectionIndex.R2]:          'Trigger R2',
+  [SectionIndex.R4]:          'Trigger R4',
+  [SectionIndex.DHAT_LEFT]:   'DHat Left',
+  [SectionIndex.DHAT_RIGHT]:  'DHat Right',
+  [SectionIndex.DHAT_UP]:     'DHat Up',
+  [SectionIndex.DHAT_DOWN]:   'DHat Down',
+  [SectionIndex.DHAT_UL]:     'DHat Up-Left',
+  [SectionIndex.DHAT_UR]:     'DHat Up-Right',
+  [SectionIndex.DHAT_DL]:     'DHat Down-Left',
+  [SectionIndex.DHAT_DR]:     'DHat Down-Right',
+  [SectionIndex.DHAT_PUSH]:   'DHat Push',
+  [SectionIndex.ROTARY_UP]:   'Rotary up',
+  [SectionIndex.ROTARY_DOWN]: 'Rotary down',
+  [SectionIndex.THUMBSTICK]:  'Thumbstick',
+  [SectionIndex.THUMBSTICK_LEFT]:  'Thumbstick Left',
+  [SectionIndex.THUMBSTICK_RIGHT]:  'Thumbstick Right',
+  [SectionIndex.THUMBSTICK_UP]:  'Thumbstick Up',
+  [SectionIndex.THUMBSTICK_DOWN]:  'Thumbstick Down',
+  [SectionIndex.THUMBSTICK_PUSH]:  'Thumbstick Push',
+  [SectionIndex.THUMBSTICK_INNER]:  'Thumbstick Inner',
+  [SectionIndex.THUMBSTICK_OUTER]:  'Thumbstick Outer',
 }

@@ -5,8 +5,7 @@
 
 import { Injectable } from '@angular/core'
 import { WebusbService } from 'services/webusb'
-import { CtrlSectionName, CtrlButton, CtrlRotary } from 'lib/ctrl'
-import { SectionIndex, SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
+import { CtrlSectionName, CtrlButton, CtrlRotary, SectionIndex, CtrlThumbstick } from 'lib/ctrl'
 
 export class Profile {
   name: CtrlSectionName
@@ -16,6 +15,7 @@ export class Profile {
     public buttons: CtrlButton[] = [],
     public rotaryUp: CtrlRotary = new CtrlRotary(0, 0),
     public rotaryDown: CtrlRotary = new CtrlRotary(0, 0),
+    public thumbstick: CtrlThumbstick = new CtrlThumbstick(0, 0, 0, 0, 0, 0),
   ) {
     this.name = new CtrlSectionName(0, 0, name)
   }
@@ -55,7 +55,7 @@ export class ProfileService {
   }
 
   async fetchProfileName(index: number) {
-    const section = await this.webusb.getSection(index, SectionName.NAME)
+    const section = await this.webusb.getSection(index, SectionIndex.NAME)
     this.profiles[index].name = section as CtrlSectionName
   }
 
@@ -65,37 +65,49 @@ export class ProfileService {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
       this.profiles[profileIndex].buttons.push(button)
     }
-    await getButton(SectionButton.A)
-    await getButton(SectionButton.B)
-    await getButton(SectionButton.X)
-    await getButton(SectionButton.Y)
-    await getButton(SectionButton.DPAD_LEFT)
-    await getButton(SectionButton.DPAD_RIGHT)
-    await getButton(SectionButton.DPAD_UP)
-    await getButton(SectionButton.DPAD_DOWN)
-    await getButton(SectionButton.SELECT_1)
-    await getButton(SectionButton.SELECT_2)
-    await getButton(SectionButton.START_1)
-    await getButton(SectionButton.START_2)
-    await getButton(SectionButton.L1)
-    await getButton(SectionButton.L2)
-    await getButton(SectionButton.L4)
-    await getButton(SectionButton.R1)
-    await getButton(SectionButton.R2)
-    await getButton(SectionButton.R4)
-    await getButton(SectionButton.DHAT_LEFT)
-    await getButton(SectionButton.DHAT_RIGHT)
-    await getButton(SectionButton.DHAT_UP)
-    await getButton(SectionButton.DHAT_DOWN)
-    await getButton(SectionButton.DHAT_UL)
-    await getButton(SectionButton.DHAT_UR)
-    await getButton(SectionButton.DHAT_DL)
-    await getButton(SectionButton.DHAT_DR)
-    await getButton(SectionButton.DHAT_PUSH)
+    await getButton(SectionIndex.A)
+    await getButton(SectionIndex.B)
+    await getButton(SectionIndex.X)
+    await getButton(SectionIndex.Y)
+    await getButton(SectionIndex.DPAD_LEFT)
+    await getButton(SectionIndex.DPAD_RIGHT)
+    await getButton(SectionIndex.DPAD_UP)
+    await getButton(SectionIndex.DPAD_DOWN)
+    await getButton(SectionIndex.SELECT_1)
+    await getButton(SectionIndex.SELECT_2)
+    await getButton(SectionIndex.START_1)
+    await getButton(SectionIndex.START_2)
+    await getButton(SectionIndex.L1)
+    await getButton(SectionIndex.L2)
+    await getButton(SectionIndex.L4)
+    await getButton(SectionIndex.R1)
+    await getButton(SectionIndex.R2)
+    await getButton(SectionIndex.R4)
+    // DHat.
+    await getButton(SectionIndex.DHAT_LEFT)
+    await getButton(SectionIndex.DHAT_RIGHT)
+    await getButton(SectionIndex.DHAT_UP)
+    await getButton(SectionIndex.DHAT_DOWN)
+    await getButton(SectionIndex.DHAT_UL)
+    await getButton(SectionIndex.DHAT_UR)
+    await getButton(SectionIndex.DHAT_DL)
+    await getButton(SectionIndex.DHAT_DR)
+    await getButton(SectionIndex.DHAT_PUSH)
+    // Thumbstick 4DIR buttons/axis.
+    await getButton(SectionIndex.THUMBSTICK_LEFT)
+    await getButton(SectionIndex.THUMBSTICK_RIGHT)
+    await getButton(SectionIndex.THUMBSTICK_UP)
+    await getButton(SectionIndex.THUMBSTICK_DOWN)
+    await getButton(SectionIndex.THUMBSTICK_PUSH)
+    await getButton(SectionIndex.THUMBSTICK_INNER)
+    await getButton(SectionIndex.THUMBSTICK_OUTER)
     // Rotary.
-    const rotaryUp = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_UP) as CtrlRotary
-    const rotaryDown = await this.webusb.getSection(profileIndex, SectionRotary.ROTARY_DOWN) as CtrlRotary
+    const rotaryUp = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_UP) as CtrlRotary
+    const rotaryDown = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_DOWN) as CtrlRotary
     this.profiles[profileIndex].rotaryUp = rotaryUp
     this.profiles[profileIndex].rotaryDown = rotaryDown
+    // Thumbstick mode.
+    const ts = await this.webusb.getSection(profileIndex, SectionIndex.THUMBSTICK) as CtrlThumbstick
+    this.profiles[profileIndex].thumbstick = ts
   }
 }

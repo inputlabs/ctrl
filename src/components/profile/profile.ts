@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
-import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary } from 'lib/ctrl'
-import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, SectionIndex } from 'lib/ctrl'
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +22,9 @@ import { SectionName, SectionButton, SectionRotary } from 'lib/ctrl'
 })
 export class ProfileComponent {
   profileIndex: number = 0
-  selected: CtrlSection = new CtrlSectionName(0, SectionName.NAME, '')
+  selected: CtrlSection = new CtrlSectionName(0, SectionIndex.NAME, '')
+  // Template aliases.
+  SectionIndex = SectionIndex
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,80 +54,76 @@ export class ProfileComponent {
     this.selected = section
   }
 
+  setSelectedThumbstick() {
+    this.selected = this.profileService.profiles[this.profileIndex].thumbstick
+  }
+
   getSelected() {
     return this.selected as CtrlSection
   }
 
-  getMappingButton(button: CtrlButton) {
-    const pos = position.filter((x) => x.section==button.sectionIndex)[0]
-    let cls = ''
+  getMapping(
+    section: CtrlButton | CtrlRotary,
+    cls: string = '',
+  ) {
+    const pos = position.filter((x) => x.section==section.sectionIndex)[0]
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
-    if (button.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
-    return {
-      mode: button.mode(),
-      actions: button.actions,
-      hints: button.hints,
-      cls,
-      style,
-      click: () => this.setSelected(button),
-    }
-  }
-
-  getMappingRotary(rotary: CtrlRotary) {
-    const pos = position.filter((x) => x.section==rotary.sectionIndex)[0]
-    let cls = 'doublewidth'
-    let style = {'grid-column': pos.column, 'grid-row': pos.row}
-    if (rotary.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
+    if (section.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
       mode: 0,
-      actions: [rotary.actions[0]],
-      hints: [rotary.hints[0]],
+      actions: section instanceof CtrlRotary ? [section.actions[0]] : section.actions,
+      hints: section instanceof CtrlRotary ? [section.hints[0]] : section.hints,
       cls,
       style,
-      click: () => this.setSelected(rotary),
+      click: () => this.setSelected(section),
     }
   }
 
   getMappings() {
     const buttons = this.profileService.profiles[this.profileIndex].buttons
-      .map((button: CtrlButton) => this.getMappingButton(button))
-    const ctrlRotaryUp = this.profileService.profiles[this.profileIndex].rotaryUp
-    const ctrlRotaryDown = this.profileService.profiles[this.profileIndex].rotaryDown
-    const rotaryUp = this.getMappingRotary(ctrlRotaryUp)
-    const rotaryDown = this.getMappingRotary(ctrlRotaryDown)
+      .map((button: CtrlButton) => this.getMapping(button))
+    const rotaryUp = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryUp)
+    const rotaryDown = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryDown)
     return [...buttons, rotaryUp, rotaryDown]
   }
 }
 
 const position = [
-  {section: 0,        column: 0,       row: 0 },
-  {section: SectionButton.L2,          column: 1,       row: 1 },
-  {section: SectionButton.L1,          column: 1,       row: 2 },
-  {section: SectionButton.DPAD_UP,     column: 1,       row: 4 },
-  {section: SectionButton.DPAD_RIGHT,  column: 1,       row: 5 },
-  {section: SectionButton.DPAD_LEFT,   column: 1,       row: 6 },
-  {section: SectionButton.DPAD_DOWN,   column: 1,       row: 7 },
-  {section: SectionButton.L4,          column: 1,       row: 9 },
-  {section: SectionButton.SELECT_1,    column: '4/8',   row: 1 },
-  {section: SectionButton.SELECT_2,    column: '4/8',   row: 2 },
-  {section: SectionButton.START_1,     column: '9/13',  row: 1 },
-  {section: SectionButton.START_2,     column: '9/13',  row: 2 },
-  {section: SectionButton.R2,          column: 15,      row: 1 },
-  {section: SectionButton.R1,          column: 15,      row: 2 },
-  {section: SectionButton.Y,           column: 15,      row: 4 },
-  {section: SectionButton.X,           column: 15,      row: 5 },
-  {section: SectionButton.B,           column: 15,      row: 6 },
-  {section: SectionButton.A,           column: 15,      row: 7 },
-  {section: SectionButton.R4,          column: 15,      row: 9 },
-  {section: SectionButton.DHAT_LEFT,   column: '10/14', row: 12 },
-  {section: SectionButton.DHAT_RIGHT,  column: 15,      row: 12 },
-  {section: SectionButton.DHAT_UP,     column: 14,      row: 11 },
-  {section: SectionButton.DHAT_DOWN,   column: 14,      row: 13 },
-  {section: SectionButton.DHAT_UL,     column: '10/14', row: 11 },
-  {section: SectionButton.DHAT_UR,     column: 15,      row: 11 },
-  {section: SectionButton.DHAT_DL,     column: '10/14', row: 13 },
-  {section: SectionButton.DHAT_DR,     column: 15,      row: 13 },
-  {section: SectionButton.DHAT_PUSH,   column: 14,      row: 12 },
-  {section: SectionRotary.ROTARY_UP,   column: '14/16', row: 15 },
-  {section: SectionRotary.ROTARY_DOWN, column: '14/16', row: 16 },
+  {section: 0,                             column: 0,       row: 0 },
+  {section: SectionIndex.L2,               column: 1,       row: 1 },
+  {section: SectionIndex.L1,               column: 1,       row: 2 },
+  {section: SectionIndex.DPAD_UP,          column: 1,       row: 4 },
+  {section: SectionIndex.DPAD_RIGHT,       column: 1,       row: 5 },
+  {section: SectionIndex.DPAD_LEFT,        column: 1,       row: 6 },
+  {section: SectionIndex.DPAD_DOWN,        column: 1,       row: 7 },
+  {section: SectionIndex.L4,               column: 1,       row: 9 },
+  {section: SectionIndex.SELECT_1,         column: '4/8',   row: 1 },
+  {section: SectionIndex.SELECT_2,         column: '4/8',   row: 2 },
+  {section: SectionIndex.START_1,          column: '9/13',  row: 1 },
+  {section: SectionIndex.START_2,          column: '9/13',  row: 2 },
+  {section: SectionIndex.R2,               column: 15,      row: 1 },
+  {section: SectionIndex.R1,               column: 15,      row: 2 },
+  {section: SectionIndex.Y,                column: 15,      row: 4 },
+  {section: SectionIndex.X,                column: 15,      row: 5 },
+  {section: SectionIndex.B,                column: 15,      row: 6 },
+  {section: SectionIndex.A,                column: 15,      row: 7 },
+  {section: SectionIndex.R4,               column: 15,      row: 9 },
+  {section: SectionIndex.DHAT_LEFT,        column: '10/14', row: 12 },
+  {section: SectionIndex.DHAT_RIGHT,       column: 15,      row: 12 },
+  {section: SectionIndex.DHAT_UP,          column: 14,      row: 11 },
+  {section: SectionIndex.DHAT_DOWN,        column: 14,      row: 13 },
+  {section: SectionIndex.DHAT_UL,          column: '10/14', row: 11 },
+  {section: SectionIndex.DHAT_UR,          column: 15,      row: 11 },
+  {section: SectionIndex.DHAT_DL,          column: '10/14', row: 13 },
+  {section: SectionIndex.DHAT_DR,          column: 15,      row: 13 },
+  {section: SectionIndex.DHAT_PUSH,        column: 14,      row: 12 },
+  {section: SectionIndex.ROTARY_UP,        column: 14,      row: 15 },
+  {section: SectionIndex.ROTARY_DOWN,      column: 14,      row: 16 },
+  {section: SectionIndex.THUMBSTICK_LEFT,  column: 1,       row: 12 },
+  {section: SectionIndex.THUMBSTICK_RIGHT, column: '3/7',   row: 12 },
+  {section: SectionIndex.THUMBSTICK_UP,    column: 2,       row: 11 },
+  {section: SectionIndex.THUMBSTICK_DOWN,  column: 2,       row: 13 },
+  {section: SectionIndex.THUMBSTICK_PUSH,  column: 2,       row: 12 },
+  {section: SectionIndex.THUMBSTICK_INNER, column: 2,       row: 15 },
+  {section: SectionIndex.THUMBSTICK_OUTER, column: 2,       row: 16 },
 ]

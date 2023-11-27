@@ -31,6 +31,8 @@ export class ButtonComponent {
     if (label == 'TAB') return 'Tab'
     if (label == 'DELETE') return 'Del'
     if (label == 'BACKQUOTE') return '`'
+    if (label == 'BRACKET_LEFT') return '['
+    if (label == 'BRACKET_RIGHT') return ']'
     // Mouse.
     if (label == 'MOUSE_SCROLL_UP') return 'Scroll'
     if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll'

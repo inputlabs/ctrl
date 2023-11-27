@@ -18,6 +18,13 @@ Copyright (C) 2023, Input Labs Oy.
                     [hints]='mapping.hints'
                 />
             </div>
+            <div
+                style='grid-area: 10 / 4'
+                [ngClass]="selected.sectionIndex == SectionIndex.THUMBSTICK ? 'selected' : ''"
+                (click)='setSelectedThumbstick()'
+                >
+                <span class='material'>settings</span>
+            </div>
         </div>
     </div>
 </div>
