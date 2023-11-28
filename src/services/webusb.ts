@@ -20,7 +20,6 @@ import {
   CtrlConfigShare,
   CtrlProfileGet,
   CtrlSection,
-  isCtrlSection,
   CtrlProfileSet,
 } from 'lib/ctrl'
 
@@ -145,7 +144,7 @@ export class WebusbService {
           this.handleCtrlConfigShare(ctrl)
         }
       }
-      if (isCtrlSection(ctrl)) {
+      if (ctrl instanceof CtrlSection) {
         console.log(ctrl)
         if (this.pendingProfile) {
           this.pendingProfile.next(ctrl as CtrlSection)

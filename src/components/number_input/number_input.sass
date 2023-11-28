@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (C) 2023, Input Labs Oy.
+
+:host
+    .number
+        display: flex
+        & > span
+            display: inline-block
+            vertical-align: top
+            height: 35px
+            line-height: 35px
+            background-color: black
+            color: hsl(0deg, 0%, 80%)
+            border: 0px solid black
+            font-size: 14px
+            font-weight: bold
+            &.value
+                padding-left: 10px
+            &.unit
+                padding-left: 3px
+                flex-grow: 1
+            &.button
+                padding-right: 5px
+                cursor: pointer
+                user-select: none

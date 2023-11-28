@@ -288,10 +288,15 @@ export class CtrlProfileShare extends Ctrl {
   }
 }
 
-export class CtrlSectionName extends Ctrl {
+export abstract class CtrlSection extends Ctrl {
+  profileIndex: number = 0
+  sectionIndex: SectionIndex = 0
+}
+
+export class CtrlSectionName extends CtrlSection {
   constructor(
-    public profileIndex: number,
-    public sectionIndex: SectionIndex,
+    public override profileIndex: number,
+    public override sectionIndex: SectionIndex,
     public name: string,
   ) {
     const payload = [profileIndex, sectionIndex, name]
@@ -316,7 +321,7 @@ export class CtrlSectionName extends Ctrl {
   }
 }
 
-export class CtrlButton extends Ctrl {
+export class CtrlButton extends CtrlSection {
   hold = false
   doubleclick = false
   overlap = false
@@ -324,8 +329,8 @@ export class CtrlButton extends Ctrl {
   homeCycle = false
 
   constructor(
-    public profileIndex: number,
-    public sectionIndex: SectionIndex,
+    public override profileIndex: number,
+    public override sectionIndex: SectionIndex,
     private _mode: number,
     public actions: ActionGroup[] = Array(2).fill(ActionGroup.empty(4)),
     public hints: string[] = Array(2).fill(''),
@@ -395,10 +400,10 @@ export class CtrlButton extends Ctrl {
   }
 }
 
-export class CtrlRotary extends Ctrl {
+export class CtrlRotary extends CtrlSection {
   constructor(
-    public profileIndex: number,
-    public sectionIndex: SectionIndex,
+    public override profileIndex: number,
+    public override sectionIndex: SectionIndex,
     public actions: ActionGroup[] = Array(5).fill(ActionGroup.empty(4)),
     public hints: string[] = Array(5).fill(''),
   ) {
@@ -445,13 +450,14 @@ export class CtrlRotary extends Ctrl {
   }
 }
 
-export class CtrlThumbstick extends Ctrl {
+export class CtrlThumbstick extends CtrlSection {
   constructor(
-    public profileIndex: number,
-    public sectionIndex: SectionIndex,
+    public override profileIndex: number,
+    public override sectionIndex: SectionIndex,
     public mode: ThumbstickMode,
     public distance_mode: ThumbstickDistanceMode,
     public deadzone: number,
+    public deadzone_override: boolean,
     public overlap : number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
@@ -465,7 +471,8 @@ export class CtrlThumbstick extends Ctrl {
       data[6],
       data[7],
       data[8],
-      data[9],
+      data[8] != 0,
+      data[9] <= 128 ? data[9] : data[9]-256,  // Unsigned to signed.
     )
   }
 
@@ -473,19 +480,10 @@ export class CtrlThumbstick extends Ctrl {
     return [
       this.profileIndex,
       this.sectionIndex,
-      this.mode,
-      this.distance_mode,
-      this.deadzone,
-      this.overlap,
+      Number(this.mode),
+      Number(this.distance_mode),
+      this.deadzone_override ? this.deadzone : 0,
+      this.overlap > 0 ? this.overlap : this.overlap+256,  // Signed to unsigned.
     ]
   }
-}
-
-export type CtrlSection = CtrlSectionName | CtrlButton | CtrlRotary | CtrlThumbstick
-
-export function isCtrlSection(instance: any) {
-  if (instance instanceof CtrlSectionName) return true
-  if (instance instanceof CtrlButton) return true
-  if (instance instanceof CtrlRotary) return true
-  return false
 }
