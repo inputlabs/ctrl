@@ -9,6 +9,7 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block'>
         <div class='subtitle'>Name:</div>
         <input
+            class='island'
             type='text'
             placeholder='Profile name'
             maxlength='24'
@@ -75,30 +76,32 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block' *ngFor='let groupIndex of [0,1]'>
         <div *ngIf='isButtonBlockVisible(groupIndex)'>
             <div class='subtitle'>{{getButtonBlockSubtitle(groupIndex)}}</div>
-            <div *ngIf='getActions(groupIndex).actions.size == 0'>
-                <div
-                    class='action placeholder'
-                    (click)='showDialogKeypicker(groupIndex)'
-                    >
-                    Actions
+            <div class='island'>
+                <div *ngIf='getActions(groupIndex).actions.size == 0'>
+                    <div
+                        class='action placeholder'
+                        (click)='showDialogKeypicker(groupIndex)'
+                        >
+                        Actions
+                    </div>
                 </div>
-            </div>
-            <div *ngFor='let action of getActions(groupIndex).actions'>
-                <div
-                    class='action primary'
-                    [ngClass]="groupIndex==1 && !button.homeCycle ? 'secondary' : ''"
-                    (click)='showDialogKeypicker(groupIndex)'
-                    >
-                    {{HID[action]}}
+                <div *ngFor='let action of getActions(groupIndex).actions'>
+                    <div
+                        class='action primary'
+                        [ngClass]="groupIndex==1 && !button.homeCycle ? 'secondary' : ''"
+                        (click)='showDialogKeypicker(groupIndex)'
+                        >
+                        {{HID[action]}}
+                    </div>
                 </div>
+                <input
+                    type='text'
+                    placeholder='Label'
+                    maxlength='14'
+                    [(ngModel)]='getHints()[groupIndex]'
+                    (change)='save()'
+                />
             </div>
-            <input
-                type='text'
-                placeholder='Label'
-                maxlength='14'
-                [(ngModel)]='getHints()[groupIndex]'
-                (change)='save()'
-            />
         </div>
     </div>
 
