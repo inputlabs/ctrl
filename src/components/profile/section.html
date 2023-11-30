@@ -141,7 +141,7 @@ Copyright (C) 2023, Input Labs Oy.
 
 <!-- THUMBSTICK -->
 <div *ngIf='sectionIsThumbstick() && getSectionAsThumbstick() as thumbstick'>
-    <h2>Thumbstick</h2>
+    <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
         <div class='subtitle'>Mode:</div>
         <select [(ngModel)]='thumbstick.mode' (change)='save()'>

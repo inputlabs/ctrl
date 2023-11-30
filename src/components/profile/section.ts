@@ -246,7 +246,7 @@ const sectionTitles: SectionTitles = {
   [SectionIndex.DHAT_PUSH]:        'DHat Push',
   [SectionIndex.ROTARY_UP]:        'Rotary up',
   [SectionIndex.ROTARY_DOWN]:      'Rotary down',
-  [SectionIndex.THUMBSTICK]:       'Thumbstick',
+  [SectionIndex.THUMBSTICK]:       'Thumbstick settings',
   [SectionIndex.THUMBSTICK_LEFT]:  'Thumbstick Left',
   [SectionIndex.THUMBSTICK_RIGHT]: 'Thumbstick Right',
   [SectionIndex.THUMBSTICK_UP]:    'Thumbstick Up',
