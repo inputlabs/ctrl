@@ -68,6 +68,22 @@ export enum SectionIndex {
   THUMBSTICK_PUSH,
   THUMBSTICK_INNER,
   THUMBSTICK_OUTER,
+  GLYPHS_0,
+  GLYPHS_1,
+  GLYPHS_2,
+  GLYPHS_3,
+  DAISY_0,
+  DAISY_1,
+  DAISY_2,
+  DAISY_3,
+  GYRO,
+  GYRO_X,
+  GYRO_Y,
+  GYRO_Z,
+  MACRO_1,
+  MACRO_2,
+  MACRO_3,
+  MACRO_4,
 }
 
 export enum ButtonMode {
