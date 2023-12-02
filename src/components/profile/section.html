@@ -250,7 +250,27 @@ Copyright (C) 2023, Input Labs Oy.
               {{HID[action]}}
           </div>
       </div>
-    </div>
+  </div>
+  <div class='block' *ngIf="getGyroMode() == 4">
+      <div class='subtitle'>Min Angle:</div>
+      <app-number-input
+          [value]='gyroAxis.minAngle'
+          (update)='gyroAxis.minAngle=$event; save()'
+          [unit]="'°'"
+          [min]='-360'
+          [max]='360'
+          [step]='1'
+      />
+      <div class='subtitle'>Max Angle:</div>
+      <app-number-input
+          [value]='gyroAxis.maxAngle'
+          (update)='gyroAxis.maxAngle=$event; save()'
+          [unit]="'°'"
+          [min]='-128'
+          [max]='127'
+          [step]='1'
+      />
+  </div>
 </div>
 
 <!-- PICKER / BINDING UI -->

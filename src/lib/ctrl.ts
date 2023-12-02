@@ -572,8 +572,8 @@ export class CtrlGyroAxis extends CtrlSection {
         new ActionGroup(data.slice(6, 10)),
         new ActionGroup(data.slice(10, 14)),
       ],
-      data[14],
-      data[15],
+      data[14] << 24 >> 24, // Unsigned to signed.
+      data[15] << 24 >> 24, // Unsigned to signed.
     )
   }
 
@@ -583,8 +583,8 @@ export class CtrlGyroAxis extends CtrlSection {
       this.sectionIndex,
       ...this.actions[0].asArrayPadded(),
       ...this.actions[1].asArrayPadded(),
-      this.minAngle,
-      this.maxAngle,
+      this.minAngle >>> 0, // Signed to unsigned.
+      this.maxAngle >>> 0, // Signed to unsigned.
     ]
   }
 }

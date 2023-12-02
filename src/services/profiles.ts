@@ -124,4 +124,8 @@ export class ProfileService {
     const gyroZ = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_Z) as CtrlGyroAxis
     this.profiles[profileIndex].gyroZ = gyroZ
   }
+
+  getProfile(profileIndex: number) {
+    return this.profiles[profileIndex]
+  }
 }

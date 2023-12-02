@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { NumberInputComponent } from 'components/number_input/number_input'
-import { ProfileService } from 'services/profiles'
+import { ProfileService, Profile } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
 import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName, CtrlThumbstick, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
 import { SectionIndex } from 'lib/ctrl'
@@ -214,6 +214,11 @@ export class SectionComponent {
 
   save() {
     this.webusbService.setSection(this.profileIndex, this.section)
+  }
+
+  getGyroMode() {
+    const profile = this.profileService.getProfile(this.profileIndex) as Profile
+    return profile.gyro.mode
   }
 }
 
