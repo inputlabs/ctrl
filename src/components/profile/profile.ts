@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
-import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, SectionIndex, ButtonMode } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis, SectionIndex, ButtonMode } from 'lib/ctrl'
 
 @Component({
   selector: 'app-profile',
@@ -58,21 +58,27 @@ export class ProfileComponent {
     this.selected = this.profileService.profiles[this.profileIndex].thumbstick
   }
 
+  setSelectedGyro() {
+    this.selected = this.profileService.profiles[this.profileIndex].gyro
+  }
+
   getSelected() {
     return this.selected as CtrlSection
   }
 
   getMapping(
-    section: CtrlButton | CtrlRotary,
+    section: CtrlButton | CtrlRotary | CtrlGyroAxis,
     cls: string = '',
   ) {
     const pos = position.filter((x) => x.section==section.sectionIndex)[0]
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
     if (section.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
     return {
-      mode: section instanceof CtrlRotary ? ButtonMode.NORMAL : section.mode(),
+      mode: section instanceof CtrlButton ? section.mode() : ButtonMode.NORMAL,
       actions: section instanceof CtrlRotary ? [section.actions[0]] : section.actions,
-      hints: section instanceof CtrlRotary ? [section.hints[0]] : section.hints,
+      hints: section instanceof CtrlRotary
+        ? [section.hints[0]]
+        : section instanceof CtrlButton ? section.hints : [],
       cls,
       style,
       click: () => this.setSelected(section),
@@ -84,7 +90,10 @@ export class ProfileComponent {
       .map((button: CtrlButton) => this.getMapping(button))
     const rotaryUp = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryUp)
     const rotaryDown = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryDown)
-    return [...buttons, rotaryUp, rotaryDown]
+    const gyroX = this.getMapping(this.profileService.profiles[this.profileIndex].gyroX)
+    const gyroY = this.getMapping(this.profileService.profiles[this.profileIndex].gyroY)
+    const gyroZ = this.getMapping(this.profileService.profiles[this.profileIndex].gyroZ)
+    return [...buttons, rotaryUp, rotaryDown, gyroX, gyroY, gyroZ]
   }
 }
 
@@ -117,6 +126,9 @@ const position = [
   {section: SectionIndex.DHAT_DL,          column: '10/14', row: 13 },
   {section: SectionIndex.DHAT_DR,          column: 15,      row: 13 },
   {section: SectionIndex.DHAT_PUSH,        column: 14,      row: 12 },
+  {section: SectionIndex.GYRO_X,           column: '6/11',  row: 15 },
+  {section: SectionIndex.GYRO_Y,           column: '6/11',  row: 16 },
+  {section: SectionIndex.GYRO_Z,           column: '6/11',  row: 17 },
   {section: SectionIndex.ROTARY_UP,        column: 14,      row: 15 },
   {section: SectionIndex.ROTARY_DOWN,      column: 14,      row: 16 },
   {section: SectionIndex.THUMBSTICK_LEFT,  column: 1,       row: 12 },

@@ -25,6 +25,13 @@ Copyright (C) 2023, Input Labs Oy.
                 >
                 &nbsp;
             </div>
+            <div
+                style='grid-area: 8 / 15'
+                [ngClass]="selected.sectionIndex == SectionIndex.GYRO ? 'selected' : ''"
+                (click)='setSelectedGyro()'
+                >
+                &nbsp;
+            </div>
         </div>
     </div>
 </div>
