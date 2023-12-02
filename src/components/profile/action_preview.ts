@@ -130,8 +130,9 @@ export class ButtonComponent {
   }
 
   getSecondary() {
-    const mode = this.mode
     if (this.actions.length < 2) return []
+    if (this.actions[1].actions.size == 0 && this.hints[1] == '') return []
+    const mode = this.mode
     return this.actions[1].asArray()
       .map((action: number) => {
         const text = this.getText(action)
