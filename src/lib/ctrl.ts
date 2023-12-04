@@ -549,7 +549,7 @@ export class CtrlGyro extends CtrlSection {
       this.profileIndex,
       this.sectionIndex,
       Number(this.mode),
-      Number(this.engageButton),
+      PIN_TOUCH_IN,
     ]
   }
 }

@@ -249,10 +249,10 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block'>
         <div class='subtitle'>On axis rotation (positive):</div>
         <div class='island'>
-            <div *ngIf='getActions(0).actions.size == 0'>
+            <div *ngIf='getActions(1).actions.size == 0'>
                 <div
                     class='action placeholder'
-                    (click)='showDialogKeypicker(0)'
+                    (click)='showDialogKeypicker(1)'
                     >
                     Actions
                 </div>
@@ -260,7 +260,7 @@ Copyright (C) 2023, Input Labs Oy.
             <div *ngFor='let action of getActions(1).actions'>
                 <div
                     class='action primary'
-                    (click)='showDialogKeypicker(0)'
+                    (click)='showDialogKeypicker(1)'
                     >
                     {{HID[action]}}
                 </div>
