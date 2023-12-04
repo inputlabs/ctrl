@@ -7,7 +7,9 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
-import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis, SectionIndex, ButtonMode } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis, CtrlThumbstick } from 'lib/ctrl'
+import { SectionIndex, ButtonMode } from 'lib/ctrl'
+import { ActionGroup } from 'lib/actions'
 
 @Component({
   selector: 'app-profile',
@@ -66,19 +68,28 @@ export class ProfileComponent {
     return this.selected as CtrlSection
   }
 
-  getMapping(
-    section: CtrlButton | CtrlRotary | CtrlGyroAxis,
-    cls: string = '',
-  ) {
+  getMapping( section: CtrlButton | CtrlRotary | CtrlGyroAxis) {
     const pos = position.filter((x) => x.section==section.sectionIndex)[0]
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
+    let cls = 'cls' in pos ? <string>pos.cls : ''
     if (section.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
+    // Mode.
+    let mode = 0
+    if (section instanceof CtrlButton) mode = section.mode()
+    if (section instanceof CtrlRotary) mode = ButtonMode.NORMAL
+    // Actions.
+    let actions: ActionGroup[] = []
+    if (section instanceof CtrlButton) actions = section.actions
+    if (section instanceof CtrlGyroAxis) actions = section.actions
+    if (section instanceof CtrlRotary) actions = [section.actions[0]]
+    // Hints
+    let hints: string[] = []
+    if (section instanceof CtrlButton) hints = section.hints
+    if (section instanceof CtrlRotary) hints = [section.hints[0]]
     return {
-      mode: section instanceof CtrlButton ? section.mode() : ButtonMode.NORMAL,
-      actions: section instanceof CtrlRotary ? [section.actions[0]] : section.actions,
-      hints: section instanceof CtrlRotary
-        ? [section.hints[0]]
-        : section instanceof CtrlButton ? section.hints : [],
+      mode,
+      actions,
+      hints,
       cls,
       style,
       click: () => this.setSelected(section),
@@ -88,12 +99,11 @@ export class ProfileComponent {
   getMappings() {
     const buttons = this.profileService.profiles[this.profileIndex].buttons
       .map((button: CtrlButton) => this.getMapping(button))
+    const gyroAxis = this.profileService.profiles[this.profileIndex].gyroAxis
+      .map((axis: CtrlGyroAxis) => this.getMapping(axis))
     const rotaryUp = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryUp)
     const rotaryDown = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryDown)
-    const gyroX = this.getMapping(this.profileService.profiles[this.profileIndex].gyroX)
-    const gyroY = this.getMapping(this.profileService.profiles[this.profileIndex].gyroY)
-    const gyroZ = this.getMapping(this.profileService.profiles[this.profileIndex].gyroZ)
-    return [...buttons, rotaryUp, rotaryDown, gyroX, gyroY, gyroZ]
+    return [...buttons, ...gyroAxis, rotaryUp, rotaryDown]
   }
 }
 
@@ -126,16 +136,16 @@ const position = [
   {section: SectionIndex.DHAT_DL,          column: '10/14', row: 13 },
   {section: SectionIndex.DHAT_DR,          column: 15,      row: 13 },
   {section: SectionIndex.DHAT_PUSH,        column: 14,      row: 12 },
-  {section: SectionIndex.GYRO_X,           column: '6/12',  row: 15 },
-  {section: SectionIndex.GYRO_Y,           column: '6/12',  row: 16 },
-  {section: SectionIndex.GYRO_Z,           column: '6/12',  row: 17 },
-  {section: SectionIndex.ROTARY_UP,        column: 14,      row: 15 },
-  {section: SectionIndex.ROTARY_DOWN,      column: 14,      row: 16 },
+  {section: SectionIndex.ROTARY_UP,        column: '14/16', row: '16/18', cls:'wide'},
+  {section: SectionIndex.ROTARY_DOWN,      column: '14/16', row: '18/20', cls:'wide'},
   {section: SectionIndex.THUMBSTICK_LEFT,  column: 1,       row: 12 },
   {section: SectionIndex.THUMBSTICK_RIGHT, column: '3/7',   row: 12 },
   {section: SectionIndex.THUMBSTICK_UP,    column: 2,       row: 11 },
   {section: SectionIndex.THUMBSTICK_DOWN,  column: 2,       row: 13 },
   {section: SectionIndex.THUMBSTICK_PUSH,  column: 2,       row: 12 },
-  {section: SectionIndex.THUMBSTICK_INNER, column: 2,       row: 15 },
-  {section: SectionIndex.THUMBSTICK_OUTER, column: 2,       row: 16 },
+  {section: SectionIndex.THUMBSTICK_INNER, column: 2,       row: '16/18' },
+  {section: SectionIndex.THUMBSTICK_OUTER, column: 2,       row: '18/20' },
+  {section: SectionIndex.GYRO_X,           column: '6/11',  row: '15/17', cls:'thin'},
+  {section: SectionIndex.GYRO_Y,           column: '6/11',  row: '17/19', cls:'thin'},
+  {section: SectionIndex.GYRO_Z,           column: '6/11',  row: '19/21', cls:'thin'},
 ]

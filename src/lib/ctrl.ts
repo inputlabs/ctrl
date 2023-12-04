@@ -115,7 +115,7 @@ export enum GyroMode {
   GYRO_MODE_AXIS_ABSOLUTE,
 }
 
-export const PIN_TOUCH_IN = 7;
+export const PIN_TOUCH_IN = 7;   // TODO PINS ENUM
 
 export function sectionIsName(section: SectionIndex) {
   return section == SectionIndex.NAME
@@ -529,6 +529,7 @@ export class CtrlGyro extends CtrlSection {
     public override profileIndex: number,
     public override sectionIndex: SectionIndex,
     public mode: GyroMode,
+    public engageButton: number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
@@ -538,7 +539,8 @@ export class CtrlGyro extends CtrlSection {
     return new CtrlGyro(
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
-      data[6],
+      data[6],  // Gyro mode.
+      data[7],  // Engage button.
     )
   }
 
@@ -547,7 +549,7 @@ export class CtrlGyro extends CtrlSection {
       this.profileIndex,
       this.sectionIndex,
       Number(this.mode),
-      PIN_TOUCH_IN,
+      Number(this.engageButton),
     ]
   }
 }

@@ -105,6 +105,11 @@ export class SectionComponent {
     return ''
   }
 
+  getGyroMode() {
+    const profile = this.profileService.getProfile(this.profileIndex) as Profile
+    return profile.gyro.mode
+  }
+
   showDialogKeypicker(pickerGroup: number) {
     this.pickerGroup = pickerGroup
     const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
@@ -215,11 +220,6 @@ export class SectionComponent {
   save() {
     this.webusbService.setSection(this.profileIndex, this.section)
   }
-
-  getGyroMode() {
-    const profile = this.profileService.getProfile(this.profileIndex) as Profile
-    return profile.gyro.mode
-  }
 }
 
 interface SectionTitles {
@@ -263,8 +263,8 @@ const sectionTitles: SectionTitles = {
   [SectionIndex.THUMBSTICK_PUSH]:  'Thumbstick Push',
   [SectionIndex.THUMBSTICK_INNER]: 'Thumbstick Inner',
   [SectionIndex.THUMBSTICK_OUTER]: 'Thumbstick Outer',
-  [SectionIndex.GYRO]: 'Gyro',
-  [SectionIndex.GYRO_X]: 'Gyro X-Axis',
-  [SectionIndex.GYRO_Y]: 'Gyro Y-Axis',
-  [SectionIndex.GYRO_Z]: 'Gyro Z-Axis',
+  [SectionIndex.GYRO]: 'Gyro settings',
+  [SectionIndex.GYRO_X]: 'Gyro Axis X',
+  [SectionIndex.GYRO_Y]: 'Gyro Axis Y',
+  [SectionIndex.GYRO_Z]: 'Gyro Axis Z',
 }

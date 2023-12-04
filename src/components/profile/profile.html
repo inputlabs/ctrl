@@ -20,16 +20,16 @@ Copyright (C) 2023, Input Labs Oy.
                 />
             </div>
             <div
-                style='grid-area: 11 / 6'
                 class='section'
+                style='grid-area: 11 / 6'
                 [ngClass]="selected.sectionIndex == SectionIndex.THUMBSTICK ? 'selected' : ''"
                 (click)='setSelectedThumbstick()'
                 >
                 &nbsp;
             </div>
             <div
-                style='grid-area: 8 / 15'
                 class='section'
+                style='grid-area: 15 / 12 / 17 / 12'
                 [ngClass]="selected.sectionIndex == SectionIndex.GYRO ? 'selected' : ''"
                 (click)='setSelectedGyro()'
                 >

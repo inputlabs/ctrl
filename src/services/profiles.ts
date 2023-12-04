@@ -5,7 +5,8 @@
 
 import { Injectable } from '@angular/core'
 import { WebusbService } from 'services/webusb'
-import { CtrlSectionName, CtrlButton, CtrlRotary, SectionIndex, CtrlThumbstick, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
+import { CtrlSectionName, CtrlButton, CtrlRotary, CtrlThumbstick } from 'lib/ctrl'
+import { SectionIndex, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
 
 export class Profile {
   name: CtrlSectionName
@@ -16,10 +17,8 @@ export class Profile {
     public rotaryUp: CtrlRotary = new CtrlRotary(0, 0),
     public rotaryDown: CtrlRotary = new CtrlRotary(0, 0),
     public thumbstick: CtrlThumbstick = new CtrlThumbstick(0, 0, 0, 0, 0, false, 0),
-    public gyro: CtrlGyro = new CtrlGyro(0, 0, 0),
-    public gyroX: CtrlGyroAxis = new CtrlGyroAxis(0, 0),
-    public gyroY: CtrlGyroAxis = new CtrlGyroAxis(0, 0),
-    public gyroZ: CtrlGyroAxis = new CtrlGyroAxis(0, 0),
+    public gyro: CtrlGyro = new CtrlGyro(0, 0, 0, 0),
+    public gyroAxis: CtrlGyroAxis[] = []
   ) {
     this.name = new CtrlSectionName(0, 0, name)
   }
@@ -118,11 +117,11 @@ export class ProfileService {
     this.profiles[profileIndex].gyro = gyro
     // Gyro Axes
     const gyroX = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_X) as CtrlGyroAxis
-    this.profiles[profileIndex].gyroX = gyroX
     const gyroY = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_Y) as CtrlGyroAxis
-    this.profiles[profileIndex].gyroY = gyroY
     const gyroZ = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_Z) as CtrlGyroAxis
-    this.profiles[profileIndex].gyroZ = gyroZ
+    this.profiles[profileIndex].gyroAxis[0] = gyroX
+    this.profiles[profileIndex].gyroAxis[1] = gyroY
+    this.profiles[profileIndex].gyroAxis[2] = gyroZ
   }
 
   getProfile(profileIndex: number) {

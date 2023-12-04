@@ -16,8 +16,11 @@
         padding-bottom: 20px
         .selected
             background-color: hsla(0deg, 0%, 100%, 0.1)
-        .doublewidth
+        .wide
             padding-left: 15% !important
+        .thin
+            padding-left: 0% !important
+
         .crop_h
             display: flex
             flex-direction: column
@@ -39,7 +42,7 @@
                 $h3: calc($h * 3)
                 $h9: calc($h * 9)
                 $h12: calc($h * 12)
-                grid-template-rows: $v4 $v4 $v2 $v4 $v4 $v4 $v4 $v7 $v4 $v3 $v4 $v4 $v4 $v3 $v4 $v4
+                grid-template-rows: $v4 $v4 $v2 $v4 $v4 $v4 $v4 $v7 $v4 $v3 $v4 $v4 $v4 $v $v2 $v2 $v2 $v2 $v2 $v2
                 grid-template-columns: $h12 $h12 $h3 $h3 $h3 $h3 $h3 $h $h3 $h3 $h3 $h3 $h3 $h12 $h12
                 &>div
                     padding-left: 30%
