@@ -107,6 +107,16 @@ export enum ThumbstickDistanceMode {
   RADIAL,
 }
 
+export enum GyroMode {
+  GYRO_MODE_OFF,
+  GYRO_MODE_ALWAYS_ON,
+  GYRO_MODE_TOUCH_OFF,
+  GYRO_MODE_TOUCH_ON,
+  GYRO_MODE_AXIS_ABSOLUTE,
+}
+
+export const PIN_TOUCH_IN = 7;
+
 export function sectionIsName(section: SectionIndex) {
   return section == SectionIndex.NAME
 }
@@ -124,6 +134,14 @@ export function sectionIsRotary(section: SectionIndex) {
 
 export function sectionIsThumbtick(section: SectionIndex) {
   return section == SectionIndex.THUMBSTICK
+}
+
+export function sectionIsGyro(section: SectionIndex) {
+  return section == SectionIndex.GYRO
+}
+
+export function sectionIsGyroAxis(section: SectionIndex) {
+  return section >= SectionIndex.GYRO_X && section <= SectionIndex.GYRO_Z
 }
 
 function string_from_slice(buffer: ArrayBuffer, start: number, end: number) {
@@ -172,6 +190,8 @@ export class Ctrl {
       if (sectionIsButton(section)) return CtrlButton.decode(buffer)
       if (sectionIsRotary(section)) return CtrlRotary.decode(buffer)
       if (sectionIsThumbtick(section)) return CtrlThumbstick.decode(buffer)
+      if (sectionIsGyro(section)) return CtrlGyro.decode(buffer)
+      if (sectionIsGyroAxis(section)) return CtrlGyroAxis.decode(buffer)
     }
     return false
   }
@@ -500,6 +520,71 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.distance_mode),
       this.deadzone_override ? this.deadzone : 0,
       this.overlap > 0 ? this.overlap : this.overlap+256,  // Signed to unsigned.
+    ]
+  }
+}
+
+export class CtrlGyro extends CtrlSection {
+  constructor(
+    public override profileIndex: number,
+    public override sectionIndex: SectionIndex,
+    public mode: GyroMode,
+  ) {
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlGyro(
+      data[4],  // ProfileIndex.
+      data[5],  // SectionIndex.
+      data[6],
+    )
+  }
+
+  override payload() {
+    return [
+      this.profileIndex,
+      this.sectionIndex,
+      Number(this.mode),
+      PIN_TOUCH_IN,
+    ]
+  }
+}
+
+export class CtrlGyroAxis extends CtrlSection {
+  constructor(
+    public override profileIndex: number,
+    public override sectionIndex: SectionIndex,
+    public actions: ActionGroup[] = Array(2).fill(ActionGroup.empty(4)),
+    public minAngle = 0,
+    public maxAngle = 0,
+  ) {
+    super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    const data = Array.from(new Uint8Array(buffer))
+    return new CtrlGyroAxis(
+      data[4],  // ProfileIndex.
+      data[5],  // SectionIndex.
+      [
+        new ActionGroup(data.slice(6, 10)),
+        new ActionGroup(data.slice(10, 14)),
+      ],
+      data[14] << 24 >> 24, // Unsigned to signed.
+      data[15] << 24 >> 24, // Unsigned to signed.
+    )
+  }
+
+  override payload() {
+    return [
+      this.profileIndex,
+      this.sectionIndex,
+      ...this.actions[0].asArrayPadded(),
+      ...this.actions[1].asArrayPadded(),
+      this.minAngle >>> 0, // Signed to unsigned.
+      this.maxAngle >>> 0, // Signed to unsigned.
     ]
   }
 }

@@ -8,6 +8,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='crop_v'>
             <div
                 *ngFor='let mapping of getMappings()'
+                class='section'
                 [ngClass]='mapping.cls'
                 [ngStyle]='mapping.style'
                 (click)='mapping.click()'
@@ -20,8 +21,17 @@ Copyright (C) 2023, Input Labs Oy.
             </div>
             <div
                 style='grid-area: 11 / 6'
+                class='section'
                 [ngClass]="selected.sectionIndex == SectionIndex.THUMBSTICK ? 'selected' : ''"
                 (click)='setSelectedThumbstick()'
+                >
+                &nbsp;
+            </div>
+            <div
+                style='grid-area: 8 / 15'
+                class='section'
+                [ngClass]="selected.sectionIndex == SectionIndex.GYRO ? 'selected' : ''"
+                (click)='setSelectedGyro()'
                 >
                 &nbsp;
             </div>

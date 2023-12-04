@@ -5,9 +5,9 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { NumberInputComponent } from 'components/number_input/number_input'
-import { ProfileService } from 'services/profiles'
+import { ProfileService, Profile } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
-import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName, CtrlThumbstick } from 'lib/ctrl'
+import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName, CtrlThumbstick, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
 import { SectionIndex } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
@@ -59,17 +59,21 @@ export class SectionComponent {
   getSectionAsButton = () => this.section as CtrlButton
   getSectionAsRotary = () => this.section as CtrlRotary
   getSectionAsThumbstick = () => this.section as CtrlThumbstick
+  getSectionAsGyro = () => this.section as CtrlGyro
+  getSectionAsGyroAxis = () => this.section as CtrlGyroAxis
   sectionIsName = () => this.section instanceof CtrlSectionName
   sectionIsButton = () => this.section instanceof CtrlButton
   sectionIsRotary = () => this.section instanceof CtrlRotary
   sectionIsThumbstick = () => this.section instanceof CtrlThumbstick
+  sectionIsGyro = () => this.section instanceof CtrlGyro
+  sectionIsGyroAxis = () => this.section instanceof CtrlGyroAxis
 
   getSectionTitle() {
     return sectionTitles[this.section.sectionIndex]
   }
 
   getActions(group: number) {
-    const section = this.section as (CtrlButton | CtrlRotary)
+    const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
     return section.actions[group]
   }
 
@@ -103,7 +107,7 @@ export class SectionComponent {
 
   showDialogKeypicker(pickerGroup: number) {
     this.pickerGroup = pickerGroup
-    const section = this.section as (CtrlButton | CtrlRotary)
+    const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
     for(let action of section.actions[pickerGroup].actions) {
       if (action >= HID.PROC_PROFILE_0 && action <= HID.PROC_PROFILE_8) {
         this.pickerProfile = action - HID.PROC_PROFILE_0
@@ -211,6 +215,11 @@ export class SectionComponent {
   save() {
     this.webusbService.setSection(this.profileIndex, this.section)
   }
+
+  getGyroMode() {
+    const profile = this.profileService.getProfile(this.profileIndex) as Profile
+    return profile.gyro.mode
+  }
 }
 
 interface SectionTitles {
@@ -254,4 +263,8 @@ const sectionTitles: SectionTitles = {
   [SectionIndex.THUMBSTICK_PUSH]:  'Thumbstick Push',
   [SectionIndex.THUMBSTICK_INNER]: 'Thumbstick Inner',
   [SectionIndex.THUMBSTICK_OUTER]: 'Thumbstick Outer',
+  [SectionIndex.GYRO]: 'Gyro',
+  [SectionIndex.GYRO_X]: 'Gyro X-Axis',
+  [SectionIndex.GYRO_Y]: 'Gyro Y-Axis',
+  [SectionIndex.GYRO_Z]: 'Gyro Z-Axis',
 }

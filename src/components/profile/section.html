@@ -195,9 +195,86 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
 </div>
 
+<!-- GYRO -->
+<div *ngIf='sectionIsGyro() && getSectionAsGyro() as gyro'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+        <div class='subtitle'>Mode:</div>
+        <select [(ngModel)]='gyro.mode' (change)='save()'>
+            <option value='0'>Always Off</option>
+            <option value='1'>Always On</option>
+            <option value='2'>Touch Off</option>
+            <option value='3'>Touch On</option>
+            <option value='4'>Axis Absolute</option>
+        </select>
+    </div>
+</div>
+
+<!-- GYRO AXIS -->
+<div *ngIf='sectionIsGyroAxis() && getSectionAsGyroAxis() as gyroAxis'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+      <div class='subtitle'>Negative Action:</div>
+      <div *ngIf='getActions(0).actions.size == 0'>
+          <div
+              class='action placeholder'
+              (click)='showDialogKeypicker(0)'
+              >
+              Actions
+          </div>
+      </div>
+      <div *ngFor='let action of getActions(0).actions'>
+          <div
+              class='action primary'
+              (click)='showDialogKeypicker(0)'
+              >
+              {{HID[action]}}
+          </div>
+      </div>
+  </div>
+  <div class='block'>
+      <div class='subtitle'>Poitive Action:</div>
+      <div *ngIf='getActions(1).actions.size == 0'>
+          <div
+              class='action placeholder'
+              (click)='showDialogKeypicker(1)'
+              >
+              Actions
+          </div>
+      </div>
+      <div *ngFor='let action of getActions(1).actions'>
+          <div
+              class='action primary'
+              (click)='showDialogKeypicker(1)'
+              >
+              {{HID[action]}}
+          </div>
+      </div>
+  </div>
+  <div class='block' *ngIf="getGyroMode() == 4">
+      <div class='subtitle'>Min Angle:</div>
+      <app-number-input
+          [value]='gyroAxis.minAngle'
+          (update)='gyroAxis.minAngle=$event; save()'
+          [unit]="'°'"
+          [min]='-360'
+          [max]='360'
+          [step]='1'
+      />
+      <div class='subtitle'>Max Angle:</div>
+      <app-number-input
+          [value]='gyroAxis.maxAngle'
+          (update)='gyroAxis.maxAngle=$event; save()'
+          [unit]="'°'"
+          [min]='-128'
+          [max]='127'
+          [step]='1'
+      />
+  </div>
+</div>
 
 <!-- PICKER / BINDING UI -->
-<dialog id='dialog-keypicker' *ngIf='sectionIsButton() || sectionIsRotary()'>
+<dialog id='dialog-keypicker' *ngIf='sectionIsButton() || sectionIsRotary() || sectionIsGyroAxis()'>
     <div class='bigrow'>
         <div class='keyboard'>
             <div>

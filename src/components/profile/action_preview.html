@@ -11,7 +11,7 @@ Copyright (C) 2023, Input Labs Oy.
     <span *ngIf='getPrimaryHint()' class='hint'>{{getPrimaryHint()}}</span>
 </div>
 
-<div class='group'>
+<div class='group' *ngIf='getSecondary().length > 0'>
     <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getSecondary()'>
         <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
         <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
