@@ -4,6 +4,7 @@
 @use '../../styles' as *
 
 :host
+    position: absolute
     font-family: poppins
     font-weight: bold
     white-space: nowrap
@@ -12,8 +13,6 @@
     flex-wrap: wrap
     align-items: center
     height: 100%
-    width: 100%
-    overflow-x: hidden
     $size: 2.2vmin
 
     .group
@@ -31,8 +30,8 @@
             display: flex
             min-width: $size
             height: $size
-            font-size: calc($size * 0.7)
-            line-height: calc($size * 1.05)
+            font-size: $size * 0.7
+            line-height: $size * 1.05
             vertical-align: text-top
             padding: 0px
             padding-left: 3px
@@ -52,7 +51,7 @@
         border-radius: 5px
 
     .circle
-        border-radius: calc($size * 0.5)
+        border-radius: $size * 0.5
 
     .fixed
         width: $size !important
@@ -61,7 +60,7 @@
         padding-right: 0 !important
 
     .material
-        font-size: calc($size * 0.8) !important
+        font-size: $size * 0.8 !important
         vertical-align: bottom
         font-variation-settings: 'wght' 700, 'opsz' 48, 'FILL' 0
 
@@ -69,8 +68,7 @@
         color: hsl(0deg, 0%, 50%)
         font-weight: normal
         height: $size
-        line-height: calc($size * 1.05)
+        line-height: $size * 1.05
         font-size: $size * 0.55
-        // margin-left: 4px
         margin-right: 8px
         white-space: nowrap

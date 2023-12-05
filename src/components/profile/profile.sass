@@ -33,25 +33,20 @@
                 background-repeat: no-repeat
                 background-size: contain
                 display: grid
-                $v: calc((100% / 2600) * 40)
-                $h: calc((100% / 3160) * 40)
-                $v2: calc($v * 2)
-                $v3: calc($v * 3)
-                $v4: calc($v * 4)
-                $v7: calc($v * 7)
-                $h3: calc($h * 3)
-                $h9: calc($h * 9)
-                $h12: calc($h * 12)
-                grid-template-rows: $v4 $v4 $v2 $v4 $v4 $v4 $v4 $v7 $v4 $v3 $v4 $v4 $v4 $v $v2 $v2 $v2 $v2 $v2 $v2
-                grid-template-columns: $h12 $h12 $h3 $h3 $h3 $h3 $h3 $h $h3 $h3 $h3 $h3 $h3 $h12 $h12
+                grid-template-rows: 4fr 4fr 2fr 4fr 4fr 4fr 4fr 7fr 4fr 3fr 4fr 4fr 4fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr
+                grid-template-columns: 12fr 12fr 3fr 3fr 3fr 3fr 3fr 1fr 3fr 3fr 3fr 3fr 3fr 12fr 12fr
                 &>div
                     padding-left: 30%
 
     .panel
-        width: 300px
+        min-width: 300px
         background-color: hsl(0deg, 0%, 20%)
         padding: 30px
         padding-top: 20px
 
     .section
+        position: relative
+        overflow: hidden
         cursor: pointer
+        &.overflow
+            overflow: initial

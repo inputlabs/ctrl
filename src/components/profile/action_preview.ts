@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
 import { ActionGroup } from 'lib/actions'
-import { ButtonMode, CtrlButton, CtrlGyroAxis } from 'lib/ctrl'
+import { ButtonMode, CtrlButton } from 'lib/ctrl'
 
 interface Chip {
   cls: string,
