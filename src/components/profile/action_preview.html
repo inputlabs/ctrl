@@ -3,18 +3,22 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
-<div class='group'>
-    <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getPrimary()'>
-        <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
-        <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
+<div class='group' [ngClass]='getGroupClass(0)'>
+    <span class='chips'>
+        <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getChips(0)'>
+            <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
+            <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
+        </span>
     </span>
-    <span *ngIf='getPrimaryHint()' class='hint'>{{getPrimaryHint()}}</span>
+    <span *ngIf='getLabel(0)' class='label'>{{getLabel(0)}}</span>
 </div>
 
-<div class='group' *ngIf='getSecondary().length > 0'>
-    <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getSecondary()'>
-        <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
-        <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
+<div class='group' [ngClass]='getGroupClass(1)'>
+    <span class='chips'>
+        <span class='chip' [ngClass]='chip.cls' *ngFor='let chip of getChips(1)'>
+            <span *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</span>
+            <span *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</span>
+        </span>
     </span>
-    <span *ngIf='getSecondaryHint()' class='hint'>{{getSecondaryHint()}}</span>
+    <span *ngIf='getLabel(1)' class='label'>{{getLabel(1)}}</span>
 </div>

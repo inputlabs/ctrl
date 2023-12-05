@@ -6,7 +6,18 @@ import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID } from 'lib/hid'
 import { ActionGroup } from 'lib/actions'
-import { ButtonMode } from 'lib/ctrl'
+import { ButtonMode, CtrlButton, CtrlGyroAxis } from 'lib/ctrl'
+
+interface Chip {
+  cls: string,
+  text: string,
+  icon: Icon,
+}
+
+interface Icon {
+  icon: string,
+  showLabel: boolean,
+}
 
 @Component({
   selector: 'app-action-preview',
@@ -16,13 +27,25 @@ import { ButtonMode } from 'lib/ctrl'
   styleUrls: ['./action_preview.sass']
 })
 export class ButtonComponent {
+  @Input() type: any
   @Input() mode: ButtonMode = 0
   @Input() actions: ActionGroup[] = []
-  @Input() hints: string[] = []
+  @Input() labels: string[] = []
 
   constructor(
     public profileService: ProfileService,
   ) {}
+
+  getActions(index: number) {
+    if (this.type == CtrlButton) {
+      if (this.mode == ButtonMode.STICKY) {
+        if (index == 0) return this.actions[0].merge(this.actions[1])
+        else return new ActionGroup([0])
+      }
+      return this.actions[index]
+    }
+    return this.actions[index]
+  }
 
   getText(action: number) {
     let label = HID[action]
@@ -74,7 +97,7 @@ export class ButtonComponent {
 
   getIcon(action: number) {
     const hid = HID[action]
-    let icon = null
+    let icon = ''
     let showLabel = false
     if (hid.startsWith('PROC_PROFILE')) {
       icon = 'sports_esports'
@@ -109,7 +132,7 @@ export class ButtonComponent {
   }
 
   getClass(action: number, text: string, icon: any) {
-    let cls
+    let cls = ''
     const hid = HID[action]
     if (hid.startsWith('KEY')) cls = 'square round'
     if (hid.startsWith('MOUSE')) cls = 'square round'
@@ -119,38 +142,39 @@ export class ButtonComponent {
     return cls
   }
 
-  getPrimary() {
-    return this.actions[0].asArray()
-      .map((action: number) => {
-        const text = this.getText(action)
-        const icon = this.getIcon(action)
-        const cls = this.getClass(action, text, icon) + ' press'
-        return {cls, text, icon}
-      })
+  getGroupClass(index: number) {
+    if (index==0 && this.getActions(1).sizeNonZero()==0 && this.labels[0]?.length>0) return 'wrap'
+    return ''
   }
 
-  getSecondary() {
-    if (this.actions.length < 2) return []
-    if (this.actions[1].actions.size == 0 && this.hints[1] == '') return []
-    const mode = this.mode
-    return this.actions[1].asArray()
-      .map((action: number) => {
-        const text = this.getText(action)
-        const icon = this.getIcon(action)
-        let cls = this.getClass(action, text, icon)
-        if (mode == 0) cls += ' press'
-        if (mode == 1) cls += ' press'
-        if (mode == 6) cls += ' double'
-        if ([2, 3, 4, 5].includes(mode)) cls += ' hold'
-        return {cls, text, icon}
-      })
+  getChips(index: number): Chip[] {
+    if (index == 0) {
+      return this.getActions(0).asArray()
+        .map((action: number) => {
+          const text = this.getText(action)
+          const icon = this.getIcon(action)
+          const cls = this.getClass(action, text, icon) + ' press'
+          return {cls, text, icon}
+        })
+    } else {
+      if (this.actions.length < 2) return []
+      if (this.getActions(1).actions.size == 0 && this.labels[1] == '') return []
+      const mode = this.mode
+      return this.getActions(1).asArray()
+        .map((action: number) => {
+          const text = this.getText(action)
+          const icon = this.getIcon(action)
+          let cls = this.getClass(action, text, icon)
+          if (mode == ButtonMode.NORMAL) cls += ' press'
+          if (mode == ButtonMode.STICKY) cls += ' press'
+          if (mode == ButtonMode.HOLD_DOUBLE_PRESS) cls += ' double'
+          if ([2, 3, 4, 5].includes(mode)) cls += ' hold'
+          return {cls, text, icon}
+        })
+    }
   }
 
-  getPrimaryHint() {
-    return this.hints[0] == '' ? null : this.hints[0]
-  }
-
-  getSecondaryHint() {
-    return this.hints[1] == '' ? null : this.hints[1]
+  getLabel(index: number) {
+    return this.labels[index] || null
   }
 }

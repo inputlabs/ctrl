@@ -8,30 +8,35 @@
     font-weight: bold
     white-space: nowrap
     display: flex
-    flex-wrap: wrap
     flex-direction: row
+    flex-wrap: wrap
     align-items: center
     height: 100%
+    width: 100%
     $size: 2.2vmin
-    overflow: hidden
 
     .group
         display: inline-block
         display: flex
         align-items: center
 
-    .chip
-        display: inline-block
-        min-width: $size
-        height: $size
-        font-size: calc($size * 0.7)
-        line-height: calc($size * 1.05)
-        vertical-align: text-top
-        padding: 0px
-        padding-left: 3px
-        padding-right: 3px
+    .group.wrap
+        flex-wrap: wrap
+
+    .chips
         margin-right: 3px
-        text-align: center
+        .chip
+            display: inline-block
+            min-width: $size
+            height: $size
+            font-size: calc($size * 0.7)
+            line-height: calc($size * 1.05)
+            vertical-align: text-top
+            padding: 0px
+            padding-left: 3px
+            padding-right: 3px
+            margin-right: 3px
+            text-align: center
 
     .press
         background-color: $green
@@ -58,11 +63,12 @@
         vertical-align: bottom
         font-variation-settings: 'wght' 700, 'opsz' 48, 'FILL' 0
 
-    .hint
+    .label
         color: hsl(0deg, 0%, 50%)
         font-weight: normal
         height: $size
         line-height: calc($size * 1.05)
         font-size: $size * 0.55
-        margin-left: 4px
-        // text-transform: uppercase
+        // margin-left: 4px
+        margin-right: 8px
+        white-space: nowrap

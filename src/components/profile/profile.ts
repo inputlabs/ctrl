@@ -73,6 +73,11 @@ export class ProfileComponent {
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
     let cls = 'cls' in pos ? <string>pos.cls : ''
     if (section.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
+    // Type.
+    let type
+    if (section instanceof CtrlButton) type = CtrlButton
+    if (section instanceof CtrlGyroAxis) type = CtrlGyroAxis
+    if (section instanceof CtrlRotary) type = CtrlRotary
     // Mode.
     let mode = 0
     if (section instanceof CtrlButton) mode = section.mode()
@@ -81,12 +86,13 @@ export class ProfileComponent {
     let actions: ActionGroup[] = []
     if (section instanceof CtrlButton) actions = section.actions
     if (section instanceof CtrlGyroAxis) actions = section.actions
-    if (section instanceof CtrlRotary) actions = [section.actions[0]]
-    // Hints
+    if (section instanceof CtrlRotary) actions = [section.actions[0], new ActionGroup([0])]
+    // Hints.
     let hints: string[] = []
     if (section instanceof CtrlButton) hints = section.hints
     if (section instanceof CtrlRotary) hints = [section.hints[0]]
     return {
+      type,
       mode,
       actions,
       hints,

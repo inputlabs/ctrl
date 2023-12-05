@@ -28,6 +28,14 @@ export class ActionGroup {
       return this.actions.has(action)
     }
 
+    sizeNonZero() {
+      return this.asArray().filter((x) => x!=0).length
+    }
+
+    merge(other: ActionGroup) {
+      return new ActionGroup([...this.asArray(), ...other.asArray()])
+    }
+
     asArray() {
       return Array.from(this.actions)
     }
