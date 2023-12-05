@@ -53,14 +53,40 @@ export class ButtonComponent {
     label = label.replace('KEY_', '')
     if (label == 'ESCAPE') return 'Esc'
     if (label == 'TAB') return 'Tab'
-    if (label == 'DELETE') return 'Del'
     if (label == 'BACKQUOTE') return '`'
+    if (label == 'MINUS') return '-'
+    if (label == 'EQUALS') return '='
+    if (label == 'BACKSLASH') return '\\'
     if (label == 'BRACKET_LEFT') return '['
     if (label == 'BRACKET_RIGHT') return ']'
+    if (label == 'CAPS_LOCK') return 'Caps'
+    if (label == 'SEMICOLON') return ';'
+    if (label == 'QUOTE') return "'"
+    if (label == 'COMMA') return ","
+    if (label == 'PERIOD') return "."
+    if (label == 'SLASH') return "/"
+    if (label == 'INSERT') return 'Ins'
+    if (label == 'DELETE') return 'Del'
+    if (label == 'HOME') return 'Home'
+    if (label == 'END') return 'End'
+    if (label == 'PAGE_UP') return 'Page-'
+    if (label == 'PAGE_DOWN') return 'Page+'
+    if (label == 'PAD_NUMLOCK') return 'Lock'
+    if (label == 'PAD_SLASH') return '/'
+    if (label == 'PAD_ASTERISK') return '*'
+    if (label == 'PAD_MINUS') return '-'
+    if (label == 'PAD_PLUS') return '+'
+    if (label == 'PAD_ENTER') return '↵'
+    if (label == 'PAD_PERIOD') return '.'
+    if (label.startsWith('PAD_')) return label.split('_')[1]
     // Mouse.
-    if (label == 'MOUSE_SCROLL_UP') return 'Scroll'
-    if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll'
-    label = label.replace(/^MOUSE_/, 'Mouse ')
+    if (label == 'MOUSE_X') return 'X+'
+    if (label == 'MOUSE_Y') return 'Y+'
+    if (label == 'MOUSE_X_NEG') return 'X-'
+    if (label == 'MOUSE_Y_NEG') return 'Y-'
+    if (label == 'MOUSE_SCROLL_UP') return 'Scroll+'
+    if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll-'
+    label = label.replace(/^MOUSE_/, '')
     // Modifiers.
     if (label.includes('CONTROL')) label = 'Ctrl'
     if (label.includes('SHIFT')) label = 'Shift'
@@ -75,9 +101,13 @@ export class ButtonComponent {
     if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
     if (label == 'PROC_TUNE_UP') return 'Tune up'
     if (label == 'PROC_TUNE_DOWN') return 'Tune down'
-    if (label.startsWith('PROC_PROFILE')) {
+    if (label.startsWith('PROC_PROFILE_')) {
       const profileIndex = Number(label.split('_')[2])
       label = this.profileService.profiles[profileIndex].name.name
+    }
+    if (label.startsWith('PROC_MACRO_')) {
+      const macroIndex = Number(label.split('_')[2])
+      label = 'M' + macroIndex
     }
     if (label.startsWith('PROC_ROTARY_MODE')) label = label.split('_')[3]
     if (label.startsWith('PROC')) label = label.replace('PROC_', '')
@@ -111,17 +141,28 @@ export class ButtonComponent {
       icon = 'screen_record'
       showLabel = true
     }
-    if (hid.startsWith('MOUSE_SCROLL_UP')) {
-      icon = 'stat_2'
+    if (hid.startsWith('MOUSE_')) {
+      icon = 'mouse'
       showLabel = true
     }
-    if (hid.startsWith('MOUSE_SCROLL_DOWN')) {
-      icon = 'stat_minus_2'
+    if (hid.startsWith('KEY_PAD')) {
+      icon = 'dialpad'
+      showLabel = true
+    }
+    if (hid.startsWith('PROC_MACRO_')) {
+      icon = 'keyboard'
       showLabel = true
     }
     if (hid == 'KEY_SPACE') icon = 'space_bar'
     if (hid == 'KEY_BACKSPACE') icon = 'backspace'
     if (hid == 'KEY_ENTER') icon = 'keyboard_return'
+    if (hid == 'KEY_PRINT_SCREEN') icon = 'photo_camera'
+    if (hid == 'KEY_SCROLL_LOCK') icon = 'sync_lock'
+    if (hid == 'KEY_PAUSE') icon = 'pause_circle'
+    if (hid == 'KEY_MUTE') icon = 'volume_off'
+    if (hid == 'KEY_VOLUME_UP') icon = 'volume_up'
+    if (hid == 'KEY_VOLUME_DOWN') icon = 'volume_down'
+    if (hid == 'KEY_POWER') icon = 'power_settings_new'
     if (hid == 'GAMEPAD_SELECT') icon = 'stack'
     if (hid == 'GAMEPAD_START') icon = 'menu'
     if (['KEY_LEFT', 'GAMEPAD_LEFT'].includes(hid)) icon = 'arrow_back'
