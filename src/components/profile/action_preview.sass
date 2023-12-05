@@ -13,10 +13,10 @@
     align-items: center
     height: 100%
     width: 100%
+    overflow-x: hidden
     $size: 2.2vmin
 
     .group
-        display: inline-block
         display: flex
         align-items: center
 
@@ -24,9 +24,11 @@
         flex-wrap: wrap
 
     .chips
+        display: flex
+        white-space: nowrap
         margin-right: 3px
         .chip
-            display: inline-block
+            display: flex
             min-width: $size
             height: $size
             font-size: calc($size * 0.7)
@@ -36,7 +38,7 @@
             padding-left: 3px
             padding-right: 3px
             margin-right: 3px
-            text-align: center
+            justify-content: center
 
     .press
         background-color: $green

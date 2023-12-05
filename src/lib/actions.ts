@@ -32,6 +32,10 @@ export class ActionGroup {
       return this.asArray().filter((x) => x!=0).length
     }
 
+    copy() {
+      return new ActionGroup(this.asArray())
+    }
+
     merge(other: ActionGroup) {
       return new ActionGroup([...this.asArray(), ...other.asArray()])
     }

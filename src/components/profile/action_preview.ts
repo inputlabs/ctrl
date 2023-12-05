@@ -37,14 +37,15 @@ export class ButtonComponent {
   ) {}
 
   getActions(index: number) {
+    let actions = this.actions[index].copy()
     if (this.type == CtrlButton) {
       if (this.mode == ButtonMode.STICKY) {
-        if (index == 0) return this.actions[0].merge(this.actions[1])
-        else return new ActionGroup([0])
+        if (index == 0) actions = this.actions[0].merge(this.actions[1])
+        else actions = new ActionGroup([0])
       }
-      return this.actions[index]
     }
-    return this.actions[index]
+    actions.delete(HID.PROC_THANKS)  // Hide easter egg.
+    return actions
   }
 
   getText(action: number) {
