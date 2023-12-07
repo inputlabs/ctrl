@@ -3,7 +3,8 @@
 
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FormsModule } from '@angular/forms';
+import { Subject } from 'rxjs'
+import { debounceTime } from 'rxjs/operators'
 import { NumberInputComponent } from 'components/number_input/number_input'
 import { ProfileService, Profile } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
@@ -31,7 +32,6 @@ enum Category {
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     NumberInputComponent
   ],
   templateUrl: './section.html',
@@ -40,6 +40,7 @@ enum Category {
 export class SectionComponent {
   @Input() profileIndex: number = 0
   @Input() section: CtrlSection = new CtrlSectionName(0, SectionIndex.NAME, '')
+  subjectSave: Subject<any> = new Subject()
   dialogKeyPicker: any
   pickerGroup = 0
   pickerProfile = 1
@@ -52,7 +53,9 @@ export class SectionComponent {
   constructor(
     public webusbService: WebusbService,
     public profileService: ProfileService,
-  ) {}
+  ) {
+    this.saveSetup()
+  }
 
   getSection = () => this.section as CtrlSection
   getSectionAsName = () => this.section as CtrlSectionName
@@ -217,8 +220,16 @@ export class SectionComponent {
     return []
   }
 
+  async saveSetup() {
+    this.subjectSave
+      .pipe(debounceTime(100))
+      .subscribe(async () => {
+        await this.webusbService.setSection(this.profileIndex, this.section)
+      })
+  }
+
   save() {
-    this.webusbService.setSection(this.profileIndex, this.section)
+    this.subjectSave.next(null)
   }
 }
 

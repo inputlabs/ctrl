@@ -13,8 +13,8 @@ Copyright (C) 2023, Input Labs Oy.
             type='text'
             placeholder='Profile name'
             maxlength='24'
-            [(ngModel)]='name.name'
-            (change)='save()'
+            [value]='name.name'
+            (input)='name.name=$any($event.target).value; save()'
         />
     </div>
 </div>
@@ -98,8 +98,8 @@ Copyright (C) 2023, Input Labs Oy.
                     type='text'
                     placeholder='Label'
                     maxlength='14'
-                    [(ngModel)]='getHints()[groupIndex]'
-                    (change)='save()'
+                    [value]='getHints()[groupIndex]'
+                    (input)='getHints()[groupIndex]=$any($event.target).value; save()'
                 />
             </div>
         </div>
@@ -133,8 +133,8 @@ Copyright (C) 2023, Input Labs Oy.
             type='text'
             placeholder='Label'
             maxlength='14'
-            [(ngModel)]='getHints()[0]'
-            (change)='save()'
+            [value]='getHints()[0]'
+            (input)='getHints()[0]=$any($event.target).value; save()'
         />
     </div>
 </div>
@@ -144,7 +144,10 @@ Copyright (C) 2023, Input Labs Oy.
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
         <div class='subtitle'>Mode:</div>
-        <select [(ngModel)]='thumbstick.mode' (change)='save()'>
+        <select
+            [value]='thumbstick.mode'
+            (input)='thumbstick.mode=$any($event.target).value; save()'
+            >
             <option value='0'>Off</option>
             <option value='1'>4 directions</option>
             <option value='2'>Alphanumeric</option>
@@ -152,7 +155,10 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
     <div class='block' *ngIf='thumbstick.mode == 1'>
         <div class='subtitle'>Distance calculation:</div>
-        <select [(ngModel)]='thumbstick.distance_mode' (change)='save()'>
+        <select
+            [value]='thumbstick.distance_mode'
+            (input)='thumbstick.distance_mode=$any($event.target).value; save()'
+            >
             <option value='0'>Axial</option>
             <option value='1'>Radial</option>
         </select>
@@ -200,7 +206,10 @@ Copyright (C) 2023, Input Labs Oy.
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
         <div class='subtitle'>Mode:</div>
-        <select [(ngModel)]='gyro.mode' (change)='save()'>
+        <select
+            [value]='gyro.mode'
+            (input)='gyro.mode=$any($event.target).value; save()'
+            >
             <option value='0'>Off</option>
             <option value='1'>Always On</option>
             <option value='2'>Touch Off</option>
@@ -210,7 +219,8 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
     <div class='block'>
         <div class='subtitle'>Engage surface/button:</div>
-        <select [(ngModel)]='gyro.engageButton' (change)='save()'>
+        <select>
+            <!-- TODO -->
         </select>
     </div>
 </div>
