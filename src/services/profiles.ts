@@ -10,6 +10,7 @@ import { SectionIndex, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
 
 export class Profile {
   name: CtrlSectionName
+  synced: boolean = false
 
   constructor (
     name: string,
@@ -51,6 +52,7 @@ export class ProfileService {
   }
 
   async fetchProfileNames() {
+    if (this.syncedNames) return
     for(let index of Array(9).keys()) {
       await this.fetchProfileName(index)
     }
@@ -63,6 +65,8 @@ export class ProfileService {
   }
 
   async fetchProfile(profileIndex: number) {
+    // Skip if profile was already fetched.
+    if (this.profiles[profileIndex].synced) return
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
@@ -122,6 +126,8 @@ export class ProfileService {
     this.profiles[profileIndex].gyroAxis[0] = gyroX
     this.profiles[profileIndex].gyroAxis[1] = gyroY
     this.profiles[profileIndex].gyroAxis[2] = gyroZ
+    // Flag as synced.
+    this.profiles[profileIndex].synced = true
   }
 
   getProfile(profileIndex: number) {
