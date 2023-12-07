@@ -251,7 +251,8 @@ Copyright (C) 2023, Input Labs Oy.
                 type='text'
                 placeholder='Label'
                 maxlength='14'
-                (change)='save()'
+                [value]='gyroAxis.labels[0]'
+                (input)='gyroAxis.labels[0]=$any($event.target).value; save()'
             />
             <!-- [(ngModel)]='getHints()[0]' -->
         </div>
@@ -279,7 +280,8 @@ Copyright (C) 2023, Input Labs Oy.
                 type='text'
                 placeholder='Label'
                 maxlength='14'
-                (change)='save()'
+                [value]='gyroAxis.labels[1]'
+                (input)='gyroAxis.labels[1]=$any($event.target).value; save()'
             />
             <!-- [(ngModel)]='getHints()[0]' -->
         </div>

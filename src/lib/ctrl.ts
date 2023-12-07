@@ -561,6 +561,7 @@ export class CtrlGyroAxis extends CtrlSection {
     public actions: ActionGroup[] = Array(2).fill(ActionGroup.empty(4)),
     public minAngle = 0,
     public maxAngle = 0,
+    public labels: string[]
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
@@ -576,6 +577,10 @@ export class CtrlGyroAxis extends CtrlSection {
       ],
       data[14] << 24 >> 24, // Unsigned to signed.
       data[15] << 24 >> 24, // Unsigned to signed.
+      [
+        string_from_slice(buffer, 16, 30),
+        string_from_slice(buffer, 30, 48),
+      ]
     )
   }
 
@@ -587,6 +592,8 @@ export class CtrlGyroAxis extends CtrlSection {
       ...this.actions[1].asArrayPadded(),
       this.minAngle >>> 0, // Signed to unsigned.
       this.maxAngle >>> 0, // Signed to unsigned.
+      ...string_to_buffer(14, this.labels[0]),
+      ...string_to_buffer(14, this.labels[1]),
     ]
   }
 }

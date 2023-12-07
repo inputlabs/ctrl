@@ -90,6 +90,7 @@ export class ProfileComponent {
     // Hints.
     let hints: string[] = []
     if (section instanceof CtrlButton) hints = section.hints
+    if (section instanceof CtrlGyroAxis) hints = section.labels
     if (section instanceof CtrlRotary) hints = [section.hints[0]]
     return {
       type,
