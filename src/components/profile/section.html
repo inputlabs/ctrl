@@ -98,8 +98,8 @@ Copyright (C) 2023, Input Labs Oy.
                     type='text'
                     placeholder='Label'
                     maxlength='14'
-                    [value]='getHints()[groupIndex]'
-                    (input)='getHints()[groupIndex]=$any($event.target).value; save()'
+                    [value]='getLabels()[groupIndex]'
+                    (input)='getLabels()[groupIndex]=$any($event.target).value; save()'
                 />
             </div>
         </div>
@@ -133,8 +133,8 @@ Copyright (C) 2023, Input Labs Oy.
             type='text'
             placeholder='Label'
             maxlength='14'
-            [value]='getHints()[0]'
-            (input)='getHints()[0]=$any($event.target).value; save()'
+            [value]='getLabels()[0]'
+            (input)='getLabels()[0]=$any($event.target).value; save()'
         />
     </div>
 </div>
@@ -254,7 +254,6 @@ Copyright (C) 2023, Input Labs Oy.
                 [value]='gyroAxis.labels[0]'
                 (input)='gyroAxis.labels[0]=$any($event.target).value; save()'
             />
-            <!-- [(ngModel)]='getHints()[0]' -->
         </div>
     </div>
     <div class='block'>
@@ -283,7 +282,6 @@ Copyright (C) 2023, Input Labs Oy.
                 [value]='gyroAxis.labels[1]'
                 (input)='gyroAxis.labels[1]=$any($event.target).value; save()'
             />
-            <!-- [(ngModel)]='getHints()[0]' -->
         </div>
     </div>
     <div class='block' *ngIf="getGyroMode() == 4">

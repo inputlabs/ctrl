@@ -369,7 +369,7 @@ export class CtrlButton extends CtrlSection {
     public override sectionIndex: SectionIndex,
     private _mode: number,
     public actions: ActionGroup[] = Array(2).fill(ActionGroup.empty(4)),
-    public hints: string[] = Array(2).fill(''),
+    public labels: string[] = Array(2).fill(''),
   ) {
     const payload: number[] = []
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
@@ -430,8 +430,8 @@ export class CtrlButton extends CtrlSection {
       ...this.actions[0].asArrayPadded(),
       ...this.actions[1].asArrayPadded(),
       ...Array(20).fill(0),  // Reserved.
-      ...string_to_buffer(14, this.hints[0]),
-      ...string_to_buffer(14, this.hints[1]),
+      ...string_to_buffer(14, this.labels[0]),
+      ...string_to_buffer(14, this.labels[1]),
     ]
   }
 }
@@ -441,7 +441,7 @@ export class CtrlRotary extends CtrlSection {
     public override profileIndex: number,
     public override sectionIndex: SectionIndex,
     public actions: ActionGroup[] = Array(5).fill(ActionGroup.empty(4)),
-    public hints: string[] = Array(5).fill(''),
+    public labels: string[] = Array(5).fill(''),
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
@@ -459,11 +459,11 @@ export class CtrlRotary extends CtrlSection {
         new ActionGroup(data.slice(22, 26)), // Actions
       ],
       [
-        string_from_slice(buffer, 26, 40), // Hint
-        string_from_slice(buffer, 40, 46), // Hint
-        string_from_slice(buffer, 46, 52), // Hint
-        string_from_slice(buffer, 52, 58), // Hint
-        string_from_slice(buffer, 58, 64), // Hint
+        string_from_slice(buffer, 26, 40), // Label
+        string_from_slice(buffer, 40, 46), // Label
+        string_from_slice(buffer, 46, 52), // Label
+        string_from_slice(buffer, 52, 58), // Label
+        string_from_slice(buffer, 58, 64), // Label
       ]
     )
   }
@@ -477,11 +477,11 @@ export class CtrlRotary extends CtrlSection {
       ...this.actions[2].asArrayPadded(),
       ...this.actions[3].asArrayPadded(),
       ...this.actions[4].asArrayPadded(),
-      ...string_to_buffer(14, this.hints[0]),
-      ...string_to_buffer(6, this.hints[1]),
-      ...string_to_buffer(6, this.hints[2]),
-      ...string_to_buffer(6, this.hints[3]),
-      ...string_to_buffer(6, this.hints[4]),
+      ...string_to_buffer(14, this.labels[0]),
+      ...string_to_buffer(6, this.labels[1]),
+      ...string_to_buffer(6, this.labels[2]),
+      ...string_to_buffer(6, this.labels[3]),
+      ...string_to_buffer(6, this.labels[4]),
     ]
   }
 }

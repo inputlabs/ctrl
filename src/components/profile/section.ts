@@ -80,9 +80,9 @@ export class SectionComponent {
     return section.actions[group]
   }
 
-  getHints() {
+  getLabels() {
     const section = this.section as (CtrlButton | CtrlRotary)
-    return section.hints
+    return section.labels
   }
 
   isButtonBlockVisible(group: number) {

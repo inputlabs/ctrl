@@ -87,16 +87,16 @@ export class ProfileComponent {
     if (section instanceof CtrlButton) actions = section.actions
     if (section instanceof CtrlGyroAxis) actions = section.actions
     if (section instanceof CtrlRotary) actions = [section.actions[0], new ActionGroup([0])]
-    // Hints.
-    let hints: string[] = []
-    if (section instanceof CtrlButton) hints = section.hints
-    if (section instanceof CtrlGyroAxis) hints = section.labels
-    if (section instanceof CtrlRotary) hints = [section.hints[0]]
+    // Labels.
+    let labels: string[] = []
+    if (section instanceof CtrlButton) labels = section.labels
+    if (section instanceof CtrlGyroAxis) labels = section.labels
+    if (section instanceof CtrlRotary) labels = [section.labels[0]]
     return {
       type,
       mode,
       actions,
-      hints,
+      labels,
       cls,
       style,
       click: () => this.setSelected(section),
