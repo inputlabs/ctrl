@@ -1,0 +1,28 @@
+name: Deploy staging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+      - run: |
+          echo -e "\
+          export const version = '${GITHUB_REF}'
+          export const commit = '${GITHUB_SHA}'
+          " > src/lib/version.ts
+      - run: npm ci
+      - run: npm install @angular/cli
+      - run: npx ng build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: ctrl-b357a
+          expires: 7d
+          channelId: staging
