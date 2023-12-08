@@ -45,6 +45,7 @@ export class SectionComponent {
   pickerGroup = 0
   pickerProfile = 1
   pickerRotary = 0
+  pickerMacro = 1
   pickerTune = 0
   // Template aliases.
   HID = HID
@@ -123,6 +124,9 @@ export class SectionComponent {
       if (action >= HID.PROC_ROTARY_MODE_0 && action <= HID.PROC_ROTARY_MODE_5) {
         this.pickerRotary = action - HID.PROC_ROTARY_MODE_0
       }
+      if (action >= HID.PROC_MACRO_1 && action <= HID.PROC_MACRO_8) {
+        this.pickerMacro = action - HID.PROC_MACRO_1 + 1
+      }
       if (action >= HID.PROC_TUNE_OS && action <= HID.PROC_TUNE_DEADZONE) {
         this.pickerTune = action - HID.PROC_TUNE_OS
       }
@@ -199,6 +203,17 @@ export class SectionComponent {
       4,
       this.pickerRotary,
       (x) => this.pickerRotary=x,
+    )
+  }
+
+  pickMacro(increment = 0) {
+    this._pickSelect(
+      increment,
+      HID.PROC_MACRO_1 - 1,
+      1,
+      8,
+      this.pickerMacro,
+      (x) => this.pickerMacro=x,
     )
   }
 
