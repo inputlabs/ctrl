@@ -49,6 +49,7 @@ export class ProfileService {
   initProfile(index: number) {
     const name = index==0 ? 'Home' : index <= 8 ? `Profile ${index}` : `Custom ${index-8}`
     this.profiles[index] = new Profile(name)
+    this.syncedNames = false
   }
 
   async fetchProfileNames() {
