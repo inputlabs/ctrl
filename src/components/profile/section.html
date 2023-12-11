@@ -27,7 +27,7 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block'>
         <div class='island'>
             <div
-                class='toggle'
+                class='iconaction'
                 *ngIf='!button.homeCycle'
                 >
                 <span class='name'>Hold</span>
@@ -36,14 +36,14 @@ Copyright (C) 2023, Input Labs Oy.
                 </span>
             </div>
             <div
-                class='toggle'
+                class='iconaction'
                 *ngIf='!button.homeCycle'
                 >
                 <span class='name'>Double click</span>
                 <span class='material'>select</span>
             </div>
             <div
-                class='toggle'
+                class='iconaction'
                 *ngIf='button.hold && !button.homeCycle'
                 >
                 <span class='name'>Overlap</span>
@@ -52,7 +52,7 @@ Copyright (C) 2023, Input Labs Oy.
                 </span>
             </div>
             <div
-                class='toggle'
+                class='iconaction'
                 *ngIf='button.hold && !button.homeCycle'
                 >
                 <span class='name'>Long press</span>
@@ -61,7 +61,7 @@ Copyright (C) 2023, Input Labs Oy.
                 </span>
             </div>
             <div
-                class='toggle'
+                class='iconaction'
                 *ngIf='profileIndex===0 && !button.hold'
                 >
                 <span class='name'>Home cycle</span>
@@ -76,32 +76,14 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block' *ngFor='let groupIndex of [0,1]'>
         <div *ngIf='isButtonBlockVisible(groupIndex)'>
             <div class='subtitle'>{{getButtonBlockSubtitle(groupIndex)}}</div>
-            <div class='island'>
-                <div *ngIf='getActions(groupIndex).actions.size == 0'>
-                    <div
-                        class='action placeholder'
-                        (click)='showDialogKeypicker(groupIndex)'
-                        >
-                        Actions
-                    </div>
-                </div>
-                <div *ngFor='let action of getActions(groupIndex).actions'>
-                    <div
-                        class='action primary'
-                        [ngClass]="groupIndex==1 && !button.homeCycle ? 'secondary' : ''"
-                        (click)='showDialogKeypicker(groupIndex)'
-                        >
-                        {{HID[action]}}
-                    </div>
-                </div>
-                <input
-                    type='text'
-                    placeholder='Label'
-                    maxlength='14'
-                    [value]='getLabels()[groupIndex]'
-                    (input)='getLabels()[groupIndex]=$any($event.target).value; save()'
-                />
-            </div>
+            <app-action-selector
+                [actions]='getActions()'
+                [labels]='getLabels()'
+                [groupIndex]='groupIndex'
+                [showDialogKeypicker]='showDialogKeypicker'
+                [save]='save'
+                [cls]="groupIndex==1 && !button.homeCycle ? 'secondary' : ''"
+            />
         </div>
     </div>
 
@@ -113,28 +95,12 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block'>
         <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_UP'>On scroll up:</div>
         <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_DOWN'>On scroll down:</div>
-        <div *ngIf='getActions(0).actions.size == 0'>
-            <div
-                class='action placeholder'
-                (click)='showDialogKeypicker(0)'
-                >
-                Actions
-            </div>
-        </div>
-        <div *ngFor='let action of getActions(0).actions'>
-            <div
-                class='action primary'
-                (click)='showDialogKeypicker(0)'
-                >
-                {{HID[action]}}
-            </div>
-        </div>
-        <input
-            type='text'
-            placeholder='Label'
-            maxlength='14'
-            [value]='getLabels()[0]'
-            (input)='getLabels()[0]=$any($event.target).value; save()'
+        <app-action-selector
+            [actions]='getActions()'
+            [labels]='getLabels()'
+            [groupIndex]='0'
+            [showDialogKeypicker]='showDialogKeypicker'
+            [save]='save'
         />
     </div>
 </div>
@@ -179,7 +145,7 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block' *ngIf='thumbstick.mode == 1'>
         <div class='subtitle'>Deadzone:</div>
         <div class='island'>
-            <div class='toggle'>
+            <div class='iconaction'>
                 <span class='name'>Override global deadzone</span>
                 <span
                     class='material'
@@ -238,59 +204,23 @@ Copyright (C) 2023, Input Labs Oy.
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
         <div class='subtitle'>On axis rotation (negative):</div>
-        <div class='island'>
-            <div *ngIf='getActions(0).actions.size == 0'>
-                <div
-                    class='action placeholder'
-                    (click)='showDialogKeypicker(0)'
-                    >
-                    Actions
-                </div>
-            </div>
-            <div *ngFor='let action of getActions(0).actions'>
-                <div
-                    class='action primary'
-                    (click)='showDialogKeypicker(0)'
-                    >
-                    {{HID[action]}}
-                </div>
-            </div>
-            <input
-                type='text'
-                placeholder='Label'
-                maxlength='14'
-                [value]='gyroAxis.labels[0]'
-                (input)='gyroAxis.labels[0]=$any($event.target).value; save()'
-            />
-        </div>
+        <app-action-selector
+            [actions]='getActions()'
+            [labels]='getLabels()'
+            [groupIndex]='0'
+            [showDialogKeypicker]='showDialogKeypicker'
+            [save]='save'
+        />
     </div>
     <div class='block'>
         <div class='subtitle'>On axis rotation (positive):</div>
-        <div class='island'>
-            <div *ngIf='getActions(1).actions.size == 0'>
-                <div
-                    class='action placeholder'
-                    (click)='showDialogKeypicker(1)'
-                    >
-                    Actions
-                </div>
-            </div>
-            <div *ngFor='let action of getActions(1).actions'>
-                <div
-                    class='action primary'
-                    (click)='showDialogKeypicker(1)'
-                    >
-                    {{HID[action]}}
-                </div>
-            </div>
-            <input
-                type='text'
-                placeholder='Label'
-                maxlength='14'
-                [value]='gyroAxis.labels[1]'
-                (input)='gyroAxis.labels[1]=$any($event.target).value; save()'
-            />
-        </div>
+        <app-action-selector
+            [actions]='getActions()'
+            [labels]='getLabels()'
+            [groupIndex]='0'
+            [showDialogKeypicker]='showDialogKeypicker'
+            [save]='save'
+        />
     </div>
     <div class='block' *ngIf="getGyroMode() == 4">
         <div class='subtitle'>Min Angle:</div>

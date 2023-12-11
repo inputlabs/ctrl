@@ -5,6 +5,7 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
+import { ActionSelectorComponent } from './action_selector'
 import { NumberInputComponent } from 'components/number_input/number_input'
 import { ProfileService, Profile } from 'services/profiles'
 import { WebusbService } from 'services/webusb';
@@ -33,7 +34,8 @@ enum Category {
   standalone: true,
   imports: [
     CommonModule,
-    NumberInputComponent
+    NumberInputComponent,
+    ActionSelectorComponent,
   ],
   templateUrl: './section.html',
   styleUrls: ['./section.sass']
@@ -78,9 +80,9 @@ export class SectionComponent {
     return sectionTitles[this.section.sectionIndex]
   }
 
-  getActions(group: number) {
+  getActions() {
     const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
-    return section.actions[group]
+    return section.actions
   }
 
   getLabels() {
@@ -120,7 +122,7 @@ export class SectionComponent {
     return engageButtons
   }
 
-  showDialogKeypicker(pickerGroup: number) {
+  showDialogKeypicker = (pickerGroup: number) => {
     this.pickerGroup = pickerGroup
     const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
     for(let action of section.actions[pickerGroup].actions) {
@@ -173,7 +175,7 @@ export class SectionComponent {
     valueGet: number,
     valueSet: (x:number)=>void,
   ) {
-    const targetActions = this.getActions(this.pickerGroup)
+    const targetActions = this.getActions()[this.pickerGroup]
     let wrap = valueGet + increment
     if (wrap < wrapMin) wrap = wrap + (wrapMax - wrapMin + 1)
     else if (wrap > wrapMax) wrap = wrap - (wrapMax - wrapMin + 1)
@@ -186,7 +188,7 @@ export class SectionComponent {
   }
 
   pick(key: HID) {
-    const targetActions = this.getActions(this.pickerGroup)
+    const targetActions = this.getActions()[this.pickerGroup]
     this._pickToggle(targetActions, key)
   }
 
@@ -235,7 +237,7 @@ export class SectionComponent {
   }
 
   pickCls(key: HID) {
-    const actions = this.getActions(this.pickerGroup)
+    const actions = this.getActions()[this.pickerGroup]
     const cls = this.pickerGroup==0 ? ['green'] : ['pink']
     if (actions.has(key)) return cls
     return []
@@ -249,7 +251,7 @@ export class SectionComponent {
       })
   }
 
-  save() {
+  save = () => {
     this.subjectSave.next(null)
   }
 }
