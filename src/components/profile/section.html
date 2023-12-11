@@ -219,8 +219,16 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
     <div class='block'>
         <div class='subtitle'>Engage surface/button:</div>
-        <select>
-            <!-- TODO -->
+        <select
+            (input)='gyro.engage=$any($event.target).value; save()'
+            >
+            <option
+                *ngFor='let entry of getGyroEngageButtons()'
+                [value]='entry.key'
+                [selected]='entry.key==gyro.engage'
+                >
+                {{entry.value}}
+            </option>
         </select>
     </div>
 </div>

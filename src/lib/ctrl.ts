@@ -529,7 +529,7 @@ export class CtrlGyro extends CtrlSection {
     public override profileIndex: number,
     public override sectionIndex: SectionIndex,
     public mode: GyroMode,
-    public engageButton: number,
+    public engage: number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
@@ -549,7 +549,7 @@ export class CtrlGyro extends CtrlSection {
       this.profileIndex,
       this.sectionIndex,
       Number(this.mode),
-      PIN_TOUCH_IN,
+      Number(this.engage),
     ]
   }
 }
