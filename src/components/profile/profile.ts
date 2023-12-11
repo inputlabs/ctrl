@@ -73,30 +73,8 @@ export class ProfileComponent {
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
     let cls = 'cls' in pos ? <string>pos.cls : ''
     if (section.sectionIndex == this.selected?.sectionIndex) cls += ' selected'
-    // Type.
-    let type
-    if (section instanceof CtrlButton) type = CtrlButton
-    if (section instanceof CtrlGyroAxis) type = CtrlGyroAxis
-    if (section instanceof CtrlRotary) type = CtrlRotary
-    // Mode.
-    let mode = 0
-    if (section instanceof CtrlButton) mode = section.mode()
-    if (section instanceof CtrlRotary) mode = ButtonMode.NORMAL
-    // Actions.
-    let actions: ActionGroup[] = []
-    if (section instanceof CtrlButton) actions = section.actions
-    if (section instanceof CtrlGyroAxis) actions = section.actions
-    if (section instanceof CtrlRotary) actions = [section.actions[0], new ActionGroup([0])]
-    // Labels.
-    let labels: string[] = []
-    if (section instanceof CtrlButton) labels = section.labels
-    if (section instanceof CtrlGyroAxis) labels = section.labels
-    if (section instanceof CtrlRotary) labels = [section.labels[0]]
     return {
-      type,
-      mode,
-      actions,
-      labels,
+      section,
       cls,
       style,
       click: () => this.setSelected(section),

@@ -136,12 +136,20 @@ export function sectionIsThumbtick(section: SectionIndex) {
   return section == SectionIndex.THUMBSTICK
 }
 
+export function sectionIsThumbtickDirection(section: SectionIndex) {
+  return section >= SectionIndex.THUMBSTICK_LEFT && section <= SectionIndex.THUMBSTICK_DOWN
+}
+
 export function sectionIsGyro(section: SectionIndex) {
   return section == SectionIndex.GYRO
 }
 
 export function sectionIsGyroAxis(section: SectionIndex) {
   return section >= SectionIndex.GYRO_X && section <= SectionIndex.GYRO_Z
+}
+
+export function sectionIsAnalog(section: SectionIndex) {
+  return sectionIsThumbtickDirection(section) || sectionIsGyroAxis(section)
 }
 
 function string_from_slice(buffer: ArrayBuffer, start: number, end: number) {
@@ -394,7 +402,7 @@ export class CtrlButton extends CtrlSection {
     }
   }
 
-  mode() {
+  mode(): ButtonMode {
     let mode = ButtonMode.NORMAL;
     if (this.hold && !this.overlap && !this.long) mode = ButtonMode.HOLD_EXCLUSIVE
     if (this.hold && !this.overlap && this.long) mode = ButtonMode.HOLD_EXCLUSIVE_LONG

@@ -69,14 +69,27 @@
         font-size: 14px
         font-weight: bold
         cursor: pointer
-        &.primary
-            color: $green
-        &.secondary
-            color: $pink !important
         &.placeholder
             color: hsl(0deg, 0%, 25%)
         &.hidden
             color: hsla(0deg, 0%, 0%, 0)
+
+    .press
+        color: $green
+    .hold
+        color: $pink !important
+    .analog
+        color: $yellow !important
+
+    .pressBG
+        background-color: $green !important
+        color: black !important
+    .holdBG
+        background-color: $pink !important
+        color: black !important
+    .analogBG
+        background-color: $yellow !important
+        color: black !important
 
     #dialog-keypicker
         min-width: 935px
@@ -92,12 +105,6 @@
             align-items: flex-start
             &:first-child
                 padding-bottom: $w
-        .green
-            background-color: $green !important
-            color: black !important
-        .pink
-            background-color: $pink !important
-            color: black !important
 
         .keyboard
             .key

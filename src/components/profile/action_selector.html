@@ -17,8 +17,8 @@ Copyright (C) 2023, Input Labs Oy.
     <div *ngFor='let action of actions[groupIndex].actions'>
         <div class='iconaction'>
             <div
-                class='action primary'
-                [ngClass]='cls'
+                class='action press'
+                [ngClass]='cls(groupIndex, action)'
                 (click)='showDialogKeypicker(groupIndex)'
                 >
                 {{HID[action]}}

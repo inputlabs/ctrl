@@ -19,7 +19,7 @@ export class ActionSelectorComponent {
   @Input() groupIndex: number = 0
   @Input() showDialogKeypicker: Function = ()=>{}
   @Input() save: Function = ()=>{}
-  @Input() cls: string = ''
+  @Input() cls: Function = ()=>{}
   // Template aliases.
   HID = HID
 }

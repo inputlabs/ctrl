@@ -8,11 +8,12 @@ import { debounceTime } from 'rxjs/operators'
 import { ActionSelectorComponent } from './action_selector'
 import { NumberInputComponent } from 'components/number_input/number_input'
 import { ProfileService, Profile } from 'services/profiles'
-import { WebusbService } from 'services/webusb';
-import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName, CtrlThumbstick, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
+import { WebusbService } from 'services/webusb'
+import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName } from 'lib/ctrl'
+import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, sectionIsAnalog } from 'lib/ctrl'
 import { SectionIndex } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
-import { HID } from 'lib/hid'
+import { HID, isAxis } from 'lib/hid'
 import { PIN } from 'lib/pin'
 
 enum Category {
@@ -236,11 +237,30 @@ export class SectionComponent {
     )
   }
 
-  pickCls(key: HID) {
+  // Colors in the picker UI.
+  pickCls(action: HID) {
     const actions = this.getActions()[this.pickerGroup]
-    const cls = this.pickerGroup==0 ? ['green'] : ['pink']
-    if (actions.has(key)) return cls
-    return []
+    let cls = 'pressBG'
+    if (this.section instanceof CtrlButton) {
+      if (this.pickerGroup==1 && this.section.hold) cls += ' holdBG'
+    }
+    if (sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
+      cls += ' analogBG'
+    }
+    if (actions.has(action)) return cls
+    return ''
+  }
+
+  // Colors in the sidebar action selector.
+  actionCls = (index: number, action: HID) => {
+    let cls = 'press'
+    if (this.section instanceof CtrlButton) {
+      if (index==1 && this.section.hold) cls += ' hold'
+    }
+    if (sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
+      cls += ' analog'
+    }
+    return cls
   }
 
   async saveSetup() {

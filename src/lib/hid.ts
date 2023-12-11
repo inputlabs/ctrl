@@ -256,3 +256,9 @@ export enum HID {
   PROC_ROTARY_MODE_4,
   PROC_ROTARY_MODE_5,
 }
+
+export function isAxis(action: HID) {
+  if (action >= HID.MOUSE_X && action <= HID.MOUSE_Y_NEG) return true
+  if (action >= HID.GAMEPAD_AXIS_LX && action <= HID.GAMEPAD_AXIS_RZ_NEG) return true
+  return false
+}

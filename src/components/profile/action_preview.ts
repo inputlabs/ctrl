@@ -4,9 +4,10 @@
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
-import { HID } from 'lib/hid'
+import { HID, isAxis } from 'lib/hid'
 import { ActionGroup } from 'lib/actions'
-import { ButtonMode, CtrlButton } from 'lib/ctrl'
+import { ButtonMode, CtrlButton, CtrlGyroAxis, CtrlRotary, sectionIsAnalog } from 'lib/ctrl'
+import { sectionIsGyroAxis, sectionIsThumbtickDirection } from 'lib/ctrl'
 
 interface Chip {
   cls: string,
@@ -27,20 +28,19 @@ interface Icon {
   styleUrls: ['./action_preview.sass']
 })
 export class ButtonComponent {
-  @Input() type: any
-  @Input() mode: ButtonMode = 0
-  @Input() actions: ActionGroup[] = []
-  @Input() labels: string[] = []
+  @Input() section: CtrlButton | CtrlRotary | CtrlGyroAxis
 
   constructor(
     public profileService: ProfileService,
-  ) {}
+  ) {
+    this.section = undefined as unknown as CtrlButton
+  }
 
   getActions(index: number) {
-    let actions = this.actions[index].copy()
-    if (this.type == CtrlButton) {
-      if (this.mode == ButtonMode.STICKY) {
-        if (index == 0) actions = this.actions[0].merge(this.actions[1])
+    let actions = this.section.actions[index].copy()
+    if (this.section instanceof CtrlButton) {
+      if (this.section.mode() == ButtonMode.STICKY) {
+        if (index == 0) actions = this.section.actions[0].merge(this.section.actions[1])
         else actions = new ActionGroup([0])
       }
     }
@@ -173,19 +173,25 @@ export class ButtonComponent {
     return {icon, showLabel}
   }
 
-  getClass(action: number, text: string, icon: any) {
-    let cls = ''
+  getClass(index: number, action: number, text: string, icon: any) {
+    let cls = 'press'
     const hid = HID[action]
-    if (hid.startsWith('KEY')) cls = 'square round'
-    if (hid.startsWith('MOUSE')) cls = 'square round'
-    if (hid.startsWith('GAMEPAD')) cls = 'circle'
+    if (hid.startsWith('KEY')) cls += ' square round'
+    if (hid.startsWith('MOUSE')) cls += ' square round'
+    if (hid.startsWith('GAMEPAD')) cls += ' circle'
     if (icon.icon && !icon.showLabel) cls += ' icon fixed'
     if (!icon.icon && text.length == 1) cls += ' fixed'
+    if (this.section instanceof CtrlButton) {
+      if (index==1 && this.section.hold) cls += ' hold'
+    }
+    if (sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
+      cls += ' analog'
+    }
     return cls
   }
 
   getGroupClass(index: number) {
-    if (index==0 && this.getActions(1).sizeNonZero()==0 && this.labels[0]?.length>0) return 'wrap'
+    if (index==0 && this.getActions(1).sizeNonZero()==0 && this.section.labels[0]?.length>0) return 'wrap'
     return ''
   }
 
@@ -195,28 +201,23 @@ export class ButtonComponent {
         .map((action: number) => {
           const text = this.getText(action)
           const icon = this.getIcon(action)
-          const cls = this.getClass(action, text, icon) + ' press'
+          const cls = this.getClass(0, action, text, icon)
           return {cls, text, icon}
         })
     } else {
-      if (this.actions.length < 2) return []
-      if (this.getActions(1).actions.size == 0 && this.labels[1] == '') return []
-      const mode = this.mode
+      if (this.section.actions.length < 2) return []
+      if (this.getActions(1).actions.size == 0 && this.section.labels[1] == '') return []
       return this.getActions(1).asArray()
         .map((action: number) => {
           const text = this.getText(action)
           const icon = this.getIcon(action)
-          let cls = this.getClass(action, text, icon)
-          if (mode == ButtonMode.NORMAL) cls += ' press'
-          if (mode == ButtonMode.STICKY) cls += ' press'
-          if (mode == ButtonMode.HOLD_DOUBLE_PRESS) cls += ' double'
-          if ([2, 3, 4, 5].includes(mode)) cls += ' hold'
+          let cls = this.getClass(1, action, text, icon)
           return {cls, text, icon}
         })
     }
   }
 
   getLabel(index: number) {
-    return this.labels[index] || null
+    return this.section.labels[index] || null
   }
 }

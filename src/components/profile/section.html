@@ -46,18 +46,18 @@ Copyright (C) 2023, Input Labs Oy.
                 class='iconaction'
                 *ngIf='button.hold && !button.homeCycle'
                 >
-                <span class='name'>Overlap</span>
-                <span class='material' (click)='button.overlap=!button.overlap; save()'>
-                    {{button.overlap ? 'check_box' : 'check_box_outline_blank'}}
+                <span class='name'>Long press</span>
+                <span class='material' (click)='button.long=!button.long; save()'>
+                    {{button.long ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
             </div>
             <div
                 class='iconaction'
                 *ngIf='button.hold && !button.homeCycle'
                 >
-                <span class='name'>Long press</span>
-                <span class='material' (click)='button.long=!button.long; save()'>
-                    {{button.long ? 'check_box' : 'check_box_outline_blank'}}
+                <span class='name'>Overlap</span>
+                <span class='material' (click)='button.overlap=!button.overlap; save()'>
+                    {{button.overlap ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
             </div>
             <div
@@ -80,9 +80,9 @@ Copyright (C) 2023, Input Labs Oy.
                 [actions]='getActions()'
                 [labels]='getLabels()'
                 [groupIndex]='groupIndex'
+                [cls]='actionCls'
                 [showDialogKeypicker]='showDialogKeypicker'
                 [save]='save'
-                [cls]="groupIndex==1 && !button.homeCycle ? 'secondary' : ''"
             />
         </div>
     </div>
@@ -99,6 +99,7 @@ Copyright (C) 2023, Input Labs Oy.
             [actions]='getActions()'
             [labels]='getLabels()'
             [groupIndex]='0'
+            [cls]='actionCls'
             [showDialogKeypicker]='showDialogKeypicker'
             [save]='save'
         />
@@ -208,6 +209,7 @@ Copyright (C) 2023, Input Labs Oy.
             [actions]='getActions()'
             [labels]='getLabels()'
             [groupIndex]='0'
+            [cls]='actionCls'
             [showDialogKeypicker]='showDialogKeypicker'
             [save]='save'
         />
@@ -218,6 +220,7 @@ Copyright (C) 2023, Input Labs Oy.
             [actions]='getActions()'
             [labels]='getLabels()'
             [groupIndex]='0'
+            [cls]='actionCls'
             [showDialogKeypicker]='showDialogKeypicker'
             [save]='save'
         />
