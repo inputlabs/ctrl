@@ -28,6 +28,10 @@ export class ActionGroup {
       return this.actions.has(action)
     }
 
+    clear() {
+      this.actions.clear()
+    }
+
     sizeNonZero() {
       return this.asArray().filter((x) => x!=0).length
     }

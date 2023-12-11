@@ -422,6 +422,12 @@ export class CtrlButton extends CtrlSection {
   }
 
   override payload() {
+    // Delete secondary data if hold has been disabled.
+    if (this.hold == false) {
+      this.actions[1].clear()
+      this.labels[1] = ''
+    }
+    // Compose.
     return [
       this.profileIndex,
       this.sectionIndex,
