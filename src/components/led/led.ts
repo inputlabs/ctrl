@@ -25,6 +25,7 @@ export class LedComponent {
   @ViewChild('led_2', {static: true}) led_2?: ElementRef
   @ViewChild('led_3', {static: true}) led_3?: ElementRef
   @Input('dotsize') dotsize = 5
+  @Input('aperture') aperture = 0
   @Input('on') maskOn = 0b0000
   @Input('blink') maskBlink = 0b0000
   @Input('colorOn') colorOn = '#fff'
@@ -88,12 +89,13 @@ export class LedComponent {
 
   getPosition(index: number) {
     const offset = this.dotsize / 2
+    const ap = this.aperture
     let top = 0
     let left = 0
-    if      (index == 0) {top = 25-offset; left = 50-offset}
-    else if (index == 1) {top = 50-offset; left = 75-offset}
-    else if (index == 2) {top = 75-offset; left = 50-offset}
-    else if (index == 3) {top = 50-offset; left = 25-offset}
+    if      (index == 0) {top = 25-offset-ap; left = 50-offset}
+    else if (index == 1) {top = 50-offset;    left = 75-offset+ap}
+    else if (index == 2) {top = 75-offset+ap; left = 50-offset}
+    else if (index == 3) {top = 50-offset;    left = 25-offset-ap}
     return {top: `${top}%`, left: `${left}%`}
   }
 }

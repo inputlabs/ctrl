@@ -23,7 +23,7 @@ Copyright (C) 2023, Input Labs Oy.
                 [ngClass]="selected.sectionIndex == SectionIndex.NAME ? 'selected' : ''"
                 (click)='setSelectedName()'
                 >
-                <app-led [dotsize]='10' [on]='getLedPattern(profileIndex)'/>
+                <app-led [dotsize]='10' [aperture]='2' [on]='getLedPattern(profileIndex)'/>
             </div>
             <div
                 class='section'
