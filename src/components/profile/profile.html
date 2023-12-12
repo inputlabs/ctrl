@@ -18,6 +18,14 @@ Copyright (C) 2023, Input Labs Oy.
                 />
             </div>
             <div
+                class='section thin pale'
+                style='grid-area: 6 / 8 / 8 / 11'
+                [ngClass]="selected.sectionIndex == SectionIndex.NAME ? 'selected' : ''"
+                (click)='setSelectedName()'
+                >
+                <app-led [dotsize]='10' [on]='getLedPattern(profileIndex)'/>
+            </div>
+            <div
                 class='section'
                 style='grid-area: 11 / 6'
                 [ngClass]="selected.sectionIndex == SectionIndex.THUMBSTICK ? 'selected' : ''"

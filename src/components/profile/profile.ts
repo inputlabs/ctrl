@@ -7,9 +7,9 @@ import { ActivatedRoute } from '@angular/router'
 import { ProfileService } from 'services/profiles'
 import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
-import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis, CtrlThumbstick } from 'lib/ctrl'
-import { SectionIndex, ButtonMode } from 'lib/ctrl'
-import { ActionGroup } from 'lib/actions'
+import { LedComponent, getProfileLed } from 'components/led/led'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis } from 'lib/ctrl'
+import { SectionIndex } from 'lib/ctrl'
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +18,7 @@ import { ActionGroup } from 'lib/actions'
     CommonModule,
     ButtonComponent,
     SectionComponent,
+    LedComponent,
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.sass']
@@ -27,6 +28,7 @@ export class ProfileComponent {
   selected: CtrlSection = new CtrlSectionName(0, SectionIndex.NAME, '')
   // Template aliases.
   SectionIndex = SectionIndex
+  getLedPattern = getProfileLed
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,6 +56,10 @@ export class ProfileComponent {
 
   setSelected(section: CtrlSection) {
     this.selected = section
+  }
+
+  setSelectedName() {
+    this.selected = this.profileService.profiles[this.profileIndex].name
   }
 
   setSelectedThumbstick() {
@@ -96,41 +102,41 @@ const position = [
   {section: 0,                             column: 0,       row: 0 },
   {section: SectionIndex.L2,               column: 1,       row: 1 },
   {section: SectionIndex.L1,               column: 1,       row: 2 },
-  {section: SectionIndex.DPAD_UP,          column: 1,       row: 4, cls:'overflow' },
-  {section: SectionIndex.DPAD_RIGHT,       column: 1,       row: 5, cls:'overflow' },
-  {section: SectionIndex.DPAD_LEFT,        column: 1,       row: 6, cls:'overflow' },
-  {section: SectionIndex.DPAD_DOWN,        column: 1,       row: 7, cls:'overflow' },
-  {section: SectionIndex.L4,               column: 1,       row: 9 },
-  {section: SectionIndex.SELECT_1,         column: '4/8',   row: 1 },
-  {section: SectionIndex.SELECT_2,         column: '4/8',   row: 2 },
-  {section: SectionIndex.START_1,          column: '9/13',  row: 1 },
-  {section: SectionIndex.START_2,          column: '9/13',  row: 2 },
-  {section: SectionIndex.R2,               column: 15,      row: 1 },
-  {section: SectionIndex.R1,               column: 15,      row: 2 },
-  {section: SectionIndex.Y,                column: 15,      row: 4 },
-  {section: SectionIndex.X,                column: 15,      row: 5 },
-  {section: SectionIndex.B,                column: 15,      row: 6 },
-  {section: SectionIndex.A,                column: 15,      row: 7 },
-  {section: SectionIndex.R4,               column: 15,      row: 9 },
-  {section: SectionIndex.DHAT_LEFT,        column: '10/14', row: 12 },
-  {section: SectionIndex.DHAT_RIGHT,       column: 15,      row: 12 },
-  {section: SectionIndex.DHAT_UP,          column: 14,      row: 11 },
-  {section: SectionIndex.DHAT_DOWN,        column: 14,      row: 13 },
-  {section: SectionIndex.DHAT_UL,          column: '10/14', row: 11 },
-  {section: SectionIndex.DHAT_UR,          column: 15,      row: 11 },
-  {section: SectionIndex.DHAT_DL,          column: '10/14', row: 13 },
-  {section: SectionIndex.DHAT_DR,          column: 15,      row: 13 },
-  {section: SectionIndex.DHAT_PUSH,        column: 14,      row: 12 },
-  {section: SectionIndex.ROTARY_UP,        column: '14/16', row: '16/18', cls:'wide'},
-  {section: SectionIndex.ROTARY_DOWN,      column: '14/16', row: '18/20', cls:'wide'},
-  {section: SectionIndex.THUMBSTICK_LEFT,  column: 1,       row: 12 },
-  {section: SectionIndex.THUMBSTICK_RIGHT, column: '3/7',   row: 12 },
-  {section: SectionIndex.THUMBSTICK_UP,    column: 2,       row: 11 },
-  {section: SectionIndex.THUMBSTICK_DOWN,  column: 2,       row: 13 },
-  {section: SectionIndex.THUMBSTICK_PUSH,  column: 2,       row: 12 },
-  {section: SectionIndex.THUMBSTICK_INNER, column: 2,       row: '16/18' },
-  {section: SectionIndex.THUMBSTICK_OUTER, column: 2,       row: '18/20' },
-  {section: SectionIndex.GYRO_X,           column: '6/11',  row: '15/17', cls:'thin'},
-  {section: SectionIndex.GYRO_Y,           column: '6/11',  row: '17/19', cls:'thin'},
-  {section: SectionIndex.GYRO_Z,           column: '6/11',  row: '19/21', cls:'thin'},
+  {section: SectionIndex.DPAD_UP,          column: 1,       row: 4,     cls:'overflow' },
+  {section: SectionIndex.DPAD_RIGHT,       column: 1,       row: '5/7', cls:'overflow' },
+  {section: SectionIndex.DPAD_LEFT,        column: 1,       row: '7/9', cls:'overflow' },
+  {section: SectionIndex.DPAD_DOWN,        column: 1,       row: 9,     cls:'overflow' },
+  {section: SectionIndex.L4,               column: 1,       row: 11 },
+  {section: SectionIndex.SELECT_1,         column: '4/9',   row: 1 },
+  {section: SectionIndex.SELECT_2,         column: '4/9',   row: 2 },
+  {section: SectionIndex.START_1,          column: '10/15', row: 1 },
+  {section: SectionIndex.START_2,          column: '10/15', row: 2 },
+  {section: SectionIndex.R2,               column: 17,      row: 1 },
+  {section: SectionIndex.R1,               column: 17,      row: 2 },
+  {section: SectionIndex.Y,                column: 17,      row: 4 },
+  {section: SectionIndex.X,                column: 17,      row: '5/7' },
+  {section: SectionIndex.B,                column: 17,      row: '7/9' },
+  {section: SectionIndex.A,                column: 17,      row: 9 },
+  {section: SectionIndex.R4,               column: 17,      row: 11 },
+  {section: SectionIndex.DHAT_LEFT,        column: '12/16', row: 14 },
+  {section: SectionIndex.DHAT_RIGHT,       column: 17,      row: 14 },
+  {section: SectionIndex.DHAT_UP,          column: 16,      row: 13 },
+  {section: SectionIndex.DHAT_DOWN,        column: 16,      row: 15 },
+  {section: SectionIndex.DHAT_UL,          column: '12/16', row: 13 },
+  {section: SectionIndex.DHAT_UR,          column: 17,      row: 13 },
+  {section: SectionIndex.DHAT_DL,          column: '12/16', row: 15 },
+  {section: SectionIndex.DHAT_DR,          column: 17,      row: 15 },
+  {section: SectionIndex.DHAT_PUSH,        column: 16,      row: 14 },
+  {section: SectionIndex.ROTARY_UP,        column: '16/18', row: '18/20', cls:'wide'},
+  {section: SectionIndex.ROTARY_DOWN,      column: '16/18', row: '20/22', cls:'wide'},
+  {section: SectionIndex.THUMBSTICK_LEFT,  column: 1,       row: 14 },
+  {section: SectionIndex.THUMBSTICK_RIGHT, column: '3/7',   row: 14 },
+  {section: SectionIndex.THUMBSTICK_UP,    column: 2,       row: 13 },
+  {section: SectionIndex.THUMBSTICK_DOWN,  column: 2,       row: 15 },
+  {section: SectionIndex.THUMBSTICK_PUSH,  column: 2,       row: 14 },
+  {section: SectionIndex.THUMBSTICK_INNER, column: 2,       row: '18/20' },
+  {section: SectionIndex.THUMBSTICK_OUTER, column: 2,       row: '20/22' },
+  {section: SectionIndex.GYRO_X,           column: '6/13',  row: '17/19', cls:'thin'},
+  {section: SectionIndex.GYRO_Y,           column: '6/13',  row: '19/21', cls:'thin'},
+  {section: SectionIndex.GYRO_Z,           column: '6/13',  row: '21/23', cls:'thin'},
 ]

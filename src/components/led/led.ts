@@ -24,9 +24,8 @@ export class LedComponent {
   @ViewChild('led_1', {static: true}) led_1?: ElementRef
   @ViewChild('led_2', {static: true}) led_2?: ElementRef
   @ViewChild('led_3', {static: true}) led_3?: ElementRef
-  @Input('size') size =  26
-  @Input('dotsize') dotsize =  5
-  @Input('on') maskOn =  0b0000
+  @Input('dotsize') dotsize = 5
+  @Input('on') maskOn = 0b0000
   @Input('blink') maskBlink = 0b0000
   @Input('colorOn') colorOn = '#fff'
   @Input('colorOff') colorOff = '#000'
@@ -53,14 +52,6 @@ export class LedComponent {
       this.led_2?.nativeElement,
       this.led_3?.nativeElement,
     ]
-    leds[0].style.left = this.size * 0.5  - (this.dotsize/2) + 'px'
-    leds[1].style.left = this.size * 0.75 - (this.dotsize/2) + 'px'
-    leds[2].style.left = this.size * 0.5  - (this.dotsize/2) + 'px'
-    leds[3].style.left = this.size * 0.25 - (this.dotsize/2) + 'px'
-    leds[0].style.top =  this.size * 0.25 - (this.dotsize/2) + 'px'
-    leds[1].style.top =  this.size * 0.5  - (this.dotsize/2) + 'px'
-    leds[2].style.top =  this.size * 0.75 - (this.dotsize/2) + 'px'
-    leds[3].style.top =  this.size * 0.5  - (this.dotsize/2) + 'px'
     leds[0].style.backgroundColor = (0b0001 & this.maskOn) ? this.colorOn : this.colorOff
     leds[1].style.backgroundColor = (0b0010 & this.maskOn) ? this.colorOn : this.colorOff
     leds[2].style.backgroundColor = (0b0100 & this.maskOn) ? this.colorOn : this.colorOff
@@ -90,4 +81,36 @@ export class LedComponent {
       clearInterval(id)
     }
   }
+
+  getDotSize() {
+    return `${this.dotsize}%`
+  }
+
+  getPosition(index: number) {
+    const offset = this.dotsize / 2
+    let top = 0
+    let left = 0
+    if      (index == 0) {top = 25-offset; left = 50-offset}
+    else if (index == 1) {top = 50-offset; left = 75-offset}
+    else if (index == 2) {top = 75-offset; left = 50-offset}
+    else if (index == 3) {top = 50-offset; left = 25-offset}
+    return {top: `${top}%`, left: `${left}%`}
+  }
+}
+
+export function getProfileLed(profileIndex: Number) {
+  if (profileIndex == 0) return LED.ALL
+  if (profileIndex == 1) return LED.UP
+  if (profileIndex == 2) return LED.RIGHT
+  if (profileIndex == 3) return LED.DOWN
+  if (profileIndex == 4) return LED.LEFT
+  if (profileIndex == 5) return LED.UP + LED.LEFT + LED.RIGHT
+  if (profileIndex == 6) return LED.RIGHT + LED.UP + LED.DOWN
+  if (profileIndex == 7) return LED.DOWN + LED.LEFT + LED.RIGHT
+  if (profileIndex == 8) return LED.LEFT + LED.UP + LED.DOWN
+  if (profileIndex == 9) return LED.UP + LED.RIGHT
+  if (profileIndex == 10) return LED.RIGHT + LED.DOWN
+  if (profileIndex == 11) return LED.DOWN + LED.LEFT
+  if (profileIndex == 12) return LED.LEFT + LED.UP
+  return 0
 }

@@ -3,37 +3,41 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
-<div class='wrap' [style.width.px]='size' [style.height.px]='size'>
+<div class='wrap'>
     <div
         #led_0
         class='dot'
-        [style.width.px]='dotsize'
-        [style.height.px]='dotsize'
-        [style.borderRadius.px]='dotsize/2'
+        [style.top]='getPosition(0).top'
+        [style.left]='getPosition(0).left'
+        [style.width]='getDotSize()'
+        [style.height]='getDotSize()'
         >
     </div>
     <div
         #led_1
         class='dot'
-        [style.width.px]='dotsize'
-        [style.height.px]='dotsize'
-        [style.borderRadius.px]='dotsize/2'
+        [style.top]='getPosition(1).top'
+        [style.left]='getPosition(1).left'
+        [style.width]='getDotSize()'
+        [style.height]='getDotSize()'
         >
     </div>
     <div
         #led_2
         class='dot'
-        [style.width.px]='dotsize'
-        [style.height.px]='dotsize'
-        [style.borderRadius.px]='dotsize/2'
+        [style.top]='getPosition(2).top'
+        [style.left]='getPosition(2).left'
+        [style.width]='getDotSize()'
+        [style.height]='getDotSize()'
         >
     </div>
     <div
         #led_3
         class='dot'
-        [style.width.px]='dotsize'
-        [style.height.px]='dotsize'
-        [style.borderRadius.px]='dotsize/2'
+        [style.top]='getPosition(3).top'
+        [style.left]='getPosition(3).left'
+        [style.width]='getDotSize()'
+        [style.height]='getDotSize()'
         >
     </div>
 </div>

@@ -16,6 +16,8 @@
         padding-bottom: 20px
         .selected
             background-color: hsla(0deg, 0%, 100%, 0.1)
+            &.pale
+                background-color: hsla(0deg, 0%, 100%, 0.05) !important
         .wide
             padding-left: 15% !important
         .thin
@@ -33,8 +35,8 @@
                 background-repeat: no-repeat
                 background-size: contain
                 display: grid
-                grid-template-rows: 4fr 4fr 2fr 4fr 4fr 4fr 4fr 7fr 4fr 3fr 4fr 4fr 4fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr
-                grid-template-columns: 12fr 12fr 3fr 3fr 3fr 3fr 3fr 1fr 3fr 3fr 3fr 3fr 3fr 12fr 12fr
+                grid-template-rows: 4fr 4fr 2fr 4fr 2fr 2fr 2fr 2fr 4fr 7fr 4fr 3fr 4fr 4fr 4fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr
+                grid-template-columns: 12fr 12fr 3fr 3fr 3fr 3fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr 3fr 3fr 3fr 3fr 12fr 12fr
                 &>div
                     padding-left: 30%
 
@@ -51,3 +53,7 @@
         cursor: pointer
         &.overflow
             overflow: initial
+
+    app-led
+        width: 100%
+        height: 100%
