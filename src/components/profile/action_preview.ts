@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID, isAxis } from 'lib/hid'
 import { ActionGroup } from 'lib/actions'
-import { ButtonMode, CtrlButton, CtrlGyroAxis, CtrlRotary, sectionIsAnalog } from 'lib/ctrl'
-import { sectionIsGyroAxis, sectionIsThumbtickDirection } from 'lib/ctrl'
+import { ButtonMode, CtrlButton, CtrlGyroAxis, CtrlRotary } from 'lib/ctrl'
+import { sectionIsRotary, sectionIsAnalog } from 'lib/ctrl'
 
 interface Chip {
   cls: string,
@@ -37,15 +37,32 @@ export class ButtonComponent {
   }
 
   getActions(index: number) {
+    // Get a copy so changes are not reflected anywhere else than in this
+    // component.
     let actions = this.section.actions[index].copy()
+    // Merge sticky mode actions.
     if (this.section instanceof CtrlButton) {
       if (this.section.mode() == ButtonMode.STICKY) {
         if (index == 0) actions = this.section.actions[0].merge(this.section.actions[1])
         else actions = new ActionGroup([0])
       }
     }
-    actions.delete(HID.PROC_THANKS)  // Hide easter egg.
+    // For rotary only show first action group.
+    if (sectionIsRotary(this.section.sectionIndex) && index == 1) {
+      actions = new ActionGroup([0])
+    }
+    // Hide easter egg.
+    actions.delete(HID.PROC_THANKS)
     return actions
+  }
+
+  getLabel(index: number): string {
+    let label = this.section.labels[index] || ''
+    // For rotary only show first label.
+    if (sectionIsRotary(this.section.sectionIndex) && index == 1) {
+      label = ''
+    }
+    return label
   }
 
   getText(action: number) {
@@ -215,9 +232,5 @@ export class ButtonComponent {
           return {cls, text, icon}
         })
     }
-  }
-
-  getLabel(index: number) {
-    return this.section.labels[index] || null
   }
 }
