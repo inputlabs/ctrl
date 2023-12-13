@@ -305,8 +305,8 @@ const sectionTitles: SectionTitles = {
   [SectionIndex.THUMBSTICK_PUSH]:  'Thumbstick Push',
   [SectionIndex.THUMBSTICK_INNER]: 'Thumbstick Inner',
   [SectionIndex.THUMBSTICK_OUTER]: 'Thumbstick Outer',
-  [SectionIndex.GYRO]: 'Gyro settings',
-  [SectionIndex.GYRO_X]: 'Gyro Axis X',
-  [SectionIndex.GYRO_Y]: 'Gyro Axis Y',
-  [SectionIndex.GYRO_Z]: 'Gyro Axis Z',
+  [SectionIndex.GYRO]:             'Gyro settings',
+  [SectionIndex.GYRO_X]:           'Gyro Axis X',
+  [SectionIndex.GYRO_Y]:           'Gyro Axis Y',
+  [SectionIndex.GYRO_Z]:           'Gyro Axis Z',
 }
