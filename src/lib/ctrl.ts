@@ -108,11 +108,11 @@ export enum ThumbstickDistanceMode {
 }
 
 export enum GyroMode {
-  GYRO_MODE_OFF,
-  GYRO_MODE_ALWAYS_ON,
-  GYRO_MODE_TOUCH_OFF,
-  GYRO_MODE_TOUCH_ON,
-  GYRO_MODE_AXIS_ABSOLUTE,
+  OFF,
+  ALWAYS_ON,
+  TOUCH_OFF,
+  TOUCH_ON,
+  AXIS_ABSOLUTE,
 }
 
 export const PIN_TOUCH_IN = 7;   // TODO PINS ENUM

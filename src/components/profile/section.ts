@@ -3,38 +3,27 @@
 
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import { ActionSelectorComponent } from './action_selector'
 import { NumberInputComponent } from 'components/number_input/number_input'
 import { ProfileService, Profile } from 'services/profiles'
 import { WebusbService } from 'services/webusb'
-import { CtrlButton, CtrlRotary, CtrlSection, CtrlSectionName } from 'lib/ctrl'
-import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, sectionIsAnalog } from 'lib/ctrl'
-import { SectionIndex } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary } from 'lib/ctrl'
+import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
+import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
+import { ThumbstickMode, ThumbstickDistanceMode, GyroMode } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
 import { HID, isAxis } from 'lib/hid'
 import { PIN } from 'lib/pin'
-
-enum Category {
-  ALPHABET = 1,
-  NUMBERS,
-  MODIFIERS,
-  KEYS,
-  NAVIGATION,
-  NUMPAD,
-  FUNCTION,
-  MOUSE,
-  GAMEPAD,
-  GAMEPAD_AXIS,
-  PROC,
-}
 
 @Component({
   selector: 'app-section',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     NumberInputComponent,
     ActionSelectorComponent,
   ],
@@ -55,6 +44,9 @@ export class SectionComponent {
   HID = HID
   PIN = PIN
   SectionIndex = SectionIndex
+  GyroMode = GyroMode
+  ThumbstickMode = ThumbstickMode
+  ThumbstickDistanceMode = ThumbstickDistanceMode
 
   constructor(
     public webusbService: WebusbService,
@@ -117,10 +109,6 @@ export class SectionComponent {
   getGyroMode() {
     const profile = this.profileService.getProfile(this.profileIndex) as Profile
     return profile.gyro.mode
-  }
-
-  getGyroEngageButtons() {
-    return engageButtons
   }
 
   showDialogKeypicker = (pickerGroup: number) => {
@@ -322,28 +310,3 @@ const sectionTitles: SectionTitles = {
   [SectionIndex.GYRO_Y]: 'Gyro Axis Y',
   [SectionIndex.GYRO_Z]: 'Gyro Axis Z',
 }
-
-const engageButtons: Array<{key: number, value: string}> = [
-  {key: PIN.NONE,       value: 'None'},
-  {key: PIN.TOUCH_IN,   value: 'Hexagon surface'},
-  {key: PIN.A,          value: 'A'},
-  {key: PIN.B,          value: 'B'},
-  {key: PIN.X,          value: 'X'},
-  {key: PIN.Y,          value: 'Y'},
-  {key: PIN.DPAD_LEFT,  value: 'DPad Left'},
-  {key: PIN.DPAD_RIGHT, value: 'DPad Right'},
-  {key: PIN.DPAD_UP,    value: 'DPad Up'},
-  {key: PIN.DPAD_DOWN,  value: 'DPad Down'},
-  {key: PIN.L1,         value: 'L1'},
-  {key: PIN.L2,         value: 'L2'},
-  {key: PIN.L3,         value: 'L3'},
-  {key: PIN.L4,         value: 'L4'},
-  {key: PIN.R1,         value: 'R1'},
-  {key: PIN.R2,         value: 'R2'},
-  {key: PIN.DHAT_PUSH,  value: 'R3'},
-  {key: PIN.R4,         value: 'R4'},
-  {key: PIN.SELECT_1,   value: 'Select'},
-  {key: PIN.START_1,    value: 'Start'},
-  {key: PIN.SELECT_2,   value: 'Select (2)'},
-  {key: PIN.START_2,    value: 'Start (2)'},
-]

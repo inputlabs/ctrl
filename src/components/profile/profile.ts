@@ -96,6 +96,12 @@ export class ProfileComponent {
     const rotaryDown = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryDown)
     return [...buttons, ...gyroAxis, rotaryUp, rotaryDown]
   }
+
+  // Required so change detection is working better is scenarios where the
+  // focus is "stolen" by sidebar form inputs.
+  trackById(index: number, item: any): any {
+    return item.id
+  }
 }
 
 const position = [

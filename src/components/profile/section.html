@@ -112,25 +112,25 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block'>
         <div class='subtitle'>Mode:</div>
         <select
-            [value]='thumbstick.mode'
-            (input)='thumbstick.mode=$any($event.target).value; save()'
+            [(ngModel)]='thumbstick.mode'
+            (ngModelChange)='save()'
             >
-            <option value='0'>Off</option>
-            <option value='1'>4 directions</option>
-            <option value='2'>Alphanumeric</option>
+            <option [value]='ThumbstickMode.OFF'>Off</option>
+            <option [value]='ThumbstickMode.DIR4'>4 directions</option>
+            <option [value]='ThumbstickMode.ALPHANUMERIC'>Alphanumeric</option>
         </select>
     </div>
-    <div class='block' *ngIf='thumbstick.mode == 1'>
+    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
         <div class='subtitle'>Distance calculation:</div>
         <select
-            [value]='thumbstick.distance_mode'
-            (input)='thumbstick.distance_mode=$any($event.target).value; save()'
+            [(ngModel)]='thumbstick.distance_mode'
+            (ngModelChange)='save()'
             >
-            <option value='0'>Axial</option>
-            <option value='1'>Radial</option>
+            <option [value]='ThumbstickDistanceMode.AXIAL'>Axial</option>
+            <option [value]='ThumbstickDistanceMode.RADIAL'>Radial</option>
         </select>
     </div>
-    <div class='block' *ngIf='thumbstick.mode == 1'>
+    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
         <div class='subtitle'>Axis overlap:</div>
         <div class='island'>
             <app-number-input
@@ -143,7 +143,7 @@ Copyright (C) 2023, Input Labs Oy.
             />
         </div>
     </div>
-    <div class='block' *ngIf='thumbstick.mode == 1'>
+    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
         <div class='subtitle'>Deadzone:</div>
         <div class='island'>
             <div class='iconaction'>
@@ -174,28 +174,44 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block'>
         <div class='subtitle'>Mode:</div>
         <select
-            [value]='gyro.mode'
-            (input)='gyro.mode=$any($event.target).value; save()'
+            [(ngModel)]='gyro.mode'
+            (ngModelChange)='save()'
             >
-            <option value='0'>Off</option>
-            <option value='1'>Always On</option>
-            <option value='2'>Touch Off</option>
-            <option value='3'>Touch On</option>
-            <option value='4'>As absolute axis</option>
+            <option [value]='GyroMode.OFF'>Off</option>
+            <option [value]='GyroMode.ALWAYS_ON'>Always On</option>
+            <option [value]='GyroMode.TOUCH_OFF'>Touch Off</option>
+            <option [value]='GyroMode.TOUCH_ON'>Touch On</option>
+            <option [value]='GyroMode.AXIS_ABSOLUTE'>As absolute axis</option>
         </select>
     </div>
-    <div class='block'>
+    <div class='block' *ngIf='gyro.mode==GyroMode.TOUCH_ON || gyro.mode==GyroMode.TOUCH_OFF'>
         <div class='subtitle'>Engage surface/button:</div>
         <select
-            (input)='gyro.engage=$any($event.target).value; save()'
+            [(ngModel)]='gyro.engage'
+            (ngModelChange)='save()'
             >
-            <option
-                *ngFor='let entry of getGyroEngageButtons()'
-                [value]='entry.key'
-                [selected]='entry.key==gyro.engage'
-                >
-                {{entry.value}}
-            </option>
+            <option [value]='PIN.NONE'>None</option>
+            <option [value]='PIN.TOUCH_IN'>Hexagon surface</option>
+            <option [value]='PIN.A'>A</option>
+            <option [value]='PIN.B'>B</option>
+            <option [value]='PIN.X'>X</option>
+            <option [value]='PIN.Y'>Y</option>
+            <option [value]='PIN.DPAD_LEFT'>DPad Left</option>
+            <option [value]='PIN.DPAD_RIGHT'>DPad Right</option>
+            <option [value]='PIN.DPAD_UP'>DPad Up</option>
+            <option [value]='PIN.DPAD_DOWN'>DPad Down</option>
+            <option [value]='PIN.L1'>L1</option>
+            <option [value]='PIN.L2'>L2</option>
+            <option [value]='PIN.L3'>L3</option>
+            <option [value]='PIN.L4'>L4</option>
+            <option [value]='PIN.R1'>R1</option>
+            <option [value]='PIN.R2'>R2</option>
+            <option [value]='PIN.DHAT_PUSH'>R3</option>
+            <option [value]='PIN.R4'>R4</option>
+            <option [value]='PIN.SELECT_1'>Select</option>
+            <option [value]='PIN.START_1'>Start</option>
+            <option [value]='PIN.SELECT_2'>Select (2)</option>
+            <option [value]='PIN.START_2'>Start (2)</option>
         </select>
     </div>
 </div>
