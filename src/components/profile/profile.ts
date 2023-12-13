@@ -9,6 +9,7 @@ import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
 import { LedComponent, getProfileLed } from 'components/led/led'
 import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis } from 'lib/ctrl'
+import { ThumbstickMode, GyroMode, sectionIsThumbtickButton, sectionIsGyroAxis } from 'lib/ctrl'
 import { SectionIndex } from 'lib/ctrl'
 
 @Component({
@@ -88,12 +89,27 @@ export class ProfileComponent {
   }
 
   getMappings() {
-    const buttons = this.profileService.profiles[this.profileIndex].buttons
+    const profile = this.profileService.profiles[this.profileIndex]
+    const thumbstick = profile.thumbstick
+    const gyro = profile.gyro
+    const rotaryUp = this.getMapping(profile.rotaryUp)
+    const rotaryDown = this.getMapping(profile.rotaryDown)
+    const buttons = profile.buttons
+      .filter((button: CtrlButton) => {
+        // Filter out thumbstick directions if mode is unfitting.
+        if (!sectionIsThumbtickButton(button.sectionIndex)) return true
+        else if (thumbstick.mode == ThumbstickMode.DIR4) return true
+        return false
+      })
       .map((button: CtrlButton) => this.getMapping(button))
-    const gyroAxis = this.profileService.profiles[this.profileIndex].gyroAxis
+    const gyroAxis = profile.gyroAxis
+      .filter((axis: CtrlGyroAxis) => {
+        // Filter out gyro axis if mode is unfitting.
+        if (!sectionIsGyroAxis(axis.sectionIndex)) return true
+        else if (gyro.mode == GyroMode.OFF) return false
+        return true
+      })
       .map((axis: CtrlGyroAxis) => this.getMapping(axis))
-    const rotaryUp = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryUp)
-    const rotaryDown = this.getMapping(this.profileService.profiles[this.profileIndex].rotaryDown)
     return [...buttons, ...gyroAxis, rotaryUp, rotaryDown]
   }
 

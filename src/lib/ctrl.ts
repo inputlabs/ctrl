@@ -140,6 +140,10 @@ export function sectionIsThumbtickDirection(section: SectionIndex) {
   return section >= SectionIndex.THUMBSTICK_LEFT && section <= SectionIndex.THUMBSTICK_DOWN
 }
 
+export function sectionIsThumbtickButton(section: SectionIndex) {
+  return sectionIsThumbtickDirection(section) || section == SectionIndex.THUMBSTICK_PUSH
+}
+
 export function sectionIsGyro(section: SectionIndex) {
   return section == SectionIndex.GYRO
 }

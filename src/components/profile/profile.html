@@ -6,6 +6,7 @@ Copyright (C) 2023, Input Labs Oy.
 <div class="template">
     <div class="crop_h">
         <div class='crop_v'>
+            <!-- BUTTONS -->
             <div
                 *ngFor='let mapping of getMappings(); trackBy: trackById'
                 class='section'
@@ -17,6 +18,8 @@ Copyright (C) 2023, Input Labs Oy.
                     [section]='mapping.section'
                 />
             </div>
+
+            <!-- LED -->
             <div
                 class='section thin pale'
                 style='grid-area: 6 / 8 / 8 / 11'
@@ -25,6 +28,8 @@ Copyright (C) 2023, Input Labs Oy.
                 >
                 <app-led [dotsize]='10' [aperture]='2' [on]='getLedPattern(profileIndex)'/>
             </div>
+
+            <!-- THUMBSTICK -->
             <div
                 class='section'
                 style='grid-area: 13 / 6'
@@ -33,6 +38,8 @@ Copyright (C) 2023, Input Labs Oy.
                 >
                 &nbsp;
             </div>
+
+            <!-- GYRO -->
             <div
                 class='section'
                 style='grid-area: 17 / 14 / 19 / 14'
