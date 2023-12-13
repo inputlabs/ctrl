@@ -3,13 +3,17 @@
 
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
 import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
 
 @Component({
   selector: 'app-action-selector',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+  ],
   templateUrl: './action_selector.html',
   styleUrls: ['./action_selector.sass']
 })

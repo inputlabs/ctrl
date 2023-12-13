@@ -13,8 +13,8 @@ Copyright (C) 2023, Input Labs Oy.
             type='text'
             placeholder='Profile name'
             maxlength='24'
-            [value]='name.name'
-            (input)='name.name=$any($event.target).value; save()'
+            [(ngModel)]='name.name'
+            (change)='save()'
         />
     </div>
 </div>

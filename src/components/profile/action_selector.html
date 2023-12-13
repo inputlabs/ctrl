@@ -37,8 +37,8 @@ Copyright (C) 2023, Input Labs Oy.
             type='text'
             placeholder='Label'
             maxlength='14'
-            [value]='labels[groupIndex]'
-            (input)='labels[groupIndex]=$any($event.target).value; save()'
+            [(ngModel)]='labels[groupIndex]'
+            (change)='save()'
         />
         <div
             class='material'

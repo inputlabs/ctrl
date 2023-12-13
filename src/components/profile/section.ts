@@ -3,9 +3,7 @@
 
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FormsModule } from '@angular/forms';
-import { Subject } from 'rxjs'
-import { debounceTime } from 'rxjs/operators'
+import { FormsModule } from '@angular/forms'
 import { ActionSelectorComponent } from './action_selector'
 import { NumberInputComponent } from 'components/number_input/number_input'
 import { ProfileService, Profile } from 'services/profiles'
@@ -33,7 +31,6 @@ import { PIN } from 'lib/pin'
 export class SectionComponent {
   @Input() profileIndex: number = 0
   @Input() section: CtrlSection = new CtrlSectionName(0, SectionIndex.NAME, '')
-  subjectSave: Subject<any> = new Subject()
   dialogKeyPicker: any
   pickerGroup = 0
   pickerProfile = 1
@@ -51,9 +48,7 @@ export class SectionComponent {
   constructor(
     public webusbService: WebusbService,
     public profileService: ProfileService,
-  ) {
-    this.saveSetup()
-  }
+  ) {}
 
   getSection = () => this.section as CtrlSection
   getSectionAsName = () => this.section as CtrlSectionName
@@ -251,16 +246,8 @@ export class SectionComponent {
     return cls
   }
 
-  async saveSetup() {
-    this.subjectSave
-      .pipe(debounceTime(100))
-      .subscribe(async () => {
-        await this.webusbService.setSection(this.profileIndex, this.section)
-      })
-  }
-
-  save = () => {
-    this.subjectSave.next(null)
+  save = async () => {
+    await this.webusbService.setSection(this.profileIndex, this.section)
   }
 }
 
