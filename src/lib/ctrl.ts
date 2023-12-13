@@ -84,6 +84,7 @@ export enum SectionIndex {
   MACRO_2,
   MACRO_3,
   MACRO_4,
+  HOME = 100,
 }
 
 export enum ButtonMode {
@@ -150,6 +151,10 @@ export function sectionIsGyro(section: SectionIndex) {
 
 export function sectionIsGyroAxis(section: SectionIndex) {
   return section >= SectionIndex.GYRO_X && section <= SectionIndex.GYRO_Z
+}
+
+export function sectionIsHome(section: SectionIndex) {
+  return section == SectionIndex.HOME
 }
 
 export function sectionIsAnalog(section: SectionIndex) {
@@ -615,3 +620,5 @@ export class CtrlGyroAxis extends CtrlSection {
     ]
   }
 }
+
+export class CtrlHome extends CtrlButton {}

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common'
 import { ProfileService } from 'services/profiles'
 import { HID, isAxis } from 'lib/hid'
 import { ActionGroup } from 'lib/actions'
-import { ButtonMode, CtrlButton, CtrlGyroAxis, CtrlRotary } from 'lib/ctrl'
+import { ButtonMode, CtrlButton, CtrlGyroAxis, CtrlRotary, CtrlHome } from 'lib/ctrl'
 import { sectionIsRotary, sectionIsAnalog } from 'lib/ctrl'
 
 interface Chip {
@@ -183,6 +183,7 @@ export class ButtonComponent {
     if (hid == 'KEY_POWER') icon = 'power_settings_new'
     if (hid == 'GAMEPAD_SELECT') icon = 'stack'
     if (hid == 'GAMEPAD_START') icon = 'menu'
+    if (hid == 'PROC_HOME_GAMEPAD') icon = 'home'
     if (['KEY_LEFT', 'GAMEPAD_LEFT'].includes(hid)) icon = 'arrow_back'
     if (['KEY_RIGHT', 'GAMEPAD_RIGHT'].includes(hid)) icon = 'arrow_forward'
     if (['KEY_UP', 'GAMEPAD_UP'].includes(hid)) icon = 'arrow_upward'
@@ -196,10 +197,15 @@ export class ButtonComponent {
     if (hid.startsWith('KEY')) cls += ' square round'
     if (hid.startsWith('MOUSE')) cls += ' square round'
     if (hid.startsWith('GAMEPAD')) cls += ' circle'
+    if (action == HID.PROC_HOME_GAMEPAD) cls += ' circle'
     if (icon.icon && !icon.showLabel) cls += ' icon fixed'
     if (!icon.icon && text.length == 1) cls += ' fixed'
     if (this.section instanceof CtrlButton) {
       if (index==1 && this.section.hold) cls += ' hold'
+    }
+    if (this.section instanceof CtrlHome) {
+      if (index==0) cls += ' hold'
+      if (index==1) cls += ' doubleclick'
     }
     if (sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
       cls += ' analog'

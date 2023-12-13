@@ -6,10 +6,13 @@
 import { Injectable } from '@angular/core'
 import { WebusbService } from 'services/webusb'
 import { CtrlSectionName, CtrlButton, CtrlRotary, CtrlThumbstick } from 'lib/ctrl'
-import { SectionIndex, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
+import { SectionIndex, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
+import { ActionGroup } from 'lib/actions'
+import { HID } from 'lib/hid'
 
 export class Profile {
   name: CtrlSectionName
+  home: CtrlHome
   synced: boolean = false
 
   constructor (
@@ -22,6 +25,13 @@ export class Profile {
     public gyroAxis: CtrlGyroAxis[] = []
   ) {
     this.name = new CtrlSectionName(0, 0, name)
+    // Fake home definitions.
+    const actions = [
+      new ActionGroup([HID.PROC_PROFILE_0]),
+      new ActionGroup([HID.PROC_HOME_GAMEPAD]),
+    ]
+    const labels = ['', 'Gamepad home']
+    this.home = new CtrlHome(0, SectionIndex.HOME, 0, actions, labels)
   }
 }
 
@@ -61,17 +71,18 @@ export class ProfileService {
   }
 
   async fetchProfileName(index: number) {
-    const section = await this.webusb.getSection(index, SectionIndex.NAME)
+  const section = await this.webusb.getSection(index, SectionIndex.NAME)
     this.profiles[index].name = section as CtrlSectionName
   }
 
   async fetchProfile(profileIndex: number) {
     // Skip if profile was already fetched.
-    if (this.profiles[profileIndex].synced) return
+    const profile = this.profiles[profileIndex]
+    if (profile.synced) return
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
-      this.profiles[profileIndex].buttons.push(button)
+      profile.buttons.push(button)
     }
     await getButton(SectionIndex.A)
     await getButton(SectionIndex.B)
@@ -112,23 +123,23 @@ export class ProfileService {
     // Rotary.
     const rotaryUp = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_UP) as CtrlRotary
     const rotaryDown = await this.webusb.getSection(profileIndex, SectionIndex.ROTARY_DOWN) as CtrlRotary
-    this.profiles[profileIndex].rotaryUp = rotaryUp
-    this.profiles[profileIndex].rotaryDown = rotaryDown
+    profile.rotaryUp = rotaryUp
+    profile.rotaryDown = rotaryDown
     // Thumbstick mode.
     const ts = await this.webusb.getSection(profileIndex, SectionIndex.THUMBSTICK) as CtrlThumbstick
-    this.profiles[profileIndex].thumbstick = ts
-    // Gyro mode
+    profile.thumbstick = ts
+    // Gyro mode.
     const gyro = await this.webusb.getSection(profileIndex, SectionIndex.GYRO) as CtrlGyro
-    this.profiles[profileIndex].gyro = gyro
-    // Gyro Axes
+    profile.gyro = gyro
+    // Gyro Axes.
     const gyroX = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_X) as CtrlGyroAxis
     const gyroY = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_Y) as CtrlGyroAxis
     const gyroZ = await this.webusb.getSection(profileIndex, SectionIndex.GYRO_Z) as CtrlGyroAxis
-    this.profiles[profileIndex].gyroAxis[0] = gyroX
-    this.profiles[profileIndex].gyroAxis[1] = gyroY
-    this.profiles[profileIndex].gyroAxis[2] = gyroZ
+    profile.gyroAxis[0] = gyroX
+    profile.gyroAxis[1] = gyroY
+    profile.gyroAxis[2] = gyroZ
     // Flag as synced.
-    this.profiles[profileIndex].synced = true
+    profile.synced = true
   }
 
   getProfile(profileIndex: number) {

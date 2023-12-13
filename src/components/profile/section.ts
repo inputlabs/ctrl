@@ -9,7 +9,7 @@ import { NumberInputComponent } from 'components/number_input/number_input'
 import { ProfileService, Profile } from 'services/profiles'
 import { WebusbService } from 'services/webusb'
 import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary } from 'lib/ctrl'
-import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis } from 'lib/ctrl'
+import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
 import { ThumbstickMode, ThumbstickDistanceMode, GyroMode } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
@@ -50,6 +50,13 @@ export class SectionComponent {
     public profileService: ProfileService,
   ) {}
 
+  sectionIsName = () => this.section instanceof CtrlSectionName
+  sectionIsButton = () => this.section instanceof CtrlButton && !(this.section instanceof CtrlHome)
+  sectionIsHome = () => this.section instanceof CtrlHome
+  sectionIsRotary = () => this.section instanceof CtrlRotary
+  sectionIsThumbstick = () => this.section instanceof CtrlThumbstick
+  sectionIsGyro = () => this.section instanceof CtrlGyro
+  sectionIsGyroAxis = () => this.section instanceof CtrlGyroAxis
   getSection = () => this.section as CtrlSection
   getSectionAsName = () => this.section as CtrlSectionName
   getSectionAsButton = () => this.section as CtrlButton
@@ -57,12 +64,6 @@ export class SectionComponent {
   getSectionAsThumbstick = () => this.section as CtrlThumbstick
   getSectionAsGyro = () => this.section as CtrlGyro
   getSectionAsGyroAxis = () => this.section as CtrlGyroAxis
-  sectionIsName = () => this.section instanceof CtrlSectionName
-  sectionIsButton = () => this.section instanceof CtrlButton
-  sectionIsRotary = () => this.section instanceof CtrlRotary
-  sectionIsThumbstick = () => this.section instanceof CtrlThumbstick
-  sectionIsGyro = () => this.section instanceof CtrlGyro
-  sectionIsGyroAxis = () => this.section instanceof CtrlGyroAxis
 
   getSectionTitle() {
     return sectionTitles[this.section.sectionIndex]

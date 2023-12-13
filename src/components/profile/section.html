@@ -19,6 +19,14 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
 </div>
 
+<!-- HOME -->
+<div *ngIf='sectionIsHome()'>
+    <h2>Home button</h2>
+    <p>Home button mappings are not configurable yet.</p>
+    <p>Holding (pink) the Home button, enables the shorcuts from the Home profile. These can be modified in the Home profile page.</p>
+    <p>Double-clicking (purple) and optionally holding the Home button, emulates the native gamepad home/guide button.</p>
+</div>
+
 <!-- BUTTONS -->
 <div *ngIf='sectionIsButton() && getSectionAsButton() as button'>
     <h2>{{getSectionTitle()}}</h2>

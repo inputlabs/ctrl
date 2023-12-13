@@ -9,7 +9,8 @@ import { ButtonComponent } from 'components/profile/action_preview'
 import { SectionComponent } from 'components/profile/section'
 import { LedComponent, getProfileLed } from 'components/led/led'
 import { CtrlSection, CtrlSectionName, CtrlButton, CtrlRotary, CtrlGyroAxis } from 'lib/ctrl'
-import { ThumbstickMode, GyroMode, sectionIsThumbtickButton, sectionIsGyroAxis } from 'lib/ctrl'
+import { ThumbstickMode, GyroMode } from 'lib/ctrl'
+import { sectionIsThumbtickButton, sectionIsGyroAxis, sectionIsHome } from 'lib/ctrl'
 import { SectionIndex } from 'lib/ctrl'
 
 @Component({
@@ -75,6 +76,13 @@ export class ProfileComponent {
     return this.selected as CtrlSection
   }
 
+  getAdditionalClass(sectionIndex: SectionIndex): string {
+    let cls = ''
+    if (sectionIsHome(sectionIndex)) cls += ' centered'
+    if (sectionIsGyroAxis(sectionIndex)) cls += ' centered'
+    return cls
+  }
+
   getMapping( section: CtrlButton | CtrlRotary | CtrlGyroAxis) {
     const pos = position.filter((x) => x.section==section.sectionIndex)[0]
     let style = {'grid-column': pos.column, 'grid-row': pos.row}
@@ -94,6 +102,7 @@ export class ProfileComponent {
     const gyro = profile.gyro
     const rotaryUp = this.getMapping(profile.rotaryUp)
     const rotaryDown = this.getMapping(profile.rotaryDown)
+    const home = this.getMapping(profile.home)
     const buttons = profile.buttons
       .filter((button: CtrlButton) => {
         // Filter out thumbstick directions if mode is unfitting.
@@ -110,7 +119,7 @@ export class ProfileComponent {
         return true
       })
       .map((axis: CtrlGyroAxis) => this.getMapping(axis))
-    return [...buttons, ...gyroAxis, rotaryUp, rotaryDown]
+    return [...buttons, ...gyroAxis, rotaryUp, rotaryDown, home]
   }
 
   // Required so change detection is working better is scenarios where the
@@ -161,4 +170,5 @@ const position = [
   {section: SectionIndex.GYRO_X,           column: '6/13',  row: '17/19', cls:'thin'},
   {section: SectionIndex.GYRO_Y,           column: '6/13',  row: '19/21', cls:'thin'},
   {section: SectionIndex.GYRO_Z,           column: '6/13',  row: '21/23', cls:'thin'},
+  {section: SectionIndex.HOME,             column: '6/13',  row: 11, cls: 'thin'},
 ]
