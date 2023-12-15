@@ -531,7 +531,7 @@ export class CtrlThumbstick extends CtrlSection {
       data[7],
       data[8],
       data[8] != 0,
-      data[9] <= 128 ? data[9] : data[9]-256,  // Unsigned to signed.
+      data[9] << 24 >> 24,  // Unsigned to signed.
     )
   }
 
@@ -542,7 +542,7 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.mode),
       Number(this.distance_mode),
       this.deadzone_override ? this.deadzone : 0,
-      this.overlap > 0 ? this.overlap : this.overlap+256,  // Signed to unsigned.
+      this.overlap,
     ]
   }
 }
@@ -613,8 +613,8 @@ export class CtrlGyroAxis extends CtrlSection {
       this.sectionIndex,
       ...this.actions[0].asArrayPadded(),
       ...this.actions[1].asArrayPadded(),
-      this.minAngle >>> 0, // Signed to unsigned.
-      this.maxAngle >>> 0, // Signed to unsigned.
+      this.minAngle,
+      this.maxAngle,
       ...string_to_buffer(14, this.labels[0]),
       ...string_to_buffer(14, this.labels[1]),
     ]
