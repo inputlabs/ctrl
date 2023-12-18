@@ -2,20 +2,25 @@
 // Copyright (C) 2023, Input Labs Oy.
 
 /// <reference types="w3c-web-usb" />
-import { Injectable } from '@angular/core';
+
+import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { AsyncSubject } from 'rxjs';
+import { AsyncSubject } from 'rxjs'
 import { delay } from 'lib/delay'
+import { HID } from 'lib/hid'
 import {
   Ctrl,
   CtrlLog,
   CtrlProc,
-  Proc,
   ConfigIndex,
+  SectionIndex,
   PACKAGE_SIZE,
   CtrlConfigGet,
   CtrlConfigSet,
   CtrlConfigShare,
+  CtrlProfileGet,
+  CtrlSection,
+  CtrlProfileSet,
 } from 'lib/ctrl'
 
 const ADDR_IN = 3
@@ -37,7 +42,8 @@ export class WebusbService {
   isConnectedRaw = false
   failed = false
   failedError?: Error
-  pending?: AsyncSubject<CtrlConfigShare>
+  pendingConfig?: AsyncSubject<CtrlConfigShare>
+  pendingProfile?: AsyncSubject<CtrlSection>
 
   constructor(
     private router: Router,
@@ -125,17 +131,25 @@ export class WebusbService {
     try {
       // console.log('Listening...')
       const response = await this.device.transferIn(ADDR_IN, PACKAGE_SIZE)
-      const ctrl = Ctrl.decode(response.data)
+      const ctrl = Ctrl.decode(response.data.buffer as ArrayBuffer)
       // console.log('received', ctrl)
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
       if (ctrl instanceof CtrlConfigShare) {
         console.log(ctrl)
-        if (this.pending) {
-          this.pending.next(ctrl)
-          this.pending.complete()
-          this.pending = undefined
+        if (this.pendingConfig) {
+          this.pendingConfig.next(ctrl)
+          this.pendingConfig.complete()
+          this.pendingConfig = undefined
         } else {
-          this.handleCtrlShare(ctrl)
+          this.handleCtrlConfigShare(ctrl)
+        }
+      }
+      if (ctrl instanceof CtrlSection) {
+        console.log(ctrl)
+        if (this.pendingProfile) {
+          this.pendingProfile.next(ctrl as CtrlSection)
+          this.pendingProfile.complete()
+          this.pendingProfile = undefined
         }
       }
     } catch (error:any) {
@@ -154,7 +168,7 @@ export class WebusbService {
     // console.log(ctrl.logMessage)
   }
 
-  handleCtrlShare(ctrl: CtrlConfigShare) {
+  handleCtrlConfigShare(ctrl: CtrlConfigShare) {
     // If there is no pending receiver for the config change we assume it is a
     // change made on the controller via shortcuts, and refresh the components.
     const url = this.router.url
@@ -175,36 +189,36 @@ export class WebusbService {
   }
 
   async sendRestart() {
-    const data = new CtrlProc(Proc.RESTART)
+    const data = new CtrlProc(HID.PROC_RESTART)
     await this.send(data)
   }
 
   async sendBootsel() {
-    const data = new CtrlProc(Proc.BOOTSEL)
+    const data = new CtrlProc(HID.PROC_BOOTSEL)
     await this.send(data)
   }
 
   async sendCalibrate() {
-    const data = new CtrlProc(Proc.CALIBRATE)
+    const data = new CtrlProc(HID.PROC_CALIBRATE)
     await this.send(data)
   }
 
   async sendFactory() {
-    const data = new CtrlProc(Proc.FACTORY)
+    const data = new CtrlProc(HID.PROC_FACTORY)
     await this.send(data)
   }
 
-  async send(ctrl: CtrlProc | CtrlConfigGet) {
+  async send(ctrl: CtrlProc | CtrlConfigGet | CtrlProfileGet) {
     console.log(ctrl)
     await this.device.transferOut(ADDR_OUT, ctrl.encode())
   }
 
   async getConfig(index: ConfigIndex): Promise<PresetWithValues> {
-    this.pending = new AsyncSubject()
+    this.pendingConfig = new AsyncSubject()
     const ctrlOut = new CtrlConfigGet(index)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
-      this.pending?.subscribe({
+      this.pendingConfig?.subscribe({
         next: (ctrlIn) => {
           resolve({presetIndex: ctrlIn.preset, values: ctrlIn.values})
         }
@@ -213,15 +227,41 @@ export class WebusbService {
   }
 
   async setConfig(index: ConfigIndex, preset: number, values: number[]): Promise<number> {
-    this.pending = new AsyncSubject()
+    this.pendingConfig = new AsyncSubject()
     const ctrlOut = new CtrlConfigSet(index, preset, values)
     await this.send(ctrlOut)
     return new Promise((resolve, reject) => {
-      this.pending?.subscribe({
+      this.pendingConfig?.subscribe({
         next: (ctrlIn) => {
           resolve(ctrlIn.preset)
         }
       })
     })
+  }
+
+  async getSection(
+    profileIndex: number,
+    sectionIndex: SectionIndex,
+  ): Promise<CtrlSection> {
+    this.pendingProfile = new AsyncSubject()
+    const ctrlOut = new CtrlProfileGet(profileIndex, sectionIndex)
+    await this.send(ctrlOut)
+    return new Promise((resolve, reject) => {
+      this.pendingProfile?.subscribe({
+        next: (ctrlIn) => {
+          resolve(ctrlIn)
+        }
+      })
+    })
+  }
+
+  async setSection(
+    profileIndex: number,
+    section: CtrlSection,
+  ) {
+    this.pendingProfile = new AsyncSubject()
+    const ctrlOut = new CtrlProfileSet(profileIndex, section.sectionIndex, section.payload())
+    await this.send(ctrlOut)
+    // TODO: Receive confirmation.
   }
 }

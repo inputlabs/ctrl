@@ -4,7 +4,8 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
-import { LedComponent, LED } from 'components/led/led'
+import { LedComponent, LED, getProfileLed } from 'components/led/led'
+import { ProfileService } from 'services/profiles'
 import { version, commit } from 'lib/version'
 
 @Component({
@@ -25,9 +26,11 @@ export class SidebarComponent {
   LED = LED
   version = version.split('/').pop()
   commit = commit.slice(0, 12)
+  getProfileLed = getProfileLed
 
   constructor(
-    private router: Router
+    private router: Router,
+    public profileService: ProfileService,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -50,5 +53,9 @@ export class SidebarComponent {
 
   isHelp() {
     return this.route.startsWith('/help')
+  }
+
+  getProfileName(index: number) {
+    return this.profileService.profiles[index].name.name
   }
 }

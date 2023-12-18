@@ -10,6 +10,7 @@
     max-width: 300px
     padding-top: 10px
     background: hsl(0deg, 0%, 8%)
+    overflow-y: auto
     a
         display: flex
         align-items: center
@@ -21,10 +22,15 @@
         font-weight: bold
         text-decoration: none
         color: hsl(0deg, 0%, 70%)
-        .material-icons
+        .material
+            font-size: 26px
+            font-variation-settings: 'wght' 300, 'opsz' 48, 'FILL' 0
             padding-right: 10px
         app-led
-            padding-right: 8px
+            height: 28px
+            width: 28px
+            aspect-ratio: 1/1
+            margin-right: 8px
         &.active
             background-color: hsl(0deg, 0%, 15%)
             color: $green

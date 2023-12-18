@@ -60,8 +60,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
-              "node_modules/material-icons/iconfont/material-icons.css"
+              "src/styles.sass"
             ],
             "scripts": []
           },
@@ -75,8 +74,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "20kb"
                 }
               ],
               "outputHashing": "all"

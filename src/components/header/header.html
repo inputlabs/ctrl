@@ -47,11 +47,11 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='connection'>
         <div *ngIf='!webusb.isConnectedRaw' (click)='webusb.requestDevice()'>
             Not connected
-            <span class='material-icons'>usb_off</span>
+            <span class='material'>usb_off</span>
         </div>
         <div *ngIf='webusb.isConnectedRaw' class='active' (click)='showDialogForget()'>
             {{webusb.device.productName}}
-            <span class='material-icons'>usb</span>
+            <span class='material'>usb</span>
         </div>
     </div>
 </div>

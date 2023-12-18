@@ -1,0 +1,556 @@
+<!--
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2023, Input Labs Oy.
+-->
+
+<!-- PROFILE NAME -->
+<div *ngIf='sectionIsName() && getSectionAsName() as name'>
+    <h2>Profile</h2>
+    <div class='block'>
+        <div class='subtitle'>Name:</div>
+        <input
+            class='island'
+            type='text'
+            placeholder='Profile name'
+            maxlength='24'
+            [(ngModel)]='name.name'
+            (change)='save()'
+        />
+    </div>
+</div>
+
+<!-- HOME -->
+<div *ngIf='sectionIsHome()'>
+    <h2>Home button</h2>
+    <p>Home button mappings are not configurable yet.</p>
+    <p>Holding (pink) the Home button, enables the shorcuts from the Home profile. These can be modified in the Home profile page.</p>
+    <p>Double-clicking (purple) and optionally holding the Home button, emulates the native gamepad home/guide button.</p>
+</div>
+
+<!-- BUTTONS -->
+<div *ngIf='sectionIsButton() && getSectionAsButton() as button'>
+    <h2>{{getSectionTitle()}}</h2>
+
+    <!-- BUTTON FILTERS -->
+    <div class='block'>
+        <div class='island'>
+            <div
+                class='iconaction'
+                *ngIf='!button.homeCycle'
+                >
+                <span class='name'>Hold</span>
+                <span class='material' (click)='button.hold=!button.hold; save()'>
+                    {{button.hold ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+            <div
+                class='iconaction'
+                *ngIf='!button.homeCycle'
+                >
+                <span class='name'>Double click</span>
+                <span class='material'>select</span>
+            </div>
+            <div
+                class='iconaction'
+                *ngIf='button.hold && !button.homeCycle'
+                >
+                <span class='name'>Long press</span>
+                <span class='material' (click)='button.long=!button.long; save()'>
+                    {{button.long ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+            <div
+                class='iconaction'
+                *ngIf='button.hold && !button.homeCycle'
+                >
+                <span class='name'>Overlap</span>
+                <span class='material' (click)='button.overlap=!button.overlap; save()'>
+                    {{button.overlap ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+            <div
+                class='iconaction'
+                *ngIf='profileIndex===0 && !button.hold'
+                >
+                <span class='name'>Home cycle</span>
+                <span class='material' (click)='button.homeCycle=!button.homeCycle; save()'>
+                    {{button.homeCycle ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUTTON ACTIONS -->
+    <div class='block' *ngFor='let groupIndex of [0,1]'>
+        <div *ngIf='isButtonBlockVisible(groupIndex)'>
+            <div class='subtitle'>{{getButtonBlockSubtitle(groupIndex)}}</div>
+            <app-action-selector
+                [actions]='getActions()'
+                [labels]='getLabels()'
+                [groupIndex]='groupIndex'
+                [cls]='actionCls'
+                [showDialogKeypicker]='showDialogKeypicker'
+                [save]='save'
+            />
+        </div>
+    </div>
+
+</div>
+
+<!-- ROTARY -->
+<div *ngIf='sectionIsRotary() && getSectionAsRotary() as rotary'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_UP'>On scroll up:</div>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_DOWN'>On scroll down:</div>
+        <app-action-selector
+            [actions]='getActions()'
+            [labels]='getLabels()'
+            [groupIndex]='0'
+            [cls]='actionCls'
+            [showDialogKeypicker]='showDialogKeypicker'
+            [save]='save'
+        />
+    </div>
+</div>
+
+<!-- THUMBSTICK -->
+<div *ngIf='sectionIsThumbstick() && getSectionAsThumbstick() as thumbstick'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+        <div class='subtitle'>Mode:</div>
+        <select
+            [(ngModel)]='thumbstick.mode'
+            (ngModelChange)='save()'
+            >
+            <option [value]='ThumbstickMode.OFF'>Off</option>
+            <option [value]='ThumbstickMode.DIR4'>4 directions</option>
+            <option [value]='ThumbstickMode.ALPHANUMERIC'>Alphanumeric</option>
+        </select>
+    </div>
+    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
+        <div class='subtitle'>Distance calculation:</div>
+        <select
+            [(ngModel)]='thumbstick.distance_mode'
+            (ngModelChange)='save()'
+            >
+            <option [value]='ThumbstickDistanceMode.AXIAL'>Axial</option>
+            <option [value]='ThumbstickDistanceMode.RADIAL'>Radial</option>
+        </select>
+    </div>
+    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
+        <div class='subtitle'>Axis overlap:</div>
+        <div class='island'>
+            <app-number-input
+                [value]='thumbstick.overlap'
+                (update)='thumbstick.overlap=$event; save()'
+                [unit]="'%'"
+                [min]='-100'
+                [max]='100'
+                [step]='5'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
+        <div class='subtitle'>Deadzone:</div>
+        <div class='island'>
+            <div class='iconaction'>
+                <span class='name'>Override global deadzone</span>
+                <span
+                    class='material'
+                    (click)='thumbstick.deadzone_override=!thumbstick.deadzone_override; save()'
+                    >
+                    {{thumbstick.deadzone_override ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+            <app-number-input
+                *ngIf='thumbstick.deadzone_override'
+                [value]='thumbstick.deadzone'
+                (update)='thumbstick.deadzone=$event; save()'
+                [unit]="'%'"
+                [min]='0'
+                [max]='100'
+                [step]='1'
+            />
+        </div>
+    </div>
+</div>
+
+<!-- GYRO -->
+<div *ngIf='sectionIsGyro() && getSectionAsGyro() as gyro'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+        <div class='subtitle'>Mode:</div>
+        <select
+            [(ngModel)]='gyro.mode'
+            (ngModelChange)='save()'
+            >
+            <option [value]='GyroMode.OFF'>Off</option>
+            <option [value]='GyroMode.ALWAYS_ON'>Always On</option>
+            <option [value]='GyroMode.TOUCH_OFF'>Touch Off</option>
+            <option [value]='GyroMode.TOUCH_ON'>Touch On</option>
+            <option [value]='GyroMode.AXIS_ABSOLUTE'>As absolute axis</option>
+        </select>
+    </div>
+    <div class='block' *ngIf='gyro.mode==GyroMode.TOUCH_ON || gyro.mode==GyroMode.TOUCH_OFF'>
+        <div class='subtitle'>Engage surface/button:</div>
+        <select
+            [(ngModel)]='gyro.engage'
+            (ngModelChange)='save()'
+            >
+            <option [value]='PIN.NONE'>None</option>
+            <option [value]='PIN.TOUCH_IN'>Hexagon surface</option>
+            <option [value]='PIN.A'>A</option>
+            <option [value]='PIN.B'>B</option>
+            <option [value]='PIN.X'>X</option>
+            <option [value]='PIN.Y'>Y</option>
+            <option [value]='PIN.DPAD_LEFT'>DPad Left</option>
+            <option [value]='PIN.DPAD_RIGHT'>DPad Right</option>
+            <option [value]='PIN.DPAD_UP'>DPad Up</option>
+            <option [value]='PIN.DPAD_DOWN'>DPad Down</option>
+            <option [value]='PIN.L1'>L1</option>
+            <option [value]='PIN.L2'>L2</option>
+            <option [value]='PIN.L3'>L3</option>
+            <option [value]='PIN.L4'>L4</option>
+            <option [value]='PIN.R1'>R1</option>
+            <option [value]='PIN.R2'>R2</option>
+            <option [value]='PIN.DHAT_PUSH'>R3</option>
+            <option [value]='PIN.R4'>R4</option>
+            <option [value]='PIN.SELECT_1'>Select</option>
+            <option [value]='PIN.START_1'>Start</option>
+            <option [value]='PIN.SELECT_2'>Select (2)</option>
+            <option [value]='PIN.START_2'>Start (2)</option>
+        </select>
+    </div>
+</div>
+
+<!-- GYRO AXIS -->
+<div *ngIf='sectionIsGyroAxis() && getSectionAsGyroAxis() as gyroAxis'>
+    <h2>{{getSectionTitle()}}</h2>
+    <div class='block'>
+        <div class='subtitle'>On axis rotation (negative):</div>
+        <app-action-selector
+            [actions]='getActions()'
+            [labels]='getLabels()'
+            [groupIndex]='0'
+            [cls]='actionCls'
+            [showDialogKeypicker]='showDialogKeypicker'
+            [save]='save'
+        />
+    </div>
+    <div class='block'>
+        <div class='subtitle'>On axis rotation (positive):</div>
+        <app-action-selector
+            [actions]='getActions()'
+            [labels]='getLabels()'
+            [groupIndex]='1'
+            [cls]='actionCls'
+            [showDialogKeypicker]='showDialogKeypicker'
+            [save]='save'
+        />
+    </div>
+    <div class='block' *ngIf="getGyroMode() == 4">
+        <div class='subtitle'>Min Angle:</div>
+        <div class='island'>
+            <app-number-input
+                [value]='gyroAxis.minAngle'
+                (update)='gyroAxis.minAngle=$event; save()'
+                [unit]="'°'"
+                [min]='-90'
+                [max]='90'
+                [step]='5'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf="getGyroMode() == 4">
+        <div class='subtitle'>Max Angle:</div>
+        <div class='island'>
+            <app-number-input
+                [value]='gyroAxis.maxAngle'
+                (update)='gyroAxis.maxAngle=$event; save()'
+                [unit]="'°'"
+                [min]='-90'
+                [max]='90'
+                [step]='5'
+            />
+        </div>
+    </div>
+</div>
+
+<!-- PICKER / BINDING UI -->
+<dialog id='dialog-keypicker' *ngIf='sectionIsButton() || sectionIsRotary() || sectionIsGyroAxis()'>
+    <div class='bigrow'>
+        <div class='keyboard'>
+            <div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_ESCAPE)' (click)='pick(HID.KEY_ESCAPE)'>ESC</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F1)' (click)='pick(HID.KEY_F1)'>F1</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F2)' (click)='pick(HID.KEY_F2)'>F2</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F3)' (click)='pick(HID.KEY_F3)'>F3</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F4)' (click)='pick(HID.KEY_F4)'>F4</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F5)' (click)='pick(HID.KEY_F5)'>F5</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F6)' (click)='pick(HID.KEY_F6)'>F6</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F7)' (click)='pick(HID.KEY_F7)'>F7</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F8)' (click)='pick(HID.KEY_F8)'>F8</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F9)' (click)='pick(HID.KEY_F9)'>F9</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F10)' (click)='pick(HID.KEY_F10)'>F10</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F11)' (click)='pick(HID.KEY_F11)'>F11</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F12)' (click)='pick(HID.KEY_F12)'>F12</div>
+                <div class='key wide20'>US<span class='material'>language</span></div>
+                <div class='void'>&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PRINT_SCREEN)' (click)='pick(HID.KEY_PRINT_SCREEN)'><span class='material'>photo_camera</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_SCROLL_LOCK)' (click)='pick(HID.KEY_SCROLL_LOCK)'><span class='material'>sync_lock</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAUSE)' (click)='pick(HID.KEY_PAUSE)'><span class='material'>pause_circle</span></div>
+                <div class="void">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_MUTE)' (click)='pick(HID.KEY_MUTE)'><span class='material'>volume_off</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_VOLUME_DOWN)' (click)='pick(HID.KEY_VOLUME_DOWN)'><span class='material'>volume_down</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_VOLUME_UP)' (click)='pick(HID.KEY_VOLUME_UP)'><span class='material'>volume_up</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_POWER)' (click)='pick(HID.KEY_POWER)'><span class='material'>power_settings_new</span></div>
+            </div>
+            <div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_BACKQUOTE)' (click)='pick(HID.KEY_BACKQUOTE)'>`</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_1)' (click)='pick(HID.KEY_1)'>1</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_2)' (click)='pick(HID.KEY_2)'>2</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_3)' (click)='pick(HID.KEY_3)'>3</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_4)' (click)='pick(HID.KEY_4)'>4</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_5)' (click)='pick(HID.KEY_5)'>5</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_6)' (click)='pick(HID.KEY_6)'>6</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_7)' (click)='pick(HID.KEY_7)'>7</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_8)' (click)='pick(HID.KEY_8)'>8</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_9)' (click)='pick(HID.KEY_9)'>9</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_0)' (click)='pick(HID.KEY_0)'>0</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_MINUS)' (click)='pick(HID.KEY_MINUS)'>-</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_EQUALS)' (click)='pick(HID.KEY_EQUALS)'>=</div>
+                <div class='key wide20' [ngClass]='pickCls(HID.KEY_BACKSPACE)' (click)='pick(HID.KEY_BACKSPACE)'><span class='material'>backspace</span></div>
+                <div class="void">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_INSERT)' (click)='pick(HID.KEY_INSERT)'>INS</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_HOME)' (click)='pick(HID.KEY_HOME)'>HOM</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAGE_UP)' (click)='pick(HID.KEY_PAGE_UP)'>PG-</div>
+                <div class="void">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_NUMLOCK)' (click)='pick(HID.KEY_PAD_NUMLOCK)'>NUM</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_SLASH)' (click)='pick(HID.KEY_PAD_SLASH)'>/</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_ASTERISK)' (click)='pick(HID.KEY_PAD_ASTERISK)'>*</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_MINUS)' (click)='pick(HID.KEY_PAD_MINUS)'>-</div>
+            </div>
+            <div>
+                <div class='key wide20' [ngClass]='pickCls(HID.KEY_TAB)' (click)='pick(HID.KEY_TAB)' >TAB</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_Q)' (click)='pick(HID.KEY_Q)' >Q</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_W)' (click)='pick(HID.KEY_W)' >W</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_E)' (click)='pick(HID.KEY_E)' >E</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_R)' (click)='pick(HID.KEY_R)' >R</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_T)' (click)='pick(HID.KEY_T)' >T</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_Y)' (click)='pick(HID.KEY_Y)' >Y</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_U)' (click)='pick(HID.KEY_U)' >U</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_I)' (click)='pick(HID.KEY_I)' >I</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_O)' (click)='pick(HID.KEY_O)' >O</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_P)' (click)='pick(HID.KEY_P)' >P</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_BRACKET_LEFT)' (click)='pick(HID.KEY_BRACKET_LEFT)' >[</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_BRACKET_RIGHT)' (click)='pick(HID.KEY_BRACKET_RIGHT)' >]</div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_BACKSLASH)' (click)='pick(HID.KEY_BACKSLASH)' >\</div>
+                <div class="void">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_DELETE)' (click)='pick(HID.KEY_DELETE)' >DEL</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_END)' (click)='pick(HID.KEY_END)' >END</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAGE_DOWN)' (click)='pick(HID.KEY_PAGE_DOWN)' >PG+</div>
+                <div class="void">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_7)' (click)='pick(HID.KEY_PAD_7)' >7</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_8)' (click)='pick(HID.KEY_PAD_8)' >8</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_9)' (click)='pick(HID.KEY_PAD_9)' >9</div>
+                <div class='key tallup' [ngClass]='pickCls(HID.KEY_PAD_PLUS)' (click)='pick(HID.KEY_PAD_PLUS)'>&nbsp;</div>
+            </div>
+            <div>
+                <div class='key wide20' [ngClass]='pickCls(HID.KEY_CAPS_LOCK)' (click)='pick(HID.KEY_CAPS_LOCK)'>CAPS</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_A)' (click)='pick(HID.KEY_A)'>A</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_S)' (click)='pick(HID.KEY_S)'>S</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_D)' (click)='pick(HID.KEY_D)'>D</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_F)' (click)='pick(HID.KEY_F)'>F</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_G)' (click)='pick(HID.KEY_G)'>G</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_H)' (click)='pick(HID.KEY_H)'>H</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_J)' (click)='pick(HID.KEY_J)'>J</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_K)' (click)='pick(HID.KEY_K)'>K</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_L)' (click)='pick(HID.KEY_L)'>L</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_SEMICOLON)' (click)='pick(HID.KEY_SEMICOLON)'>;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_QUOTE)' (click)='pick(HID.KEY_QUOTE)'>'</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_ISO_1)' (click)='pick(HID.KEY_ISO_1)'>&nbsp;</div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_ENTER)' (click)='pick(HID.KEY_ENTER)'><span class='material'>keyboard_return</span></div>
+                <div class="void wide50">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_4)' (click)='pick(HID.KEY_PAD_4)'>4</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_5)' (click)='pick(HID.KEY_PAD_5)'>5</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_6)' (click)='pick(HID.KEY_PAD_6)'>6</div>
+                <div class='key talldown' [ngClass]='pickCls(HID.KEY_PAD_PLUS)' (click)='pick(HID.KEY_PAD_PLUS)'>+</div>
+            </div>
+            <div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_SHIFT_LEFT)' (click)='pick(HID.KEY_SHIFT_LEFT)'><span class='material'>shift</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_ISO_2)' (click)='pick(HID.KEY_ISO_2)'>&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_Z)' (click)='pick(HID.KEY_Z)'>Z</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_X)' (click)='pick(HID.KEY_X)'>X</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_C)' (click)='pick(HID.KEY_C)'>C</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_V)' (click)='pick(HID.KEY_V)'>V</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_B)' (click)='pick(HID.KEY_B)'>B</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_N)' (click)='pick(HID.KEY_N)'>N</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_M)' (click)='pick(HID.KEY_M)'>M</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_COMMA)' (click)='pick(HID.KEY_COMMA)'>,</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PERIOD)' (click)='pick(HID.KEY_PERIOD)'>.</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_SLASH)' (click)='pick(HID.KEY_SLASH)'>/</div>
+                <!-- <div class='key'>&nbsp;</div> -->
+                <div class='key wide30' [ngClass]='pickCls(HID.KEY_SHIFT_RIGHT)' (click)='pick(HID.KEY_SHIFT_RIGHT)'><span class='material'>shift</span></div>
+                <div class="void wide20">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_UP)' (click)='pick(HID.KEY_UP)'><span class='material'>arrow_upward</span></div>
+                <div class="void wide20">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_1)' (click)='pick(HID.KEY_PAD_1)'>1</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_2)' (click)='pick(HID.KEY_PAD_2)'>2</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_3)' (click)='pick(HID.KEY_PAD_3)'>3</div>
+                <div class='key tallup' [ngClass]='pickCls(HID.KEY_PAD_ENTER)' (click)='pick(HID.KEY_PAD_ENTER)'>&nbsp;</div>
+            </div>
+            <div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_CONTROL_LEFT)' (click)='pick(HID.KEY_CONTROL_LEFT)'>CTRL</div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_SUPER_LEFT)' (click)='pick(HID.KEY_SUPER_LEFT)'>WIN</div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_ALT_LEFT)' (click)='pick(HID.KEY_ALT_LEFT)'>ALT</div>
+                <div class='key wide65' [ngClass]='pickCls(HID.KEY_SPACE)' (click)='pick(HID.KEY_SPACE)'><span class='material'>space_bar</span></div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_ALT_RIGHT)' (click)='pick(HID.KEY_ALT_RIGHT)'>ALT</div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_SUPER_RIGHT)' (click)='pick(HID.KEY_SUPER_RIGHT)'>WIN</div>
+                <div class='key wide15' [ngClass]='pickCls(HID.KEY_CONTROL_RIGHT)' (click)='pick(HID.KEY_CONTROL_RIGHT)'>CTRL</div>
+                <div class="void wide">&nbsp;</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_LEFT)' (click)='pick(HID.KEY_LEFT)'><span class='material'>arrow_back</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_DOWN)' (click)='pick(HID.KEY_DOWN)'><span class='material'>arrow_downward</span></div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_RIGHT)' (click)='pick(HID.KEY_RIGHT)'><span class='material'>arrow_forward</span></div>
+                <div class="void">&nbsp;</div>
+                <div class='key wide20' [ngClass]='pickCls(HID.KEY_PAD_0)' (click)='pick(HID.KEY_PAD_0)'>0</div>
+                <div class='key' [ngClass]='pickCls(HID.KEY_PAD_PERIOD)' (click)='pick(HID.KEY_PAD_PERIOD)'>.</div>
+                <div class='key talldown' [ngClass]='pickCls(HID.KEY_PAD_ENTER)' (click)='pick(HID.KEY_PAD_ENTER)'><span class='material'>keyboard_return</span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='bigrow'>
+
+        <div class='keyboard proc'>
+            <div class='key' [ngClass]='pickCls(HID.PROC_PROFILE_0 + pickerProfile)'>
+                <span class='prevnext' (click)='pickProfile(-1)'>⏴</span>
+                <span (click)='pickProfile()'>SET PROFILE {{pickerProfile}}</span>
+                <span class='prevnext' (click)='pickProfile(+1)'>⏵</span>
+            </div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_ROTARY_MODE_0 + pickerRotary)'>
+                <span class='prevnext' (click)='pickRotary(-1)'>⏴</span>
+                <span (click)='pickRotary()'>SET ROTARY {{pickerRotary}}</span>
+                <span class='prevnext' (click)='pickRotary(+1)'>⏵</span>
+            </div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_MACRO_1 + pickerMacro - 1)'>
+                <span class='prevnext' (click)='pickMacro(-1)'>⏴</span>
+                <span (click)='pickMacro()'>MACRO {{pickerMacro}}</span>
+                <span class='prevnext' (click)='pickMacro(+1)'>⏵</span>
+            </div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_TUNE_OS + pickerTune)'>
+                <span class='prevnext' (click)='pickTune(-1)'>⏴</span>
+                <span *ngIf='pickerTune==0' (click)='pickTune()'><span class='material'>settings</span>PROTOCOL</span>
+                <span *ngIf='pickerTune==1' (click)='pickTune()'><span class='material'>settings</span>MOUSE SENS</span>
+                <span *ngIf='pickerTune==2' (click)='pickTune()'><span class='material'>settings</span>TOUCH SENS</span>
+                <span *ngIf='pickerTune==3' (click)='pickTune()'><span class='material'>settings</span>TS DEADZONE</span>
+                <span class='prevnext' (click)='pickTune(+1)'>⏵</span>
+            </div>
+            <div>
+                <div class='key half' [ngClass]='pickCls(HID.PROC_TUNE_DOWN)' (click)='pick(HID.PROC_TUNE_DOWN)'><span class='material'>settings</span><span class='material'>remove</span></div>
+                <div class='key half' [ngClass]='pickCls(HID.PROC_TUNE_UP)' (click)='pick(HID.PROC_TUNE_UP)'><span class='material'>settings</span><span class='material'>add</span></div>
+            </div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)'>CALIBRATE</div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)'>BOOTSEL</div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_THANKS)' (click)='pick(HID.PROC_THANKS)'>THANKS</div>
+        </div>
+
+        <div class='compact gamepad'>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LZ)' (click)='pick(HID.GAMEPAD_AXIS_LZ)'>LT</div>
+                <div class='spacing w9'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_RZ)' (click)='pick(HID.GAMEPAD_AXIS_RZ)'>RT</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_L1)' (click)='pick(HID.GAMEPAD_L1)'>LB</div>
+                <div class='spacing w9'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_R1)' (click)='pick(HID.GAMEPAD_R1)'>RB</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_SELECT)' (click)='pick(HID.GAMEPAD_SELECT)'><span class='material small'>stack</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_HOME)' (click)='pick(HID.GAMEPAD_HOME)'><span class='material small'>home</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_START)' (click)='pick(HID.GAMEPAD_START)'><span class='material small'>menu</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LY_NEG)' (click)='pick(HID.GAMEPAD_AXIS_LY_NEG)'><span class='material'>keyboard_arrow_up</span></div>
+                <div class='spacing w9'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_Y)' (click)='pick(HID.GAMEPAD_Y)'>Y</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LX_NEG)' (click)='pick(HID.GAMEPAD_AXIS_LX_NEG)'><span class='material'>keyboard_arrow_left</span></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_L3)' (click)='pick(HID.GAMEPAD_L3)'>LS</div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LX)' (click)='pick(HID.GAMEPAD_AXIS_LX)'><span class='material'>keyboard_arrow_right</span></div>
+                <div class='spacing w7'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_X)' (click)='pick(HID.GAMEPAD_X)'>X</div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_B)' (click)='pick(HID.GAMEPAD_B)'>B</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_LY)' (click)='pick(HID.GAMEPAD_AXIS_LY)'><span class='material'>keyboard_arrow_down</span></div>
+                <div class='spacing w2'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_UP)' (click)='pick(HID.GAMEPAD_UP)'><span class='material'>arrow_upward</span></div>
+                <div class='spacing w3'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_RY_NEG)' (click)='pick(HID.GAMEPAD_AXIS_RY_NEG)'><span class='material'>keyboard_arrow_up</span></div>
+                <div class='spacing w2'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_A)' (click)='pick(HID.GAMEPAD_A)'>A</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_LEFT)' (click)='pick(HID.GAMEPAD_LEFT)'><span class='material'>arrow_back</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_RIGHT)' (click)='pick(HID.GAMEPAD_RIGHT)'><span class='material'>arrow_forward</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_RX_NEG)' (click)='pick(HID.GAMEPAD_AXIS_RX_NEG)'><span class='material'>keyboard_arrow_left</span></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_R3)' (click)='pick(HID.GAMEPAD_R3)'>RS</div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_RX)' (click)='pick(HID.GAMEPAD_AXIS_RX)'><span class='material'>keyboard_arrow_right</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_DOWN)' (click)='pick(HID.GAMEPAD_DOWN)'><span class='material'>arrow_downward</span></div>
+                <div class='spacing w3'></div>
+                <div class='button' [ngClass]='pickCls(HID.GAMEPAD_AXIS_RY)' (click)='pick(HID.GAMEPAD_AXIS_RY)'><span class='material'>keyboard_arrow_down</span></div>
+            </div>
+        </div>
+
+        <div class='compact mouse'>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_SCROLL_UP)' (click)='pick(HID.MOUSE_SCROLL_UP)'><span class='material'>stat_2</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_1)' (click)='pick(HID.MOUSE_1)'>1</div>
+                <div class='spacing w07'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_3)' (click)='pick(HID.MOUSE_3)'>3</div>
+                <div class='spacing w07'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_2)' (click)='pick(HID.MOUSE_2)'>2</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_SCROLL_DOWN)' (click)='pick(HID.MOUSE_SCROLL_DOWN)'><span class='material'>stat_minus_2</span></div>
+            </div>
+            <div>
+                <div class='spacing w1'>&nbsp;</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_4)' (click)='pick(HID.MOUSE_4)'>4</div>
+                <div class='spacing w4'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_5)' (click)='pick(HID.MOUSE_5)'>5</div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_Y_NEG)' (click)='pick(HID.MOUSE_Y_NEG)'><span class='material'>keyboard_arrow_up</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_X_NEG)' (click)='pick(HID.MOUSE_X_NEG)'><span class='material'>keyboard_arrow_left</span></div>
+                <div class='spacing w1'></div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_X)' (click)='pick(HID.MOUSE_X)'><span class='material'>keyboard_arrow_right</span></div>
+            </div>
+            <div>
+                <div class='button' [ngClass]='pickCls(HID.MOUSE_Y)' (click)='pick(HID.MOUSE_Y)'><span class='material'>keyboard_arrow_down</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class='close'>
+        <button (click)='hideDialogKeypicker()' class='flat'>Close</button>
+    </div>
+</dialog>

@@ -1,0 +1,82 @@
+// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (C) 2023, Input Labs Oy.
+
+@use '../../styles' as *
+
+:host
+    position: absolute
+    font-family: poppins
+    font-weight: bold
+    white-space: nowrap
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    align-items: center
+    height: 100%
+    $size: 2.2vmin
+
+    .group
+        display: flex
+        align-items: center
+
+    .group.wrap
+        flex-wrap: wrap
+
+    .chips
+        display: flex
+        white-space: nowrap
+        margin-right: 3px
+        .chip
+            display: flex
+            min-width: $size
+            height: $size
+            font-size: $size * 0.7
+            line-height: $size * 1.05
+            vertical-align: text-top
+            padding: 0px
+            padding-left: 3px
+            padding-right: 3px
+            margin-right: 3px
+            justify-content: center
+
+    .press
+        background-color: $green
+        color: black
+
+    .hold
+        background-color: $pink
+        color: black
+
+    .doubleclick
+        background-color: $purple
+        color: black
+
+    .analog
+        background-color: $yellow
+        color: black
+
+    .round
+        border-radius: 5px
+
+    .circle
+        border-radius: $size * 0.5
+
+    .fixed
+        width: $size !important
+        height: $size !important
+        padding-left: 0 !important
+        padding-right: 0 !important
+
+    .material
+        font-size: $size * 0.8 !important
+        vertical-align: bottom
+        font-variation-settings: 'wght' 700, 'opsz' 48, 'FILL' 0
+
+    .label
+        color: hsl(0deg, 0%, 50%)
+        font-weight: normal
+        height: $size
+        line-height: $size * 1.05
+        font-size: $size * 0.55
+        margin-right: 8px
+        white-space: nowrap

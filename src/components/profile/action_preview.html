@@ -1,0 +1,24 @@
+<!--
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2023, Input Labs Oy.
+-->
+
+<div class='group' [ngClass]='getGroupClass(0)'>
+    <div class='chips'>
+        <div class='chip' [ngClass]='chip.cls' *ngFor='let chip of getChips(0)'>
+            <div *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</div>
+            <div *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</div>
+        </div>
+    </div>
+    <div *ngIf='getLabel(0)' class='label'>{{getLabel(0)}}</div>
+</div>
+
+<div class='group' [ngClass]='getGroupClass(1)'>
+    <div class='chips'>
+        <div class='chip' [ngClass]='chip.cls' *ngFor='let chip of getChips(1)'>
+            <div *ngIf='chip.icon.icon' class='material'>{{chip.icon.icon}}</div>
+            <div *ngIf='!chip.icon.icon || chip.icon.showLabel'>{{chip.text}}</div>
+        </div>
+    </div>
+    <div *ngIf='getLabel(1)' class='label'>{{getLabel(1)}}</div>
+</div>

@@ -1,0 +1,235 @@
+// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (C) 2023, Input Labs Oy.
+
+@use '../../styles' as *
+
+:host
+    .wide
+        width: 100%
+
+    .block
+        margin-bottom: 20px
+
+    .subtitle
+        margin-bottom: 5px
+        font-size: 14px
+
+    p
+        font-size: 14px
+
+    .island
+        border-radius: 6px
+        overflow: hidden
+
+    .iconaction
+        width: 100%
+        height: 35px
+        background-color: black
+        color: hsl(0deg, 0%, 80%)
+        border: 0px solid black
+        font-size: 14px
+        font-weight: bold
+        display: flex
+        *:first-child
+            flex-grow: 1
+            line-height: 35px
+            padding-left: 10px
+        .material
+            line-height: 35px
+            padding-right: 6px
+            cursor: pointer
+
+    input[type=text]
+        width: 100%
+        height: 35px
+        background-color: black
+        color: hsl(0deg, 0%, 50%)
+        border: 0px solid black
+        font-size: 14px
+        font-weight: bold
+        padding-left: 10px
+        &::placeholder
+            color: hsl(0deg, 0%, 25%)
+
+    select
+        height: 35px
+        width: 100%
+        background-color: black
+        color: hsl(0deg, 0%, 80%)
+        padding-left: 10px
+        border: 0px solid black
+        border-radius: 5px
+        font-size: 14px
+        font-weight: bold
+        cursor: pointer
+        appearance: none
+
+    .action
+        height: 35px
+        line-height: 35px
+        padding-left: 10px
+        background-color: black
+        font-size: 14px
+        font-weight: bold
+        cursor: pointer
+        &.placeholder
+            color: hsl(0deg, 0%, 25%)
+        &.hidden
+            color: hsla(0deg, 0%, 0%, 0)
+
+    .press
+        color: $green
+    .hold
+        color: $pink !important
+    .analog
+        color: $yellow !important
+
+    .pressBG
+        background-color: $green !important
+        color: black !important
+    .holdBG
+        background-color: $pink !important
+        color: black !important
+    .analogBG
+        background-color: $yellow !important
+        color: black !important
+
+    #dialog-keypicker
+        min-width: 935px
+        min-height: 600px
+        user-select: none
+        $size: 35px
+        padding: $size
+        padding-bottom: 25px
+        position: relative
+
+        .bigrow
+            display: flex
+            align-items: flex-start
+            min-width: $size * 24.5  // Amount of keys + gaps in a keyboard.
+            &:first-child
+                padding-bottom: $size
+
+        .keyboard
+            .key
+                display: inline-block
+                background-color: hsl(0deg, 0%, 0%)
+                font-size: 14px
+                font-weight: bold
+                width: 35px
+                height: 35px
+                line-height: 32px
+                border: 1px solid white
+                cursor: pointer
+                // box-sizing: border-box
+            .material.narrow
+                width: 10px
+                margin-left: -10px
+            .void
+                display: inline-block
+                vertical-align: bottom
+                width: 35px
+                height: 35px
+            .wide15
+                width: $size * 1.5
+            .wide20
+                width: $size * 2
+            .wide25
+                width: $size * 2.5
+            .wide30
+                width: $size * 3
+            .wide35
+                width: $size * 3.5
+            .wide40
+                width: $size * 4
+            .wide50
+                width: $size * 5
+            .wide60
+                width: $size * 6
+            .wide65
+                width: $size * 6.5
+            .wide70
+                width: $size * 7
+            .wide90
+                width: $size * 9
+            .material
+                vertical-align: middle
+                font-variation-settings: 'wght' 300, 'opsz' 20, 'FILL' 0
+            .tallup
+                border-bottom: 1px solid transparent
+            .talldown
+                border-top: 1px solid transparent
+
+        .proc
+            width: $size * 5.5
+            height: 290px
+            display: flex
+            flex-direction: column
+            flex-wrap: wrap
+            .key
+                width: 100%
+            .half
+                width: 50% !important
+            .prevnext
+                display: inline-block
+                height: $size
+                width: 20px
+
+        .compact
+            $size: 25px
+            .button
+                display: inline-block
+                background-color: black
+                text-align: center
+                width: $size
+                height: $size
+                border: 1px solid white
+                line-height: 24px
+                cursor: pointer
+            .material
+                vertical-align: bottom
+            .small
+                font-size: 16px
+            .spacing
+                display: inline-block
+            .w07
+                width: $size * 0.7
+            .w1
+                width: $size * 1
+            .w2
+                width: $size * 2
+            .w3
+                width: $size * 3
+            .w4
+                width: $size * 4
+            .w5
+                width: $size * 5
+            .w7
+                width: $size * 7
+            .w9
+                width: $size * 9
+
+        .gamepad
+            background-image: url('/assets/gamepad_outline.png')
+            width: 425px
+            height: 300px
+            margin-top: -15px
+            margin-left: 25px
+            .button
+                border-radius: 12.5px
+
+        .mouse
+            background-image: url('/assets/mouse_outline.png')
+            width: 175px
+            height: 275px
+            margin-top: 10px
+            margin-left: 40px
+            padding-top: $size
+            .button
+                border-radius: 6px
+
+        .close
+            position: absolute
+            bottom: 30px
+            left: 420px
+

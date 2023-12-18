@@ -1,0 +1,52 @@
+<!--
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2023, Input Labs Oy.
+-->
+
+<div class='island'>
+
+    <div *ngIf='actions[groupIndex].actions.size == 0'>
+        <div
+            class='action placeholder'
+            (click)='showDialogKeypicker(groupIndex)'
+            >
+            Actions
+        </div>
+    </div>
+
+    <div *ngFor='let action of actions[groupIndex].actions'>
+        <div class='iconaction'>
+            <div
+                class='action press'
+                [ngClass]='cls(groupIndex, action)'
+                (click)='showDialogKeypicker(groupIndex)'
+                >
+                {{HID[action]}}
+            </div>
+            <div
+                class='material'
+                (click)="actions[groupIndex].delete(action); save()"
+                >
+                close
+            </div>
+        </div>
+    </div>
+
+    <div class='iconaction'>
+        <input
+            type='text'
+            placeholder='Label'
+            maxlength='14'
+            [(ngModel)]='labels[groupIndex]'
+            (change)='save()'
+        />
+        <div
+            class='material'
+            *ngIf="labels[groupIndex]!=''"
+            (click)="labels[groupIndex]=''; save()"
+            >
+            close
+        </div>
+    </div>
+
+</div>

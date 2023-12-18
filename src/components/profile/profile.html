@@ -4,10 +4,60 @@ Copyright (C) 2023, Input Labs Oy.
 -->
 
 <div class="template">
-    <div class="crop"></div>
+    <div class="crop_h">
+        <div class='crop_v'>
+            <!-- BUTTONS -->
+            <div
+                *ngFor='let mapping of getMappings(); trackBy: trackById'
+                class='section'
+                [ngClass]='mapping.cls'
+                [ngStyle]='mapping.style'
+                (click)='mapping.click()'
+                >
+                <app-action-preview
+                    [ngClass]='getAdditionalClass(mapping.section.sectionIndex)'
+                    [section]='mapping.section'
+                />
+            </div>
+
+            <!-- LED -->
+            <div
+                class='section thin pale'
+                style='grid-area: 6 / 8 / 8 / 11'
+                [ngClass]="selected.sectionIndex == SectionIndex.NAME ? 'selected' : ''"
+                (click)='setSelectedName()'
+                >
+                <app-led [dotsize]='12' [aperture]='5' [on]='getLedPattern(profileIndex)'/>
+            </div>
+
+            <!-- THUMBSTICK -->
+            <div
+                class='section'
+                style='grid-area: 13 / 6'
+                [ngClass]="selected.sectionIndex == SectionIndex.THUMBSTICK ? 'selected' : ''"
+                (click)='setSelectedThumbstick()'
+                >
+                &nbsp;
+            </div>
+
+            <!-- GYRO -->
+            <div
+                class='section'
+                style='grid-area: 17 / 14 / 19 / 14'
+                [ngClass]="selected.sectionIndex == SectionIndex.GYRO ? 'selected' : ''"
+                (click)='setSelectedGyro()'
+                >
+                &nbsp;
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class='panel'>
-    <h2>Selected button properties</h2>
-    WORK IN PROGRESS
+    <div *ngIf='getSelected()'>
+        <app-section
+            [profileIndex]='profileIndex'
+            [section]='getSelected()'
+        />
+    </div>
 </div>

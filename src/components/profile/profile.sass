@@ -1,25 +1,64 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
+@use '../../styles' as *
+
 :host
     flex-grow: 1
     display: flex
     .template
         flex-grow: 1
         display: flex
-        flex-direction: column
-        padding: 50px
+        flex-shrink: 1
+        justify-content: center
+        padding: 10px
         padding-top: 20px
-        padding-bottom: 10px
-        .crop
-            flex-grow: 1
-            background-image: url("/assets/profile_template.png")
-            background-size: contain
-            background-repeat: no-repeat
-            background-position: center
+        padding-bottom: 20px
+        .selected
+            background-color: hsla(0deg, 0%, 100%, 0.1)
+            &.pale
+                background-color: hsla(0deg, 0%, 100%, 0.05) !important
+        .wide
+            padding-left: 15% !important
+        .thin
+            padding-left: 0% !important
+
+        .crop_h
+            display: flex
+            flex-direction: column
+            aspect-ratio: 3160 / 2600
+            max-width: 99% !important
+            .crop_v
+                aspect-ratio: 3160 / 2600
+                background-image: url("/assets/profile_template.png")
+                background-position: top
+                background-repeat: no-repeat
+                background-size: contain
+                display: grid
+                grid-template-rows: 4fr 4fr 2fr 4fr 2fr 2fr 2fr 2fr 4fr 7fr 4fr 3fr 4fr 4fr 4fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr
+                grid-template-columns: 12fr 12fr 3fr 3fr 3fr 3fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr 3fr 3fr 3fr 3fr 12fr 12fr
+                &>div
+                    padding-left: 30%
 
     .panel
         width: 300px
+        min-width: 300px
         background-color: hsl(0deg, 0%, 20%)
         padding: 30px
         padding-top: 20px
+
+    .section
+        position: relative
+        overflow: hidden
+        cursor: pointer
+        &.overflow
+            overflow: initial
+
+    app-led
+        width: 100%
+        height: 100%
+
+    app-action-preview
+        &.centered
+            width: 100%
+            justify-content: center

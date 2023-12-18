@@ -7,13 +7,11 @@ Copyright (C) 2023, Input Labs Oy.
     <h2>{{mode.title}}</h2>
     <div class="leds">
         <app-led
-        *ngIf='active'
-        [size]='100'
-        [dotsize]='9'
-        [on]='active.leds'
-        [blink]='active.blink'
-        >
-        </app-led>
+            *ngIf='active'
+            [dotsize]='9'
+            [on]='active.leds'
+            [blink]='active.blink'
+        />
     </div>
     <div class='presets'>
         <div
