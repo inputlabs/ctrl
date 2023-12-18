@@ -181,8 +181,8 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_PROFILE_0,
-      1,
-      8,
+      1,  // First profile.
+      8,  // Last profile.
       this.pickerProfile,
       (x) => this.pickerProfile=x,
     )
@@ -192,8 +192,8 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_ROTARY_MODE_0,
-      0,
-      4,
+      0,  // First rotary mode.
+      4,  // Last rotary mode.
       this.pickerRotary,
       (x) => this.pickerRotary=x,
     )
@@ -203,8 +203,8 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_MACRO_1 - 1,
-      1,
-      8,
+      1,  // First macro.
+      8,  // Last macro.
       this.pickerMacro,
       (x) => this.pickerMacro=x,
     )
@@ -214,8 +214,8 @@ export class SectionComponent {
     this._pickSelect(
       increment,
       HID.PROC_TUNE_OS,
-      0,
-      3,
+      0,  // First tune index.
+      3,  // Last tune index.
       this.pickerTune,
       (x) => this.pickerTune=x,
     )

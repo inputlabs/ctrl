@@ -116,8 +116,6 @@ export enum GyroMode {
   AXIS_ABSOLUTE,
 }
 
-export const PIN_TOUCH_IN = 7;   // TODO PINS ENUM
-
 export function sectionIsName(section: SectionIndex) {
   return section == SectionIndex.NAME
 }
@@ -428,12 +426,12 @@ export class CtrlButton extends CtrlSection {
       data[5],  // SectionIndex.
       data[6],  // Mode.
       [
-        new ActionGroup(data.slice(8, 12)),
-        new ActionGroup(data.slice(12, 16)),
+        new ActionGroup(data.slice(8, 12)),  // Actions 0.
+        new ActionGroup(data.slice(12, 16)), // Actions 1.
       ],
       [
-        string_from_slice(buffer, 36, 50),
-        string_from_slice(buffer, 50, 64),
+        string_from_slice(buffer, 36, 50),  // Label 0.
+        string_from_slice(buffer, 50, 64),  // Label 1.
       ]
     )
   }
@@ -523,15 +521,16 @@ export class CtrlThumbstick extends CtrlSection {
   }
 
   static override decode(buffer: ArrayBuffer) {
+    // See firmware repo "ctrl.h" header, "CtrlThumbstick" struct.
     const data = Array.from(new Uint8Array(buffer))
     return new CtrlThumbstick(
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
-      data[6],
-      data[7],
-      data[8],
-      data[8] != 0,
-      data[9] << 24 >> 24,  // Unsigned to signed.
+      data[6],  // Mode.
+      data[7],  // Distance mode.
+      data[8],  // Deadzone.
+      data[8] != 0,  // Deadzone override.
+      data[9] <= 128 ? data[9] : data[9]-256,  // Axis overlap (unsigned to signed).
     )
   }
 
@@ -595,14 +594,14 @@ export class CtrlGyroAxis extends CtrlSection {
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
       [
-        new ActionGroup(data.slice(6, 10)),
-        new ActionGroup(data.slice(10, 14)),
+        new ActionGroup(data.slice(6, 10)),   // Action negative.
+        new ActionGroup(data.slice(10, 14)),  // Action positive.
       ],
-      data[14] << 24 >> 24, // Unsigned to signed.
-      data[15] << 24 >> 24, // Unsigned to signed.
+      data[14] <= 128 ? data[14] : data[14]-256,  // Min angle (nnsigned to signed).
+      data[15] <= 128 ? data[15] : data[15]-256,  // Max angle (nnsigned to signed).
       [
-        string_from_slice(buffer, 16, 30),
-        string_from_slice(buffer, 30, 48),
+        string_from_slice(buffer, 16, 30),  // Label negative.
+        string_from_slice(buffer, 30, 48),  // Label positive.
       ]
     )
   }

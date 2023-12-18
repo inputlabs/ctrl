@@ -10,6 +10,8 @@ import { SectionIndex, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
 
+const NUMBER_OF_PROFILES = 9  // Home + 8 builtin.
+
 export class Profile {
   name: CtrlSectionName
   home: CtrlHome
@@ -53,7 +55,7 @@ export class ProfileService {
   }
 
   initProfiles() {
-    for(let i of Array(13).keys()) this.initProfile(i)
+    for(let i of Array(NUMBER_OF_PROFILES).keys()) this.initProfile(i)
   }
 
   initProfile(index: number) {
@@ -64,7 +66,7 @@ export class ProfileService {
 
   async fetchProfileNames() {
     if (this.syncedNames) return
-    for(let index of Array(9).keys()) {
+    for(let index of Array(NUMBER_OF_PROFILES).keys()) {
       await this.fetchProfileName(index)
     }
     this.syncedNames = true

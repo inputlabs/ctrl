@@ -98,17 +98,17 @@
         min-width: 935px
         min-height: 600px
         user-select: none
-        $w: 35px
-        padding: $w
+        $size: 35px
+        padding: $size
         padding-bottom: 25px
         position: relative
 
         .bigrow
             display: flex
             align-items: flex-start
-            min-width: $w * 24.5
+            min-width: $size * 24.5  // Amount of keys + gaps in a keyboard.
             &:first-child
-                padding-bottom: $w
+                padding-bottom: $size
 
         .keyboard
             .key
@@ -131,27 +131,27 @@
                 width: 35px
                 height: 35px
             .wide15
-                width: calc($w * 1.5)
+                width: $size * 1.5
             .wide20
-                width: calc($w * 2)
+                width: $size * 2
             .wide25
-                width: calc($w * 2.5)
+                width: $size * 2.5
             .wide30
-                width: calc($w * 3)
+                width: $size * 3
             .wide35
-                width: calc($w * 3.5)
+                width: $size * 3.5
             .wide40
-                width: calc($w * 4)
+                width: $size * 4
             .wide50
-                width: calc($w * 5)
+                width: $size * 5
             .wide60
-                width: calc($w * 6)
+                width: $size * 6
             .wide65
-                width: calc($w * 6.5)
+                width: $size * 6.5
             .wide70
-                width: calc($w * 7)
+                width: $size * 7
             .wide90
-                width: calc($w * 9)
+                width: $size * 9
             .material
                 vertical-align: middle
                 font-variation-settings: 'wght' 300, 'opsz' 20, 'FILL' 0
@@ -161,7 +161,7 @@
                 border-top: 1px solid transparent
 
         .proc
-            width: calc($w * 5.5)
+            width: $size * 5.5
             height: 290px
             display: flex
             flex-direction: column
@@ -172,17 +172,17 @@
                 width: 50% !important
             .prevnext
                 display: inline-block
-                height: $w
+                height: $size
                 width: 20px
 
         .compact
-            $w: 25px
+            $size: 25px
             .button
                 display: inline-block
                 background-color: black
                 text-align: center
-                width: $w
-                height: $w
+                width: $size
+                height: $size
                 border: 1px solid white
                 line-height: 24px
                 cursor: pointer
@@ -193,21 +193,21 @@
             .spacing
                 display: inline-block
             .w07
-                width: calc($w * 0.7)
+                width: $size * 0.7
             .w1
-                width: calc($w * 1)
+                width: $size * 1
             .w2
-                width: calc($w * 2)
+                width: $size * 2
             .w3
-                width: calc($w * 3)
+                width: $size * 3
             .w4
-                width: calc($w * 4)
+                width: $size * 4
             .w5
-                width: calc($w * 5)
+                width: $size * 5
             .w7
-                width: calc($w * 7)
+                width: $size * 7
             .w9
-                width: calc($w * 9)
+                width: $size * 9
 
         .gamepad
             background-image: url('/assets/gamepad_outline.png')
@@ -224,7 +224,7 @@
             height: 275px
             margin-top: 10px
             margin-left: 40px
-            padding-top: $w
+            padding-top: $size
             .button
                 border-radius: 6px
 
