@@ -62,36 +62,28 @@
                         color: hsl(0deg, 0%, 50%)
                     &.selected
                         border: 2px solid $green
-                .value
-                    width: 70px
+                .fixedvalue
+                    width: 100px
                     height: 40px
                     font-size: 16px
                     background: black
-                    padding-top: 5px
                     border-radius: 5px
                     text-align: center
                     border-width: 0px
-                .invalid
-                    background-color: red
+                    pointer-events: none
+                    width: 100px
 
-    .panel
-        display: flex
-        flex-direction: column
-        background-color: hsl(0deg, 0%, 20%)
-        min-width: 300px
-        max-width: 300px
-        padding: 30px
-        padding-top: 20px
-        div
-            font-size: 15px
-
-    [data-tooltip]::before
-        position : absolute
-        content : attr(data-tooltip)
-        opacity : 0
-    [data-tooltip]:hover::before
-        opacity : 1
-    [data-tooltip]:not([data-tooltip-persistent])::before
-        padding-left: 70px
-        font-size: 14px
-        color: hsl(0deg, 0%, 40%)
+    ::ng-deep app-number-input
+        width: 120px
+        height: 40px !important
+        border-radius: 5px
+        background-color: blue !important
+        & *
+            height: 40px !important
+            line-height: 40px !important
+        .value, .unit
+            font-size: 16px !important
+            font-weight: normal !important
+            color: white !important
+        .button
+            color: hsl(0deg, 0%, 40%) !important
