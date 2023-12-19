@@ -6,6 +6,6 @@ Copyright (C) 2023, Input Labs Oy.
 <div class='number'>
     <span class='value'>{{value}}</span>
     <span class='unit'>{{unit}}</span>
-    <span class='button' (click)='decrease()'><span class='material'>remove</span></span>
-    <span class='button' (click)='increase()'><span class='material'>add</span></span>
+    <span class='button' (mousedown)='press(-1)' (mouseup)='release(-1)'><span class='material'>remove</span></span>
+    <span class='button' (mousedown)='press(+1)' (mouseup)='release(+1)'><span class='material'>add</span></span>
 </div>

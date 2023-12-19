@@ -4,6 +4,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
+const HOLD_DELAY = 500
+const REPEAT_INTERVAL = 50
+
 @Component({
   selector: 'app-number-input',
   standalone: true,
@@ -18,20 +21,36 @@ export class NumberInputComponent {
   @Input() min: number = 0
   @Input() max: number = 100
   @Input() step: number = 1
+  clickTime: number = 0
+  timeout: any
+  interval: any
 
-  crease(up: boolean) {
+  increase(dir: number) {
     let value = this.value
-    up ? value += this.step : value -= this.step
-    value = Math.max(value, this.min)
-    value = Math.min(value, this.max)
-    this.update.emit(value)
+    dir===1 ? value += this.step : value -= this.step
+    this.value = Math.min(Math.max(value, this.min), this.max)
   }
 
-  increase() {
-    this.crease(true)
+  save() {
+    this.update.emit(this.value)
   }
 
-  decrease() {
-    this.crease(false)
+  press(dir: number) {
+    this.clickTime = Date.now()
+    this.timeout = setTimeout(() => {
+      this.interval = setInterval(() => {
+        this.increase(dir)
+      }, REPEAT_INTERVAL)
+    }, HOLD_DELAY)
+  }
+
+  release(dir: number) {
+    const delta = Date.now() - this.clickTime
+    if (delta < HOLD_DELAY) {
+      this.increase(dir)
+    }
+    clearTimeout(this.timeout)
+    clearInterval(this.interval)
+    this.save()
   }
 }
