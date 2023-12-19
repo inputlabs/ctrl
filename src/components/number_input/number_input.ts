@@ -7,6 +7,11 @@ import { CommonModule } from '@angular/common'
 const HOLD_DELAY = 500
 const REPEAT_INTERVAL = 50
 
+enum Direction {
+  UP,
+  DOWN,
+}
+
 @Component({
   selector: 'app-number-input',
   standalone: true,
@@ -24,30 +29,41 @@ export class NumberInputComponent {
   clickTime: number = 0
   timeout: any
   interval: any
+  Direction = Direction
 
-  increase(dir: number) {
-    let value = this.value
-    dir===1 ? value += this.step : value -= this.step
-    this.value = Math.min(Math.max(value, this.min), this.max)
+  minmax(value: number) {
+    return Math.min(Math.max(value, this.min), this.max)
+  }
+
+  decrease() {
+    const value = this.value - this.step
+    this.value = this.minmax(value)
+  }
+
+  increase() {
+    const value = this.value + this.step
+    this.value = this.minmax(value)
   }
 
   save() {
     this.update.emit(this.value)
   }
 
-  press(dir: number) {
+  press(dir: Direction) {
     this.clickTime = Date.now()
     this.timeout = setTimeout(() => {
       this.interval = setInterval(() => {
-        this.increase(dir)
+        if (dir == Direction.DOWN) this.decrease()
+        if (dir == Direction.UP) this.increase()
       }, REPEAT_INTERVAL)
     }, HOLD_DELAY)
   }
 
-  release(dir: number) {
+  release(dir: Direction) {
     const delta = Date.now() - this.clickTime
     if (delta < HOLD_DELAY) {
-      this.increase(dir)
+      if (dir == Direction.DOWN) this.decrease()
+      if (dir == Direction.UP) this.increase()
     }
     clearTimeout(this.timeout)
     clearInterval(this.interval)
