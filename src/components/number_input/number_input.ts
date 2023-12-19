@@ -4,6 +4,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
+const HOLD_DELAY = 500
+const REPEAT_INTERVAL = 50
+
+enum Direction {
+  UP,
+  DOWN,
+}
+
 @Component({
   selector: 'app-number-input',
   standalone: true,
@@ -18,20 +26,47 @@ export class NumberInputComponent {
   @Input() min: number = 0
   @Input() max: number = 100
   @Input() step: number = 1
+  clickTime: number = 0
+  timeout: any
+  interval: any
+  Direction = Direction
 
-  crease(up: boolean) {
-    let value = this.value
-    up ? value += this.step : value -= this.step
-    value = Math.max(value, this.min)
-    value = Math.min(value, this.max)
-    this.update.emit(value)
-  }
-
-  increase() {
-    this.crease(true)
+  minmax(value: number) {
+    return Math.min(Math.max(value, this.min), this.max)
   }
 
   decrease() {
-    this.crease(false)
+    const value = this.value - this.step
+    this.value = this.minmax(value)
+  }
+
+  increase() {
+    const value = this.value + this.step
+    this.value = this.minmax(value)
+  }
+
+  save() {
+    this.update.emit(this.value)
+  }
+
+  press(dir: Direction) {
+    this.clickTime = Date.now()
+    this.timeout = setTimeout(() => {
+      this.interval = setInterval(() => {
+        if (dir == Direction.DOWN) this.decrease()
+        if (dir == Direction.UP) this.increase()
+      }, REPEAT_INTERVAL)
+    }, HOLD_DELAY)
+  }
+
+  release(dir: Direction) {
+    const delta = Date.now() - this.clickTime
+    if (delta < HOLD_DELAY) {
+      if (dir == Direction.DOWN) this.decrease()
+      if (dir == Direction.UP) this.increase()
+    }
+    clearTimeout(this.timeout)
+    clearInterval(this.interval)
+    this.save()
   }
 }

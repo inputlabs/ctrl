@@ -23,13 +23,19 @@ Copyright (C) 2023, Input Labs Oy.
                 <div class='desc'>{{preset.desc}}</div>
             </div>
             <input
+                *ngIf='preset.readonly'
                 type='text'
-                class='value'
-                [ngClass]="preset.invalid ? 'invalid' : ''"
-                *ngIf='preset.value && !preset.hidden'
-                value={{mode.format(preset.value)}}
-                (input)='setValues(preset, $event)'
-                [readonly]='preset.readonly'
+                class='fixedvalue readonly'
+                [value]=preset.fixed
+            />
+            <app-number-input
+                *ngIf='!preset.readonly && !preset.hidden'
+                [value]=$any(preset.value)
+                (update)='setValue(preset, $event)'
+                [unit]=mode.unit
+                [min]='mode.min'
+                [max]='mode.max'
+                [step]='mode.step'
             />
         </div>
     </div>
