@@ -44,6 +44,10 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class=filler></div>
 
+    <div class='notification' *ngIf='shouldNotifyFirmware()' (click)='showDialogFirmware()'>
+        <span class='material'>notifications</span>
+    </div>
+
     <div class='connection'>
         <div *ngIf='!webusb.isConnectedRaw' (click)='webusb.requestDevice()'>
             Not connected
@@ -65,5 +69,17 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='buttons'>
         <button (click)='hideDialogForget()' class='flat'>Cancel</button>
         <button (click)='hideDialogForget() && webusb.forgetDevice()'>Unpair</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-firmware'>
+    <h3>New firmware available</h3>
+    <div>
+        There is a new controller firmware
+        (<a [href]='RELEASES_LINK' target='_blank'>{{firmwareAsString(LATEST_FIRMWARE)}}</a>)
+        available. Some of the Ctrl app features may require the latest version to work correctly.
+    </div>
+    <div class='buttons'>
+        <button (click)='hideDialogFirmware() && firmwareAck()'>Got it!</button>
     </div>
 </dialog>

@@ -10,6 +10,7 @@
     color: white
     min-height: 100px
     font-family: Poppins
+    align-items: center
 
     .logo
         min-width: 300px
@@ -17,6 +18,7 @@
         flex-direction: row
         font-size: 24px
         font-weight: bold
+        user-select: none
         .image
             img
                 margin-top: 14px
@@ -30,12 +32,12 @@
     .nav
         flex-grow: 1
         display: flex
+        align-items: center
         flex-direction: row
         padding-right: 20px
         .filler
             flex-grow: 1
         .tab
-            margin-top: 30px
             font-size: 24px
             font-weight: bold
             &:first-child
@@ -52,6 +54,13 @@
                     color: black
                     border-radius: 5px
                     margin: 0 10px
+
+        .notification
+            padding-right: 30px
+            color: $yellow
+            cursor: pointer
+            .material
+                font-size: 40px
 
         .connection
             display: flex

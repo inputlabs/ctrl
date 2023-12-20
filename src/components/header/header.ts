@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
 import { WebusbService } from 'services/webusb'
 
+const LATEST_FIRMWARE = [0, 94, 0]
+const RELEASES_LINK = 'https://github.com/inputlabs/alpakka_firmware/releases'
+const FIRMWARE_ACK = 'firmware_ack'
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -20,6 +24,10 @@ import { WebusbService } from 'services/webusb'
 export class HeaderComponent {
   route: string = ''
   dialogForget: any
+  dialogFirmware: any
+  // Template aliases.
+  LATEST_FIRMWARE = LATEST_FIRMWARE
+  RELEASES_LINK = RELEASES_LINK
 
   constructor(
     private router: Router,
@@ -44,5 +52,33 @@ export class HeaderComponent {
   hideDialogForget(): boolean {
     this.dialogForget.close()
     return true
+  }
+
+  showDialogFirmware() {
+    this.dialogFirmware = document.getElementById('dialog-firmware')
+    this.dialogFirmware.showModal()
+  }
+
+  hideDialogFirmware(): boolean {
+    this.dialogFirmware.close()
+    return true
+  }
+
+  firmwareAsNumber(version: number[]) {
+    return (version[0] * 1000000) + (version[1] * 1000) + version[2]
+  }
+
+  firmwareAsString(version: number[]) {
+    return `${version[0]}.${version[1]}.${version[2]}`
+  }
+
+  firmwareAck() {
+    const fwValue = this.firmwareAsNumber(LATEST_FIRMWARE).toString()
+    localStorage.setItem(FIRMWARE_ACK, fwValue)
+  }
+
+  shouldNotifyFirmware() {
+    const knownByUser = Number(localStorage.getItem(FIRMWARE_ACK))
+    return knownByUser < this.firmwareAsNumber(LATEST_FIRMWARE)
   }
 }
