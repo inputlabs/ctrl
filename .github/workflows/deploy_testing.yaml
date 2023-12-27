@@ -13,8 +13,8 @@ jobs:
           cache: 'npm'
       - run: |
           echo -e "\
-          export const version = '${GITHUB_REF}'
-          export const commit = '${GITHUB_SHA}'
+          export const VERSION = '${GITHUB_REF}'
+          export const COMMIT = '${GITHUB_SHA}'
           " > src/lib/version.ts
       - run: npm ci
       - run: npm install @angular/cli
