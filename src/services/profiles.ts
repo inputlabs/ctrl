@@ -15,7 +15,6 @@ const NUMBER_OF_PROFILES = 9  // Home + 8 builtin.
 export class Profile {
   name: CtrlSectionName
   home: CtrlHome
-  synced: boolean = false
 
   constructor (
     name: string,
@@ -80,9 +79,7 @@ export class ProfileService {
   }
 
   async fetchProfile(profileIndex: number) {
-    // Skip if profile was already fetched.
     const profile = this.profiles[profileIndex]
-    if (profile.synced) return
     // Buttons.
     const getButton = async (sectionIndex: SectionIndex) => {
       const button = await this.webusb.getSection(profileIndex, sectionIndex) as CtrlButton
@@ -142,8 +139,6 @@ export class ProfileService {
     profile.gyroAxis[0] = gyroX
     profile.gyroAxis[1] = gyroY
     profile.gyroAxis[2] = gyroZ
-    // Flag as synced.
-    profile.synced = true
   }
 
   getProfile(profileIndex: number) {
