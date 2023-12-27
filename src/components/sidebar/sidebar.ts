@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive, Router, NavigationEnd} from '@angular/router'
 import { LedComponent, LED, getProfileLed } from 'components/led/led'
 import { ProfileService } from 'services/profiles'
-import { version, commit } from 'lib/version'
+import { VERSION, COMMIT } from 'lib/version'
 
 @Component({
   selector: 'app-sidebar',
@@ -23,9 +23,10 @@ import { version, commit } from 'lib/version'
 export class SidebarComponent {
   route: string = ''
   ledColorOff = '#555'
+  // Template aliases.
   LED = LED
-  version = version.split('/').pop()
-  commit = commit.slice(0, 12)
+  VERSION = VERSION.split('/').pop()  // If version is a branch name from git, keep only the tail.
+  COMMIT = COMMIT.slice(0, 12)  // Keep only the first 12 hash characters.
   getProfileLed = getProfileLed
 
   constructor(
