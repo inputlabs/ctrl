@@ -5,8 +5,9 @@ import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
 import { WebusbService } from 'services/webusb'
+import { LATEST_FIRMWARE } from 'lib/version'
 
-const LATEST_FIRMWARE = [0, 94, 0]
+
 const RELEASES_LINK = 'https://github.com/inputlabs/alpakka_firmware/releases'
 const FIRMWARE_ACK = 'firmware_ack'
 
