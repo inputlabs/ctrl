@@ -49,7 +49,7 @@ export class WebusbService {
     private router: Router,
   ) {
     this.logs = []
-    this.browserIsCompatible = this.checkBrowser()
+    this.browserIsCompatible = this.isBrowserCompatible()
     if (!this.browserIsCompatible) return
     navigator.usb.getDevices().then((devices) => {
       console.log('Devices found:', devices)
@@ -76,7 +76,7 @@ export class WebusbService {
     })
   }
 
-  checkBrowser() {
+  isBrowserCompatible() {
     return !!navigator.usb
   }
 

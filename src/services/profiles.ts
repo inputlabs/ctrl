@@ -49,9 +49,11 @@ export class ProfileService {
   ) {
     this.initProfiles()
     // Reset profiles if controller is disconnected.
-    navigator.usb.addEventListener('disconnect', (event:any) => {
-      this.initProfiles()
-    })
+    if (webusb.isBrowserCompatible()) {
+      navigator.usb.addEventListener('disconnect', (event:any) => {
+        this.initProfiles()
+      })
+    }
   }
 
   initProfiles() {
