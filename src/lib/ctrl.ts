@@ -529,7 +529,7 @@ export class CtrlThumbstick extends CtrlSection {
       data[6],  // Mode.
       data[7],  // Distance mode.
       data[8],  // Deadzone.
-      data[8] != 0,  // Deadzone override.
+      Boolean(data[10]),  // Deadzone override.
       data[9] <= 128 ? data[9] : data[9]-256,  // Axis overlap (unsigned to signed).
     )
   }
@@ -540,7 +540,8 @@ export class CtrlThumbstick extends CtrlSection {
       this.sectionIndex,
       Number(this.mode),
       Number(this.distance_mode),
-      this.deadzone_override ? this.deadzone : 0,
+      this.deadzone,
+      Number(this.deadzone_override),
       this.overlap,
     ]
   }
