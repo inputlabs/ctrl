@@ -514,8 +514,8 @@ export class CtrlThumbstick extends CtrlSection {
     public mode: ThumbstickMode,
     public distance_mode: ThumbstickDistanceMode,
     public deadzone: number,
-    public deadzone_override: boolean,
     public overlap : number,
+    public deadzone_override: boolean,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.PROFILE_SHARE)
   }
@@ -529,8 +529,8 @@ export class CtrlThumbstick extends CtrlSection {
       data[6],  // Mode.
       data[7],  // Distance mode.
       data[8],  // Deadzone.
-      Boolean(data[10]),  // Deadzone override.
       data[9] <= 128 ? data[9] : data[9]-256,  // Axis overlap (unsigned to signed).
+      Boolean(data[10]),  // Deadzone override.
     )
   }
 
@@ -541,8 +541,8 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.mode),
       Number(this.distance_mode),
       this.deadzone,
-      Number(this.deadzone_override),
       this.overlap,
+      Number(this.deadzone_override),
     ]
   }
 }

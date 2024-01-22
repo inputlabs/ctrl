@@ -21,7 +21,7 @@ export class Profile {
     public buttons: CtrlButton[] = [],
     public rotaryUp: CtrlRotary = new CtrlRotary(0, 0),
     public rotaryDown: CtrlRotary = new CtrlRotary(0, 0),
-    public thumbstick: CtrlThumbstick = new CtrlThumbstick(0, 0, 0, 0, 0, false, 0),
+    public thumbstick: CtrlThumbstick = new CtrlThumbstick(0, 0, 0, 0, 0, 0, false),
     public gyro: CtrlGyro = new CtrlGyro(0, 0, 0, 0),
     public gyroAxis: CtrlGyroAxis[] = []
   ) {
