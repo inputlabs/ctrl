@@ -21,6 +21,8 @@ import {
   CtrlProfileGet,
   CtrlSection,
   CtrlProfileSet,
+  CtrlHandshakeDevice,
+  CtrlHandshakeHost,
 } from 'lib/ctrl'
 
 const ADDR_IN = 3
@@ -133,6 +135,7 @@ export class WebusbService {
       const response = await this.device.transferIn(ADDR_IN, PACKAGE_SIZE)
       const ctrl = Ctrl.decode(response.data.buffer as ArrayBuffer)
       // console.log('received', ctrl)
+      if (ctrl instanceof CtrlHandshakeDevice) this.sendHandshake()
       if (ctrl instanceof CtrlLog) this.handleCtrlLog(ctrl)
       if (ctrl instanceof CtrlConfigShare) {
         console.log(ctrl)
@@ -185,7 +188,12 @@ export class WebusbService {
 
   async sendEmpty() {
     const data = new Uint8Array(64)
-    await this.device.transferOut(ADDR_OUT, data)  // TODO: use send()
+    await this.device.transferOut(ADDR_OUT, data)
+  }
+
+  async sendHandshake() {
+    const data = new CtrlHandshakeHost(Date.now())
+    await this.send(data)
   }
 
   async sendRestart() {
@@ -208,7 +216,7 @@ export class WebusbService {
     await this.send(data)
   }
 
-  async send(ctrl: CtrlProc | CtrlConfigGet | CtrlProfileGet) {
+  async send(ctrl: CtrlHandshakeHost | CtrlProc | CtrlConfigGet | CtrlProfileGet) {
     console.log(ctrl)
     await this.device.transferOut(ADDR_OUT, ctrl.encode())
   }

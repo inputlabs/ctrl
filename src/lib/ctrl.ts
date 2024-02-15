@@ -19,6 +19,8 @@ enum MessageType {
   PROFILE_GET,
   PROFILE_SET,
   PROFILE_SHARE,
+  HANDSHAKE_DEVICE,
+  HANDSHAKE_HOST,
 }
 
 export enum ConfigIndex {
@@ -197,6 +199,7 @@ export class Ctrl {
     // See: https://github.com/inputlabs/alpakka_firmware/blob/main/docs/ctrl_protocol.md
     const data = Array.from(new Uint8Array(buffer))
     const msgType = data[2]
+    if (msgType== MessageType.HANDSHAKE_DEVICE) return CtrlHandshakeDevice.decode(buffer)
     if (msgType== MessageType.LOG) return CtrlLog.decode(buffer)
     if (msgType == MessageType.CONFIG_SHARE) return CtrlConfigShare.decode(buffer)
     if (msgType == MessageType.PROFILE_SHARE) {
@@ -617,6 +620,41 @@ export class CtrlGyroAxis extends CtrlSection {
       this.maxAngle,
       ...string_to_buffer(14, this.labels[0]),
       ...string_to_buffer(14, this.labels[1]),
+    ]
+  }
+}
+
+export class CtrlHandshakeDevice extends Ctrl {
+  constructor(
+    // TODO: Device firmware version.
+  ) {
+    super(1, DeviceId.ALPAKKA, MessageType.HANDSHAKE_DEVICE)
+  }
+
+  static override decode(buffer: ArrayBuffer) {
+    return new CtrlHandshakeDevice()
+  }
+}
+
+export class CtrlHandshakeHost extends Ctrl {
+  constructor(
+    public time: number
+  ) {
+    super(1, DeviceId.ALPAKKA, MessageType.HANDSHAKE_HOST)
+  }
+
+  override payload() {
+    const dataview = new DataView(new ArrayBuffer(8))
+    dataview.setBigUint64(0, BigInt(this.time), true)
+    return [
+      dataview.getUint8(0),
+      dataview.getUint8(1),
+      dataview.getUint8(2),
+      dataview.getUint8(3),
+      dataview.getUint8(4),
+      dataview.getUint8(5),
+      dataview.getUint8(6),
+      dataview.getUint8(7),
     ]
   }
 }
