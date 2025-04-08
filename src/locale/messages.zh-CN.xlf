@@ -819,7 +819,7 @@
       </trans-unit>
       <trans-unit id="3663888230558616651" datatype="html">
         <source>Reset config</source>
-        <target>重置配置</target>
+        <target>重置设置</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logs/logs.html</context>
           <context context-type="linenumber">61</context>
@@ -923,6 +923,7 @@
       </trans-unit>
       <trans-unit id="1412509208547146532" datatype="html">
         <source>Reset config values</source>
+        <target>重置设置值</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logs/logs.html</context>
           <context context-type="linenumber">81</context>
@@ -930,6 +931,7 @@
       </trans-unit>
       <trans-unit id="5002505847053594234" datatype="html">
         <source> All config values will be discarded (calibration, protocol mode, sensitivities, etc). Profiles won&apos;t be affected. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> The controller will restart in default Windows mode. </source>
+        <target> 所有设置值都将被丢弃（校准、协议模式、灵敏度等）。配置文件不会受到影响。<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>控制器将在默认 Windows 模式下重新启动。 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logs/logs.html</context>
           <context context-type="linenumber">82,86</context>
@@ -937,6 +939,7 @@
       </trans-unit>
       <trans-unit id="4163248802541639272" datatype="html">
         <source> All profiles will be restored to default built-in profiles (as defined in the manual). <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Current profiles will be lost forever. </source>
+        <target> 所有配置文件都将恢复为默认内置配置文件（如手册中所定义）。<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>当前配置文件将永远丢失。 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logs/logs.html</context>
           <context context-type="linenumber">95,99</context>
@@ -960,6 +963,7 @@
       </trans-unit>
       <trans-unit id="5555551554619855542" datatype="html">
         <source> All config values will be discarded (calibration, protocol mode, sensitivities, etc). Profiles will be restored to built-in defaults. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> The controller will restart in default Windows mode. </source>
+        <target> 所有设置值将被丢弃（校准、协议模式、灵敏度等）。配置文件将恢复为内置默认值。<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>控制器将在默认 Windows 模式下重新启动。 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logs/logs.html</context>
           <context context-type="linenumber">108,113</context>
@@ -983,6 +987,7 @@
       </trans-unit>
       <trans-unit id="7896709963512456550" datatype="html">
         <source> The current device (<x id="INTERPOLATION" equiv-text="{{webusb.getManufacturerName()}}"/> <x id="INTERPOLATION_1" equiv-text="{{webusb.getProductName()}}"/>) will be disconnected and removed from the list of paired devices. </source>
+        <target> 当前设备（<x id="INTERPOLATION" equiv-text="{{webusb.getManufacturerName()}}"/> <x id="INTERPOLATION_1" equiv-text="{{webusb.getProductName()}}"/>）将断开连接并从配对设备列表中删除。 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logs/logs.html</context>
           <context context-type="linenumber">122,125</context>
@@ -1138,11 +1143,11 @@
                     accept=&apos;.ctrl&apos;
                     (change)=&apos;profileLoad($any($event).target.files)&apos;
                 /&gt;"/></source>
-        <source> 从配置文件加载 <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input
+        <target> 从配置文件加载 <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input
                     type=&apos;file&apos;
                     accept=&apos;.ctrl&apos;
                     (change)=&apos;profileLoad($any($event).target.files)&apos;
-                /&gt;"/></source>
+                /&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/profile/section.html</context>
           <context context-type="linenumber">53,60</context>
