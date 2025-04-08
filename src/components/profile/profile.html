@@ -51,7 +51,7 @@ Copyright (C) 2023, Input Labs Oy.
 
             <!-- RIGHT STICK SETTINGS -->
             <div
-                *ngIf='this.device?.isAlpakkaV1()'
+                *ngIf='!this.device?.isAlpakkaV0()'
                 class='section settings'
                 style='grid-area: 13 / 18'
                 [ngClass]="selected.sectionIndex == SectionIndex.RSTICK_SETTINGS ? 'selected' : ''"
