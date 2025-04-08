@@ -1,0 +1,2259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="7666030396044504097" datatype="html">
+        <source>Controller not found</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/central/central.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5242926542593163886" datatype="html">
+        <source>How to setup</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/central/central.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/central/central.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3423986987505360221" datatype="html">
+        <source>There was a problem</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/central/central.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4167030336944220973" datatype="html">
+        <source>Browser not compatible</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/central/central.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6345617187393585329" datatype="html">
+        <source> This browser do not support <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&apos;https://caniuse.com/webusb&apos; target=&apos;_blank&apos;&gt;"/>WebUSB<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/central/central.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2779596500656409800" datatype="html">
+        <source> Tools </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5452197026058277652" datatype="html">
+        <source> Profiles </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">26,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4426319772533875265" datatype="html">
+        <source> Settings </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4349446481980481506" datatype="html">
+        <source> Help </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">44,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8250520580967139485" datatype="html">
+        <source>Add device</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6791540235622735409" datatype="html">
+        <source>Firmware update required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1541078726057754643" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{webusb.selectedDevice!.getConnectorName()}}"/> firmware is outdated, the Ctrl app won&apos;t work correctly.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Current <x id="INTERPOLATION" equiv-text="{{webusb.selectedDevice!.getConnectorName()}}"/> firmware: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&apos;em&apos;&gt;"/><x id="INTERPOLATION_1" equiv-text="{{firmwareAsString(webusb.getDeviceVersion())}}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Minimum recommended firmware: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&apos;em&apos;&gt;"/><x id="INTERPOLATION_2" equiv-text="{{firmwareAsString(LATEST_FIRMWARE)}}"/>+<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a [href]=&apos;RELEASES_LINK&apos; target=&apos;_blank&apos;&gt;"/>Check latest firmware releases<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">76,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="464916539454098167" datatype="html">
+        <source>Got it!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/header/header.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7824287251368444664" datatype="html">
+        <source>Setup in Steam Deck / Arch Linux</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2851421031928500282" datatype="html">
+        <source>Compatible browsers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="903108596848228653" datatype="html">
+        <source>Chrome / Chromium.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7651588695311310031" datatype="html">
+        <source>Protocol mode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3512453988529376856" datatype="html">
+        <source>Controller must be either in <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Linux XInput<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> mode, or in <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Generic<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> mode.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3619117754361172801" datatype="html">
+        <source>Each mode have to be paired individually.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2746941338332933500" datatype="html">
+        <source>OS configuration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4547028449468321252" datatype="html">
+        <source>Go into desktop mode, in the terminal app set a password for your user:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5325053508911106879" datatype="html">
+        <source>Type a new password (it won&apos;t be visible while typing).</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8602490615831858880" datatype="html">
+        <source>Create a file with udev rules:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6563310080463756063" datatype="html">
+        <source>Reconnect the controller and verify the rule has been loaded by checking if <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&apos;code&apos;&gt;"/>/dev/webusb<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> exist.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9181973863327176105" datatype="html">
+        <source>Pair controller</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1310448238169216179" datatype="html">
+        <source>Click the <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&apos;color&apos; (click)=&apos;webusb.requestDevice()&apos;&gt;"/>Add device +<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> button on the top right corner.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6273864351579840015" datatype="html">
+        <source>Select <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Alpakka<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kapybara<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, or <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Dongle<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> from the list.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2650032704187884883" datatype="html">
+        <source>Known issues</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8298731855752153359" datatype="html">
+        <source>The controller has to be connected before opening the browser.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2130409044840773087" datatype="html">
+        <source>If the controller is restarted, the browser must be re-opened too.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_deck.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6124655972120311049" datatype="html">
+        <source>Setup in Debian / Ubuntu</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8524033241974879009" datatype="html">
+        <source>If Chromium was installed using <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Snap<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, it may require additional permissions to access USB devices:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3125868039961770496" datatype="html">
+        <source>The controller may have to be unplugged and plugged at least once after opening the browser.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_linux.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6090931838305354672" datatype="html">
+        <source>Privacy policy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5474739883699006762" datatype="html">
+        <source>This Privacy Policy describes how ctrl.inputlabs.io (the &quot;Site&quot; or &quot;we&quot;) collects, uses, and discloses your Personal Information when you visit the Site.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7922989125096435449" datatype="html">
+        <source>Contact</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9051842888734103050" datatype="html">
+        <source>After reviewing this policy, if you have additional questions, want more information about our privacy practices, or would like to make a complaint, please contact us by e-mail at <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span class=&apos;lima&apos;&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&apos;lima1&apos;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> or by mail using the details provided below:
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2603809582591676655" datatype="html">
+        <source>Lapinlahdenkatu 16, 00180 Helsinki, Finland.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7763573512516754986" datatype="html">
+        <source>Collecting Personal Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6926009073993418238" datatype="html">
+        <source>When you visit the Site, we collect certain information about your device and your interaction with the Site. In this Privacy Policy, we refer to any information about an identifiable individual (including the information below) as &quot;Personal Information&quot;. See the list below for more information about what Personal Information we collect and why.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8074294360933588445" datatype="html">
+        <source>Website aggregated usage data (NOT personally identifiable)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3957442136445726594" datatype="html">
+        <source>Purpose of collection: Determine if the website is working and serving everyone correctly, determine overall interest of website content.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="825666559618039593" datatype="html">
+        <source>Source of collection: collected automatically when you access our Site.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9152099675643286205" datatype="html">
+        <source>Disclosure for a business purpose: data kept by <x id="START_LINK" ctype="x-a" equiv-text="&lt;a target=&apos;_blank&apos; href=&apos;https://plausible.io&apos;&gt;"/>Plausible<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, then shared with Us.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6399615544727686394" datatype="html">
+        <source>Personal Information collected: version and agent of the web browser, approximate location, what pages are visited, referral link, outbound links, and how the users interact with the Site.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8406008367263053285" datatype="html">
+        <source>More details at: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a target=&apos;_blank&apos; href=&apos;https://plausible.io/data-policy&apos;&gt;"/>https://plausible.io/data-policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1957742491378356425" datatype="html">
+        <source>Logs on Content Delivery Network service</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6859955302680307822" datatype="html">
+        <source>Purpose of collection: Cloudflare uses data of incoming requests to detect abuse and provide customers with usage metrics.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4477293150319309646" datatype="html">
+        <source>Source of collection: collected automatically when data is transferred to you.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6948958521118524079" datatype="html">
+        <source>Disclosure for a business purpose: data kept by <x id="START_LINK" ctype="x-a" equiv-text="&lt;a target=&apos;_blank&apos; href=&apos;https://www.cloudflare.com/&apos;&gt;"/>Cloudflare<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, only shared with Us if manually requested.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8295173938922518850" datatype="html">
+        <source>Personal Information collected: may include but is not limited to IP addresses, traffic routing data, system configuration information, and other information about traffic to and from Customers’ websites, devices, applications, and/or networks.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3991493481635411786" datatype="html">
+        <source>More details at: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a target=&apos;_blank&apos; href=&apos;https://www.cloudflare.com/en-gb/privacypolicy&apos;&gt;"/>https://www.cloudflare.com/en-gb/privacypolicy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7155292536249274960" datatype="html">
+        <source>Sharing Personal Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5306721431040667628" datatype="html">
+        <source>We share your Personal Information with service providers to help us provide our services, as described above.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5665221113129113345" datatype="html">
+        <source>Using Personal Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6466765819091462851" datatype="html">
+        <source>We do not directly use Personally Identifiable Information on the Site for any purpose.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3627550817347594067" datatype="html">
+        <source>Lawful basis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="357308118949262499" datatype="html">
+        <source>Pursuant to the General Data Protection Regulation (&quot;GDPR&quot;), if you are a resident of the European Economic Area (&quot;EEA&quot;), we process your personal information under the following lawful bases:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7615668288794682668" datatype="html">
+        <source>Your consent;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2036321618358579733" datatype="html">
+        <source>The performance of the contract between you and the Site;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2287656980600578121" datatype="html">
+        <source>Compliance with our legal obligations;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4163261295011647626" datatype="html">
+        <source>To protect your vital interests;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1210197528716741754" datatype="html">
+        <source>To perform a task carried out in the public interest;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5491526146852031602" datatype="html">
+        <source>For our legitimate interests, which do not override your fundamental rights and freedoms.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="683980015107026060" datatype="html">
+        <source>Retention</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="841874115409850500" datatype="html">
+        <source>When You visit the Site, our providers could retain your Personal Information for their operations (as described above) temporally unless you ask to erase this information. For more information on your right of erasure, please see the &apos;Your rights&apos; section below.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1544562079545876580" datatype="html">
+        <source>Automatic decision-making</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1599648039503267857" datatype="html">
+        <source>If you are a resident of the EEA, you have the right to object to processing based solely on automated decision-making (which includes profiling), when that decision-making has a legal effect on you or otherwise significantly affects you.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="431768521669193463" datatype="html">
+        <source>We DO NOT engage in fully automated decision-making that has a legal or otherwise significant effect using customer data.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8227994648161387475" datatype="html">
+        <source>Our provider Cloudflare may use limited automated decision-making to prevent abuse, that does not have a legal or otherwise significant effect on you.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6155876973774194934" datatype="html">
+        <source>Your rights</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3387422732252707037" datatype="html">
+        <source>GDPR</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5866724993272979595" datatype="html">
+        <source>If you are a resident of the EEA, you have the right to access the Personal Information we hold about you, to port it to a new service, and to ask that your Personal Information be corrected, updated, or erased. If you would like to exercise these rights, please contact us through the contact information above.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2797694310455499940" datatype="html">
+        <source>Local data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4516124744118816397" datatype="html">
+        <source>Cookies</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8997061066443145552" datatype="html">
+        <source>The Site do NOT use cookies.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1474147820033410875" datatype="html">
+        <source>LocalStorage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="779514267699388444" datatype="html">
+        <source>The Site stores data locally in your browser to remember configurable website settings, that do NOT contain Personally Identifiable Information, are not unique, and are NOT transmitted outside your device.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="335477340719417868" datatype="html">
+        <source>Do Not Track</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3273658777329535386" datatype="html">
+        <source>Please note that because there is no consistent industry understanding of how to respond to &quot;Do Not Track&quot; signals, we do not alter our data collection and usage practices when we detect such a signal from your browser.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3713756119624581044" datatype="html">
+        <source>Changes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8706522265716783719" datatype="html">
+        <source>We may update this Privacy Policy from time to time in order to reflect, for example, changes to our practices or for other operational, legal, or regulatory reasons.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2027430872238447988" datatype="html">
+        <source>Complaints</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5743345388351963299" datatype="html">
+        <source>As noted above, if you would like to make a complaint, please contact us by e-mail or by mail using the details provided under &quot;Contact&quot; above.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7784156418342027231" datatype="html">
+        <source>If you are not satisfied with our response to your complaint, you have the right to lodge your complaint with the relevant data protection authority.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_privacy.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5123155114532157123" datatype="html">
+        <source>Setup in Windows</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7897017871808402390" datatype="html">
+        <source>Edge.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4884019850022158047" datatype="html">
+        <source>Brave.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6319563012413580927" datatype="html">
+        <source>Controller must be either in <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Windows XInput<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> mode, or in <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Generic<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> mode.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/help/help_windows.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6971728857637558766" datatype="html">
+        <source>Firmware logs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8773412883246811858" datatype="html">
+        <source>Try using the restart button</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2048128464022329296" datatype="html">
+        <source>No logs in here</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="21275452006765587" datatype="html">
+        <source>Commands</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1236604279860679031" datatype="html">
+        <source>Restart</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3199462773419298809" datatype="html">
+        <source>Restart in bootsel mode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="205321723260710470" datatype="html">
+        <source>Calibrate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3663888230558616651" datatype="html">
+        <source>Reset config</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="553186460981674820" datatype="html">
+        <source>Reset all profiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9082101511154676018" datatype="html">
+        <source>Reset to factory settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5269451513559029194" datatype="html">
+        <source>Unpair</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2598420328756701675" datatype="html">
+        <source>Controller calibration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6041951957185496244" datatype="html">
+        <source> The gyroscopes, accelerometers, and thumbstick will be calibrated, leave the controller on a flat surface and wait until the procedure is completed. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">69,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5162686434580248853" datatype="html">
+        <source>Start</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">295</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">322</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1412509208547146532" datatype="html">
+        <source>Reset config values</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5002505847053594234" datatype="html">
+        <source> All config values will be discarded (calibration, protocol mode, sensitivities, etc). Profiles won&apos;t be affected. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> The controller will restart in default Windows mode. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">82,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4163248802541639272" datatype="html">
+        <source> All profiles will be restored to default built-in profiles (as defined in the manual). <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Current profiles will be lost forever. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">95,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5637852788337509627" datatype="html">
+        <source>Reset profiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4926099772000923631" datatype="html">
+        <source>Reset to factory defaults</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5555551554619855542" datatype="html">
+        <source> All config values will be discarded (calibration, protocol mode, sensitivities, etc). Profiles will be restored to built-in defaults. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> The controller will restart in default Windows mode. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">108,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5920181885448938770" datatype="html">
+        <source>Reset to factory</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4250388001730708481" datatype="html">
+        <source>Unpair controller</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7896709963512456550" datatype="html">
+        <source> The current device (<x id="INTERPOLATION" equiv-text="{{webusb.getManufacturerName()}}"/> <x id="INTERPOLATION_1" equiv-text="{{webusb.getProductName()}}"/>) will be disconnected and removed from the list of paired devices. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logs/logs.html</context>
+          <context context-type="linenumber">122,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2099687720835547962" datatype="html">
+        <source> Add actions </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/action_selector.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4897817053917542646" datatype="html">
+        <source>Add label</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/action_selector.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1230484278622027391" datatype="html">
+        <source>Select a wireless device</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/profile.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5816995557857482955" datatype="html">
+        <source>to modify profiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/profile.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4915431133669985304" datatype="html">
+        <source>Profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7658402240953727096" datatype="html">
+        <source>Name:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7603807266305377715" datatype="html">
+        <source>Copy profile from:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7251303786709815525" datatype="html">
+        <source>Select a profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3603607767992403073" datatype="html">
+        <source>Default - FPS Fusion</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9139729764884549442" datatype="html">
+        <source>Default - FPS WASD</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3048446400833982940" datatype="html">
+        <source>Default - Racing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4537203279060008511" datatype="html">
+        <source>Default - Flight</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7247913378996341430" datatype="html">
+        <source>Default - Console</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="488701694645754124" datatype="html">
+        <source>Default - Console Legacy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1415802650189230248" datatype="html">
+        <source>Default - Desktop</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3473816472685499365" datatype="html">
+        <source>Default - RTS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6349380662719384717" datatype="html">
+        <source>Default - Custom (empty)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1290458664974105493" datatype="html">
+        <source>Import / export:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4296018467360867315" datatype="html">
+        <source> Load from file <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input
+                    type=&apos;file&apos;
+                    accept=&apos;.ctrl&apos;
+                    (change)=&apos;profileLoad($any($event).target.files)&apos;
+                /&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">53,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5061824733021207875" datatype="html">
+        <source>Save to file</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3007982943291829754" datatype="html">
+        <source>Home button</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8154623589922396675" datatype="html">
+        <source>Home button mappings are not configurable yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="841498412745733319" datatype="html">
+        <source>Holding (pink) the Home button, enables the shortcuts from the Home profile. These can be modified in the Home profile page.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="33356841036211362" datatype="html">
+        <source>Double-clicking (purple) the Home button, emulates the native gamepad home/guide button.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5270070351385858959" datatype="html">
+        <source>Double-clicking and holding the Home button allows for shortcuts such as &quot;Guide+X&quot; when pressing other buttons.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="715722649218993420" datatype="html">
+        <source>Long press</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2874231737589398838" datatype="html">
+        <source>Double press</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1743864392140452193" datatype="html">
+        <source>Immediate / trigger both</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6817431195965793398" datatype="html">
+        <source>Very long press</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5033591810829285284" datatype="html">
+        <source>Home cycle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6470483779445626442" datatype="html">
+        <source>On scroll up:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1261398282076664245" datatype="html">
+        <source>On scroll down:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3931464303130647899" datatype="html">
+        <source>Mode:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">257</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3500458863157551898" datatype="html">
+        <source>Off</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">173</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">262</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4268767554047266275" datatype="html">
+        <source>4 directions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3909627973192946459" datatype="html">
+        <source>8 directions (only digital)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5995733499749363419" datatype="html">
+        <source>Alphanumeric</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4454388116576935279" datatype="html">
+        <source>Analog distance calculation:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6867057976377925549" datatype="html">
+        <source>Axial</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="665924690919264959" datatype="html">
+        <source>Radial</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8796075184771383302" datatype="html">
+        <source>Saturation:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4369184567415441043" datatype="html">
+        <source>Axis overlap:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7781360806304245829" datatype="html">
+        <source>Deadzone:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">216</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="437153374710331773" datatype="html">
+        <source>Override global deadzone</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">219</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2541614838847717392" datatype="html">
+        <source>Anti-deadzone:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">239</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3357990158664370328" datatype="html">
+        <source>Always On</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5309880325977197419" datatype="html">
+        <source>Touch Off</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">264</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5676473758439073797" datatype="html">
+        <source>Touch On</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">265</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8610959434704936767" datatype="html">
+        <source>As absolute axis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">266</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4067909080153790909" datatype="html">
+        <source>Engage surface/button:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">270</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6252070156626006029" datatype="html">
+        <source>None</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">275</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5719424070220437792" datatype="html">
+        <source>Hexagon surface</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">276</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1626736638119145418" datatype="html">
+        <source>DPad Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">281</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">316</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3313233846046436085" datatype="html">
+        <source>DPad Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">282</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">317</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7635607951232472394" datatype="html">
+        <source>DPad Up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">283</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">318</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1270586436369095851" datatype="html">
+        <source>DPad Down</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">284</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">319</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3797570084942068182" datatype="html">
+        <source>Select</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">293</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">320</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7634175120496957716" datatype="html">
+        <source>Select (2)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">294</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">321</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2506111472765806522" datatype="html">
+        <source>Start (2)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">296</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">323</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8316992595534586700" datatype="html">
+        <source>On axis rotation (negative):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">305</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7569412806567592923" datatype="html">
+        <source>On axis rotation (positive):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">316</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1288662123225744920" datatype="html">
+        <source>Min Angle:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">327</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="137492010204935433" datatype="html">
+        <source>Max Angle:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">340</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6837938753645297409" datatype="html">
+        <source>SET PROFILE <x id="INTERPOLATION" equiv-text="{{pickerProfile}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">503,504</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1615506683033943537" datatype="html">
+        <source>SET ROTARY <x id="INTERPOLATION" equiv-text="{{pickerRotary}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">508,509</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6651140305118126328" datatype="html">
+        <source>MACRO <x id="INTERPOLATION" equiv-text="{{pickerMacro}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">513,514</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6383229356575987049" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="an class=&apos;material&apos;&gt;"/>settings<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>PROTOCOL</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">518</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7430275318293672857" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="an class=&apos;material&apos;&gt;"/>settings<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>MOUSE SENS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">519</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="133857118319682093" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="an class=&apos;material&apos;&gt;"/>settings<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>TOUCH SENS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">520</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1871590217751752879" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="an class=&apos;material&apos;&gt;"/>settings<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>TS DEADZONE</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">521</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4198665451107896783" datatype="html">
+        <source>CALIBRATE</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">528</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2061433929980104347" datatype="html">
+        <source>BOOTSEL</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">529</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="97593744425467674" datatype="html">
+        <source>THANKS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">530</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7819314041543176992" datatype="html">
+        <source>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.html</context>
+          <context context-type="linenumber">628</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5523179417141824109" datatype="html">
+        <source>On the first press, until home is released:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5114286400817437983" datatype="html">
+        <source>On button press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3669679395702054583" datatype="html">
+        <source>On short press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5894159537686042079" datatype="html">
+        <source>On press (always):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="728647875682575884" datatype="html">
+        <source>On single press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="745946818439081690" datatype="html">
+        <source>On first press (always):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7559381838139482921" datatype="html">
+        <source>On every press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7869190463389570728" datatype="html">
+        <source>Otherwise on long press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1545400936762142925" datatype="html">
+        <source>On long press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5060874843162449565" datatype="html">
+        <source>Additionally on long press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5102533559126781619" datatype="html">
+        <source>On double press:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6218175700434984311" datatype="html">
+        <source>Button A</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">312</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7578114772762868555" datatype="html">
+        <source>Button B</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">313</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6715026758502072004" datatype="html">
+        <source>Button X</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">314</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7494008685024924218" datatype="html">
+        <source>Button Y</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">315</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3215424364517715954" datatype="html">
+        <source>Trigger L1</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">324</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2312002463732978333" datatype="html">
+        <source>Trigger L2</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">325</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5723001028383424982" datatype="html">
+        <source>Trigger L4</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">326</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7684591007491699803" datatype="html">
+        <source>Trigger R1</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">327</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="890202188642381360" datatype="html">
+        <source>Trigger R2</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">328</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4417162788927370452" datatype="html">
+        <source>Trigger R4</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">329</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5916006415418109011" datatype="html">
+        <source>LStick Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">330</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2151910388573008781" datatype="html">
+        <source>LStick Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">331</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2221720129029569779" datatype="html">
+        <source>LStick Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">332</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7854109260873126689" datatype="html">
+        <source>LStick Up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">333</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3031318625692194804" datatype="html">
+        <source>LStick Down</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">334</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5723283555352224174" datatype="html">
+        <source>LStick Up-Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">335</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9108585885011711311" datatype="html">
+        <source>LStick Up-Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">336</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2127383714533338049" datatype="html">
+        <source>LStick Down-Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">337</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1102351149055066447" datatype="html">
+        <source>LStick Down-Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">338</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3496827640150623963" datatype="html">
+        <source>LStick Push</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">339</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2595317596253298289" datatype="html">
+        <source>LStick Inner</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">340</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7230077435424047893" datatype="html">
+        <source>LStick Outer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">341</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3109868765173075523" datatype="html">
+        <source>RStick Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">342</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5803610824040703340" datatype="html">
+        <source>RStick Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">343</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8218817016560519180" datatype="html">
+        <source>RStick Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">344</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4373119042756815516" datatype="html">
+        <source>RStick Up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">345</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5903172101626192728" datatype="html">
+        <source>RStick Down</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">346</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3632321183642499308" datatype="html">
+        <source>RStick Up-Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">347</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="439450071935700038" datatype="html">
+        <source>RStick Up-Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">348</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7733339827108206128" datatype="html">
+        <source>RStick Down-Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">349</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2165276641349795520" datatype="html">
+        <source>RStick Down-Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">350</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1284516755480936721" datatype="html">
+        <source>RStick Push</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">351</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3275973224406613619" datatype="html">
+        <source>Rotary up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">352</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="965851014246582332" datatype="html">
+        <source>Rotary down</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">353</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1790632158013107259" datatype="html">
+        <source>Gyro settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">354</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="452764176654391273" datatype="html">
+        <source>Gyro Axis X</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">355</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1925334011339409863" datatype="html">
+        <source>Gyro Axis Y</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">356</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5967507037744985201" datatype="html">
+        <source>Gyro Axis Z</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/profile/section.ts</context>
+          <context context-type="linenumber">357</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8821221480638803282" datatype="html">
+        <source>Advanced settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8896772983674995801" datatype="html">
+        <source>Long calibration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4396037219921401738" datatype="html">
+        <source>4x longer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2327581348338201343" datatype="html">
+        <source>Swap gyros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3328403654633316091" datatype="html">
+        <source>Left&lt;-&gt;Right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7988132804493569287" datatype="html">
+        <source>Invert touch polarity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4527527451805092136" datatype="html">
+        <source>Charge vs Discharge</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4711351777786941716" datatype="html">
+        <source>Gyro calibration tweak</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6852368223081272611" datatype="html">
+        <source>X axis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4512364542910553723" datatype="html">
+        <source>Y axis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4488450467896387989" datatype="html">
+        <source>Z axis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6219211647326058007" datatype="html">
+        <source>Makes sense</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7460464286182666139" datatype="html">
+        <source>In some cases the drift could be changing direction so slowly that a normal calibration is
+        not able to capture it completely. A longer calibration will do a better job
+        averaging the drift.&lt;br&gt;&lt;br&gt;
+        After enabling this setting, any new calibration procedure will take 4x times longer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">89,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6236789515702347385" datatype="html">
+        <source>In some cases one of the IMU sensors could be more sensitive to temperature-induced drift,
+        since each gyroscope sensor is configured in a slightly different way, swapping their roles
+        could help preventing this issue.&lt;br&gt;&lt;br&gt;
+        A re-calibration is required after enabling this feature.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">94,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9118109481694144206" datatype="html">
+        <source>The touch sensor works by measuring how long it takes to charge up or charge down the touch
+        plate (and anything that touches it). This polarity setting controls which one it is
+        (up or down).&lt;br&gt;&lt;br&gt;
+        If you are having problems with the touch sensor, this feature could help making the
+        measurements more stable.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">99,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5075277402108714844" datatype="html">
+        <source>Since the calibration has to be performed with the controller on a flat surface, it is
+        possible that the piezoelectric sensor has slightly different zero readings while tilted
+        back and held in a normal gaming position.&lt;br&gt;&lt;br&gt;
+        If this problem is noticeable, it can be solved by manually adding additional offsets into
+        the calibration values.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/settings/settings.ts</context>
+          <context context-type="linenumber">105,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4355325822938424405" datatype="html">
+        <source>Logs and commands</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3776799655893708914" datatype="html">
+        <source>Output tester</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6579410468612432551" datatype="html">
+        <source>Firmware update</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3783562484965706612" datatype="html">
+        <source>Protocol</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5339557362278197599" datatype="html">
+        <source>Touch sensitivity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="691401936955174706" datatype="html">
+        <source>Mouse sensitivity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="895573909873208585" datatype="html">
+        <source>Thumbstick deadzone</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">213</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6201638315245239510" datatype="html">
+        <source>Advanced</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4400563495332051227" datatype="html">
+        <source>App settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8825834355871078079" datatype="html">
+        <source>Setup in Linux</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7319726215224411267" datatype="html">
+        <source>Setup in Steam Deck</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidebar/sidebar.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2638624180494426243" datatype="html">
+        <source>Protocol change</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="448295002900108742" datatype="html">
+        <source> The controller will restart using a different protocol, you may have to pair the controller again, or revert back to the current protocol via button shotcuts. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.html</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1230154438678955604" datatype="html">
+        <source>Change</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1144181435169393677" datatype="html">
+        <source>Communication protocol</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4739888351445187545" datatype="html">
+        <source>and Steam Deck</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6486507492018628427" datatype="html">
+        <source>Generic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4398346843190486149" datatype="html">
+        <source>aka DirectInput</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3904291878108633028" datatype="html">
+        <source>Auto low</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2116797009540918380" datatype="html">
+        <source>More stable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5417077995384162807" datatype="html">
+        <source>Auto mid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5607669932062416162" datatype="html">
+        <source>Default</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="502909983567037693" datatype="html">
+        <source>Auto high</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8274962657524377657" datatype="html">
+        <source>More responsive</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9052440263580439664" datatype="html">
+        <source>Custom 2</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3756511278288848928" datatype="html">
+        <source>Custom 1</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="802458941707537739" datatype="html">
+        <source>Low</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">205</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">220</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9005163798035816176" datatype="html">
+        <source>Mid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">206</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8063651736083474594" datatype="html">
+        <source>High</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">222</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6475975979382223955" datatype="html">
+        <source>Smaller center radius</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">220</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9094669397657904930" datatype="html">
+        <source>Bigger center radius</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/tune/tune.ts</context>
+          <context context-type="linenumber">222</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5156047489151158244" datatype="html">
+        <source>Work in progress</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/wip/wip.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5455696397492081887" datatype="html">
+        <source>This feature is not implemented yet</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/wip/wip.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1388780615416818063" datatype="html">
+        <source>Missing Udev rules?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/services/webusb.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7141219267026291384" datatype="html">
+        <source>Try re-plugging the controller.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/services/webusb.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

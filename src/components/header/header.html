@@ -13,6 +13,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='{{lastRouteForTools}}'
             [ngClass]='this.routeIsTools()'
+            i18n
             >
             Tools
         </a>
@@ -21,6 +22,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='{{lastRouteForProfiles}}'
             routerLinkActive='active'
+            i18n
             >
             Profiles
         </a>
@@ -29,6 +31,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='{{lastRouteForSettings}}'
             routerLinkActive='active'
+            i18n
             >
             Settings
         </a>
@@ -37,6 +40,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='help'
             routerLinkActive='active'
+            i18n
             >
             Help
         </a>
@@ -61,15 +65,15 @@ Copyright (C) 2023, Input Labs Oy.
             </div>
         </div>
         <div class='add' (click)='webusb.requestDevice()'>
-            <span *ngIf='!webusb.isConnectedRaw()'>Add device</span>
+            <span *ngIf='!webusb.isConnectedRaw()' i18n>Add device</span>
             <span class='material'>add</span>
         </div>
     </div>
 </div>
 
 <dialog id='dialog-firmware' *ngIf='webusb.isConnected()'>
-    <h3>Firmware update required</h3>
-    <div>
+    <h3 i18n>Firmware update required</h3>
+    <div i18n>
         {{webusb.selectedDevice!.getConnectorName()}} firmware is outdated, the Ctrl app won't work correctly.<br/>
         <br/>
         Current {{webusb.selectedDevice!.getConnectorName()}} firmware: <span class='em'>{{firmwareAsString(webusb.getDeviceVersion())}}</span><br/>
@@ -77,6 +81,6 @@ Copyright (C) 2023, Input Labs Oy.
         <a [href]='RELEASES_LINK' target='_blank'>Check latest firmware releases</a>
     </div>
     <div class='buttons'>
-        <button (click)='hideDialogFirmware() && firmwareAck()'>Got it!</button>
+        <button (click)='hideDialogFirmware() && firmwareAck()' i18n>Got it!</button>
     </div>
 </dialog>

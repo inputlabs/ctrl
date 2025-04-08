@@ -3,48 +3,48 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
-<h2>Setup in Steam Deck / Arch Linux</h2>
+<h2 i18n>Setup in Steam Deck / Arch Linux</h2>
 <hr/>
 
-<h3>Compatible browsers</h3>
+<h3 i18n>Compatible browsers</h3>
 <ul>
-    <li>Chrome / Chromium.</li>
+    <li i18n>Chrome / Chromium.</li>
 </ul>
 <hr/>
 
-<h3>Protocol mode</h3>
+<h3 i18n>Protocol mode</h3>
 <ul>
-    <li>Controller must be either in <em>Linux Xinput</em> mode, or in <em>Generic</em> mode.</li>
-    <li>Each mode have to be paired individually.</li>
+    <li i18n>Controller must be either in <em>Linux XInput</em> mode, or in <em>Generic</em> mode.</li>
+    <li i18n>Each mode have to be paired individually.</li>
 </ul>
 <hr/>
 
-<h3>OS configuration</h3>
-<p>Go into desktop mode, in the terminal app set a password for your user:</p>
+<h3 i18n>OS configuration</h3>
+<p i18n>Go into desktop mode, in the terminal app set a password for your user:</p>
 <span class='code'>passwd</span>
-<p>Type a new password (it won't be visible while typing).</p>
+<p i18n>Type a new password (it won't be visible while typing).</p>
 
-<p>Create a file with udev rules:</p>
+<p i18n>Create a file with udev rules:</p>
 <p><span class='code'>sudo nano /etc/udev/rules.d/99-alpakka.rules</span></p>
 <div class='code'>
     <pre>
 {{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", MODE="0660", GROUP="deck", SYMLINK+="webusb"'}}
 {{'SUBSYSTEMS=="usb", ATTRS{idVendor}=="0170", MODE="0660", GROUP="deck", SYMLINK+="webusb"'}}</pre>
 </div>
-<p>Reconnect the controller and verify the rule has been loaded by checking if <span class='code'>/dev/webusb</span> exist.</p>
+<p i18n>Reconnect the controller and verify the rule has been loaded by checking if <span class='code'>/dev/webusb</span> exist.</p>
 <hr/>
 
-<h3>Pair controller</h3>
+<h3 i18n>Pair controller</h3>
 <ul>
-    <li>Click the <span class='color' (click)='webusb.requestDevice()'>Add device +</span> button on the top right corner.</li>
-    <li>Select <em>Alpakka</em>, <em>Kapybara</em>, or <em>Dongle</em> from the list.</li>
+    <li i18n>Click the <span class='color' (click)='webusb.requestDevice()'>Add device +</span> button on the top right corner.</li>
+    <li i18n>Select <em>Alpakka</em>, <em>Kapybara</em>, or <em>Dongle</em> from the list.</li>
 </ul>
 <hr/>
 
-<h3>Known issues</h3>
+<h3 i18n>Known issues</h3>
 <ul>
-    <li>The controller has to be connected before opening the browser.</li>
-    <li>If the controller is restarted, the browser must be re-opened too.</li>
+    <li i18n>The controller has to be connected before opening the browser.</li>
+    <li i18n>If the controller is restarted, the browser must be re-opened too.</li>
 </ul>
 
 

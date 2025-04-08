@@ -159,7 +159,7 @@ const modes: Modes = {
   protocol: {
     configIndex: ConfigIndex.PROTOCOL,
     url: 'protocol',
-    title: 'Communication protocol',
+    title: $localize`Communication protocol`,
     unit: '',
     min: 0,
     max: 0,
@@ -167,14 +167,14 @@ const modes: Modes = {
     displayReversed: false,
     presets: [
       {index: 0, name: 'Windows', desc:'',                fixed:'XInput', leds:0b0001, blink:0b1000, readonly:true},
-      {index: 1, name: 'Linux',   desc:'and Steam Deck',  fixed:'XPad',   leds:0b0001, blink:0b0100, readonly:true},
-      {index: 2, name: 'Generic', desc:'aka DirectInput', fixed:'HID',    leds:0b0001, blink:0b0010, readonly:true},
+      {index: 1, name: 'Linux',   desc:$localize`and Steam Deck`,  fixed:'XPad',   leds:0b0001, blink:0b0100, readonly:true},
+      {index: 2, name: $localize`Generic`, desc:$localize`aka DirectInput`, fixed:'HID',    leds:0b0001, blink:0b0010, readonly:true},
     ]
   },
   touch_sens: {
     configIndex: ConfigIndex.SENS_TOUCH,
     url: 'touch_sens',
-    title: 'Touch sensitivity',
+    title: $localize`Touch sensitivity`,
     unit: 'μs',
     min: 0,
     max: 25,
@@ -183,11 +183,11 @@ const modes: Modes = {
     decimals: 1,
     displayReversed: true,
     presets: [
-      {index: 0, name: 'Auto low',  desc: 'More stable',     leds:0b0010, blink:0b0100, hidden:true},
-      {index: 1, name: 'Auto mid',  desc: 'Default',         leds:0b0010, blink:0b1000, hidden:true},
-      {index: 2, name: 'Auto high', desc: 'More responsive', leds:0b0010, blink:0b0001, hidden:true},
-      {index: 3, name: 'Custom 2',  desc: '',                leds:0b0010, blink:0b1100},
-      {index: 4, name: 'Custom 1',  desc: '',                leds:0b0010, blink:0b1001},
+      {index: 0, name: $localize`Auto low`,  desc: $localize`More stable`,     leds:0b0010, blink:0b0100, hidden:true},
+      {index: 1, name: $localize`Auto mid`,  desc: $localize`Default`,         leds:0b0010, blink:0b1000, hidden:true},
+      {index: 2, name: $localize`Auto high`, desc: $localize`More responsive`, leds:0b0010, blink:0b0001, hidden:true},
+      {index: 3, name: $localize`Custom 2`,  desc: '',                leds:0b0010, blink:0b1100},
+      {index: 4, name: $localize`Custom 1`,  desc: '',                leds:0b0010, blink:0b1001},
     ]
   },
   mouse_sens: {
@@ -202,24 +202,24 @@ const modes: Modes = {
     decimals: 1,
     displayReversed: true,
     presets: [
-      {index: 0, name: 'Low',  desc: '1080p', leds:0b0100, blink:0b1000},
-      {index: 1, name: 'Mid',  desc: '1440p', leds:0b0100, blink:0b0001},
-      {index: 2, name: 'High', desc: '4K',    leds:0b0100, blink:0b0010},
+      {index: 0, name: $localize`Low`,  desc: '1080p', leds:0b0100, blink:0b1000},
+      {index: 1, name: $localize`Mid`,  desc: '1440p', leds:0b0100, blink:0b0001},
+      {index: 2, name: $localize`High`, desc: '4K',    leds:0b0100, blink:0b0010},
     ]
   },
   deadzone: {
     configIndex: ConfigIndex.DEADZONE,
     url: 'deadzone',
-    title: 'Thumbstick deadzone',
+    title: $localize`Thumbstick deadzone`,
     unit: '%',
     min: 0,
     max: 99,
     step: 1,
     displayReversed: true,
     presets: [
-      {index: 0, name: 'Low',  desc: 'Smaller center radius', leds:0b1000, blink:0b0100},
-      {index: 1, name: 'Mid',  desc: '',                      leds:0b1000, blink:0b0010},
-      {index: 2, name: 'High', desc: 'Bigger center radius',  leds:0b1000, blink:0b0001},
+      {index: 0, name: $localize`Low`,  desc: $localize`Smaller center radius`, leds:0b1000, blink:0b0100},
+      {index: 1, name: $localize`Mid`,  desc: '',                      leds:0b1000, blink:0b0010},
+      {index: 2, name: $localize`High`, desc: $localize`Bigger center radius`,  leds:0b1000, blink:0b0001},
     ]
   }
 }

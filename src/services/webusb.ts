@@ -79,9 +79,9 @@ export class WebusbService {
 
   getFailedHint() {
     if (this.selectedDevice!.failedError?.message.includes('Access')) {
-      return 'Missing Udev rules?'
+      return $localize`Missing Udev rules?`
     } else {
-      return 'Try re-plugging the controller.'
+      return $localize`Try re-plugging the controller.`
     }
   }
 

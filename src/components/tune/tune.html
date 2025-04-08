@@ -44,12 +44,12 @@ Copyright (C) 2023, Input Labs Oy.
 </div>
 
 <dialog id='dialog-protocol'>
-    <h3>Protocol change</h3>
-    <div>
+    <h3 i18n>Protocol change</h3>
+    <div i18n>
         The controller will restart using a different protocol, you may have to pair the controller again, or revert back to the current protocol via button shotcuts.
     </div>
     <div class='buttons'>
-        <button (click)='hideDialogProtocol()' class='flat'>Cancel</button>
-        <button (click)='hideDialogProtocol() && confirmDialogProtocol()'>Change</button>
+        <button (click)='hideDialogProtocol()' class='flat' i18n>Cancel</button>
+        <button (click)='hideDialogProtocol() && confirmDialogProtocol()' i18n>Change</button>
     </div>
 </dialog>

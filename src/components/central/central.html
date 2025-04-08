@@ -16,8 +16,8 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='icon'>
             <span class='material'>stadia_controller</span>
         </div>
-        <div class='title'>Controller not found</div>
-        <button routerLink='help/windows'>How to setup</button>
+        <div class='title' i18n>Controller not found</div>
+        <button routerLink='help/windows' i18n>How to setup</button>
     </div>
 </div>
 
@@ -29,10 +29,10 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='icon'>
             <span class='material'>heart_broken</span>
         </div>
-        <div class='title'>There was a problem</div>
+        <div class='title' i18n>There was a problem</div>
         <div><span class='code slim'>{{webusb.getFailedError()}}</span></div>
         <div class='hint'>{{webusb.getFailedHint()}}</div>
-        <button routerLink='help/windows'>How to setup</button>
+        <button routerLink='help/windows' i18n>How to setup</button>
     </div>
 </div>
 
@@ -45,8 +45,8 @@ Copyright (C) 2023, Input Labs Oy.
             <span class='material'>report</span>
         </div>
         <div>&nbsp;</div>
-        <div class='title'>Browser not compatible</div>
-        <div class='msg'>
+        <div class='title' i18n>Browser not compatible</div>
+        <div class='msg' i18n>
             This browser do not support
             <a href='https://caniuse.com/webusb' target='_blank'>WebUSB</a>
         </div>

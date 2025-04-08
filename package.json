@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:i18n": "ng build --localize",
     "watch": "ng build --watch --configuration development",
+    "extract-i18n": "ng extract-i18n --output-path src/locale",
     "test": "ng test"
   },
   "private": true,
@@ -15,6 +17,7 @@
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
     "@angular/forms": "^16.2.0",
+    "@angular/localize": "16.2.0",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
@@ -24,7 +27,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.0",
-    "@angular/cli": "~16.2.0",
+    "@angular/cli": "^16.2.0",
     "@angular/compiler-cli": "^16.2.0",
     "@types/jasmine": "~4.3.0",
     "@types/w3c-web-usb": "^1.0.6",

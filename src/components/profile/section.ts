@@ -97,23 +97,23 @@ export class SectionComponent {
   getButtonBlockSubtitle(group: number) {
     const button = this.getSectionAsButton()
     if (group == 0) {
-      if (button.sticky) return 'On the first press, until home is released:'
-      if (!button.hold && !button.double && !button.immediate) return 'On button press:'
-      if (button.hold && !button.immediate) return 'On short press:'
-      if (button.hold && button.immediate) return 'On press (always):'
-      if (!button.hold && button.double && !button.immediate) return 'On single press:'
-      if (!button.hold && button.double && button.immediate) return 'On first press (always):'
+      if (button.sticky) return $localize`On the first press, until home is released:`
+      if (!button.hold && !button.double && !button.immediate) return $localize`On button press:`
+      if (button.hold && !button.immediate) return $localize`On short press:`
+      if (button.hold && button.immediate) return $localize`On press (always):`
+      if (!button.hold && button.double && !button.immediate) return $localize`On single press:`
+      if (!button.hold && button.double && button.immediate) return $localize`On first press (always):`
     }
     if (group == 1) {
-      if (button.sticky) return 'On every press:'
-      if (button.hold && !button.double && !button.immediate) return 'Otherwise on long press:'
-      if (button.hold && button.double && !button.immediate) return 'On long press:'
-      if (button.hold && button.immediate) return 'Additionally on long press:'
-      if (!button.hold && button.double && !button.immediate) return 'On single press:'
-      if (!button.hold && button.double && button.immediate) return 'On first press (always):'
+      if (button.sticky) return $localize`On every press:`
+      if (button.hold && !button.double && !button.immediate) return $localize`Otherwise on long press:`
+      if (button.hold && button.double && !button.immediate) return $localize`On long press:`
+      if (button.hold && button.immediate) return $localize`Additionally on long press:`
+      if (!button.hold && button.double && !button.immediate) return $localize`On single press:`
+      if (!button.hold && button.double && button.immediate) return $localize`On first press (always):`
     }
     if (group == 2) {
-      return 'On double press:'
+      return $localize`On double press:`
     }
     return ''
   }
@@ -309,50 +309,50 @@ interface SectionTitles {
   [index: number]: string
 }
 const sectionTitles: SectionTitles = {
-  [SectionIndex.A]:                'Button A',
-  [SectionIndex.B]:                'Button B',
-  [SectionIndex.X]:                'Button X',
-  [SectionIndex.Y]:                'Button Y',
-  [SectionIndex.DPAD_LEFT]:        'DPad Left',
-  [SectionIndex.DPAD_RIGHT]:       'DPad Right',
-  [SectionIndex.DPAD_UP]:          'DPad Up',
-  [SectionIndex.DPAD_DOWN]:        'DPad Down',
-  [SectionIndex.SELECT_1]:         'Select',
-  [SectionIndex.SELECT_2]:         'Select (2)',
-  [SectionIndex.START_1]:          'Start',
-  [SectionIndex.START_2]:          'Start (2)',
-  [SectionIndex.L1]:               'Trigger L1',
-  [SectionIndex.L2]:               'Trigger L2',
-  [SectionIndex.L4]:               'Trigger L4',
-  [SectionIndex.R1]:               'Trigger R1',
-  [SectionIndex.R2]:               'Trigger R2',
-  [SectionIndex.R4]:               'Trigger R4',
-  [SectionIndex.LSTICK_SETTINGS]:  'LStick Settings',
-  [SectionIndex.LSTICK_LEFT]:      'LStick Left',
-  [SectionIndex.LSTICK_RIGHT]:     'LStick Right',
-  [SectionIndex.LSTICK_UP]:        'LStick Up',
-  [SectionIndex.LSTICK_DOWN]:      'LStick Down',
-  [SectionIndex.LSTICK_UL]:        'LStick Up-Left',
-  [SectionIndex.LSTICK_UR]:        'LStick Up-Right',
-  [SectionIndex.LSTICK_DL]:        'LStick Down-Left',
-  [SectionIndex.LSTICK_DR]:        'LStick Down-Right',
-  [SectionIndex.LSTICK_PUSH]:      'LStick Push',
-  [SectionIndex.LSTICK_INNER]:     'LStick Inner',
-  [SectionIndex.LSTICK_OUTER]:     'LStick Outer',
-  [SectionIndex.RSTICK_SETTINGS]:  'RStick Settings',
-  [SectionIndex.RSTICK_LEFT]:      'RStick Left',
-  [SectionIndex.RSTICK_RIGHT]:     'RStick Right',
-  [SectionIndex.RSTICK_UP]:        'RStick Up',
-  [SectionIndex.RSTICK_DOWN]:      'RStick Down',
-  [SectionIndex.RSTICK_UL]:        'RStick Up-Left',
-  [SectionIndex.RSTICK_UR]:        'RStick Up-Right',
-  [SectionIndex.RSTICK_DL]:        'RStick Down-Left',
-  [SectionIndex.RSTICK_DR]:        'RStick Down-Right',
-  [SectionIndex.RSTICK_PUSH]:      'RStick Push',
-  [SectionIndex.ROTARY_UP]:        'Rotary up',
-  [SectionIndex.ROTARY_DOWN]:      'Rotary down',
-  [SectionIndex.GYRO_SETTINGS]:    'Gyro settings',
-  [SectionIndex.GYRO_X]:           'Gyro Axis X',
-  [SectionIndex.GYRO_Y]:           'Gyro Axis Y',
-  [SectionIndex.GYRO_Z]:           'Gyro Axis Z',
+  [SectionIndex.A]:                $localize`Button A`,
+  [SectionIndex.B]:                $localize`Button B`,
+  [SectionIndex.X]:                $localize`Button X`,
+  [SectionIndex.Y]:                $localize`Button Y`,
+  [SectionIndex.DPAD_LEFT]:        $localize`DPad Left`,
+  [SectionIndex.DPAD_RIGHT]:       $localize`DPad Right`,
+  [SectionIndex.DPAD_UP]:          $localize`DPad Up`,
+  [SectionIndex.DPAD_DOWN]:        $localize`DPad Down`,
+  [SectionIndex.SELECT_1]:         $localize`Select`,
+  [SectionIndex.SELECT_2]:         $localize`Select (2)`,
+  [SectionIndex.START_1]:          $localize`Start`,
+  [SectionIndex.START_2]:          $localize`Start (2)`,
+  [SectionIndex.L1]:               $localize`Trigger L1`,
+  [SectionIndex.L2]:               $localize`Trigger L2`,
+  [SectionIndex.L4]:               $localize`Trigger L4`,
+  [SectionIndex.R1]:               $localize`Trigger R1`,
+  [SectionIndex.R2]:               $localize`Trigger R2`,
+  [SectionIndex.R4]:               $localize`Trigger R4`,
+  [SectionIndex.LSTICK_SETTINGS]:  $localize`LStick Settings`,
+  [SectionIndex.LSTICK_LEFT]:      $localize`LStick Left`,
+  [SectionIndex.LSTICK_RIGHT]:     $localize`LStick Right`,
+  [SectionIndex.LSTICK_UP]:        $localize`LStick Up`,
+  [SectionIndex.LSTICK_DOWN]:      $localize`LStick Down`,
+  [SectionIndex.LSTICK_UL]:        $localize`LStick Up-Left`,
+  [SectionIndex.LSTICK_UR]:        $localize`LStick Up-Right`,
+  [SectionIndex.LSTICK_DL]:        $localize`LStick Down-Left`,
+  [SectionIndex.LSTICK_DR]:        $localize`LStick Down-Right`,
+  [SectionIndex.LSTICK_PUSH]:      $localize`LStick Push`,
+  [SectionIndex.LSTICK_INNER]:     $localize`LStick Inner`,
+  [SectionIndex.LSTICK_OUTER]:     $localize`LStick Outer`,
+  [SectionIndex.RSTICK_SETTINGS]:  $localize`RStick Settings`,
+  [SectionIndex.RSTICK_LEFT]:      $localize`RStick Left`,
+  [SectionIndex.RSTICK_RIGHT]:     $localize`RStick Right`,
+  [SectionIndex.RSTICK_UP]:        $localize`RStick Up`,
+  [SectionIndex.RSTICK_DOWN]:      $localize`RStick Down`,
+  [SectionIndex.RSTICK_UL]:        $localize`RStick Up-Left`,
+  [SectionIndex.RSTICK_UR]:        $localize`RStick Up-Right`,
+  [SectionIndex.RSTICK_DL]:        $localize`RStick Down-Left`,
+  [SectionIndex.RSTICK_DR]:        $localize`RStick Down-Right`,
+  [SectionIndex.RSTICK_PUSH]:      $localize`RStick Push`,
+  [SectionIndex.ROTARY_UP]:        $localize`Rotary up`,
+  [SectionIndex.ROTARY_DOWN]:      $localize`Rotary down`,
+  [SectionIndex.GYRO_SETTINGS]:    $localize`Gyro settings`,
+  [SectionIndex.GYRO_X]:           $localize`Gyro Axis X`,
+  [SectionIndex.GYRO_Y]:           $localize`Gyro Axis Y`,
+  [SectionIndex.GYRO_Z]:           $localize`Gyro Axis Z`,
 }
