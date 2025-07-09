@@ -10,31 +10,31 @@ Copyright (C) 2023, Input Labs Oy.
         [routerLinkActiveOptions]='{exact: true}'
         >
         <span class='material'>terminal</span>
-        <div>Logs and commands</div>
+        <div i18n>Logs and commands</div>
     </a>
     <a routerLink='settings/protocol' routerLinkActive='active' *ngIf='webusb.isController()'>
         <span class='material'>usb</span>
-        <div>Protocol</div>
+        <div i18n>Protocol</div>
     </a>
     <a routerLink='settings/touch_sens' routerLinkActive='active' *ngIf='webusb.isController()'>
         <span class='material'>touch_app</span>
-        <div>Touch sensitivity</div>
+        <div i18n>Touch sensitivity</div>
     </a>
     <a routerLink='settings/mouse_sens' routerLinkActive='active' *ngIf='webusb.isController()'>
         <span class='material'>mouse</span>
-        <div>Mouse sensitivity</div>
+        <div i18n>Mouse sensitivity</div>
     </a>
     <a routerLink='settings/deadzone' routerLinkActive='active' *ngIf='webusb.isController()'>
         <span class='material'>adjust</span>
-        <div>Thumbstick deadzone</div>
+        <div i18n>Thumbstick deadzone</div>
     </a>
     <a routerLink='settings/advanced' routerLinkActive='active' *ngIf='webusb.isController()'>
         <span class='material'>tune</span>
-        <div>Advanced</div>
+        <div i18n>Advanced</div>
     </a>
     <a routerLink='settings/app' routerLinkActive='active'>
         <span class='material'>screenshot_monitor</span>
-        <div>App settings</div>
+        <div i18n>App settings</div>
     </a>
     <!-- <a routerLink='tools/tester' routerLinkActive='active'>
         <span class='material'>sports_esports</span>
@@ -104,23 +104,23 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='this.isHelp()'>
     <a routerLink='help/windows' routerLinkActive='active'>
         <span class='material'>desktop_windows</span>
-        <div>Setup in Windows</div>
+        <div i18n>Setup in Windows</div>
     </a>
     <a routerLink='help/deck' routerLinkActive='active'>
         <span class='material'>stay_current_landscape</span>
-        <div>Setup in Steam Deck</div>
+        <div i18n>Setup in Steam Deck</div>
     </a>
     <a routerLink='help/linux' routerLinkActive='active'>
         <span class='material'>terminal</span>
-        <div>Setup in Linux</div>
+        <div i18n>Setup in Linux</div>
     </a>
     <a routerLink='help/pwa' routerLinkActive='active'>
         <span class='material'>package_2</span>
-        <div>Install as an App</div>
+        <div i18n>Install as an App</div>
     </a>
     <a routerLink='help/privacy' routerLinkActive='active'>
         <span class='material'>verified_user</span>
-        <div>Privacy policy</div>
+        <div i18n>Privacy policy</div>
     </a>
 </div>
 

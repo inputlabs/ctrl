@@ -13,6 +13,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='{{lastRouteForSettings}}'
             [ngClass]='this.routeIsSettings()'
+            i18n
             >
             Settings
         </a>
@@ -21,6 +22,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='{{lastRouteForProfiles}}'
             routerLinkActive='active'
+            i18n
             >
             Profiles
         </a>
@@ -29,6 +31,7 @@ Copyright (C) 2023, Input Labs Oy.
         <a
             routerLink='help'
             routerLinkActive='active'
+            i18n
             >
             Help
         </a>
@@ -57,15 +60,15 @@ Copyright (C) 2023, Input Labs Oy.
             </div>
         </div>
         <div class='add' (click)='webusb.requestDevice()'>
-            <span *ngIf='!webusb.isConnectedRaw()'>Add device</span>
+            <span *ngIf='!webusb.isConnectedRaw()' i18n>Add device</span>
             <span class='material'>add</span>
         </div>
     </div>
 </div>
 
 <dialog id='dialog-firmware' *ngIf='webusb.isConnected()'>
-    <h3>Firmware update required</h3>
-    <div>
+    <h3 i18n>Firmware update required</h3>
+    <div i18n>
         {{webusb.selectedDevice!.getConnectorName()}} firmware is outdated, the Ctrl app won't work correctly.<br/>
         <br/>
         Current {{webusb.selectedDevice!.getConnectorName()}}
@@ -74,19 +77,19 @@ Copyright (C) 2023, Input Labs Oy.
         <a [href]='RELEASES_LINK' target='_blank'>Check latest firmware releases</a>
     </div>
     <div class='buttons'>
-        <button (click)='hideDialog() && firmwareAck()'>Got it!</button>
+        <button (click)='hideDialog() && firmwareAck()' i18n>Got it!</button>
     </div>
 </dialog>
 
 <dialog id='dialog-serial'>
-    <h3>Controller model undefined</h3>
-    <div>
+    <h3 i18n>Controller model undefined</h3>
+    <div i18n>
         The identifier for the controller model cannot be read.
         The app functionality is limited without this piece of information.
         <br/><br/>
         A privacy protector (for example Brave Shields) could be blocking the access to it.
     </div>
     <div class='buttons'>
-        <button (click)='hideDialog()'>Close</button>
+        <button (click)='hideDialog()' i18n>Close</button>
     </div>
 </dialog>

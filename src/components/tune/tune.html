@@ -11,6 +11,7 @@ Copyright (C) 2023, Input Labs Oy.
             [dotsize]='9'
             [on]='getActive()!.leds'
             [blink]='getActive()!.blink'
+            i18n-title
             title='LED animation when using button shortcuts'
         />
     </div>
@@ -45,12 +46,12 @@ Copyright (C) 2023, Input Labs Oy.
 </div>
 
 <dialog id='dialog-protocol'>
-    <h3>Protocol change</h3>
-    <div>
+    <h3 i18n>Protocol change</h3>
+    <div i18n>
         The device will restart using a different protocol, you may have to pair the device again.
     </div>
     <div class='buttons'>
-        <button (click)='hideDialogProtocol()' class='flat'>Cancel</button>
-        <button (click)='hideDialogProtocol() && confirmDialogProtocol()'>Change</button>
+        <button (click)='hideDialogProtocol()' class='flat' i18n>Cancel</button>
+        <button (click)='hideDialogProtocol() && confirmDialogProtocol()' i18n>Change</button>
     </div>
 </dialog>

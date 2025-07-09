@@ -4,12 +4,12 @@ Copyright (C) 2023, Input Labs Oy.
 -->
 
 <div class='settings'>
-    <h2>Advanced settings</h2>
+    <h2 i18n>Advanced settings</h2>
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Long calibration</div>
-            <div class='desc'>4x longer</div>
+            <div class='name' i18n>Long calibration</div>
+            <div class='desc' i18n>4x longer</div>
             <div class='material' (click)='showDialogHelp("longCalibration")'>help</div>
         </div>
         <app-input-toggle
@@ -20,8 +20,8 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Swap gyros</div>
-            <div class='desc'>Left<->Right</div>
+            <div class='name' i18n>Swap gyros</div>
+            <div class='desc' i18n>Left<->Right</div>
             <div class='material' (click)='showDialogHelp("swapGyros")'>help</div>
         </div>
         <app-input-toggle
@@ -32,8 +32,8 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Invert touch polarity</div>
-            <div class='desc'>Charge vs Discharge</div>
+            <div class='name' i18n>Invert touch polarity</div>
+            <div class='desc' i18n>Charge vs Discharge</div>
             <div class='material' (click)='showDialogHelp("invertTouchPolarity")'>help</div>
         </div>
         <app-input-toggle
@@ -44,8 +44,8 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Gyro calibration tweak</div>
-            <div class='desc'>X axis</div>
+            <div class='name' i18n>Gyro calibration tweak</div>
+            <div class='desc' i18n>X axis</div>
             <div class='material' (click)='showDialogHelp("gyroUserOffset")'>help</div>
         </div>
         <app-input-number
@@ -62,8 +62,8 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Gyro calibration tweak</div>
-            <div class='desc'>Y axis</div>
+            <div class='name' i18n>Gyro calibration tweak</div>
+            <div class='desc' i18n>Y axis</div>
             <div class='material' (click)='showDialogHelp("gyroUserOffset")'>help</div>
         </div>
         <app-input-number
@@ -80,8 +80,8 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Gyro calibration tweak</div>
-            <div class='desc'>Z axis</div>
+            <div class='name' i18n>Gyro calibration tweak</div>
+            <div class='desc' i18n>Z axis</div>
             <div class='material' (click)='showDialogHelp("gyroUserOffset")'>help</div>
         </div>
         <app-input-number
@@ -98,8 +98,8 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='setting'>
         <div class='text'>
-            <div class='name'>Thumbstick smoothing</div>
-            <div class='desc'>Samples</div>
+            <div class='name' i18n>Thumbstick smoothing</div>
+            <div class='desc' i18n>Samples</div>
             <div class='material' (click)='showDialogHelp("thumbstickSmoothing")'>help</div>
         </div>
         <app-input-number
@@ -120,6 +120,6 @@ Copyright (C) 2023, Input Labs Oy.
     <h3>{{helpTitle}}</h3>
     <div [innerHTML]='helpText'></div>
     <div class='buttons'>
-        <button (click)='hideDialogHelp()'>Makes sense</button>
+        <button (click)='hideDialogHelp()' i18n>Makes sense</button>
     </div>
 </dialog>

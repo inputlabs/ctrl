@@ -10,6 +10,15 @@
   "projects": {
     "ctrl": {
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "zh-CN": {
+            "translation": "src/locale/messages.zh-CN.xlf",
+            "baseHref": "/zh-CN/"
+          }
+        }
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "sass",

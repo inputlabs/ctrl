@@ -85,36 +85,36 @@ export class SettingsComponent {
 
   showDialogHelp(key: string) {
     const titles: {[key: string]: string} = {
-      longCalibration: "Long calibration",
-      swapGyros: "Swap gyros",
-      invertTouchPolarity: "Invert touch polarity",
-      gyroUserOffset: "Gyro calibration tweak",
+      longCalibration: $localize`Long calibration`,
+      swapGyros: $localize`Swap gyros`,
+      invertTouchPolarity: $localize`Invert touch polarity`,
+      gyroUserOffset: $localize`Gyro calibration tweak`,
     }
     const texts: {[key: string]: string} = {
       longCalibration:
-        `In some cases the drift could be changing direction so slowly that a normal calibration is
+        $localize`In some cases the drift could be changing direction so slowly that a normal calibration is
         not able to capture it completely. A longer calibration will do a better job
         averaging the drift.<br><br>
         After enabling this setting, any new calibration procedure will take 4x times longer.`,
       swapGyros:
-        `In some cases one of the IMU sensors could be more sensitive to temperature-induced drift,
+        $localize`In some cases one of the IMU sensors could be more sensitive to temperature-induced drift,
         since each gyroscope sensor is configured in a slightly different way, swapping their roles
         could help preventing this issue.<br><br>
         A re-calibration is required after enabling this feature.`,
       invertTouchPolarity:
-        `The touch sensor works by measuring how long it takes to charge up or charge down the touch
+        $localize`The touch sensor works by measuring how long it takes to charge up or charge down the touch
         plate (and anything that touches it). This polarity setting controls which one it is
         (up or down).<br><br>
         If you are having problems with the touch sensor, this feature could help making the
         measurements more stable.`,
       gyroUserOffset:
-        `Since the calibration has to be performed with the controller on a flat surface, it is
+        $localize`Since the calibration has to be performed with the controller on a flat surface, it is
         possible that the piezoelectric sensor has slightly different zero readings while tilted
         back and held in a normal gaming position.<br><br>
         If this problem is noticeable, it can be solved by manually adding additional offsets into
         the calibration values.`,
       thumbstickSmoothing:
-        `How many additional samples are used to calculate the final value of the thumbstick.
+        $localize`How many additional samples are used to calculate the final value of the thumbstick.
         More samples provide a more stable output but also increase the perceived latency.<br><br>
         Smoothing is disabled when the number of additional samples is set to zero (only
         the current sample is used).`,

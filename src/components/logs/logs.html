@@ -4,10 +4,11 @@ Copyright (C) 2023, Input Labs Oy.
 -->
 
 <div class='terminal'>
-    <h2>Firmware logs</h2>
+    <h2 i18n>Firmware logs</h2>
     <div class='filters'>
         <button
             class='material'
+            i18n-title
             title='Enable USB logs'
             [class.active]='filterUSB'
             (click)='filterToggle("usb")'
@@ -16,6 +17,7 @@ Copyright (C) 2023, Input Labs Oy.
         </button>
         <button
             class='material'
+            i18n-title
             title='Enable wireless logs'
             [class.active]='filterWireless'
             (click)='filterToggle("wireless")'
@@ -24,6 +26,7 @@ Copyright (C) 2023, Input Labs Oy.
         </button>
         <button
             class='material'
+            i18n-title
             title='Enable touch sensor logs'
             [class.active]='filterTouch'
             (click)='filterToggle("touch")'
@@ -32,6 +35,7 @@ Copyright (C) 2023, Input Labs Oy.
         </button>
         <button
             class='material'
+            i18n-title
             title='Download logs'
             (click)='downloadLogs()'
             >
@@ -39,6 +43,7 @@ Copyright (C) 2023, Input Labs Oy.
         </button>
         <button
             class='material'
+            i18n-title
             title='Clear logs'
             (click)='webusb.clearLogs()'
             >
@@ -47,84 +52,84 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
     <pre>
         <div class='filler'></div>
-        <span *ngIf='!webusb.getLogs().length'>Try using the restart button</span>
-        <span *ngIf='!webusb.getLogs().length'>No logs in here</span>
+        <span *ngIf='!webusb.getLogs().length' i18n>Try using the restart button</span>
+        <span *ngIf='!webusb.getLogs().length' i18n>No logs in here</span>
         <span *ngFor='let line of webusb.getLogs()'>{{line}}</span>
     </pre>
 </div>
 
 <div class='panel'>
-    <h2>Commands</h2>
-    <button (click)='webusb.sendProc(HID.PROC_RESTART)'>Restart</button>
-    <button *ngIf='!webusb.isProxy()' (click)='webusb.sendProc(HID.PROC_BOOTSEL)'>Restart in bootsel mode</button>
-    <button *ngIf='webusb.isController()' (click)='dialogCalibrate.showModal()'>Calibrate</button>
-    <button (click)='dialogResetConfig.showModal()'>Reset config</button>
-    <button *ngIf='webusb.isController()' (click)='dialogResetProfiles.showModal()'>Reset all profiles</button>
-    <button (click)='dialogResetFactory.showModal()'>Reset to factory settings</button>
-    <button *ngIf='!webusb.isProxy()' (click)='dialogForget.showModal()'>Unpair</button>
+    <h2 i18n>Commands</h2>
+    <button (click)='webusb.sendProc(HID.PROC_RESTART)' i18n>Restart</button>
+    <button *ngIf='!webusb.isProxy()' (click)='webusb.sendProc(HID.PROC_BOOTSEL)' i18n>Restart in bootsel mode</button>
+    <button *ngIf='webusb.isController()' (click)='dialogCalibrate.showModal()' i18n>Calibrate</button>
+    <button (click)='dialogResetConfig.showModal()' i18n>Reset config</button>
+    <button *ngIf='webusb.isController()' (click)='dialogResetProfiles.showModal()' i18n>Reset all profiles</button>
+    <button (click)='dialogResetFactory.showModal()' i18n>Reset to factory settings</button>
+    <button *ngIf='!webusb.isProxy()' (click)='dialogForget.showModal()' i18n>Unpair</button>
 </div>
 
 <dialog id='dialog-calibrate'>
-    <h3>Controller calibration</h3>
-    <div>
+    <h3 i18n>Controller calibration</h3>
+    <div i18n>
         The gyroscopes, accelerometers, and thumbstick will be calibrated,
         leave the controller on a flat surface and wait until the procedure
         is completed.
     </div>
     <div class='buttons'>
-        <button (click)='dialogCalibrate.close()' class='flat'>Cancel</button>
-        <button (click)='dialogCalibrate.close(); webusb.sendProc(HID.PROC_CALIBRATE)'>Start</button>
+        <button (click)='dialogCalibrate.close()' class='flat' i18n>Cancel</button>
+        <button (click)='dialogCalibrate.close(); webusb.sendProc(HID.PROC_CALIBRATE)' i18n>Start</button>
     </div>
 </dialog>
 
 <dialog id='dialog-reset-config'>
-    <h3>Reset config values</h3>
-    <div>
+    <h3 i18n>Reset config values</h3>
+    <div i18n>
         All config values will be discarded (calibration, protocol mode, sensitivities, etc). Profiles won't be affected.
         <br/><br/>
         The controller will restart in default Windows mode.
     </div>
     <div class='buttons'>
-        <button (click)='dialogResetConfig.close()' class='flat'>Cancel</button>
-        <button (click)='dialogResetConfig.close(); webusb.sendProc(HID.PROC_RESET_CONFIG)'>Reset config</button>
+        <button (click)='dialogResetConfig.close()' class='flat' i18n>Cancel</button>
+        <button (click)='dialogResetConfig.close(); webusb.sendProc(HID.PROC_RESET_CONFIG)' i18n>Reset config</button>
     </div>
 </dialog>
 
 <dialog id='dialog-reset-profiles'>
-    <h3>Reset all profiles</h3>
-    <div>
+    <h3 i18n>Reset all profiles</h3>
+    <div i18n>
         All profiles will be restored to default built-in profiles (as defined in the manual).
         <br/><br/>
         Current profiles will be lost forever.
     </div>
     <div class='buttons'>
-        <button (click)='dialogResetProfiles.close()' class='flat'>Cancel</button>
-        <button (click)='dialogResetProfiles.close(); webusb.sendProc(HID.PROC_RESET_PROFILES)'>Reset profiles</button>
+        <button (click)='dialogResetProfiles.close()' class='flat' i18n>Cancel</button>
+        <button (click)='dialogResetProfiles.close(); webusb.sendProc(HID.PROC_RESET_PROFILES)' i18n>Reset profiles</button>
     </div>
 </dialog>
 
 <dialog id='dialog-reset-factory'>
-    <h3>Reset to factory defaults</h3>
-    <div>
+    <h3 i18n>Reset to factory defaults</h3>
+    <div i18n>
         All config values will be discarded (calibration, protocol mode, sensitivities, etc).
         Profiles will be restored to built-in defaults.
         <br/><br/>
         The controller will restart in default Windows mode.
     </div>
     <div class='buttons'>
-        <button (click)='dialogResetFactory.close()' class='flat'>Cancel</button>
-        <button (click)='dialogResetFactory.close(); webusb.sendProc(HID.PROC_RESET_FACTORY)'>Reset to factory</button>
+        <button (click)='dialogResetFactory.close()' class='flat' i18n>Cancel</button>
+        <button (click)='dialogResetFactory.close(); webusb.sendProc(HID.PROC_RESET_FACTORY)' i18n>Reset to factory</button>
     </div>
 </dialog>
 
 <dialog id='dialog-forget'>
-    <h3>Unpair controller</h3>
-    <div>
+    <h3 i18n>Unpair controller</h3>
+    <div i18n>
         The current device ({{webusb.getManufacturerName()}} {{webusb.getProductName()}})
         will be disconnected and removed from the list of paired devices.
     </div>
     <div class='buttons'>
-        <button (click)='dialogForget.close()' class='flat'>Cancel</button>
-        <button (click)='dialogForget.close(); webusb.forgetDevice()'>Unpair</button>
+        <button (click)='dialogForget.close()' class='flat' i18n>Cancel</button>
+        <button (click)='dialogForget.close(); webusb.forgetDevice()' i18n>Unpair</button>
     </div>
 </dialog>

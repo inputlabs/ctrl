@@ -5,9 +5,9 @@ Copyright (C) 2023, Input Labs Oy.
 
 <!-- PROFILE META -->
 <div *ngIf='sectionIsMeta()'>
-    <h2>Profile</h2>
+    <h2 i18n>Profile</h2>
     <div class='block'>
-        <div class='subtitle'>Name:</div>
+        <div class='subtitle' i18n>Name:</div>
         <input
             class='island'
             type='text'
@@ -18,12 +18,12 @@ Copyright (C) 2023, Input Labs Oy.
         />
     </div>
     <div class='block'>
-        <div class='subtitle'>Copy profile from:</div>
+        <div class='subtitle' i18n>Copy profile from:</div>
         <select id='loadProfileElement'
             [(ngModel)]='profileOverwriteIndex'
             (ngModelChange)='profileOverwrite()'
             >
-            <option class='opt' [value]='0'>Select a profile</option>
+            <option class='opt' [value]='0' i18n>Select a profile</option>
             <option class='opt' [value]='1'>{{profiles.getProfile(1).meta.name}}</option>
             <option class='opt' [value]='5'>{{profiles.getProfile(5).meta.name}}</option>
             <option class='opt' [value]='2'>{{profiles.getProfile(2).meta.name}}</option>
@@ -36,21 +36,21 @@ Copyright (C) 2023, Input Labs Oy.
             <option class='opt' [value]='10'>{{profiles.getProfile(10).meta.name}}</option>
             <option class='opt' [value]='11'>{{profiles.getProfile(11).meta.name}}</option>
             <option class='opt' [value]='12'>{{profiles.getProfile(12).meta.name}}</option>
-            <option class='opt' [value]='-1'>Default - FPS Fusion</option>
-            <option class='opt' [value]='-5'>Default - FPS WASD</option>
-            <option class='opt' [value]='-2'>Default - Racing</option>
-            <option class='opt' [value]='-6'>Default - Flight</option>
-            <option class='opt' [value]='-3'>Default - Console</option>
-            <option class='opt' [value]='-7'>Default - Console Legacy</option>
-            <option class='opt' [value]='-4'>Default - Desktop</option>
-            <option class='opt' [value]='-8'>Default - RTS</option>
-            <option class='opt' [value]='-9'>Default - Custom (empty)</option>
+            <option class='opt' [value]='-1' i18n>Default - FPS Fusion</option>
+            <option class='opt' [value]='-5' i18n>Default - FPS WASD</option>
+            <option class='opt' [value]='-2' i18n>Default - Racing</option>
+            <option class='opt' [value]='-6' i18n>Default - Flight</option>
+            <option class='opt' [value]='-3' i18n>Default - Console</option>
+            <option class='opt' [value]='-7' i18n>Default - Console Legacy</option>
+            <option class='opt' [value]='-4' i18n>Default - Desktop</option>
+            <option class='opt' [value]='-8' i18n>Default - RTS</option>
+            <option class='opt' [value]='-9' i18n>Default - Custom (empty)</option>
         </select>
     </div>
     <div class='block'>
-        <div class='subtitle'>Import / export:</div>
+        <div class='subtitle' i18n>Import / export:</div>
         <button>
-            <label class='file-upload'>
+            <label class='file-upload' i18n>
                 Load from file
                 <input
                     type='file'
@@ -59,17 +59,17 @@ Copyright (C) 2023, Input Labs Oy.
                 />
             </label>
         </button>
-        <button (click)='profileSave()'>Save to file</button>
+        <button (click)='profileSave()' i18n>Save to file</button>
     </div>
 </div>
 
 <!-- HOME -->
 <div *ngIf='sectionIsHome()'>
-    <h2>Home button</h2>
-    <p>Home button mappings are not configurable yet.</p>
-    <p>Holding (pink) the Home button, enables the shortcuts from the Home profile. These can be modified in the Home profile page.</p>
-    <p>Double-clicking (purple) the Home button, emulates the native gamepad home/guide button.</p>
-    <p>Double-clicking and holding the Home button allows for shortcuts such as "Guide+X" when pressing other buttons.</p>
+    <h2 i18n>Home button</h2>
+    <p i18n>Home button mappings are not configurable yet.</p>
+    <p i18n>Holding (pink) the Home button, enables the shortcuts from the Home profile. These can be modified in the Home profile page.</p>
+    <p i18n>Double-clicking (purple) the Home button, emulates the native gamepad home/guide button.</p>
+    <p i18n>Double-clicking and holding the Home button allows for shortcuts such as "Guide+X" when pressing other buttons.</p>
 </div>
 
 <!-- BUTTONS -->
@@ -83,7 +83,7 @@ Copyright (C) 2023, Input Labs Oy.
                 class='iconaction'
                 *ngIf='!button.sticky'
                 >
-                <span class='name'>Long press</span>
+                <span class='name' i18n>Long press</span>
                 <span class='material' (click)='button.hold=!button.hold; save()'>
                     {{button.hold ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -92,7 +92,7 @@ Copyright (C) 2023, Input Labs Oy.
                 class='iconaction'
                 *ngIf='!button.sticky'
                 >
-                <span class='name'>Double press</span>
+                <span class='name' i18n>Double press</span>
                 <span class='material' (click)='button.double=!button.double; save()'>
                     {{button.double ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -101,7 +101,7 @@ Copyright (C) 2023, Input Labs Oy.
                 class='iconaction'
                 *ngIf='(button.hold || button.double) && !button.sticky'
                 >
-                <span class='name'>Immediate / trigger both</span>
+                <span class='name' i18n>Immediate / trigger both</span>
                 <span class='material' (click)='button.immediate=!button.immediate; save()'>
                     {{button.immediate ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -110,7 +110,7 @@ Copyright (C) 2023, Input Labs Oy.
                 class='iconaction'
                 *ngIf='button.hold && !button.sticky'
                 >
-                <span class='name'>Very long press</span>
+                <span class='name' i18n>Very long press</span>
                 <span class='material' (click)='button.long=!button.long; save()'>
                     {{button.long ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -119,7 +119,7 @@ Copyright (C) 2023, Input Labs Oy.
                 class='iconaction'
                 *ngIf='profileIndex===0 && !button.hold'
                 >
-                <span class='name'>Home cycle</span>
+                <span class='name' i18n>Home cycle</span>
                 <span class='material' (click)='button.sticky=!button.sticky; save()'>
                     {{button.sticky ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -148,8 +148,8 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='sectionIsRotary() && getSectionAsRotary() as rotary'>
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
-        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_UP'>On scroll up:</div>
-        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_DOWN'>On scroll down:</div>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_UP' i18n>On scroll up:</div>
+        <div class='subtitle' *ngIf='rotary.sectionIndex==SectionIndex.ROTARY_DOWN' i18n>On scroll down:</div>
         <app-action-selector
             [actions]='getActions()'
             [labels]='getLabels()'
@@ -165,29 +165,29 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='sectionIsThumbstick() && getSectionAsThumbstick() as thumbstick'>
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
-        <div class='subtitle'>Mode:</div>
+        <div class='subtitle' i18n>Mode:</div>
         <select
             [(ngModel)]='thumbstick.mode'
             (ngModelChange)='save()'
             >
-            <option [value]='ThumbstickMode.OFF'>Off</option>
-            <option [value]='ThumbstickMode.DIR4'>4 directions</option>
-            <option [value]='ThumbstickMode.DIR8'>8 directions (only digital)</option>
-            <option [value]='ThumbstickMode.ALPHANUMERIC'>Alphanumeric</option>
+            <option [value]='ThumbstickMode.OFF' i18n>Off</option>
+            <option [value]='ThumbstickMode.DIR4' i18n>4 directions</option>
+            <option [value]='ThumbstickMode.DIR8' i18n>8 directions (only digital)</option>
+            <option [value]='ThumbstickMode.ALPHANUMERIC' i18n>Alphanumeric</option>
         </select>
     </div>
     <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
-        <div class='subtitle'>Analog distance calculation:</div>
+        <div class='subtitle' i18n>Analog distance calculation:</div>
         <select
             [(ngModel)]='thumbstick.distance_mode'
             (ngModelChange)='save()'
             >
-            <option [value]='ThumbstickDistanceMode.AXIAL'>Axial</option>
-            <option [value]='ThumbstickDistanceMode.RADIAL'>Radial</option>
+            <option [value]='ThumbstickDistanceMode.AXIAL' i18n>Axial</option>
+            <option [value]='ThumbstickDistanceMode.RADIAL' i18n>Radial</option>
         </select>
     </div>
     <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
-        <div class='subtitle'>Saturation:</div>
+        <div class='subtitle' i18n>Saturation:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.saturation'
@@ -200,7 +200,7 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
-        <div class='subtitle'>Axis overlap:</div>
+        <div class='subtitle' i18n>Axis overlap:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.overlap'
@@ -213,10 +213,10 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
-        <div class='subtitle'>Deadzone:</div>
+        <div class='subtitle' i18n>Deadzone:</div>
         <div class='island'>
             <div class='iconaction'>
-                <span class='name'>Override global deadzone</span>
+                <span class='name' i18n>Override global deadzone</span>
                 <span
                     class='material'
                     (click)='thumbstick.deadzone_override=!thumbstick.deadzone_override; save()'
@@ -236,7 +236,7 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
-        <div class='subtitle'>Anti-deadzone:</div>
+        <div class='subtitle' i18n>Anti-deadzone:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.antideadzone'
@@ -254,35 +254,35 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='sectionIsGyro() && getSectionAsGyro() as gyro'>
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
-        <div class='subtitle'>Mode:</div>
+        <div class='subtitle' i18n>Mode:</div>
         <select
             [(ngModel)]='gyro.mode'
             (ngModelChange)='save()'
             >
-            <option [value]='GyroMode.OFF'>Off</option>
-            <option [value]='GyroMode.ALWAYS_ON'>Always On</option>
-            <option [value]='GyroMode.TOUCH_OFF'>Touch Off</option>
-            <option [value]='GyroMode.TOUCH_ON'>Touch On</option>
-            <option [value]='GyroMode.AXIS_ABSOLUTE'>As absolute axis</option>
+            <option [value]='GyroMode.OFF' i18n>Off</option>
+            <option [value]='GyroMode.ALWAYS_ON' i18n>Always On</option>
+            <option [value]='GyroMode.TOUCH_OFF' i18n>Touch Off</option>
+            <option [value]='GyroMode.TOUCH_ON' i18n>Touch On</option>
+            <option [value]='GyroMode.AXIS_ABSOLUTE' i18n>As absolute axis</option>
         </select>
     </div>
     <div class='block' *ngIf='gyro.mode==GyroMode.TOUCH_ON || gyro.mode==GyroMode.TOUCH_OFF'>
-        <div class='subtitle'>Engage surface/button:</div>
+        <div class='subtitle' i18n>Engage surface/button:</div>
         <select
             [(ngModel)]='gyro.engage'
             (ngModelChange)='save()'
             >
-            <option [value]='getPins().NONE'>None</option>
-            <option [value]='getPins().TOUCH_IN_RC' *ngIf='gyro.engage===getPins().TOUCH_IN_RC'>Hexagon surface (rc)</option>
-            <option [value]='getPins().TOUCH_IN'>Hexagon surface</option>
+            <option [value]='getPins().NONE' i18n>None</option>
+            <option [value]='getPins().TOUCH_IN_RC' *ngIf='gyro.engage===getPins().TOUCH_IN_RC' i18n>Hexagon surface (rc)</option>
+            <option [value]='getPins().TOUCH_IN' i18n>Hexagon surface</option>
             <option [value]='getPins().A'>A</option>
             <option [value]='getPins().B'>B</option>
             <option [value]='getPins().X'>X</option>
             <option [value]='getPins().Y'>Y</option>
-            <option [value]='getPins().DPAD_LEFT'>DPad Left</option>
-            <option [value]='getPins().DPAD_RIGHT'>DPad Right</option>
-            <option [value]='getPins().DPAD_UP'>DPad Up</option>
-            <option [value]='getPins().DPAD_DOWN'>DPad Down</option>
+            <option [value]='getPins().DPAD_LEFT' i18n>DPad Left</option>
+            <option [value]='getPins().DPAD_RIGHT' i18n>DPad Right</option>
+            <option [value]='getPins().DPAD_UP' i18n>DPad Up</option>
+            <option [value]='getPins().DPAD_DOWN' i18n>DPad Down</option>
             <option [value]='getPins().L1'>L1</option>
             <option [value]='getPins().L2'>L2</option>
             <option [value]='getPins().L3'>L3</option>
@@ -291,10 +291,10 @@ Copyright (C) 2023, Input Labs Oy.
             <option [value]='getPins().R2'>R2</option>
             <option [value]='getPins().R3'>R3</option>
             <option [value]='getPins().R4'>R4</option>
-            <option [value]='getPins().SELECT_1'>Select</option>
-            <option [value]='getPins().SELECT_2'>Select (2)</option>
-            <option [value]='getPins().START_1'>Start</option>
-            <option [value]='getPins().START_2'>Start (2)</option>
+            <option [value]='getPins().SELECT_1' i18n>Select</option>
+            <option [value]='getPins().SELECT_2' i18n>Select (2)</option>
+            <option [value]='getPins().START_1' i18n>Start</option>
+            <option [value]='getPins().START_2' i18n>Start (2)</option>
         </select>
     </div>
 </div>
@@ -303,7 +303,7 @@ Copyright (C) 2023, Input Labs Oy.
 <div *ngIf='sectionIsGyroAxis() && getSectionAsGyroAxis() as gyroAxis'>
     <h2>{{getSectionTitle()}}</h2>
     <div class='block'>
-        <div class='subtitle'>On axis rotation (negative):</div>
+        <div class='subtitle' i18n>On axis rotation (negative):</div>
         <app-action-selector
             [actions]='getActions()'
             [labels]='getLabels()'
@@ -314,7 +314,7 @@ Copyright (C) 2023, Input Labs Oy.
         />
     </div>
     <div class='block'>
-        <div class='subtitle'>On axis rotation (positive):</div>
+        <div class='subtitle' i18n>On axis rotation (positive):</div>
         <app-action-selector
             [actions]='getActions()'
             [labels]='getLabels()'
@@ -325,7 +325,7 @@ Copyright (C) 2023, Input Labs Oy.
         />
     </div>
     <div class='block' *ngIf="getGyroMode() == 4">
-        <div class='subtitle'>Min Angle:</div>
+        <div class='subtitle' i18n>Min Angle:</div>
         <div class='island'>
             <app-input-number
                 [value]='gyroAxis.minAngle'
@@ -338,7 +338,7 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf="getGyroMode() == 4">
-        <div class='subtitle'>Max Angle:</div>
+        <div class='subtitle' i18n>Max Angle:</div>
         <div class='island'>
             <app-input-number
                 [value]='gyroAxis.maxAngle'
@@ -501,35 +501,35 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='keyboard proc'>
             <div class='key' [ngClass]='pickCls(HID.PROC_PROFILE_0 + pickerProfile)'>
                 <span class='prevnext' (click)='pickProfile(-1)'>⏴</span>
-                <span (click)='pickProfile()'>SET PROFILE {{pickerProfile}}</span>
+                <span (click)='pickProfile()' i18n>SET PROFILE {{pickerProfile}}</span>
                 <span class='prevnext' (click)='pickProfile(+1)'>⏵</span>
             </div>
             <!-- <div class='key' [ngClass]='pickCls(HID.PROC_ROTARY_MODE_0 + pickerRotary)'>
                 <span class='prevnext' (click)='pickRotary(-1)'>⏴</span>
-                <span (click)='pickRotary()'>SET ROTARY {{pickerRotary}}</span>
+                <span (click)='pickRotary()' i18n>SET ROTARY {{pickerRotary}}</span>
                 <span class='prevnext' (click)='pickRotary(+1)'>⏵</span>
             </div> -->
             <div class='key' [ngClass]='pickCls(HID.PROC_MACRO_1 + pickerMacro - 1)'>
                 <span class='prevnext' (click)='pickMacro(-1)'>⏴</span>
-                <span (click)='pickMacro()'>MACRO {{pickerMacro}}</span>
+                <span (click)='pickMacro()' i18n>MACRO {{pickerMacro}}</span>
                 <span class='prevnext' (click)='pickMacro(+1)'>⏵</span>
             </div>
             <div class='key' [ngClass]='pickCls(HID.PROC_TUNE_OS + pickerTune)'>
                 <span class='prevnext' (click)='pickTune(-1)'>⏴</span>
-                <span *ngIf='pickerTune==0' (click)='pickTune()'><span class='material'>settings</span>PROTOCOL</span>
-                <span *ngIf='pickerTune==1' (click)='pickTune()'><span class='material'>settings</span>MOUSE SENS</span>
-                <span *ngIf='pickerTune==2' (click)='pickTune()'><span class='material'>settings</span>TOUCH SENS</span>
-                <span *ngIf='pickerTune==3' (click)='pickTune()'><span class='material'>settings</span>TS DEADZONE</span>
+                <span *ngIf='pickerTune==0' (click)='pickTune()' i18n><span class='material'>settings</span>PROTOCOL</span>
+                <span *ngIf='pickerTune==1' (click)='pickTune()' i18n><span class='material'>settings</span>MOUSE SENS</span>
+                <span *ngIf='pickerTune==2' (click)='pickTune()' i18n><span class='material'>settings</span>TOUCH SENS</span>
+                <span *ngIf='pickerTune==3' (click)='pickTune()' i18n><span class='material'>settings</span>TS DEADZONE</span>
                 <span class='prevnext' (click)='pickTune(+1)'>⏵</span>
             </div>
             <div>
                 <div class='key half' [ngClass]='pickCls(HID.PROC_TUNE_DOWN)' (click)='pick(HID.PROC_TUNE_DOWN)'><span class='material'>settings</span><span class='material'>remove</span></div>
                 <div class='key half' [ngClass]='pickCls(HID.PROC_TUNE_UP)' (click)='pick(HID.PROC_TUNE_UP)'><span class='material'>settings</span><span class='material'>add</span></div>
             </div>
-            <div class='key' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)'>CALIBRATE</div>
-            <div class='key' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)'>BOOTSEL</div>
-            <div class='key' [ngClass]='pickCls(HID.PROC_PAIR)' (click)='pick(HID.PROC_PAIR)'>PAIR</div>
-            <div class='key' [ngClass]='pickCls(HID.PROC_SLEEP)' (click)='pick(HID.PROC_SLEEP)'>SLEEP</div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_CALIBRATE)' (click)='pick(HID.PROC_CALIBRATE)' i18n>CALIBRATE</div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_BOOTSEL)' (click)='pick(HID.PROC_BOOTSEL)' i18n>BOOTSEL</div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_PAIR)' (click)='pick(HID.PROC_PAIR)' i18n>PAIR</div>
+            <div class='key' [ngClass]='pickCls(HID.PROC_SLEEP)' (click)='pick(HID.PROC_SLEEP)' i18n>SLEEP</div>
         </div>
 
         <div class='compact gamepad'>
@@ -627,6 +627,6 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
 
     <div class='close'>
-        <button (click)='hideDialogKeypicker()'>Close</button>
+        <button (click)='hideDialogKeypicker()' i18n>Close</button>
     </div>
 </dialog>
