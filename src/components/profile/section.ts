@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ActionSelectorComponent } from './action_selector'
 import { InputNumberComponent } from 'components/input_number/input_number'
+import { InputToggleComponent } from 'components/input_toggle/input_toggle'
 import { WebusbService } from 'services/webusb'
 import { Profile } from 'lib/profile'
 import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary } from 'lib/ctrl'
@@ -24,6 +25,7 @@ import { delay } from 'lib/delay'
     CommonModule,
     FormsModule,
     InputNumberComponent,
+    InputToggleComponent,
     ActionSelectorComponent,
   ],
   templateUrl: './section.html',
@@ -41,6 +43,10 @@ export class SectionComponent {
   pickerTune = 0
   profileOverwriteIndex = 0
   profiles = this.webusb.getProfiles()!
+  // Help dialog
+  dialogHelp: any
+  helpTitle = ''
+  helpText = ''
   // Template aliases.
   HID = HID
   SectionIndex = SectionIndex
@@ -302,6 +308,45 @@ export class SectionComponent {
 
   save = async () => {
     await this.webusb.trySetSection(this.profileIndex, this.section)
+  }
+
+  showDialogHelp(key: string) {
+    const titles: {[key: string]: string} = {
+      gyroMomentum: "Enable Momentum",
+      gyroMomentumDamping: "Momentum Dampening",
+      gyroMomentumCutoff: "Momentum Cutoff Velocity",
+    }
+    const texts: {[key: string]: string} = {
+      gyroMomentum:
+        `When enabled, the mouse cursor will have "momementum" and continue moving after 
+        disabling the gyro for a short time. The cursor will have the initial velocity at
+        the moment of disabling, and then it will slow down at an exponential rate. 
+        This creates a more fluid, natural feel similar to trackpad or trackball momentum.<br><br>
+        
+        Works in both TOUCH_ON mode (momentum continues after releasing the button) and TOUCH_OFF 
+        mode (momentum continues after pressing the button to stop gyro input).`,
+      gyroMomentumDamping:
+        `Controls how quickly the momentum decays. Consider these values "friction" values.
+        with Higher values = faster decay.<br><br>
+        Separate values for vertical and horizontal allow you to customize the feel for each axis. 
+        For example, you might want faster horizontal swipes but more controlled vertical movement.<br><br>
+        Recommended range: 1.0-20.0. Default: H=4.0, V=4.0`,
+      gyroMomentumCutoff:
+        `The minimum velocity (in pixels per second) below which momentum stops completely. At 250Hz,
+        The minimum visible velocity is about 250 pixels/second, but the cutoff can be set even lower. 
+        This prevents the cursor from drifting indefinitely at very slow speeds.<br><br>
+        Lower values = momentum lasts longer but may feel floaty<br>
+        Higher values = momentum stops sooner but may feel abrupt<br><br>
+        Recommended range: 100-10000.0. Default: 500.0`,
+    }
+    this.helpTitle = titles[key]
+    this.helpText = texts[key]
+    this.dialogHelp = document.getElementById('dialog-help')
+    if (this.dialogHelp) this.dialogHelp.showModal()
+  }
+
+  hideDialogHelp() {
+    if (this.dialogHelp) this.dialogHelp.close()
   }
 }
 

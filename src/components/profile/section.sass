@@ -13,6 +13,11 @@
     .subtitle
         margin-bottom: 5px
         font-size: 14px
+        .help-icon
+            font-size: 14px
+            vertical-align: middle
+            color: hsl(0deg, 0%, 40%)
+            cursor: pointer
 
     p
         font-size: 14px
@@ -262,3 +267,50 @@
             button
                 text-align: center
 
+// Gyro momentum settings
+.gyro-momentum
+    margin-top: 10px
+
+    .setting
+        display: flex
+        align-items: center
+        margin-bottom: 15px
+        .text
+            display: flex
+            flex: 1
+            min-width: 0
+            height: 40px
+            margin-right: 10px
+            align-items: center
+            background-color: hsl(0deg, 0%, 20%)
+            border-radius: 5px
+            .name
+                font-size: 14px
+                font-weight: normal
+                white-space: nowrap
+            .material
+                font-size: 18px
+                color: hsl(0deg, 0%, 40%)
+                padding-left: 6px
+                padding-right: 4px
+                cursor: pointer
+                line-height: 40px
+
+    ::ng-deep app-input-number
+        width: 100px
+        height: 40px !important
+        & *
+            height: 40px !important
+            line-height: 40px !important
+        .number
+            border-radius: 5px
+            background-color: black
+        .value, .unit
+            font-size: 16px !important
+            font-weight: normal !important
+            color: white !important
+        .button
+            color: hsl(0deg, 0%, 40%) !important
+
+    ::ng-deep app-input-toggle
+        height: 40px !important

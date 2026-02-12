@@ -608,27 +608,56 @@ export class CtrlGyro extends CtrlSection {
     public override sectionIndex: SectionIndex,
     public mode: GyroMode,
     public engage: number,
+    // Momentum settings
+    public momentumEnabled: boolean = false,
+    public momentumDampingH: number = 4.0,
+    public momentumDampingV: number = 4.0,
+    public momentumThreshold: number = 200.0,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
   }
 
   static override decode(buffer: Uint8Array) {
     const data = Array.from(buffer)
+    const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+    // Buffer layout: 4-byte Ctrl header + 2-byte indices + 58-byte CtrlGyro struct
+    // CtrlGyro struct starts at buffer offset 6:
+    //   byte 0 (buf 6):  mode
+    //   byte 1 (buf 7):  engage
+    //   byte 2 (buf 8):  momentum_enabled
+    //   byte 3 (buf 9):  _reserved1 (padding)
+    //   bytes 4-7  (buf 10-13): momentum_damping_h (float)
+    //   bytes 8-11 (buf 14-17): momentum_damping_v (float)
+    //   bytes 12-15 (buf 18-21): momentum_threshold (float)
     return new CtrlGyro(
-      data[4],  // ProfileIndex.
-      data[5],  // SectionIndex.
-      data[6],  // Gyro mode.
-      data[7],  // Engage button.
+      data[4],                       // profileIndex
+      data[5],                       // sectionIndex
+      data[6],                       // mode
+      data[7],                       // engage
+      data[8] !== 0,                 // momentumEnabled
+      view.getFloat32(10, true),     // momentumDampingH
+      view.getFloat32(14, true),     // momentumDampingV
+      view.getFloat32(18, true),     // momentumThreshold
     )
   }
 
   override payload() {
-    return [
-      this.profileIndex,
-      this.sectionIndex,
-      Number(this.mode),
-      Number(this.engage),
-    ]
+    // Payload: profileIndex (1) + sectionIndex (1) + CtrlGyro struct (58) = 60 bytes
+    const buffer = new ArrayBuffer(60)
+    const view = new DataView(buffer)
+    const arr = new Uint8Array(buffer)
+    arr[0] = this.profileIndex
+    arr[1] = this.sectionIndex
+    // CtrlGyro struct:
+    arr[2] = Number(this.mode)           // byte 0: mode
+    arr[3] = Number(this.engage)         // byte 1: engage
+    arr[4] = this.momentumEnabled ? 1 : 0 // byte 2: momentum_enabled
+    arr[5] = 0                           // byte 3: _reserved1
+    view.setFloat32(6, this.momentumDampingH, true)   // bytes 4-7
+    view.setFloat32(10, this.momentumDampingV, true)  // bytes 8-11
+    view.setFloat32(14, this.momentumThreshold, true) // bytes 12-15
+    // bytes 16-57: padding (zeroed by ArrayBuffer)
+    return Array.from(arr)
   }
 }
 
