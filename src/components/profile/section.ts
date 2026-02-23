@@ -196,12 +196,13 @@ export class SectionComponent {
     const ctx = this.canvasCircle.nativeElement.getContext('2d')!
     const thumbstick = this.getSectionAsThumbstick()
     const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
-
+    let overlap = thumbstick.overlap
+    if (overlap == 0) overlap = -2.5  // Force a visual gap when value is zero.
     const size = this.canvasCircle.nativeElement.width
     const mid = size / 2
     const max = size * 0.4
-    let overlap = (50-thumbstick.overlap) / 100 * 90
-    let overlapNeg = -thumbstick.overlap / 100 * 90
+    let overlapDeg = (50-overlap) / 100 * 90
+    let overlapDegNeg = -overlap / 100 * 90
     // Helper functions.
     const deg = (angle: number) => {
       return angle * (Math.PI / 180)
@@ -223,23 +224,23 @@ export class SectionComponent {
     }
     // Draw.
     ctx.clearRect(0, 0, size, size);
-    if (thumbstick.overlap >= 0) {
-      drawArc(3, deg(0), deg(45+overlap))
-      drawArc(3, deg(90), deg(45+overlap))
-      drawArc(3, deg(180), deg(45+overlap))
-      drawArc(3, deg(270), deg(45+overlap))
+    if (overlap > 0) {
+      drawArc(3, deg(0), deg(45+overlapDeg))
+      drawArc(3, deg(90), deg(45+overlapDeg))
+      drawArc(3, deg(180), deg(45+overlapDeg))
+      drawArc(3, deg(270), deg(45+overlapDeg))
     }
-    if (thumbstick.overlap >= 0) {
-      drawArc(1, deg(45+0), deg(45-overlap))
-      drawArc(1, deg(45+90), deg(45-overlap))
-      drawArc(1, deg(45+180), deg(45-overlap))
-      drawArc(1, deg(45+270), deg(45-overlap))
+    if (overlap > 0) {
+      drawArc(1, deg(45+0), deg(45-overlapDeg))
+      drawArc(1, deg(45+90), deg(45-overlapDeg))
+      drawArc(1, deg(45+180), deg(45-overlapDeg))
+      drawArc(1, deg(45+270), deg(45-overlapDeg))
     }
-    if (thumbstick.overlap < 0) {
-      drawArc(3, deg(0), deg(90-overlapNeg))
-      drawArc(3, deg(90), deg(90-overlapNeg))
-      drawArc(3, deg(180), deg(90-overlapNeg))
-      drawArc(3, deg(270), deg(90-overlapNeg))
+    if (overlap < 0) {
+      drawArc(3, deg(0), deg(90-overlapDegNeg))
+      drawArc(3, deg(90), deg(90-overlapDegNeg))
+      drawArc(3, deg(180), deg(90-overlapDegNeg))
+      drawArc(3, deg(270), deg(90-overlapDegNeg))
     }
     drawCircle(deadzone*max/100, 3)
     drawCircle(thumbstick.outer_threshold*max/100, 3)
