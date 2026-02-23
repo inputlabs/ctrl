@@ -239,6 +239,7 @@ export class SectionComponent {
     const size = this.canvasRamp.nativeElement.width
     const min = 2
     const max = size - 2
+    type Point = {x: number, y:number}
     const pointA = {x: min, y: min}
     const pointB = {x: min + thumbstick.deadzone/100*max, y: min}
     const pointC = {x: pointB.x, y: min + thumbstick.antideadzone/100*max}
@@ -260,24 +261,20 @@ export class SectionComponent {
       ctx.lineWidth = 3;
       ctx.stroke();
     }
+    const drawLines = (points: Point[]) => {
+      ctx.beginPath()
+      ctx.moveTo(points[0].x, points[0].y)
+      for (const point of points.slice(1)) {
+        ctx.lineTo(point.x, point.y)
+      }
+      ctx.strokeStyle = this.green
+      ctx.lineWidth = 3
+      ctx.stroke()
+    }
     const felixCurve = (x: number, k: number) => {
       return (x*k+x) / (2*x*k-k+1)
     }
-    // Clear.
-    ctx.clearRect(0, 0, size, size);
-    // Draw vertical lines.
-    drawVert(pointB.x)
-    drawVert(thumbstick.outer_threshold / 100 * max)
-    // Draw starting lines.
-    ctx.beginPath()
-    ctx.moveTo(pointA.x, pointA.y)
-    ctx.lineTo(pointB.x, pointB.y)
-    ctx.lineTo(pointC.x, pointC.y)
-    ctx.strokeStyle = this.green
-    ctx.lineWidth = 3
-    ctx.stroke()
-    // Draw accel curve.
-    let pointCz: {x: number, y:number}[] = []
+    let pointsCtoD: Point[] = []
     for(let i=0; i<=curvePoints; i++) {
       const k = thumbstick.accel_curve / 100
       let x = i / curvePoints
@@ -286,24 +283,15 @@ export class SectionComponent {
       y *= scaleY
       x += startX
       y += startY
-      pointCz.push({x, y})
+      pointsCtoD.push({x, y})
     }
-    ctx.beginPath()
-    ctx.moveTo(pointC.x, pointC.y)
-    for(let i=0; i<=curvePoints; i++) {
-      ctx.lineTo(pointCz[i].x, pointCz[i].y)
-    }
-    ctx.lineTo(pointD.x, pointD.y)
-    ctx.strokeStyle = this.green
-    ctx.lineWidth = 3
-    ctx.stroke()
-    // Draw ending lines.
-    ctx.beginPath()
-    ctx.moveTo(pointD.x, pointD.y)
-    ctx.lineTo(pointE.x, pointE.y)
-    ctx.strokeStyle = this.green
-    ctx.lineWidth = 3
-    ctx.stroke()
+    // Draw.
+    ctx.clearRect(0, 0, size, size);
+    drawVert(pointB.x)
+    drawVert(thumbstick.outer_threshold / 100 * max)
+    drawLines([pointA, pointB, pointC])
+    drawLines(pointsCtoD)  // Curve.
+    drawLines([pointD, pointE])
   }
 
   showDialogKeypicker = (pickerGroup: number) => {
