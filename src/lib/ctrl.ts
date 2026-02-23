@@ -133,11 +133,6 @@ export enum ThumbstickMode {
   DIR8,
 }
 
-export enum ThumbstickDistanceMode {
-  AXIAL,
-  RADIAL,
-}
-
 export enum GyroMode {
   OFF,
   ALWAYS_ON,
@@ -560,12 +555,18 @@ export class CtrlThumbstick extends CtrlSection {
     public override profileIndex: number,
     public override sectionIndex: SectionIndex,
     public mode: ThumbstickMode,
-    public distance_mode: ThumbstickDistanceMode,
+    public distance_mode: boolean,
     public deadzone: number,
     public overlap : number,
     public deadzone_override: boolean,
     public antideadzone: number,
     public saturation: number,
+    public outer_threshold: number,
+    public push_auto_toggle: boolean,
+    public sens_mouse: number,
+    public sens_scroll: number,
+    public sens_y_ratio: number,
+    public accel_curve: number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
   }
@@ -578,12 +579,18 @@ export class CtrlThumbstick extends CtrlSection {
       data[4],  // ProfileIndex.
       data[5],  // SectionIndex.
       data[6],  // Mode.
-      data[7],  // Distance mode.
+      Boolean(data[7]),  // Distance mode / Axis self align.
       data[8],  // Deadzone.
       data[9] <= 128 ? data[9] : data[9]-256,  // Axis overlap (unsigned to signed).
       Boolean(data[10]),  // Deadzone override.
       data[11], // Antideadzone.
       data[12] > 0 ? data[12] : 100, // Saturation.
+      data[13] > 0 ? data[13] : 80, // Outer threshold.
+      Boolean(data[14]), // Push auto-toggle.
+      data[15] > 0 ? data[15] : 10,  // Sens mouse.
+      data[16] > 0 ? data[16] : 10,  // Sens scroll.
+      data[17] > 0 ? data[17] : 100,  // Sens Y ratio.
+      data[18] <= 128 ? data[18] : data[18]-256,  // Accel (unsigned to signed).
     )
   }
 
@@ -598,6 +605,12 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.deadzone_override),
       this.antideadzone,
       this.saturation,
+      this.outer_threshold,
+      Number(this.push_auto_toggle),
+      this.sens_mouse,
+      this.sens_scroll,
+      this.sens_y_ratio,
+      this.accel_curve,
     ]
   }
 }

@@ -14,7 +14,6 @@ import {
   CtrlThumbstick,
   CtrlSection,
   ThumbstickMode,
-  ThumbstickDistanceMode
 } from 'lib/ctrl'
 
 const NUMBER_OF_PROFILES = 13  // Home + 12 builtin.
@@ -180,12 +179,18 @@ export class Profiles {
         sections[0].profileIndex,
         SectionIndex.RSTICK_SETTINGS,
         ThumbstickMode.DIR8,
-        ThumbstickDistanceMode.AXIAL,
+        false,  // Distance mode / Ignore misalignment.
         60,  // Deadzone.
         50,  // Axis overlap (unsigned to signed).
         true,  // Deadzone override.
         0, // Antideadzone.
         70, // Saturation.
+        80,  // Outer threshold.
+        false,  // Push auto-toggle.
+        100,  // Sens mouse.
+        10,  // Sens scroll.
+        100,  // Sens Y ratio.
+        0,  // Accel.
       )
       sections.push(rStickSection)
     }

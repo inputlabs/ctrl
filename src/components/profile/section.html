@@ -176,35 +176,19 @@ Copyright (C) 2023, Input Labs Oy.
             <option [value]='ThumbstickMode.ALPHANUMERIC'>Alphanumeric</option>
         </select>
     </div>
-    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
-        <div class='subtitle'>Analog distance calculation:</div>
-        <select
-            [(ngModel)]='thumbstick.distance_mode'
-            (ngModelChange)='save()'
-            >
-            <option [value]='ThumbstickDistanceMode.AXIAL'>Axial</option>
-            <option [value]='ThumbstickDistanceMode.RADIAL'>Radial</option>
-        </select>
+
+    <div class='block tabs' *ngIf='thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
+        <div class='tab' [class.active]='tab==0' (click)='tab=0'>Zones</div>
+        <div class='tab' [class.active]='tab==1' (click)='tab=1'>Response</div>
     </div>
-    <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
-        <div class='subtitle'>Saturation:</div>
-        <div class='island'>
-            <app-input-number
-                [value]='thumbstick.saturation'
-                (update)='thumbstick.saturation=$event; save()'
-                [unit]="'%'"
-                [min]='1'
-                [max]='200'
-                [step]='1'
-            />
-        </div>
-    </div>
-    <div class='block' *ngIf='thumbstick.mode == ThumbstickMode.DIR4'>
+
+
+    <div class='block' *ngIf='tab==0 && thumbstick.mode == ThumbstickMode.DIR4'>
         <div class='subtitle'>Axis overlap:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.overlap'
-                (update)='thumbstick.overlap=$event; save()'
+                (update)='thumbstick.overlap=$event; save(); plot()'
                 [unit]="'%'"
                 [min]='-100'
                 [max]='100'
@@ -212,14 +196,14 @@ Copyright (C) 2023, Input Labs Oy.
             />
         </div>
     </div>
-    <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
         <div class='subtitle'>Deadzone:</div>
         <div class='island'>
             <div class='iconaction'>
                 <span class='name'>Override global deadzone</span>
                 <span
                     class='material'
-                    (click)='thumbstick.deadzone_override=!thumbstick.deadzone_override; save()'
+                    (click)='thumbstick.deadzone_override=!thumbstick.deadzone_override; save(); plot()'
                     >
                     {{thumbstick.deadzone_override ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -227,7 +211,7 @@ Copyright (C) 2023, Input Labs Oy.
             <app-input-number
                 *ngIf='thumbstick.deadzone_override'
                 [value]='thumbstick.deadzone'
-                (update)='thumbstick.deadzone=$event; save()'
+                (update)='thumbstick.deadzone=$event; save(); plot()'
                 [unit]="'%'"
                 [min]='0'
                 [max]='100'
@@ -235,18 +219,122 @@ Copyright (C) 2023, Input Labs Oy.
             />
         </div>
     </div>
-    <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.DIR4'>
         <div class='subtitle'>Anti-deadzone:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.antideadzone'
-                (update)='thumbstick.antideadzone=$event; save()'
+                (update)='thumbstick.antideadzone=$event; save(); plot()'
                 [unit]="'%'"
                 [min]='0'
                 [max]='100'
                 [step]='1'
             />
         </div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
+        <div class='subtitle'>Outer threshold:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.outer_threshold'
+                (update)='thumbstick.outer_threshold=$event; save(); plot()'
+                [unit]="'%'"
+                [min]='1'
+                [max]='100'
+                [step]='1'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
+        <div class='subtitle'>Upper limit:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.saturation'
+                (update)='thumbstick.saturation=$event; save(); plot()'
+                [unit]="'%'"
+                [min]='1'
+                [max]='200'
+                [step]='1'
+            />
+        </div>
+    </div>
+
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.DIR4'>
+        <div class='subtitle'>Acceleration curve:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.accel_curve'
+                (update)='thumbstick.accel_curve=$event; save(); plot()'
+                [unit]="''"
+                [min]='-0.95'
+                [max]='0.95'
+                [step]='0.05'
+                [decimals]='2'
+                [factor]='0.01'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.DIR4'>
+        <div class='subtitle'>Sensitivity vertical ratio:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='1.0'
+                (update)='save(); plot()'
+                [unit]="'x'"
+                [min]='0'
+                [max]='2'
+                [step]='0.01'
+                [decimals]='2'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.DIR4'>
+        <div class='subtitle'>Sensitivity as mouse:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='100'
+                (update)='save(); plot()'
+                [unit]="'pixel/s'"
+                [min]='10'
+                [max]='2550'
+                [step]='10'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.DIR4'>
+        <div class='subtitle'>Sensitivity as scrollwheel:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='10'
+                (update)='save(); plot()'
+                [unit]="'step/s'"
+                [min]='1'
+                [max]='100'
+                [step]='1'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode == ThumbstickMode.DIR4'>
+        <div class='subtitle'>Extras:</div>
+        <div class='island'>
+            <div class='iconaction'>
+                <span class='name'>Push auto-toggle</span>
+                <span class='material' (click)='thumbstick.push_auto_toggle=!thumbstick.push_auto_toggle; save()'>
+                    {{thumbstick.push_auto_toggle ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+            <div class='iconaction'>
+                <span class='name'>Axis self-align</span>
+                <span class='material' (click)='thumbstick.distance_mode=!thumbstick.distance_mode; save()'>
+                    {{thumbstick.distance_mode ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class='block plots'>
+        <canvas class='plot' height='115' width='115' #_canvasCircle></canvas>
+        <canvas class='plot' height='115' width='115' #_canvasRamp></canvas>
     </div>
 </div>
 
