@@ -278,13 +278,12 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='subtitle'>Sensitivity vertical ratio:</div>
         <div class='island'>
             <app-input-number
-                [value]='1.0'
-                (update)='save(); plot()'
-                [unit]="'x'"
+                [value]='thumbstick.sens_y_ratio'
+                (update)='thumbstick.sens_y_ratio=$event; save(); plot()'
+                [unit]="'%'"
                 [min]='0'
-                [max]='2'
-                [step]='0.01'
-                [decimals]='2'
+                [max]='200'
+                [step]='1'
             />
         </div>
     </div>
@@ -292,12 +291,13 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='subtitle'>Sensitivity as mouse:</div>
         <div class='island'>
             <app-input-number
-                [value]='100'
-                (update)='save(); plot()'
+                [value]='thumbstick.sens_mouse'
+                (update)='thumbstick.sens_mouse=$event; save(); plot()'
                 [unit]="'pixel/s'"
-                [min]='10'
-                [max]='2550'
-                [step]='10'
+                [min]='25'
+                [max]='5000'
+                [step]='25'
+                [factor]='25'
             />
         </div>
     </div>
@@ -305,8 +305,8 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='subtitle'>Sensitivity as scrollwheel:</div>
         <div class='island'>
             <app-input-number
-                [value]='10'
-                (update)='save(); plot()'
+                [value]='thumbstick.sens_scroll'
+                (update)='thumbstick.sens_scroll=$event; save(); plot()'
                 [unit]="'step/s'"
                 [min]='1'
                 [max]='100'
