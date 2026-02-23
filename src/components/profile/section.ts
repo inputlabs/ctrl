@@ -8,7 +8,7 @@ import { ActionSelectorComponent } from './action_selector'
 import { InputNumberComponent } from 'components/input_number/input_number'
 import { WebusbService } from 'services/webusb'
 import { Profile } from 'lib/profile'
-import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary, ConfigIndex } from 'lib/ctrl'
 import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
 import { ThumbstickMode, GyroMode } from 'lib/ctrl'
@@ -41,6 +41,7 @@ export class SectionComponent {
   pickerTune = 0
   profileOverwriteIndex = 0
   profiles = this.webusb.getProfiles()!
+  globalDeadzone = 0
   tab = 0
   canvasCircle!: ElementRef<HTMLCanvasElement>
   canvasRamp!: ElementRef<HTMLCanvasElement>
@@ -54,7 +55,13 @@ export class SectionComponent {
 
   constructor(
     public webusb: WebusbService,
-  ) {}
+  ) {
+    this.afterConstructor()
+  }
+
+  async afterConstructor() {
+    this.globalDeadzone = await this.fetchGlobalDeadzone()
+  }
 
   sectionIsMeta = () => this.section instanceof CtrlSectionMeta
   sectionIsButton = () => this.section instanceof CtrlButton && !(this.section instanceof CtrlHome)
@@ -100,6 +107,11 @@ export class SectionComponent {
   getPins() {
     if (this.webusb.selectedDevice!.isAlpakkaV0()) return PinV0
     else return PinV1
+  }
+
+  async fetchGlobalDeadzone() {
+    const preset = await this.webusb.tryGetConfig(ConfigIndex.DEADZONE)
+    return preset.values[preset.presetIndex]
   }
 
   isButtonBlockVisible(group: number) {
@@ -174,7 +186,7 @@ export class SectionComponent {
     a.remove()
   }
 
-  plot = () => {
+  plot() {
     this.plotCircle()
     this.plotRamp()
   }
@@ -183,6 +195,7 @@ export class SectionComponent {
     if (!this.canvasCircle) return
     const ctx = this.canvasCircle.nativeElement.getContext('2d')!
     const thumbstick = this.getSectionAsThumbstick()
+    const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
 
     const size = this.canvasCircle.nativeElement.width
     const mid = size / 2
@@ -228,7 +241,7 @@ export class SectionComponent {
       drawArc(3, deg(180), deg(90-overlapNeg))
       drawArc(3, deg(270), deg(90-overlapNeg))
     }
-    drawCircle(thumbstick.deadzone*max/100, 3)
+    drawCircle(deadzone*max/100, 3)
     drawCircle(thumbstick.outer_threshold*max/100, 3)
   }
 
@@ -236,18 +249,19 @@ export class SectionComponent {
     if (!this.canvasRamp) return
     const ctx = this.canvasRamp.nativeElement.getContext('2d')!
     const thumbstick = this.getSectionAsThumbstick()
+    const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
     const size = this.canvasRamp.nativeElement.width
     const min = 2
     const max = size - 2
     type Point = {x: number, y:number}
     const pointA = {x: min, y: min}
-    const pointB = {x: min + thumbstick.deadzone/100*max, y: min}
+    const pointB = {x: min + deadzone/100*max, y: min}
     const pointC = {x: pointB.x, y: min + thumbstick.antideadzone/100*max}
     const pointD = {x: thumbstick.saturation/100*max, y: max}
     const pointE = {x: max, y: max}
     // Accel curve.
     const curvePoints = 20
-    const startX = min + (thumbstick.deadzone / 100) * max
+    const startX = min + (deadzone / 100) * max
     const startY = min + (thumbstick.antideadzone / 100) * max
     const endX = (thumbstick.saturation / 100) * max
     const scaleX = endX - startX
