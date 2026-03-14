@@ -565,7 +565,7 @@ export class CtrlThumbstick extends CtrlSection {
     public push_auto_toggle: boolean,
     public sens_mouse: number,
     public sens_scroll: number,
-    public sens_y_ratio: number,
+    public sens_xy_ratio: number,
     public accel_curve: number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
@@ -609,7 +609,7 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.push_auto_toggle),
       this.sens_mouse,
       this.sens_scroll,
-      this.sens_y_ratio,
+      this.sens_xy_ratio,
       this.accel_curve,
     ]
   }
