@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
-import { Component, Input } from '@angular/core'
+import { Component, Input, ViewChild, ElementRef} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ActionSelectorComponent } from './action_selector'
 import { InputNumberComponent } from 'components/input_number/input_number'
 import { WebusbService } from 'services/webusb'
 import { Profile } from 'lib/profile'
-import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary } from 'lib/ctrl'
+import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary, ConfigIndex } from 'lib/ctrl'
 import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
-import { ThumbstickMode, ThumbstickDistanceMode, GyroMode } from 'lib/ctrl'
+import { ThumbstickMode, GyroMode } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
 import { HID, isAxis } from 'lib/hid'
 import { PinV0, PinV1 } from 'lib/pin'
@@ -41,16 +41,27 @@ export class SectionComponent {
   pickerTune = 0
   profileOverwriteIndex = 0
   profiles = this.webusb.getProfiles()!
+  globalDeadzone = 0
+  tab = 0
+  canvasCircle!: ElementRef<HTMLCanvasElement>
+  canvasRamp!: ElementRef<HTMLCanvasElement>
+  green = 'hsl(160deg, 100%, 50%)'
+  purple = 'hsl(266deg, 100%, 50%)'
   // Template aliases.
   HID = HID
   SectionIndex = SectionIndex
   GyroMode = GyroMode
   ThumbstickMode = ThumbstickMode
-  ThumbstickDistanceMode = ThumbstickDistanceMode
 
   constructor(
     public webusb: WebusbService,
-  ) {}
+  ) {
+    this.afterConstructor()
+  }
+
+  async afterConstructor() {
+    this.globalDeadzone = await this.fetchGlobalDeadzone()
+  }
 
   sectionIsMeta = () => this.section instanceof CtrlSectionMeta
   sectionIsButton = () => this.section instanceof CtrlButton && !(this.section instanceof CtrlHome)
@@ -66,6 +77,18 @@ export class SectionComponent {
   getSectionAsThumbstick = () => this.section as CtrlThumbstick
   getSectionAsGyro = () => this.section as CtrlGyro
   getSectionAsGyroAxis = () => this.section as CtrlGyroAxis
+
+  @ViewChild('_canvasCircle') set _canvasCircle(canvas: ElementRef<HTMLCanvasElement>) {
+    if (!canvas) return
+    this.canvasCircle = canvas
+    this.plot()
+  }
+
+  @ViewChild('_canvasRamp') set _canvasRamp(canvas: ElementRef<HTMLCanvasElement>) {
+    if (!canvas) return
+    this.canvasRamp = canvas
+    this.plot()
+  }
 
   getSectionTitle() {
     return sectionTitles[this.section.sectionIndex]
@@ -84,6 +107,11 @@ export class SectionComponent {
   getPins() {
     if (this.webusb.selectedDevice!.isAlpakkaV0()) return PinV0
     else return PinV1
+  }
+
+  async fetchGlobalDeadzone() {
+    const preset = await this.webusb.tryGetConfig(ConfigIndex.DEADZONE)
+    return preset.values[preset.presetIndex]
   }
 
   isButtonBlockVisible(group: number) {
@@ -156,6 +184,129 @@ export class SectionComponent {
     a.click()
     URL.revokeObjectURL(a.href)
     a.remove()
+  }
+
+  plot() {
+    this.plotCircle()
+    this.plotRamp()
+  }
+
+  plotCircle = () => {
+    if (!this.canvasCircle) return
+    const ctx = this.canvasCircle.nativeElement.getContext('2d')!
+    const thumbstick = this.getSectionAsThumbstick()
+    const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
+    let overlap = thumbstick.overlap
+    if (overlap == 0) overlap = -2.5  // Force a visual gap when value is zero.
+    const size = this.canvasCircle.nativeElement.width
+    const mid = size / 2
+    const max = size * 0.4
+    let overlapDeg = (50-overlap) / 100 * 90
+    let overlapDegNeg = -overlap / 100 * 90
+    // Helper functions.
+    const deg = (angle: number) => {
+      return angle * (Math.PI / 180)
+    }
+    const drawArc = (stroke: number, angle: number, size: number) => {
+      let half = size / 2
+      ctx.beginPath();
+      ctx.arc(mid, mid, max, angle-half, angle+half)
+      ctx.strokeStyle = this.green
+      ctx.lineWidth = stroke
+      ctx.stroke()
+    }
+    const drawCircle = (radius: number, lineWidth: number) => {
+      ctx.beginPath()
+      ctx.arc(mid, mid, radius, 0, deg(360))
+      ctx.strokeStyle = this.purple
+      ctx.lineWidth = lineWidth
+      ctx.stroke()
+    }
+    // Draw.
+    ctx.clearRect(0, 0, size, size);
+    if (overlap > 0) {
+      drawArc(3, deg(0), deg(45+overlapDeg))
+      drawArc(3, deg(90), deg(45+overlapDeg))
+      drawArc(3, deg(180), deg(45+overlapDeg))
+      drawArc(3, deg(270), deg(45+overlapDeg))
+    }
+    if (overlap > 0) {
+      drawArc(1, deg(45+0), deg(45-overlapDeg))
+      drawArc(1, deg(45+90), deg(45-overlapDeg))
+      drawArc(1, deg(45+180), deg(45-overlapDeg))
+      drawArc(1, deg(45+270), deg(45-overlapDeg))
+    }
+    if (overlap < 0) {
+      drawArc(3, deg(0), deg(90-overlapDegNeg))
+      drawArc(3, deg(90), deg(90-overlapDegNeg))
+      drawArc(3, deg(180), deg(90-overlapDegNeg))
+      drawArc(3, deg(270), deg(90-overlapDegNeg))
+    }
+    drawCircle(deadzone*max/100, 3)
+    drawCircle(thumbstick.outer_threshold*max/100, 3)
+  }
+
+  plotRamp = () => {
+    if (!this.canvasRamp) return
+    const ctx = this.canvasRamp.nativeElement.getContext('2d')!
+    const thumbstick = this.getSectionAsThumbstick()
+    const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
+    const size = this.canvasRamp.nativeElement.width
+    const min = 2
+    const max = size - 2
+    type Point = {x: number, y:number}
+    const pointA = {x: min, y: min}
+    const pointB = {x: min + deadzone/100*max, y: min}
+    const pointC = {x: pointB.x, y: min + thumbstick.antideadzone/100*max}
+    const pointD = {x: thumbstick.saturation/100*max, y: max}
+    const pointE = {x: max, y: max}
+    // Accel curve.
+    const curvePoints = 20
+    const startX = min + (deadzone / 100) * max
+    const startY = min + (thumbstick.antideadzone / 100) * max
+    const endX = (thumbstick.saturation / 100) * max
+    const scaleX = endX - startX
+    const scaleY = max - startY
+    // Helper functions.
+    const drawVert = (x: number) => {
+      ctx.beginPath();
+      ctx.moveTo(x, min);
+      ctx.lineTo(x, max);
+      ctx.strokeStyle = this.purple;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    const drawLines = (points: Point[]) => {
+      ctx.beginPath()
+      ctx.moveTo(points[0].x, points[0].y)
+      for (const point of points.slice(1)) {
+        ctx.lineTo(point.x, point.y)
+      }
+      ctx.strokeStyle = this.green
+      ctx.lineWidth = 3
+      ctx.stroke()
+    }
+    const felixCurve = (x: number, k: number) => {
+      return (x*k+x) / (2*x*k-k+1)
+    }
+    let pointsCtoD: Point[] = []
+    for(let i=0; i<=curvePoints; i++) {
+      const k = thumbstick.accel_curve / 100
+      let x = i / curvePoints
+      let y = felixCurve(x, k)
+      x *= scaleX
+      y *= scaleY
+      x += startX
+      y += startY
+      pointsCtoD.push({x, y})
+    }
+    // Draw.
+    ctx.clearRect(0, 0, size, size);
+    drawVert(pointB.x)
+    drawVert(thumbstick.outer_threshold / 100 * max)
+    drawLines([pointA, pointB, pointC])
+    drawLines(pointsCtoD)  // Curve.
+    drawLines([pointD, pointE])
   }
 
   showDialogKeypicker = (pickerGroup: number) => {

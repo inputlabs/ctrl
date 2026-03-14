@@ -17,6 +17,27 @@
     p
         font-size: 14px
 
+    .tabs
+        width: 100%
+        display: flex
+        background-color: black
+        border-radius: 6px 6px 0 0
+        border-bottom: 3px solid $green
+        font-size: 14px
+        font-weight: bold
+        height: 32px
+        line-height: 32px
+        cursor: pointer
+        user-select: none
+        .tab
+            width: 50%
+            text-align: center
+            color: hsl(0deg, 0%, 50%)
+            border-radius: 6px 6px 0 0
+            &.active
+                color: black
+                background-color: $green
+
     .island
         border-radius: 6px
         overflow: hidden
@@ -120,6 +141,16 @@
     .analogBG
         background-color: $yellow !important
         color: black !important
+
+    .plots
+        display: flex
+        padding-top: 15px
+        .plot
+            background: black
+            border-radius: 10px
+            transform: scaleY(-1)
+            &:first-child
+                margin-right: 10px
 
     #dialog-keypicker
         min-width: 935px
