@@ -305,7 +305,7 @@ export class SectionComponent {
     }
     // Draw.
     ctx.clearRect(0, 0, size, size);
-    drawVert(outer ? pointB.x : pointB.x-4)
+    drawVert(outer ? pointB.x : pointB.x-4)  // Offset so both verticals are visible.
     if (outer) drawVert(thumbstick.outer_threshold / 100 * max)
     drawLines([pointA, pointB, pointC])
     if (outer) drawLines(pointsCtoD)  // Curve.
