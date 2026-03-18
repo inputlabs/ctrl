@@ -198,6 +198,7 @@ export class SectionComponent {
     const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
     let overlap = thumbstick.overlap
     if (overlap == 0) overlap = -2.5  // Force a visual gap when value is zero.
+    const outer = this.canvasCircle.nativeElement.getAttribute('plot_outer') == 'true'
     const size = this.canvasCircle.nativeElement.width
     const mid = size / 2
     const max = size * 0.4
@@ -243,7 +244,7 @@ export class SectionComponent {
       drawArc(3, deg(270), deg(90-overlapDegNeg))
     }
     drawCircle(deadzone*max/100, 3)
-    drawCircle(thumbstick.outer_threshold*max/100, 3)
+    if (outer) drawCircle(thumbstick.outer_threshold*max/100, 3)
   }
 
   plotRamp = () => {
@@ -251,6 +252,7 @@ export class SectionComponent {
     const ctx = this.canvasRamp.nativeElement.getContext('2d')!
     const thumbstick = this.getSectionAsThumbstick()
     const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
+    const outer = this.canvasCircle.nativeElement.getAttribute('plot_outer') == 'true'
     const size = this.canvasRamp.nativeElement.width
     const min = 2
     const max = size - 2
@@ -258,7 +260,8 @@ export class SectionComponent {
     const pointA = {x: min, y: min}
     const pointB = {x: min + deadzone/100*max, y: min}
     const pointC = {x: pointB.x, y: min + thumbstick.antideadzone/100*max}
-    const pointD = {x: thumbstick.saturation/100*max, y: max}
+    let pointD = {x: thumbstick.saturation/100*max, y: max}
+    if (!outer) pointD = {x: pointC.x, y: max}  // Force vertical.
     const pointE = {x: max, y: max}
     // Accel curve.
     const curvePoints = 20
@@ -302,10 +305,11 @@ export class SectionComponent {
     }
     // Draw.
     ctx.clearRect(0, 0, size, size);
-    drawVert(pointB.x)
-    drawVert(thumbstick.outer_threshold / 100 * max)
+    drawVert(outer ? pointB.x : pointB.x-4)
+    if (outer) drawVert(thumbstick.outer_threshold / 100 * max)
     drawLines([pointA, pointB, pointC])
-    drawLines(pointsCtoD)  // Curve.
+    if (outer) drawLines(pointsCtoD)  // Curve.
+    else drawLines([pointC, pointD])
     drawLines([pointD, pointE])
   }
 
