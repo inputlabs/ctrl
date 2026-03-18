@@ -177,7 +177,7 @@ Copyright (C) 2023, Input Labs Oy.
         </select>
     </div>
 
-    <div class='block tabs' *ngIf='thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
+    <div class='block tabs' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
         <div class='tab' [class.active]='tab==0' (click)='tab=0'>Zones</div>
         <div class='tab' [class.active]='tab==1' (click)='tab=1'>Response</div>
     </div>
@@ -232,7 +232,7 @@ Copyright (C) 2023, Input Labs Oy.
             />
         </div>
     </div>
-    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.DIR4 || thumbstick.mode==ThumbstickMode.DIR8'>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.DIR4'>
         <div class='subtitle'>Outer threshold:</div>
         <div class='island'>
             <app-input-number
@@ -294,10 +294,10 @@ Copyright (C) 2023, Input Labs Oy.
                 [value]='thumbstick.sens_mouse'
                 (update)='thumbstick.sens_mouse=$event; save(); plot()'
                 [unit]="'pixel/s'"
-                [min]='25'
-                [max]='5000'
-                [step]='25'
-                [factor]='25'
+                [min]='100'
+                [max]='25000'
+                [step]='100'
+                [factor]='100'
             />
         </div>
     </div>
@@ -332,9 +332,14 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
 
-    <div class='block plots'>
-        <canvas class='plot' height='115' width='115' #_canvasCircle></canvas>
-        <canvas class='plot' height='115' width='115' #_canvasRamp></canvas>
+    <div class='block plots' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
+        <canvas class='plot' height='115' width='115' plot_outer='true' #_canvasCircle></canvas>
+        <canvas class='plot' height='115' width='115' plot_outer='true' #_canvasRamp></canvas>
+    </div>
+
+    <div class='block plots' *ngIf='thumbstick.mode==ThumbstickMode.DIR8'>
+        <canvas class='plot' height='115' width='115' plot_outer='false' #_canvasCircle></canvas>
+        <canvas class='plot' height='115' width='115' plot_outer='false' #_canvasRamp ></canvas>
     </div>
 </div>
 
