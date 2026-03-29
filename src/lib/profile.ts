@@ -7,7 +7,7 @@ import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
 
 const getDefaultThumbstick = () => {
-  return new CtrlThumbstick(0, 0, 0, !!0, 0, 0, false, 0, 0, 80, false, 100, 10, 1, 0)
+  return new CtrlThumbstick(0, 0, 0, !!0, 0, 0, !!0, 0, 0, 0, !!0, 0, 0, 0, 0, 0, 0, !!0, !!0, !!0, 0, 0, 0)
 }
 
 export class Profile {

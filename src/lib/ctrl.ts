@@ -131,6 +131,7 @@ export enum ThumbstickMode {
   DIR4,
   ALPHANUMERIC,
   DIR8,
+  ROTATION,
 }
 
 export enum GyroMode {
@@ -567,6 +568,14 @@ export class CtrlThumbstick extends CtrlSection {
     public sens_scroll: number,
     public sens_xy_ratio: number,
     public accel_curve: number,
+    public rot_center_deadzone: number,
+    public rot_entry_deadzone: number,
+    public rot_anticlockwise: boolean,
+    public rot_relative_mode: boolean,
+    public rot_rws_enabled: boolean,
+    public rot_rws: number,
+    public rot_sens_axis: number,
+    public rot_smoothing: number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
   }
@@ -584,13 +593,21 @@ export class CtrlThumbstick extends CtrlSection {
       data[9] <= 128 ? data[9] : data[9]-256,  // Axis overlap (unsigned to signed).
       Boolean(data[10]),  // Deadzone override.
       data[11], // Antideadzone.
-      data[12] > 0 ? data[12] : 100, // Saturation.
-      data[13] > 0 ? data[13] : 80, // Outer threshold.
+      data[12] || 100, // Saturation.
+      data[13] || 80, // Outer threshold.
       Boolean(data[14]), // Push auto-toggle.
-      data[15] > 0 ? data[15] : 10,  // Sens mouse.
-      data[16] > 0 ? data[16] : 10,  // Sens scroll.
-      data[17] > 0 ? data[17] : 100,  // Sens Y ratio.
+      data[15] || 20,  // Sens mouse.
+      data[16] || 20,  // Sens scroll.
+      data[17] || 100,  // Sens Y ratio.
       data[18] <= 128 ? data[18] : data[18]-256,  // Accel (unsigned to signed).
+      data[19] || 50,  // Rotation center deadzone.
+      data[20],  // Rotation entry deadzone.
+      Boolean(data[21]),  // Rotation anti-clockwise.
+      Boolean(data[22]),  // Rotation absolute.
+      Boolean(data[23]),  // Rotation RWS enabled.
+      data[24] || 80,  // Rotation RWS.
+      data[25] || 20,  // Rotation sens axis.
+      data[26] || 10,  // Rotation smoothing.
     )
   }
 
@@ -611,6 +628,14 @@ export class CtrlThumbstick extends CtrlSection {
       this.sens_scroll,
       this.sens_xy_ratio,
       this.accel_curve,
+      this.rot_center_deadzone,
+      this.rot_entry_deadzone,
+      Number(this.rot_anticlockwise),
+      Number(this.rot_relative_mode),
+      Number(this.rot_rws_enabled),
+      this.rot_rws,
+      this.rot_sens_axis,
+      this.rot_smoothing,
     ]
   }
 }

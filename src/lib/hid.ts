@@ -264,7 +264,7 @@ export enum HID {
 }
 
 export function isAxis(action: HID) {
-  if (action >= HID.MOUSE_X && action <= HID.MOUSE_Y_NEG) return true
+  if (action >= HID.MOUSE_SCROLL_UP && action <= HID.MOUSE_Y_NEG) return true
   if (action >= HID.GAMEPAD_AXIS_LX && action <= HID.GAMEPAD_AXIS_RZ_NEG) return true
   return false
 }
