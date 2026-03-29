@@ -28,6 +28,8 @@ export class InputNumberComponent {
   @Input() step: number = 1
   @Input() decimals: number = 0
   @Input() factor: number = 1
+  @Input() disabled: boolean = false
+  @Input() disabledMessage: string = ''
   clickTime: number = 0
   timeout: any
   interval: any

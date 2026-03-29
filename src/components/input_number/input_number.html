@@ -3,7 +3,7 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2023, Input Labs Oy.
 -->
 
-<div class='number'>
+<div class='number' *ngIf='!disabled'>
     <span class='value'>{{(value * factor).toFixed(decimals)}}</span>
     <span class='unit'>{{unit}}</span>
     <span
@@ -20,4 +20,8 @@ Copyright (C) 2023, Input Labs Oy.
         >
         <span class='material'>add</span>
     </span>
+</div>
+
+<div class='number disabled' *ngIf='disabled'>
+    <span class='value'>{{disabledMessage}}</span>
 </div>
