@@ -176,6 +176,7 @@ Copyright (C) 2023, Input Labs Oy.
                 <option [value]='ThumbstickMode.OFF'>Off</option>
                 <option [value]='ThumbstickMode.DIR4'>4 directions</option>
                 <option [value]='ThumbstickMode.DIR8'>8 directions (only digital)</option>
+                <option [value]='ThumbstickMode.ROTATION'>Rotation</option>
                 <option [value]='ThumbstickMode.ALPHANUMERIC'>Alphanumeric</option>
             </select>
         </div>
@@ -306,7 +307,7 @@ Copyright (C) 2023, Input Labs Oy.
             <app-input-number
                 [value]='thumbstick.sens_mouse'
                 (update)='thumbstick.sens_mouse=$event; save(); plot()'
-                [unit]="'pixel/s'"
+                [unit]="'pixels / second'"
                 [min]='100'
                 [max]='25000'
                 [step]='100'
@@ -320,7 +321,7 @@ Copyright (C) 2023, Input Labs Oy.
             <app-input-number
                 [value]='thumbstick.sens_scroll'
                 (update)='thumbstick.sens_scroll=$event; save(); plot()'
-                [unit]="'step/s'"
+                [unit]="'steps / second'"
                 [min]='1'
                 [max]='100'
                 [step]='1'
@@ -342,6 +343,130 @@ Copyright (C) 2023, Input Labs Oy.
                     {{thumbstick.distance_mode ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
             </div>
+        </div>
+    </div>
+
+    <!-- ROTATION MODE -->
+    <div class='block tabs' *ngIf='thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='tab' [class.active]='tab==0' (click)='tab=0'>Zones</div>
+        <div class='tab' [class.active]='tab==1' (click)='tab=1'>Response</div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Center deadzone:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.rot_center_deadzone'
+                (update)='thumbstick.rot_center_deadzone=$event; save()'
+                [unit]="'%'"
+                [min]='1'
+                [max]='200'
+                [step]='1'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Entry deadzone:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.rot_entry_deadzone'
+                (update)='thumbstick.rot_entry_deadzone=$event; save()'
+                [unit]="'º'"
+                [min]='0'
+                [max]='45'
+                [step]='1'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Direction:</div>
+        <div class='select'>
+            <select
+                [(ngModel)]='thumbstick.rot_anticlockwise'
+                (ngModelChange)='save()'
+                >
+                <option [ngValue]='false'>Clockwise</option>
+                <option [ngValue]='true'>Anti-clockwise</option>
+            </select>
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Start from:</div>
+        <div class='select'>
+            <select
+                [(ngModel)]='thumbstick.rot_relative_mode'
+                (ngModelChange)='save()'
+                >
+                <option [ngValue]='false'>Fixed angle</option>
+                <option [ngValue]='true'>Any angle</option>
+            </select>
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Sensitivity as mouse:</div>
+        <div class='island'>
+            <div class='iconaction'>
+                <span class='name'>Based on gyro RWS</span>
+                <span class='material' (click)='thumbstick.rot_rws_enabled=!thumbstick.rot_rws_enabled; save()'>
+                    {{thumbstick.rot_rws_enabled ? 'check_box' : 'check_box_outline_blank'}}
+                </span>
+            </div>
+            <app-input-number *ngIf='!thumbstick.rot_rws_enabled'
+                [value]='thumbstick.sens_mouse'
+                (update)='thumbstick.sens_mouse=$event; save()'
+                [unit]="'pixels / 360º'"
+                [min]='100'
+                [max]='25000'
+                [step]='100'
+                [factor]='100'
+            />
+            <app-input-number *ngIf='thumbstick.rot_rws_enabled'
+                [value]='thumbstick.rot_rws'
+                (update)='thumbstick.rot_rws=$event; save()'
+                [unit]="'RWS'"
+                [min]='0.05'
+                [max]='16'
+                [step]='0.05'
+                [factor]='0.05'
+                [decimals]='2'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Sensitivity as scrollwheel:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.sens_scroll'
+                (update)='thumbstick.sens_scroll=$event; save()'
+                [unit]="'steps / 360º'"
+                [min]='1'
+                [max]='100'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Sensitivity as axis:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.rot_sens_axis'
+                (update)='thumbstick.rot_sens_axis=$event; save()'
+                [unit]="'% / 360º'"
+                [min]='5'
+                [max]='1000'
+                [step]='5'
+                [factor]='5'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Smoothing:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.rot_smoothing'
+                (update)='thumbstick.rot_smoothing=$event; save()'
+                [unit]="''"
+                [min]='1'
+                [max]='50'
+            />
         </div>
     </div>
 </div>

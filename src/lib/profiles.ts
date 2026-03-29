@@ -153,7 +153,7 @@ export class Profiles {
       const section = Ctrl.decode(new Uint8Array(sectionData)) as CtrlSection
       sections.push(section)
     }
-    sections = this.upgradeFrom097to100(sections)
+    sections = this.upgradeFrom097(sections)
     for(let section of sections) {
       console.log('Section from blob', section)
       await this.device.trySetSection(profileIndex, section)
@@ -161,11 +161,11 @@ export class Profiles {
     this.fetchProfile(profileIndex, true)
   }
 
-  upgradeFrom097to100(sections: CtrlSection[]): CtrlSection[] {
+  upgradeFrom097(sections: CtrlSection[]): CtrlSection[] {
     // Bump profile version.
     const meta = sections.find(s => s instanceof CtrlSectionMeta) as CtrlSectionMeta
     meta.versionMajor = 1
-    meta.versionMinor = 0
+    meta.versionMinor = 1
     meta.versionPatch = 0
     // Inject default right stick settings if not defined.
     // (Default made to resemble digital 8-dir as in old controllers).
@@ -191,6 +191,14 @@ export class Profiles {
         10,  // Sens scroll.
         100,  // Sens Y ratio.
         0,  // Accel.
+        0,  // Rotation center deadzone.
+        0,  // Rotation entry deadzone.
+        false,  // Rotation anti-clockwise.
+        false,  // Rotation absolute mode
+        false,  // Rotation RWS enabled.
+        0,  // Rotation RWS.
+        0,  // Rotation sens axis.
+        0,  // Rotation smoothing.
       )
       sections.push(rStickSection)
     }

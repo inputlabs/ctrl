@@ -115,10 +115,18 @@ export class ProfileComponent {
       SectionIndex.RSTICK_UP,
       SectionIndex.RSTICK_DOWN
     ]
-    if (this.getProfile().settingsLStick.mode == ThumbstickMode.DIR4) {
+    const LThumbstickModeAnalog = (
+      this.getProfile().settingsLStick.mode == ThumbstickMode.DIR4 ||
+      this.getProfile().settingsLStick.mode == ThumbstickMode.ROTATION
+    )
+    const RThumbstickModeAnalog = (
+      this.getProfile().settingsRStick.mode == ThumbstickMode.DIR4 ||
+      this.getProfile().settingsRStick.mode == ThumbstickMode.ROTATION
+    )
+    if (LThumbstickModeAnalog) {
       if (dirLStick.includes(section.sectionIndex)) return true
     }
-    if (this.getProfile().settingsRStick.mode == ThumbstickMode.DIR4) {
+    if (RThumbstickModeAnalog) {
       if (dirRStick.includes(section.sectionIndex)) return true
     }
     if (sectionIsGyroAxis(section.sectionIndex)) return true
@@ -150,6 +158,13 @@ export class ProfileComponent {
     const rotaryUp = this.getMapping(profile.rotaryUp)
     const rotaryDown = this.getMapping(profile.rotaryDown)
     const home = this.getMapping(profile.home)
+    const modeHas4DirOrMore = (mode: ThumbstickMode) => {
+      return (
+        mode==ThumbstickMode.DIR4 ||
+        mode==ThumbstickMode.DIR8 ||
+        mode==ThumbstickMode.ROTATION
+      )
+    }
     const buttons = [
       this.getMapping(profile.buttonA),
       this.getMapping(profile.buttonB),
@@ -170,7 +185,7 @@ export class ProfileComponent {
       this.getMapping(profile.buttonR2),
       this.getMapping(profile.buttonR4),
     ]
-    if (settingsLStick.mode==ThumbstickMode.DIR4 || settingsLStick.mode==ThumbstickMode.DIR8) {
+    if (modeHas4DirOrMore(settingsLStick.mode)) {
       buttons.push(...[
         this.getMapping(profile.buttonLStickLeft),
         this.getMapping(profile.buttonLStickRight),
@@ -189,7 +204,7 @@ export class ProfileComponent {
         this.getMapping(profile.buttonLStickDR),
       ])
     }
-    if (isV0 || settingsRStick.mode==ThumbstickMode.DIR4 || settingsRStick.mode==ThumbstickMode.DIR8) {
+    if (isV0 || modeHas4DirOrMore(settingsRStick.mode)) {
       buttons.push(...[
         this.getMapping(profile.buttonRStickLeft),
         this.getMapping(profile.buttonRStickRight),
