@@ -86,4 +86,25 @@ export class Profile {
     return Object.values(this)
       .filter((value) => value.sectionIndex!=SectionIndex.HOME)
   }
+
+  thumbstickHasAxis(thumbstick: CtrlThumbstick, isAxisFunc: (x:HID)=>boolean) {
+    const isLeft = thumbstick === this.settingsLStick
+    const isRight = thumbstick === this.settingsRStick
+    let buttons: CtrlButton[] = []
+    if (isLeft) {
+      buttons = [this.buttonLStickUp, this.buttonLStickDown, this.buttonLStickLeft, this.buttonLStickRight]
+    }
+    if (isRight) {
+      buttons = [this.buttonRStickUp, this.buttonRStickDown, this.buttonRStickLeft, this.buttonRStickRight]
+    }
+    for (const button of buttons) {
+      for (const actionSet of button.actions) {
+        const actions = actionSet.asArray()
+        for (const action of actions) {
+          if (isAxisFunc(action)) return true;
+        }
+      }
+    }
+    return false
+  }
 }

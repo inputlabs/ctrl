@@ -13,7 +13,7 @@ import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
 import { ThumbstickMode, GyroMode } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
-import { HID, isAxis } from 'lib/hid'
+import { HID, isAxis, isMouseAxis, isScrollAxis, isGamepadAxis } from 'lib/hid'
 import { PinV0, PinV1 } from 'lib/pin'
 import { delay } from 'lib/delay'
 
@@ -184,6 +184,21 @@ export class SectionComponent {
     a.click()
     URL.revokeObjectURL(a.href)
     a.remove()
+  }
+
+  thumbstickHasMouseAxis(thumbstick: CtrlThumbstick) {
+    const profile = this.profiles.profiles[this.profileIndex]
+    return profile.thumbstickHasAxis(thumbstick, isMouseAxis)
+  }
+
+  thumbstickHasScrollAxis(thumbstick: CtrlThumbstick) {
+    const profile = this.profiles.profiles[this.profileIndex]
+    return profile.thumbstickHasAxis(thumbstick, isScrollAxis)
+  }
+
+  thumbstickHasGamepadAxis(thumbstick: CtrlThumbstick) {
+    const profile = this.profiles.profiles[this.profileIndex]
+    return profile.thumbstickHasAxis(thumbstick, isGamepadAxis)
   }
 
   plot() {
