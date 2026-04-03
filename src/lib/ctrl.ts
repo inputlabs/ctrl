@@ -576,6 +576,7 @@ export class CtrlThumbstick extends CtrlSection {
     public rot_rws: number,
     public rot_sens_axis: number,
     public rot_smoothing: number,
+    public rot_flick_time: number,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
   }
@@ -608,6 +609,7 @@ export class CtrlThumbstick extends CtrlSection {
       data[24] || 80,  // Rotation RWS.
       data[25] || 20,  // Rotation sens axis.
       data[26] || 10,  // Rotation smoothing.
+      data[27],  // Rotation flick time.
     )
   }
 
@@ -635,7 +637,8 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.rot_rws_enabled),
       this.rot_rws,
       this.rot_sens_axis,
-      this.rot_smoothing,
+      this.rot_smoothing || 1,
+      this.rot_flick_time,
     ]
   }
 }

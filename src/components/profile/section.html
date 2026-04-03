@@ -480,13 +480,27 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Flick time:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='thumbstick.rot_flick_time'
+                (update)='thumbstick.rot_flick_time=$event; save()'
+                [unit]="'ms'"
+                [min]='0'
+                [max]='2000'
+                [step]='10'
+                [factor]='10'
+            />
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
         <div class='subtitle'>Smoothing:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.rot_smoothing'
                 (update)='thumbstick.rot_smoothing=$event; save()'
                 [unit]="''"
-                [min]='1'
+                [min]='0'
                 [max]='50'
             />
         </div>
