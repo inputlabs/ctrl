@@ -375,7 +375,11 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
         <div class='subtitle'>Entry deadzone:</div>
         <div class='island'>
-            <app-input-number
+            <app-input-number *ngIf='thumbstick.rot_relative_mode'
+                [disabled]='true'
+                [disabledMessage]="'N/A'"
+            />
+            <app-input-number *ngIf='!thumbstick.rot_relative_mode'
                 [value]='thumbstick.rot_entry_deadzone'
                 (update)='thumbstick.rot_entry_deadzone=$event; save()'
                 [unit]="'º'"
@@ -482,7 +486,11 @@ Copyright (C) 2023, Input Labs Oy.
     <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
         <div class='subtitle'>Flick time:</div>
         <div class='island'>
-            <app-input-number
+            <app-input-number *ngIf='!(thumbstickHasMouseAxis(thumbstick) && !thumbstick.rot_relative_mode)'
+                [disabled]='true'
+                [disabledMessage]="'N/A'"
+            />
+            <app-input-number *ngIf='thumbstickHasMouseAxis(thumbstick) && !thumbstick.rot_relative_mode'
                 [value]='thumbstick.rot_flick_time'
                 (update)='thumbstick.rot_flick_time=$event; save()'
                 [unit]="'ms'"
