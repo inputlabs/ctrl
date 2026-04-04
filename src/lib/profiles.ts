@@ -199,6 +199,7 @@ export class Profiles {
         0,  // Rotation RWS.
         0,  // Rotation sens axis.
         0,  // Rotation smoothing.
+        0,  // Rotation flick time.
       )
       sections.push(rStickSection)
     }
