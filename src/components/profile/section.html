@@ -289,15 +289,14 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.DIR4'>
-        <div class='subtitle'>Sensitivity vertical ratio:</div>
+        <div class='subtitle'>Vertical sensitivity ratio:</div>
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.sens_xy_ratio'
                 (update)='thumbstick.sens_xy_ratio=$event; save(); plot()'
                 [unit]="'%'"
-                [min]='0'
-                [max]='200'
-                [step]='1'
+                [min]='1'
+                [max]='250'
             />
         </div>
     </div>
