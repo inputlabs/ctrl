@@ -608,7 +608,7 @@ export class CtrlThumbstick extends CtrlSection {
       Boolean(data[23]),  // Rotation RWS enabled.
       data[24] || 80,  // Rotation RWS.
       data[25] || 20,  // Rotation sens axis.
-      data[26] || 10,  // Rotation smoothing.
+      data[26] || 11,  // Rotation smoothing (10 + 1 offset)
       data[27],  // Rotation flick time.
     )
   }
@@ -637,7 +637,7 @@ export class CtrlThumbstick extends CtrlSection {
       Number(this.rot_rws_enabled),
       this.rot_rws,
       this.rot_sens_axis,
-      this.rot_smoothing || 1,
+      this.rot_smoothing,
       this.rot_flick_time,
     ]
   }

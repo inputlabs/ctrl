@@ -28,6 +28,7 @@ export class InputNumberComponent {
   @Input() step: number = 1
   @Input() decimals: number = 0
   @Input() factor: number = 1
+  @Input() offset: number = 0
   @Input() disabled: boolean = false
   @Input() disabledMessage: string = ''
   clickTime: number = 0
@@ -36,8 +37,8 @@ export class InputNumberComponent {
   Direction = Direction
 
   minmax(value: number) {
-    const min = this.min / this.factor
-    const max = this.max / this.factor
+    const min = (this.min / this.factor) - this.offset
+    const max = (this.max / this.factor) - this.offset
     return Math.min(Math.max(value, min), max)
   }
 
