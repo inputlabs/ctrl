@@ -79,7 +79,7 @@ Copyright (C) 2023, Input Labs Oy.
     <h2>{{getSectionTitle()}}</h2>
 
     <!-- BUTTON FILTERS -->
-    <div class='block'>
+    <div class='block' *ngIf='buttonsCanHaveModifiers(button)'>
         <div class='island'>
             <div
                 class='iconaction'
@@ -587,6 +587,20 @@ Copyright (C) 2023, Input Labs Oy.
 <!-- GYRO AXIS -->
 <div *ngIf='sectionIsGyroAxis() && getSectionAsGyroAxis() as gyroAxis'>
     <h2>{{getSectionTitle()}}</h2>
+
+    <div class='block' *ngIf="getGyroMode() != 4">
+        <div class='subtitle'>Sensitivity relative to DPI:</div>
+        <div class='island'>
+            <app-input-number
+                [value]='gyroAxis.sens'
+                (update)='gyroAxis.sens=$event; save()'
+                [unit]="'%'"
+                [min]='1'
+                [max]='200'
+            />
+        </div>
+    </div>
+
     <div class='block'>
         <div class='subtitle'>On axis rotation (negative):</div>
         <app-action-selector
