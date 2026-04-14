@@ -412,6 +412,22 @@ Copyright (C) 2023, Input Labs Oy.
             </select>
         </div>
     </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>When back to center:</div>
+        <div class='select'>
+            <app-input-number *ngIf='!thumbstickHasGamepadAxis(thumbstick)'
+                [disabled]='true'
+                [disabledMessage]="'N/A'"
+            />
+            <select *ngIf='thumbstickHasGamepadAxis(thumbstick)'
+                [(ngModel)]='thumbstick.rot_keep_value'
+                (ngModelChange)='save()'
+                >
+                <option [ngValue]='false'>Forget value</option>
+                <option [ngValue]='true'>Keep value</option>
+            </select>
+        </div>
+    </div>
     <div class='block' *ngIf='tab==1 && thumbstick.mode==ThumbstickMode.ROTATION'>
         <div class='subtitle'>Sensitivity as mouse:</div>
         <div class='island' *ngIf='!thumbstickHasMouseAxis(thumbstick)'>
