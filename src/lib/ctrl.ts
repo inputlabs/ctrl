@@ -577,6 +577,7 @@ export class CtrlThumbstick extends CtrlSection {
     public rot_sens_axis: number,
     public rot_smoothing: number,
     public rot_flick_time: number,
+    public rot_keep_value: boolean,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
   }
@@ -610,6 +611,7 @@ export class CtrlThumbstick extends CtrlSection {
       data[25] || 20,  // Rotation sens axis.
       data[26] || 11,  // Rotation smoothing (10 + 1 offset)
       data[27],  // Rotation flick time.
+      Boolean(data[28]),  // Rotation keep value.
     )
   }
 
@@ -639,6 +641,7 @@ export class CtrlThumbstick extends CtrlSection {
       this.rot_sens_axis,
       this.rot_smoothing,
       this.rot_flick_time,
+      Number(this.rot_keep_value),
     ]
   }
 }
@@ -680,7 +683,8 @@ export class CtrlGyroAxis extends CtrlSection {
     public actions: ActionGroup[] = Array(2).fill(ActionGroup.empty(4)),
     public minAngle = 0,
     public maxAngle = 0,
-    public labels: string[]
+    public labels: string[],
+    public sens = 0,
   ) {
     super(1, DeviceId.ALPAKKA, MessageType.SECTION_SHARE)
   }
@@ -698,12 +702,13 @@ export class CtrlGyroAxis extends CtrlSection {
         new ActionGroup(data.slice(6, 10)),   // Action negative.
         new ActionGroup(data.slice(10, 14)),  // Action positive.
       ],
-      data[14] <= 128 ? data[14] : data[14]-256,  // Min angle (nnsigned to signed).
-      data[15] <= 128 ? data[15] : data[15]-256,  // Max angle (nnsigned to signed).
+      data[14] <= 128 ? data[14] : data[14]-256,  // Min angle (unsigned to signed).
+      data[15] <= 128 ? data[15] : data[15]-256,  // Max angle (unsigned to signed).
       [
         string_from_slice(buffer, 16, 30),  // Label negative.
-        string_from_slice(buffer, 30, 48),  // Label positive.
-      ]
+        string_from_slice(buffer, 30, 44),  // Label positive.
+      ],
+      data[44] || 100,  // Sens.
     )
   }
 
@@ -717,6 +722,7 @@ export class CtrlGyroAxis extends CtrlSection {
       this.maxAngle,
       ...string_to_buffer(14, this.labels[0]),
       ...string_to_buffer(14, this.labels[1]),
+      this.sens,
     ]
   }
 }

@@ -201,6 +201,24 @@ export class SectionComponent {
     return profile.thumbstickHasAxis(thumbstick, isGamepadAxis)
   }
 
+  buttonsCanHaveModifiers(button: CtrlButton) {
+    const sectionName = SectionIndex[button.sectionIndex]
+    const is_cardinal = (
+      sectionName.endsWith('LEFT') ||
+      sectionName.endsWith('RIGHT') ||
+      sectionName.endsWith('UP') ||
+      sectionName.endsWith('DOWN')
+    )
+    if (is_cardinal) {
+      const is_stick_left = sectionName.startsWith('LSTICK_')
+      const is_stick_right = sectionName.startsWith('RSTICK_')
+      const profile = this.profiles.profiles[this.profileIndex]
+      if (is_stick_left  && profile.settingsLStick.mode == ThumbstickMode.ROTATION) return false;
+      if (is_stick_right && profile.settingsRStick.mode == ThumbstickMode.ROTATION) return false;
+    }
+    return true;
+  }
+
   plot() {
     this.plotCircle()
     this.plotRamp()

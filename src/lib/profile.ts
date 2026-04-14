@@ -6,8 +6,10 @@ import { SectionIndex, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { ActionGroup } from 'lib/actions'
 import { HID } from 'lib/hid'
 
-const getDefaultThumbstick = () => {
-  return new CtrlThumbstick(0, 0, 0, !!0, 0, 0, !!0, 0, 0, 0, !!0, 0, 0, 0, 0, 0, 0, !!0, !!0, !!0, 0, 0, 0, 0)
+const getEmptyThumbstick = () => {
+  return new CtrlThumbstick(
+    0, 0, 0, !!0, 0, 0, !!0, 0, 0, 0, !!0, 0, 0, 0, 0, 0, 0, !!0, !!0, !!0, 0, 0, 0, 0, !!0
+  )
 }
 
 export class Profile {
@@ -34,7 +36,7 @@ export class Profile {
     public buttonR2: CtrlButton = new CtrlButton(0, 0, 0),
     public buttonR4: CtrlButton = new CtrlButton(0, 0, 0),
     // Left stick.
-    public settingsLStick: CtrlThumbstick = getDefaultThumbstick(),
+    public settingsLStick: CtrlThumbstick = getEmptyThumbstick(),
     public buttonLStickLeft: CtrlButton = new CtrlButton(0, 0, 0),
     public buttonLStickRight: CtrlButton = new CtrlButton(0, 0, 0),
     public buttonLStickUp: CtrlButton = new CtrlButton(0, 0, 0),
@@ -47,7 +49,7 @@ export class Profile {
     public buttonLStickInner: CtrlButton = new CtrlButton(0, 0, 0),
     public buttonLStickOuter: CtrlButton = new CtrlButton(0, 0, 0),
     // Right stick (stick or dhat).
-    public settingsRStick: CtrlThumbstick = getDefaultThumbstick(),
+    public settingsRStick: CtrlThumbstick = getEmptyThumbstick(),
     public buttonRStickLeft: CtrlButton = new CtrlButton(0, 0, 0),
     public buttonRStickRight: CtrlButton = new CtrlButton(0, 0, 0),
     public buttonRStickUp: CtrlButton = new CtrlButton(0, 0, 0),
