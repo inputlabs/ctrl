@@ -389,31 +389,19 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
     </div>
     <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
-        <div class='subtitle'>Direction:</div>
-        <div class='select'>
-            <select
-                [(ngModel)]='thumbstick.rot_anticlockwise'
-                (ngModelChange)='save()'
-                >
-                <option [ngValue]='false'>Clockwise</option>
-                <option [ngValue]='true'>Anti-clockwise</option>
-            </select>
-        </div>
-    </div>
-    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
-        <div class='subtitle'>Start from:</div>
+        <div class='subtitle'>Entry point:</div>
         <div class='select'>
             <select
                 [(ngModel)]='thumbstick.rot_relative_mode'
                 (ngModelChange)='save()'
                 >
-                <option [ngValue]='false'>Fixed angle</option>
+                <option [ngValue]='false'>Use angle from action</option>
                 <option [ngValue]='true'>Any angle</option>
             </select>
         </div>
     </div>
     <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
-        <div class='subtitle'>When back to center:</div>
+        <div class='subtitle'>Value while in center:</div>
         <div class='select'>
             <app-input-number *ngIf='!thumbstickHasGamepadAxis(thumbstick)'
                 [disabled]='true'
@@ -423,8 +411,20 @@ Copyright (C) 2023, Input Labs Oy.
                 [(ngModel)]='thumbstick.rot_keep_value'
                 (ngModelChange)='save()'
                 >
-                <option [ngValue]='false'>Forget value</option>
-                <option [ngValue]='true'>Keep value</option>
+                <option [ngValue]='false'>Zero</option>
+                <option [ngValue]='true'>Keep last value</option>
+            </select>
+        </div>
+    </div>
+    <div class='block' *ngIf='tab==0 && thumbstick.mode==ThumbstickMode.ROTATION'>
+        <div class='subtitle'>Direction:</div>
+        <div class='select'>
+            <select
+                [(ngModel)]='thumbstick.rot_anticlockwise'
+                (ngModelChange)='save()'
+                >
+                <option [ngValue]='false'>Clockwise</option>
+                <option [ngValue]='true'>Anti-clockwise</option>
             </select>
         </div>
     </div>
