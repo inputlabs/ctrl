@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
-import { Component } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router'
 import { WebusbService } from 'services/webusb'
@@ -33,6 +33,7 @@ export class ProfileComponent {
   // Template aliases.
   SectionIndex = SectionIndex
   getLedPattern = getProfileLed
+  @ViewChild('section') section!: SectionComponent;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -238,6 +239,10 @@ export class ProfileComponent {
   // focus is "stolen" by sidebar form inputs.
   trackById(index: number, item: any): any {
     return item.id
+  }
+
+  showDialogPicker() {
+    this.section?.showDialogKeypicker(0)
   }
 }
 

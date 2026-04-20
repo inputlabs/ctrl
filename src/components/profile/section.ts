@@ -372,6 +372,17 @@ export class SectionComponent {
     return true
   }
 
+  hideDialogKeypickerOutbound(event: MouseEvent, dialog: HTMLDialogElement) {
+    const rect = dialog.getBoundingClientRect()
+    const isInsideDialog = (
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom
+    )
+    if (!isInsideDialog) dialog.close();
+  }
+
   private _pickToggle(actions: ActionGroup, key: HID) {
     if(actions.has(key)) {
       this._pickRemove(actions, key)
