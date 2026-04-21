@@ -12,8 +12,14 @@
     flex-direction: row
     flex-wrap: wrap
     align-items: center
+    align-content: center
+    justify-content: flex-start !important
+    row-gap: 4px
+    overflow: visible
     height: 100%
     $size: 2.2vmin
+    &.centered
+        justify-content: center !important
 
     .group
         display: flex

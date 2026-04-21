@@ -134,7 +134,7 @@ export class ButtonComponent {
     if (label == 'PROC_CALIBRATE') return 'Calibrate'
     if (label == 'PROC_PAIR') return 'Pair'
     if (label == 'PROC_TUNE_OS') return 'OS'
-    if (label == 'PROC_TUNE_MOUSE_SENS') return 'Mouse'
+    if (label == 'PROC_TUNE_MOUSE_SENS') return 'DPI'
     if (label == 'PROC_TUNE_TOUCH_SENS') return 'Touch'
     if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
     if (label == 'PROC_TUNE_UP') return 'Tune up'

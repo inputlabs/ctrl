@@ -12,64 +12,62 @@ Copyright (C) 2023, Input Labs Oy.
 </div>
 
 <div class="template" *ngIf='webusb.isConnectedRaw() && webusb.isController()'>
-    <div class="crop_h">
-        <div class='crop_v'>
-            <!-- BUTTONS -->
-            <div
-                *ngFor='let mapping of getMappings(); trackBy: trackById'
-                class='section'
-                [ngClass]='mapping.cls'
-                [ngStyle]='mapping.style'
-                (click)='mapping.click()'
-                (dblclick)='showDialogPicker()'
-                >
-                <app-action-preview
-                    [ngClass]='getAdditionalClass(mapping.section.sectionIndex)'
-                    [section]='mapping.section'
-                    [analog]='mapping.analog'
-                />
-            </div>
+    <div class='fixed_aspect'>
+        <!-- BUTTONS -->
+        <div
+            *ngFor='let mapping of getMappings(); trackBy: trackById'
+            class='section'
+            [ngClass]='mapping.cls'
+            [ngStyle]='mapping.style'
+            (click)='mapping.click()'
+            (dblclick)='showDialogPicker()'
+            >
+            <app-action-preview
+                [ngClass]='getAdditionalClass(mapping.section.sectionIndex)'
+                [section]='mapping.section'
+                [analog]='mapping.analog'
+            />
+        </div>
 
-            <!-- LED -->
-            <div
-                class='section thin pale'
-                style='grid-area: 6 / 8 / 8 / 11'
-                [ngClass]="selected.sectionIndex == SectionIndex.META ? 'selected' : ''"
-                (click)='setSelectedMeta()'
-                >
-                <app-led [dotsize]='12' [aperture]='5' [on]='getLedPattern(profileIndex)'/>
-            </div>
+        <!-- LED -->
+        <div
+            class='section thin pale'
+            style='grid-area: 6 / 8 / 8 / 11'
+            [ngClass]="selected.sectionIndex == SectionIndex.META ? 'selected' : ''"
+            (click)='setSelectedMeta()'
+            >
+            <app-led [dotsize]='12' [aperture]='5' [on]='getLedPattern(profileIndex)'/>
+        </div>
 
-            <!-- LEFT STICK SETTINGS -->
-            <div
-                class='section settings'
-                style='grid-area: 13 / 6'
-                [ngClass]="selected.sectionIndex == SectionIndex.LSTICK_SETTINGS ? 'selected' : ''"
-                (click)='setSelected(getProfile().settingsLStick)'
-                >
-                &nbsp;
-            </div>
+        <!-- LEFT STICK SETTINGS -->
+        <div
+            class='section settings'
+            style='grid-area: 13 / 6'
+            [ngClass]="selected.sectionIndex == SectionIndex.LSTICK_SETTINGS ? 'selected' : ''"
+            (click)='setSelected(getProfile().settingsLStick)'
+            >
+            &nbsp;
+        </div>
 
-            <!-- RIGHT STICK SETTINGS -->
-            <div
-                *ngIf='this.device?.isAlpakkaV1()'
-                class='section settings'
-                style='grid-area: 13 / 18'
-                [ngClass]="selected.sectionIndex == SectionIndex.RSTICK_SETTINGS ? 'selected' : ''"
-                (click)='setSelected(getProfile().settingsRStick)'
-                >
-                &nbsp;
-            </div>
+        <!-- RIGHT STICK SETTINGS -->
+        <div
+            *ngIf='this.device?.isAlpakkaV1()'
+            class='section settings'
+            style='grid-area: 13 / 18'
+            [ngClass]="selected.sectionIndex == SectionIndex.RSTICK_SETTINGS ? 'selected' : ''"
+            (click)='setSelected(getProfile().settingsRStick)'
+            >
+            &nbsp;
+        </div>
 
-            <!-- GYRO -->
-            <div
-                class='section settings'
-                style='grid-area: 17 / 14 / 19 / 14'
-                [ngClass]="selected.sectionIndex == SectionIndex.GYRO_SETTINGS ? 'selected' : ''"
-                (click)='setSelectedGyro()'
-                >
-                &nbsp;
-            </div>
+        <!-- GYRO -->
+        <div
+            class='section settings'
+            style='grid-area: 17 / 14 / 19 / 14'
+            [ngClass]="selected.sectionIndex == SectionIndex.GYRO_SETTINGS ? 'selected' : ''"
+            (click)='setSelectedGyro()'
+            >
+            &nbsp;
         </div>
     </div>
 </div>

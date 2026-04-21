@@ -7,10 +7,16 @@
     user-select: none
     flex-grow: 1
     display: flex
+    height: 100%
+    max-height: 100%
     .template
         flex-grow: 1
         display: flex
         flex-shrink: 1
+        container-type: size
+        width: 100%
+        height: 100%
+        // align-items: center
         justify-content: center
         padding: 10px
         padding-top: 20px
@@ -26,26 +32,27 @@
         .thin
             padding-left: 0% !important
 
-        .crop_h
-            display: flex
-            flex-direction: column
+        .fixed_aspect
+            height: min(100%, 100cqw * (2600 / 3160))
+            width:  min(100%, 100cqh * (3160 / 2600))
             aspect-ratio: 3160 / 2600
-            max-width: 99% !important
-            .crop_v
-                aspect-ratio: 3160 / 2600
-                background-image: url("/assets/profile_template.png")
-                background-position: top
-                background-repeat: no-repeat
-                background-size: contain
-                display: grid
-                grid-template-rows: 4fr 4fr 2fr 4fr 2fr 2fr 2fr 2fr 4fr 7fr 4fr 3fr 4fr 4fr 4fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr
-                grid-template-columns: 12fr 12fr 3fr 3fr 3fr 3fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr 3fr 3fr 3fr 3fr 12fr 9fr 3fr
-                &>div
-                    padding-left: 30%
+            object-fit: contain
+            background-image: url("/assets/profile_template.png")
+            background-position: top
+            background-repeat: no-repeat
+            background-size: contain
+            display: grid
+            grid-template-rows: 4fr 4fr 2fr 4fr 2fr 2fr 2fr 2fr 4fr 7fr 4fr 3fr 4fr 4fr 4fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr
+            grid-template-columns: 12fr 12fr 3fr 3fr 3fr 3fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr 3fr 3fr 3fr 3fr 12fr 9fr 3fr
+            &>div
+                padding-left: 30%
 
     .panel
         width: 300px
         min-width: 300px
+        height: 100%
+        max-height: 100%
+        overflow-y: auto
         background-color: hsl(0deg, 0%, 20%)
         padding: 30px
         padding-top: 20px
