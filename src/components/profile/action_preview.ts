@@ -82,84 +82,103 @@ export class ButtonComponent {
   getText(action: number) {
     let label = HID[action]
     // Keys.
-    label = label.replace('KEY_', '')
-    if (label == 'ESCAPE') return 'Esc'
-    if (label == 'TAB') return 'Tab'
-    if (label == 'BACKQUOTE') return '`'
-    if (label == 'MINUS') return '-'
-    if (label == 'EQUALS') return '='
-    if (label == 'BACKSLASH') return '\\'
-    if (label == 'BRACKET_LEFT') return '['
-    if (label == 'BRACKET_RIGHT') return ']'
-    if (label == 'CAPS_LOCK') return 'Caps'
-    if (label == 'SEMICOLON') return ';'
-    if (label == 'QUOTE') return "'"
-    if (label == 'COMMA') return ","
-    if (label == 'PERIOD') return "."
-    if (label == 'SLASH') return "/"
-    if (label == 'INSERT') return 'Ins'
-    if (label == 'DELETE') return 'Del'
-    if (label == 'HOME') return 'Home'
-    if (label == 'END') return 'End'
-    if (label == 'PAGE_UP') return 'Page-'
-    if (label == 'PAGE_DOWN') return 'Page+'
-    if (label == 'PAD_NUMLOCK') return 'Lock'
-    if (label == 'PAD_SLASH') return '/'
-    if (label == 'PAD_ASTERISK') return '*'
-    if (label == 'PAD_MINUS') return '-'
-    if (label == 'PAD_PLUS') return '+'
-    if (label == 'PAD_ENTER') return '↵'
-    if (label == 'PAD_PERIOD') return '.'
-    if (label.startsWith('PAD_')) return label.split('_')[1]
+    if (label.startsWith('KEY_')) {
+      const key = label.slice('KEY_'.length)
+      switch (key) {
+        case 'ESCAPE': return 'Esc'
+        case 'TAB': return 'Tab'
+        case 'BACKQUOTE': return '`'
+        case 'MINUS': return '-'
+        case 'EQUALS': return '='
+        case 'BACKSLASH': return '\\'
+        case 'BRACKET_LEFT': return '['
+        case 'BRACKET_RIGHT': return ']'
+        case 'CAPS_LOCK': return 'Caps'
+        case 'SEMICOLON': return ';'
+        case 'QUOTE': return "'"
+        case 'COMMA': return ","
+        case 'PERIOD': return "."
+        case 'SLASH': return "/"
+        case 'INSERT': return 'Ins'
+        case 'DELETE': return 'Del'
+        case 'HOME': return 'Home'
+        case 'END': return 'End'
+        case 'PAGE_UP': return 'Page-'
+        case 'PAGE_DOWN': return 'Page+'
+        // Modifiers.
+        case 'CONTROL_LEFT': return 'Ctrl'
+        case 'SHIFT_LEFT': return 'Shift'
+        case 'ALT_LEFT': return 'Alt'
+        case 'SUPER_LEFT': return 'Win'
+        case 'CONTROL_RIGHT': return 'RCtrl'
+        case 'SHIFT_RIGHT': return 'RShift'
+        case 'ALT_RIGHT': return 'RAlt'
+        case 'SUPER_RIGHT': return 'RWin'
+        case 'PAD_NUMLOCK': return 'Lock'
+        case 'PAD_SLASH': return '/'
+        case 'PAD_ASTERISK': return '*'
+        case 'PAD_MINUS': return '-'
+        case 'PAD_PLUS': return '+'
+        case 'PAD_ENTER': return '↵'
+        case 'PAD_PERIOD': return '.'
+      }
+      if (key.startsWith('PAD_')) return key.slice('PAD_'.length)
+    }
     // Mouse.
-    if (label == 'MOUSE_X') return 'X+'
-    if (label == 'MOUSE_Y') return 'Y+'
-    if (label == 'MOUSE_X_NEG') return 'X-'
-    if (label == 'MOUSE_Y_NEG') return 'Y-'
-    if (label == 'MOUSE_SCROLL_UP') return 'Scroll+'
-    if (label == 'MOUSE_SCROLL_DOWN') return 'Scroll-'
-    label = label.replace(/^MOUSE_/, '')
-    // Modifiers.
-    if (label == 'CONTROL_LEFT') label = 'Ctrl'
-    if (label == 'SHIFT_LEFT') label = 'Shift'
-    if (label == 'ALT_LEFT') label = 'Alt'
-    if (label == 'SUPER_LEFT') label = 'Win'
-    if (label == 'CONTROL_RIGHT') label = 'RCtrl'
-    if (label == 'SHIFT_RIGHT') label = 'RShift'
-    if (label == 'ALT_RIGHT') label = 'RAlt'
-    if (label == 'SUPER_RIGHT') label = 'RWin'
+    if (label.startsWith('MOUSE_')) {
+      const mouse = label.slice('MOUSE_'.length)
+      switch (mouse) {
+        case 'X': return 'X+'
+        case 'Y': return 'Y+'
+        case 'X_NEG': return 'X-'
+        case 'Y_NEG': return 'Y-'
+        case 'SCROLL_UP': return 'Scroll+'
+        case 'SCROLL_DOWN': return 'Scroll-'
+      }
+      return mouse
+    }
     // Proc.
-    if (label == 'PROC_SLEEP') return 'Sleep'
-    if (label == 'PROC_BOOTSEL') return 'Boot'
-    if (label == 'PROC_CALIBRATE') return 'Calibrate'
-    if (label == 'PROC_PAIR') return 'Pair'
-    if (label == 'PROC_TUNE_OS') return 'OS'
-    if (label == 'PROC_TUNE_MOUSE_SENS') return 'Mouse'
-    if (label == 'PROC_TUNE_TOUCH_SENS') return 'Touch'
-    if (label == 'PROC_TUNE_DEADZONE') return 'DZ'
-    if (label == 'PROC_TUNE_UP') return 'Tune up'
-    if (label == 'PROC_TUNE_DOWN') return 'Tune down'
-    if (label.startsWith('PROC_PROFILE_')) {
-      const profileIndex = Number(label.split('_')[2])
-      label = this.webusb.getProfiles()!.profiles[profileIndex].meta.name
+    if (label.startsWith('PROC_')) {
+      const proc = label.slice('PROC_'.length)
+      switch (proc) {
+        case 'SLEEP': return 'Sleep'
+        case 'BOOTSEL': return 'Boot'
+        case 'CALIBRATE': return 'Calibrate'
+        case 'PAIR': return 'Pair'
+        case 'TUNE_OS': return 'OS'
+        case 'TUNE_MOUSE_SENS': return 'Mouse'
+        case 'TUNE_TOUCH_SENS': return 'Touch'
+        case 'TUNE_DEADZONE': return 'DZ'
+        case 'TUNE_UP': return 'Tune up'
+        case 'TUNE_DOWN': return 'Tune down'
+      }
+      if (proc.startsWith('PROFILE_')) {
+        const profileIndex = Number(proc.slice('PROFILE_'.length))
+        return this.webusb.getProfiles()!.profiles[profileIndex].meta.name
+      }
+      if (proc.startsWith('MACRO_')) {
+        const macroIndex = Number(proc.slice('MACRO_'.length))
+        return `M${macroIndex}`
+      }
+      if (proc.startsWith('ROTARY_MODE_')) return proc.slice('ROTARY_MODE_'.length)
+      return proc
     }
-    if (label.startsWith('PROC_MACRO_')) {
-      const macroIndex = Number(label.split('_')[2])
-      label = 'M' + macroIndex
-    }
-    if (label.startsWith('PROC_ROTARY_MODE')) label = label.split('_')[3]
-    if (label.startsWith('PROC')) label = label.replace('PROC_', '')
     // Gamepad.
-    label = label.replace('GAMEPAD_L1', 'LB')
-    label = label.replace('GAMEPAD_R1', 'RB')
-    label = label.replace('GAMEPAD_L3', 'LS')
-    label = label.replace('GAMEPAD_R3', 'RS')
-    if (label.startsWith('GAMEPAD_AXIS')) {
-      label = label.replace('GAMEPAD_AXIS_', '')
-      if (label.endsWith('NEG')) label = label.replace('_NEG', '-')
-      else label += '+'
+    if (label.startsWith('GAMEPAD_')) {
+      let gamepad = label.slice('GAMEPAD_'.length)
+      switch (gamepad) {
+        case 'L1': return 'LB'
+        case 'R1': return 'RB'
+        case 'L3': return 'LS'
+        case 'R3': return 'RS'
+      }
+      if (gamepad.startsWith('AXIS_')) {
+        gamepad = gamepad.slice('AXIS_'.length)
+        if (gamepad.endsWith('_NEG')) gamepad = `${gamepad.slice(0, -'_NEG'.length)}-`
+        else gamepad += '+'
+      }
+      return gamepad
     }
-    label = label.replace('GAMEPAD_', '')
     return label
   }
 
@@ -191,24 +210,64 @@ export class ButtonComponent {
       icon = 'keyboard'
       showLabel = true
     }
-    if (hid == 'KEY_SPACE') icon = 'space_bar'
-    if (hid == 'KEY_BACKSPACE') icon = 'backspace'
-    if (hid == 'KEY_ENTER') icon = 'keyboard_return'
-    if (hid == 'KEY_PRINT_SCREEN') icon = 'photo_camera'
-    if (hid == 'KEY_SCROLL_LOCK') icon = 'sync_lock'
-    if (hid == 'KEY_PAUSE') icon = 'pause_circle'
-    if (hid == 'KEY_MUTE') icon = 'volume_off'
-    if (hid == 'KEY_VOLUME_UP') icon = 'volume_up'
-    if (hid == 'KEY_VOLUME_DOWN') icon = 'volume_down'
-    if (hid == 'KEY_POWER') icon = 'power_settings_new'
-    if (hid == 'GAMEPAD_SELECT') icon = 'stack'
-    if (hid == 'GAMEPAD_START') icon = 'menu'
-    if (hid == 'PROC_HOME_GAMEPAD') icon = 'home'
-    if (['KEY_LEFT', 'GAMEPAD_LEFT'].includes(hid)) icon = 'arrow_back'
-    if (['KEY_RIGHT', 'GAMEPAD_RIGHT'].includes(hid)) icon = 'arrow_forward'
-    if (['KEY_UP', 'GAMEPAD_UP'].includes(hid)) icon = 'arrow_upward'
-    if (['KEY_DOWN', 'GAMEPAD_DOWN'].includes(hid)) icon = 'arrow_downward'
-    return {icon, showLabel}
+    switch (hid) {
+      case 'KEY_SPACE':
+        icon = 'space_bar'
+        break
+      case 'KEY_BACKSPACE':
+        icon = 'backspace'
+        break
+      case 'KEY_ENTER':
+        icon = 'keyboard_return'
+        break
+      case 'KEY_PRINT_SCREEN':
+        icon = 'photo_camera'
+        break
+      case 'KEY_SCROLL_LOCK':
+        icon = 'sync_lock'
+        break
+      case 'KEY_PAUSE':
+        icon = 'pause_circle'
+        break
+      case 'KEY_MUTE':
+        icon = 'volume_off'
+        break
+      case 'KEY_VOLUME_UP':
+        icon = 'volume_up'
+        break
+      case 'KEY_VOLUME_DOWN':
+        icon = 'volume_down'
+        break
+      case 'KEY_POWER':
+        icon = 'power_settings_new'
+        break
+      case 'GAMEPAD_SELECT':
+        icon = 'stack'
+        break
+      case 'GAMEPAD_START':
+        icon = 'menu'
+        break
+      case 'PROC_HOME_GAMEPAD':
+        icon = 'home'
+        break
+      case 'KEY_LEFT':
+      case 'GAMEPAD_LEFT':
+        icon = 'arrow_back'
+        break
+      case 'KEY_RIGHT':
+      case 'GAMEPAD_RIGHT':
+        icon = 'arrow_forward'
+        break
+      case 'KEY_UP':
+      case 'GAMEPAD_UP':
+        icon = 'arrow_upward'
+        break
+      case 'KEY_DOWN':
+      case 'GAMEPAD_DOWN':
+        icon = 'arrow_downward'
+        break
+    }
+    return { icon, showLabel }
   }
 
   getClass(index: number, action: number, text: string, icon: any) {
@@ -221,8 +280,8 @@ export class ButtonComponent {
     if (icon.icon && !icon.showLabel) cls += ' icon fixed'
     if (!icon.icon && text.length == 1) cls += ' fixed'
     if (this.section instanceof CtrlButton) {
-      if (index==1 && this.section.hold) cls += ' hold'
-      if (index==2 && this.section.double) cls += ' double'
+      if (index == 1 && this.section.hold) cls += ' hold'
+      if (index == 2 && this.section.double) cls += ' double'
     }
     if (this.analog && sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
       cls += ' analog'
@@ -232,7 +291,7 @@ export class ButtonComponent {
 
   getGroupClass(index: number) {
     const wrapConditions = (
-      index==0 &&
+      index == 0 &&
       this.getActions(1).sizeValid() == 0 &&
       this.section.labels[0]?.length > 0
     )
@@ -246,7 +305,7 @@ export class ButtonComponent {
           const text = this.getText(action)
           const icon = this.getIcon(action)
           const cls = this.getClass(0, action, text, icon)
-          return {cls, text, icon}
+          return { cls, text, icon }
         })
     }
     if (index == 1) {
@@ -266,7 +325,7 @@ export class ButtonComponent {
           const text = this.getText(action)
           const icon = this.getIcon(action)
           let cls = this.getClass(1, action, text, icon)
-          return {cls, text, icon}
+          return { cls, text, icon }
         })
     }
     if (index == 2) {
@@ -282,7 +341,7 @@ export class ButtonComponent {
           const text = this.getText(action)
           const icon = this.getIcon(action)
           let cls = this.getClass(2, action, text, icon)
-          return {cls, text, icon}
+          return { cls, text, icon }
         })
     }
     return []
@@ -292,11 +351,11 @@ export class ButtonComponent {
 const emptyHoldChip: Chip = {
   text: '',
   cls: 'square round fixed hold',
-  icon: {icon: '', showLabel: false},
+  icon: { icon: '', showLabel: false },
 }
 
 const emptyDoubleChip: Chip = {
   text: '',
   cls: 'square round fixed double',
-  icon: {icon: '', showLabel: false},
+  icon: { icon: '', showLabel: false },
 }
