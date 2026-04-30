@@ -184,11 +184,14 @@ Copyright (C) 2023, Input Labs Oy.
 
     <div class='block plots' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
         <canvas class='plot' height='115' width='115' plot_outer='true' #_canvasCircle></canvas>
-        <canvas class='plot' height='115' width='115' plot_outer='true' #_canvasRamp></canvas>
+        <canvas class='plot' height='115' width='115' plot_outer='true' #_canvasRamp style='transform: scaleY(-1)'></canvas>
     </div>
     <div class='block plots' *ngIf='thumbstick.mode==ThumbstickMode.DIR8'>
         <canvas class='plot' height='115' width='115' plot_outer='false' #_canvasCircle></canvas>
-        <canvas class='plot' height='115' width='115' plot_outer='false' #_canvasRamp ></canvas>
+        <canvas class='plot' height='115' width='115' plot_outer='false' #_canvasRamp style='transform: scaleY(-1)'></canvas>
+    </div>
+    <div class='block plots' *ngIf='thumbstick.mode==ThumbstickMode.ROTATION'>
+        <canvas class='plot' height='115' width='115' #_canvasRotation></canvas>
     </div>
 
     <div class='block tabs' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
