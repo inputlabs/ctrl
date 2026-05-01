@@ -205,7 +205,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.overlap'
-                (update)='thumbstick.overlap=$event; save(); plot()'
+                (update)='thumbstick.overlap=$event; save()'
                 [unit]="'%'"
                 [min]='-100'
                 [max]='100'
@@ -220,7 +220,7 @@ Copyright (C) 2023, Input Labs Oy.
                 <span class='name'>Override global deadzone</span>
                 <span
                     class='material'
-                    (click)='thumbstick.deadzone_override=!thumbstick.deadzone_override; save(); plot()'
+                    (click)='thumbstick.deadzone_override=!thumbstick.deadzone_override; save()'
                     >
                     {{thumbstick.deadzone_override ? 'check_box' : 'check_box_outline_blank'}}
                 </span>
@@ -228,7 +228,7 @@ Copyright (C) 2023, Input Labs Oy.
             <app-input-number
                 *ngIf='thumbstick.deadzone_override'
                 [value]='thumbstick.deadzone'
-                (update)='thumbstick.deadzone=$event; save(); plot()'
+                (update)='thumbstick.deadzone=$event; save()'
                 [unit]="'%'"
                 [min]='0'
                 [max]='100'
@@ -241,7 +241,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.antideadzone'
-                (update)='thumbstick.antideadzone=$event; save(); plot()'
+                (update)='thumbstick.antideadzone=$event; save()'
                 [unit]="'%'"
                 [min]='0'
                 [max]='100'
@@ -254,7 +254,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.outer_threshold'
-                (update)='thumbstick.outer_threshold=$event; save(); plot()'
+                (update)='thumbstick.outer_threshold=$event; save()'
                 [unit]="'%'"
                 [min]='1'
                 [max]='100'
@@ -267,7 +267,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.saturation'
-                (update)='thumbstick.saturation=$event; save(); plot()'
+                (update)='thumbstick.saturation=$event; save()'
                 [unit]="'%'"
                 [min]='1'
                 [max]='200'
@@ -281,7 +281,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.accel_curve'
-                (update)='thumbstick.accel_curve=$event; save(); plot()'
+                (update)='thumbstick.accel_curve=$event; save()'
                 [unit]="''"
                 [min]='-0.95'
                 [max]='0.95'
@@ -296,7 +296,7 @@ Copyright (C) 2023, Input Labs Oy.
         <div class='island'>
             <app-input-number
                 [value]='thumbstick.sens_xy_ratio'
-                (update)='thumbstick.sens_xy_ratio=$event; save(); plot()'
+                (update)='thumbstick.sens_xy_ratio=$event; save()'
                 [unit]="'%'"
                 [min]='1'
                 [max]='250'
@@ -312,7 +312,7 @@ Copyright (C) 2023, Input Labs Oy.
             />
             <app-input-number *ngIf='thumbstickHasMouseAxis(thumbstick)'
                 [value]='thumbstick.sens_mouse'
-                (update)='thumbstick.sens_mouse=$event; save(); plot()'
+                (update)='thumbstick.sens_mouse=$event; save()'
                 [unit]="'pixels / second'"
                 [min]='100'
                 [max]='25000'
@@ -330,7 +330,7 @@ Copyright (C) 2023, Input Labs Oy.
             />
             <app-input-number *ngIf='thumbstickHasMouseAxis(thumbstick)'
                 [value]='thumbstick.sens_scroll'
-                (update)='thumbstick.sens_scroll=$event; save(); plot()'
+                (update)='thumbstick.sens_scroll=$event; save()'
                 [unit]="'steps / second'"
                 [min]='1'
                 [max]='100'
