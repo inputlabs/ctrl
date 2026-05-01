@@ -137,7 +137,10 @@ export const plotRotation = (section: SectionComponent) => {
     const thumbstick = section.getSectionAsThumbstick()
     const CenterDeadzone = thumbstick.rot_center_deadzone
     const entryDeadzone = thumbstick.rot_entry_deadzone
-    const sens = 360 / 100 * (thumbstick.rot_sens_axis * 5)
+    const anticlockwise = thumbstick.rot_anticlockwise
+    const entryAngle = thumbstick.rot_relative_mode ? 45 : 0
+    const sensAngle = Math.min(360, 360 / (thumbstick.rot_sens_axis * 5) * 100)
+    const sensLabel = Math.min(100, thumbstick.rot_sens_axis * 5) + '%'
     const size = section.canvasRotation.nativeElement.width
     const mid = size / 2
     const max = size * 0.4
@@ -153,7 +156,7 @@ export const plotRotation = (section: SectionComponent) => {
         ctx.textBaseline = 'middle'
         ctx.fillStyle = section.green
         ctx.strokeStyle = '#000'
-        ctx.lineWidth = 2
+        ctx.lineWidth = 3
         ctx.strokeText(text, pos.x, pos.y)
         ctx.fillText(text, pos.x, pos.y);
     }
@@ -167,10 +170,10 @@ export const plotRotation = (section: SectionComponent) => {
         ctx.fillStyle = section.purple
         ctx.fill()
     }
-    const drawTriangle = (pos: Coordinate, _angle: number) => {
+    const drawTriangle = (pos: Coordinate, angleRef: number) => {
         const gap = Math.PI / 6
         const size = 12
-        const angle = _angle + deg(90)
+        const angle = angleRef + deg(90)
         ctx.beginPath()
         ctx.moveTo(pos.x, pos.y)  // Tip.
         ctx.lineTo(
@@ -193,23 +196,31 @@ export const plotRotation = (section: SectionComponent) => {
         ctx.lineTo(end.x, end.y)
         ctx.strokeStyle = section.green
         ctx.lineWidth = 3
+        ctx.setLineDash([6, 3])
         ctx.stroke()
-        drawTriangle(end, angle)
+        ctx.setLineDash([])
+        // drawTriangle(end, angle)
     }
-    const drawPerimeter = (_angleStart: number, _angleEnd: number, clockwise: boolean) => {
-        let angleStart = deg(-90) + _angleStart
-        let angleEnd = deg(-90) + _angleEnd
-        if (!clockwise) {
-            [angleStart, angleEnd] = [angleEnd, angleStart]
-        }
+    const drawPerimeter = (angleStartRef: number, angleSweep: number, anticlockwise: boolean) => {
+        const angleStart = deg(-90) + angleStartRef
+        const angleEnd = angleStart + (anticlockwise ? -angleSweep : angleSweep)
+        const angleEndRef = angleEnd + deg(90)
         ctx.beginPath()
-        ctx.arc(mid, mid, max, angleStart, angleEnd)
+        const arcEndOffset = deg(5)
+        ctx.arc(
+            mid, mid, max,
+            (anticlockwise ? angleEnd+arcEndOffset : angleStart),
+            (anticlockwise ? angleStart            : angleEnd-arcEndOffset),
+        )
         ctx.strokeStyle = section.green
         ctx.lineWidth = 3
         ctx.stroke()
-        const end = polar(angleEnd+deg(90), max)
-        drawTriangle(end, angleEnd+deg(180))
-        drawLabel(polar(angleEnd + deg(90) + deg(17), max), '100%')
+        // const labelOffset = (anticlockwise ? -deg(17) : deg(17))
+        const triangleRot = (anticlockwise ? -deg(90) : deg(90))
+        const trianglePos = polar(angleEndRef, max-1)
+        const labelPos = polar(angleEndRef, max-15)
+        drawTriangle(trianglePos, angleEndRef + triangleRot)
+        drawLabel(labelPos, sensLabel)
     }
     const drawCircle = (radius: number, lineWidth: number, color: string, alpha: number) => {
         ctx.beginPath()
@@ -224,8 +235,7 @@ export const plotRotation = (section: SectionComponent) => {
     ctx.clearRect(0, 0, size, size)
     drawCircle(CenterDeadzone * max / 100, 3, section.purple, 1)
     drawCircle(max, 3, section.green, 0.3)
-    const entryAngle = 0
     drawPie(deg(entryAngle), deg(entryDeadzone))
     drawEntry(deg(entryAngle))
-    drawPerimeter(deg(entryAngle), deg(entryAngle)+deg(sens), true)
+    drawPerimeter(deg(entryAngle), deg(sensAngle), anticlockwise)
 }
