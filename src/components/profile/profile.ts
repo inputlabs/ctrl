@@ -242,7 +242,7 @@ export class ProfileComponent {
   }
 
   showDialogPicker() {
-    this.section?.showDialogKeypicker(0)
+    this.section?.mapper.showDialog(0)
   }
 }
 

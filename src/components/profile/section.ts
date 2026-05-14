@@ -6,13 +6,13 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ActionSelectorComponent } from './action_selector'
 import { InputNumberComponent } from 'components/input_number/input_number'
+import { MapperComponent } from 'components/profile/mapper'
 import { WebusbService } from 'services/webusb'
 import { Profile } from 'lib/profile'
 import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary, ConfigIndex } from 'lib/ctrl'
 import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
 import { ThumbstickMode, GyroMode } from 'lib/ctrl'
-import { ActionGroup } from 'lib/actions'
 import { HID, isAxis, isMouseAxis, isScrollAxis, isGamepadAxis } from 'lib/hid'
 import { PinV0, PinV1 } from 'lib/pin'
 import { delay } from 'lib/delay'
@@ -26,6 +26,7 @@ import { plotCircle, plotRamp, plotRotation } from 'lib/plot'
     FormsModule,
     InputNumberComponent,
     ActionSelectorComponent,
+    MapperComponent,
   ],
   templateUrl: './section.html',
   styleUrls: ['./section.sass']
@@ -34,26 +35,25 @@ export class SectionComponent {
   @Input() profileIndex: number = 0
   @Input() section: CtrlSection = new CtrlSectionMeta(0, SectionIndex.META, '', 0, 0, 0, 0)
   @Input() analog: boolean = false
-  dialogKeyPicker: any
-  pickerGroup = 0
-  pickerProfile = 1
-  pickerRotary = 0
-  pickerMacro = 1
-  pickerTune = 0
+  @ViewChild('mapper') mapper!: MapperComponent
   profileOverwriteIndex = 0
   profiles = this.webusb.getProfiles()!
   globalDeadzone = 0
   tab = 0
-  canvasCircle!: ElementRef<HTMLCanvasElement>
-  canvasRamp!: ElementRef<HTMLCanvasElement>
-  canvasRotation!: ElementRef<HTMLCanvasElement>
-  green = 'hsl(160deg, 100%, 50%)'
-  purple = 'hsl(266deg, 100%, 50%)'
+  dialogHelp!: HTMLDialogElement
+
   // Template aliases.
   HID = HID
   SectionIndex = SectionIndex
   GyroMode = GyroMode
   ThumbstickMode = ThumbstickMode
+
+  // Plots.
+  canvasCircle!: ElementRef<HTMLCanvasElement>
+  canvasRamp!: ElementRef<HTMLCanvasElement>
+  canvasRotation!: ElementRef<HTMLCanvasElement>
+  green = 'hsl(160deg, 100%, 50%)'
+  purple = 'hsl(266deg, 100%, 50%)'
 
   constructor(
     public webusb: WebusbService,
@@ -237,146 +237,6 @@ export class SectionComponent {
     plotRotation(this)
   }
 
-  showDialogKeypicker = (pickerGroup: number) => {
-    this.pickerGroup = pickerGroup
-    const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
-    for(let action of section.actions[pickerGroup].actions) {
-      if (action >= HID.PROC_PROFILE_0 && action <= HID.PROC_PROFILE_12) {
-        this.pickerProfile = action - HID.PROC_PROFILE_0
-      }
-      if (action >= HID.PROC_ROTARY_MODE_0 && action <= HID.PROC_ROTARY_MODE_5) {
-        this.pickerRotary = action - HID.PROC_ROTARY_MODE_0
-      }
-      if (action >= HID.PROC_MACRO_1 && action <= HID.PROC_MACRO_8) {
-        this.pickerMacro = action - HID.PROC_MACRO_1 + 1
-      }
-      if (action >= HID.PROC_TUNE_OS && action <= HID.PROC_TUNE_DEADZONE) {
-        this.pickerTune = action - HID.PROC_TUNE_OS
-      }
-    }
-    this.dialogKeyPicker = document.getElementById('dialog-keypicker')
-    this.dialogKeyPicker.showModal()
-  }
-
-  hideDialogKeypicker(): boolean {
-    this.dialogKeyPicker.close()
-    return true
-  }
-
-  hideDialogKeypickerOutbound(event: MouseEvent, dialog: HTMLDialogElement) {
-    const rect = dialog.getBoundingClientRect()
-    const isInsideDialog = (
-      event.clientX >= rect.left &&
-      event.clientX <= rect.right &&
-      event.clientY >= rect.top &&
-      event.clientY <= rect.bottom
-    )
-    if (!isInsideDialog) dialog.close();
-  }
-
-  private _pickToggle(actions: ActionGroup, key: HID) {
-    if(actions.has(key)) {
-      this._pickRemove(actions, key)
-    } else {
-      this._pickAdd(actions, key)
-    }
-    return actions
-  }
-
-  private _pickAdd(actions: ActionGroup, key: HID) {
-    actions.add(key)
-    this.save()
-  }
-
-  private _pickRemove(actions: ActionGroup, key: HID) {
-    actions.delete(key)
-    this.save()
-  }
-
-  private _pickSelect(
-    increment = 0,
-    procBase: number,
-    wrapMin: number,
-    wrapMax: number,
-    valueGet: number,
-    valueSet: (x:number)=>void,
-  ) {
-    const targetActions = this.getActions()[this.pickerGroup]
-    let wrap = valueGet + increment
-    if (wrap < wrapMin) wrap = wrap + (wrapMax - wrapMin + 1)
-    else if (wrap > wrapMax) wrap = wrap - (wrapMax - wrapMin + 1)
-    if (increment == 0) this.pick(procBase + wrap)
-    else {
-      this._pickRemove(targetActions, procBase + valueGet)
-      this._pickAdd(targetActions, procBase + wrap)
-      valueSet(wrap)
-    }
-  }
-
-  pick(key: HID) {
-    const targetActions = this.getActions()[this.pickerGroup]
-    this._pickToggle(targetActions, key)
-  }
-
-  pickProfile(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_PROFILE_0,
-      1,  // First profile.
-      12,  // Last profile.
-      this.pickerProfile,
-      (x) => this.pickerProfile=x,
-    )
-  }
-
-  pickRotary(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_ROTARY_MODE_0,
-      0,  // First rotary mode.
-      4,  // Last rotary mode.
-      this.pickerRotary,
-      (x) => this.pickerRotary=x,
-    )
-  }
-
-  pickMacro(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_MACRO_1 - 1,
-      1,  // First macro.
-      8,  // Last macro.
-      this.pickerMacro,
-      (x) => this.pickerMacro=x,
-    )
-  }
-
-  pickTune(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_TUNE_OS,
-      0,  // First tune index.
-      3,  // Last tune index.
-      this.pickerTune,
-      (x) => this.pickerTune=x,
-    )
-  }
-
-  // Colors in the picker UI.
-  pickCls(action: HID) {
-    const actions = this.getActions()[this.pickerGroup]
-    let cls = 'pressBG'
-    if (this.section instanceof CtrlButton) {
-      if (this.pickerGroup==1 && this.section.hold) cls += ' holdBG'
-      if (this.pickerGroup==2 && this.section.double) cls += ' doubleBG'
-    }
-    if (this.analog && sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
-      cls += ' analogBG'
-    }
-    if (actions.has(action)) return cls
-    return ''
-  }
-
   // Colors in the sidebar action selector.
   actionCls = (index: number, action: HID) => {
     let cls = 'press'
@@ -392,6 +252,16 @@ export class SectionComponent {
 
   save = async () => {
     await this.webusb.trySetSection(this.profileIndex, this.section)
+  }
+
+  showDialogHelp(key: string) {
+    const elementId = 'dialog-help-' + key
+    this.dialogHelp = document.getElementById(elementId) as HTMLDialogElement
+    this.dialogHelp.showModal()
+  }
+
+  hideDialogHelp() {
+    this.dialogHelp.close()
   }
 }
 
