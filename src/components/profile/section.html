@@ -366,11 +366,12 @@ Copyright (C) 2023, Input Labs Oy.
             <div class='tab' [class.active]='tab==0' (click)='tab=0'>Zones</div>
             <div class='tab' [class.active]='tab==1' (click)='tab=1'>Response</div>
         </div>
+
         <ng-container *ngIf='tab==0'>
             <div class='block'>
                 <div class='subtitle'>
                     Center deadzone:
-                    <div class='material' (click)='showDialogHelp("center-deadzone")'>help</div>
+                    <div class='material' (click)='showDialogHelp("rot-center-deadzone")'>help</div>
                 </div>
                 <div class='island'>
                     <app-input-number
@@ -386,7 +387,7 @@ Copyright (C) 2023, Input Labs Oy.
             <div class='block'>
                 <div class='subtitle'>
                     Entry deadzone:
-                    <div class='material' (click)='showDialogHelp("entry-deadzone")'>help</div>
+                    <div class='material' (click)='showDialogHelp("rot-entry-deadzone")'>help</div>
                 </div>
                 <div class='island'>
                     <app-input-number *ngIf='thumbstick.rot_relative_mode'
@@ -404,19 +405,25 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
             <div class='block'>
-                <div class='subtitle'>Entry point:</div>
+                <div class='subtitle'>
+                    Entry point (zero):
+                    <div class='material' (click)='showDialogHelp("rot-entry-point")'>help</div>
+                </div>
                 <div class='select'>
                     <select
                         [(ngModel)]='thumbstick.rot_relative_mode'
                         (ngModelChange)='save()'
                         >
-                        <option [ngValue]='false'>Angle from mapping</option>
+                        <option [ngValue]='false'>Mapped action angle</option>
                         <option [ngValue]='true'>Any angle</option>
                     </select>
                 </div>
             </div>
             <div class='block'>
-                <div class='subtitle'>Direction:</div>
+                <div class='subtitle'>
+                    Direction:
+                    <div class='material' (click)='showDialogHelp("rot-direction")'>help</div>
+                </div>
                 <div class='select'>
                     <select
                         [(ngModel)]='thumbstick.rot_anticlockwise'
@@ -428,9 +435,13 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
         </ng-container>
+
         <ng-container *ngIf='tab==1'>
             <div class='block' *ngIf='thumbstickHasMouseAxis(thumbstick)'>
-                <div class='subtitle'>Sensitivity as mouse:</div>
+                <div class='subtitle'>
+                    Sensitivity as mouse:
+                    <div class='material' (click)='showDialogHelp("rot-sens-mouse")'>help</div>
+                </div>
                 <div class='island'>
                     <div class='iconaction'>
                         <span class='name'>Based on gyro RWS</span>
@@ -460,7 +471,10 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
             <div class='block' *ngIf='thumbstickHasScrollAxis(thumbstick)'>
-                <div class='subtitle'>Sensitivity as scrollwheel:</div>
+                <div class='subtitle'>
+                    Sensitivity as scrollwheel:
+                    <div class='material' (click)='showDialogHelp("rot-sens-scrollwheel")'>help</div>
+                </div>
                 <div class='island'>
                     <app-input-number
                         [value]='thumbstick.sens_scroll'
@@ -472,7 +486,10 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
             <div class='block' *ngIf='thumbstickHasGamepadAxis(thumbstick)'>
-                <div class='subtitle'>Sensitivity as axis:</div>
+                <div class='subtitle'>
+                    Sensitivity as axis:
+                    <div class='material' (click)='showDialogHelp("rot-sens-axis")'>help</div>
+                </div>
                 <div class='island'>
                     <app-input-number
                         [value]='thumbstick.rot_sens_axis'
@@ -486,7 +503,10 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
             <div class='block'>
-                <div class='subtitle'>Flick time:</div>
+                <div class='subtitle'>
+                    Flick time:
+                    <div class='material' (click)='showDialogHelp("rot-flick-time")'>help</div>
+                </div>
                 <div class='island'>
                     <app-input-number *ngIf='!(thumbstickHasMouseAxis(thumbstick) && !thumbstick.rot_relative_mode)'
                         [disabled]='true'
@@ -504,7 +524,10 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
             <div class='block'>
-                <div class='subtitle'>Value while in center:</div>
+                <div class='subtitle'>
+                    Value while in center:
+                    <div class='material' (click)='showDialogHelp("rot-value-center")'>help</div>
+                </div>
                 <div class='select'>
                     <app-input-number *ngIf='!thumbstickHasGamepadAxis(thumbstick)'
                         [disabled]='true'
@@ -520,7 +543,10 @@ Copyright (C) 2023, Input Labs Oy.
                 </div>
             </div>
             <div class='block'>
-                <div class='subtitle'>Smoothing:</div>
+                <div class='subtitle'>
+                    Smoothing:
+                    <div class='material' (click)='showDialogHelp("rot-smoothing")'>help</div>
+                </div>
                 <div class='island'>
                     <app-input-number
                         [value]='thumbstick.rot_smoothing'
@@ -657,7 +683,7 @@ Copyright (C) 2023, Input Labs Oy.
 </div>
 
 <!-- HELP DIALOGS -->
-<dialog id='dialog-help-center-deadzone'>
+<dialog id='dialog-help-rot-center-deadzone'>
     <h3>Center deadzone</h3>
     <p>The central circular area in which thumbstick movement registers no input.</p>
     <p>For rotation mode, a larger deadzone is often ideal. This ensures the stick only reacts when sweeping the outer perimeter, preventing unexpected inputs as it snaps back to the center.</p>
@@ -666,9 +692,87 @@ Copyright (C) 2023, Input Labs Oy.
     </div>
 </dialog>
 
-<dialog id='dialog-help-entry-deadzone'>
+<dialog id='dialog-help-rot-entry-deadzone'>
     <h3>Entry deadzone</h3>
-    <div>Miau 2</div>
+    <p>The angle around the entry point direction in which the input is ignored.</p>
+    <p>When output is gamepad axis the input is forced to 0%, while for mouse output (flickstick) the deadzone disables the flicking.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-entry-point'>
+    <h3>Entry point</h3>
+    <p>The direction that is assumed as the starting point (or zero) when sweeping around the perimeter.</p>
+    <p><b>Mapped action angle:</b> Either up/down/left/right depending on the action mapped in the profile.</p>
+    <p><b>Any angle:</b> Whatever angle the user deflects the stick from the center will be considered the starting point, without snapping into any cardinal direction.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-direction'>
+    <h3>Direction</h3>
+    <p>The sweeping motion direction in which the values increase, either clockwise [↻] or anti-clockwise [↺]</p>
+    <p>Negative variants of the axis actions behave as if this setting is inverted.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-sens-mouse'>
+    <h3>Sensitivity as mouse</h3>
+    <p>The output in pixels for each complete (360º) thumbstick rotation.</p>
+    <p>To facilitate flickstick configs, when the option <b>Based on gyro RWS</b> is enabled, a complete thumbstick rotation becomes 1 RWS in comparison to the RWS reference for the gyro-to-mouse emulation.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-sens-scrollwheel'>
+    <h3>Sensitivity as scrollwheel</h3>
+    <p>The output in scrollwheel steps for each complete (360º) thumbstick rotation.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-sens-axis'>
+    <h3>Sensitivity as axis</h3>
+    <p>The output in axis percentage for each complete (360º) thumbstick rotation.</p>
+    <p>This setting applies for gamepad thumbsticks X/Y, and gamepad triggers as output.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-flick-time'>
+    <h3>Flick time</h3>
+    <p>How long it takes for the mouse output to catch up with a flick (a sudden input away from the defined entry point).</p>
+    <p>The emulated sweep is logarithmic, it starts fast, but slows down gradually.</p>
+    <p>The flick is instantaneous (there is no emulated sweep) when the value is set to 0 milliseconds.
+    <p>This setting only applies for mouse output, and is disabled if <b>Entry point</b> is set as "Any angle", because flicks cannot occur.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-value-center'>
+    <h3>Value while in center</h3>
+    <p>Output value while the stick is in the central deadzone area, and not being swept.</p>
+    <p><b>Zero:</b> Output always defaults to 0% when the stick goes back to the center.</p>
+    <p><b>Keep last value:</b> The last value registered during the sweep will continue to be sent, even when the stick returns to the center.</p>
+    <p>This setting is only enabled for gamepad axis output.</p>
+    <div class='buttons'>
+        <button (click)='hideDialogHelp()'>Makes sense</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-help-rot-smoothing'>
+    <h3>Smoothing</h3>
+    <p>The maximum number of thumbstick samples aggregated to eliminate analog noise.</p>
+    <p>The smoothing is dynamic, so the number of samples is reduced the faster the movements is.</p>
+    <p>This setting is independent from global thumbstick smoothing, as sweeping requires increased accuracy.</p>
     <div class='buttons'>
         <button (click)='hideDialogHelp()'>Makes sense</button>
     </div>
