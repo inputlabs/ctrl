@@ -109,4 +109,15 @@ export class Profile {
     }
     return false
   }
+
+  thumbstickGetActions(thumbstick: CtrlThumbstick) {
+    const isLeft = thumbstick === this.settingsLStick
+    return {
+      up:    (isLeft ? this.buttonLStickUp    : this.buttonRStickUp   ).actions.map((x) => x.asArray()),
+      down:  (isLeft ? this.buttonLStickDown  : this.buttonRStickDown ).actions.map((x) => x.asArray()),
+      left:  (isLeft ? this.buttonLStickLeft  : this.buttonRStickLeft ).actions.map((x) => x.asArray()),
+      right: (isLeft ? this.buttonLStickRight : this.buttonRStickRight).actions.map((x) => x.asArray()),
+      push:  (isLeft ? this.buttonLStickPush  : this.buttonRStickPush ).actions.map((x) => x.asArray()),
+    }
+  }
 }

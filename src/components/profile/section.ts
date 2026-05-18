@@ -213,6 +213,15 @@ export class SectionComponent {
     return profile.thumbstickHasAxis(thumbstick, isGamepadAxis)
   }
 
+  thumbstickHasOneAnalogAction(thumbstick: CtrlThumbstick) {
+    const profile = this.profiles.profiles[this.profileIndex]
+    const actions = profile.thumbstickGetActions(thumbstick)
+    const actionsPrimary = [...actions.up[0], ...actions.down[0], ...actions.left[0], ...actions.right[0]]
+    const actionsAxis = actionsPrimary.filter((x) => isAxis(x))
+    if (actionsAxis.length === 1) return true
+    else return false
+  }
+
   buttonsCanHaveModifiers(button: CtrlButton) {
     const sectionName = SectionIndex[button.sectionIndex]
     const is_cardinal = (
