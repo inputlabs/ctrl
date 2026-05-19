@@ -217,9 +217,9 @@ export class SectionComponent {
     const profile = this.profiles.profiles[this.profileIndex]
     const actions = profile.thumbstickGetActions(thumbstick)
     const actionsPrimary = [...actions.up[0], ...actions.down[0], ...actions.left[0], ...actions.right[0]]
-    const actionsAxis = actionsPrimary.filter((x) => isAxis(x))
-    if (actionsAxis.length === 1) return true
-    else return false
+    if (actionsPrimary.length !== 1) return false
+    if (!isAxis(actionsPrimary[0])) return false
+    return true
   }
 
   buttonsCanHaveModifiers(button: CtrlButton) {

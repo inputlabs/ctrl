@@ -350,11 +350,11 @@ Copyright (C) 2023, Input Labs Oy.
                 <div class='material' (click)='showDialogHelp("4dir-sens-scroll")'>live_help</div>
             </div>
             <div class='island'>
-                <app-input-number *ngIf='!thumbstickHasMouseAxis(thumbstick)'
+                <app-input-number *ngIf='!thumbstickHasScrollAxis(thumbstick)'
                     [disabled]='true'
                     [disabledMessage]="'N/A'"
                 />
-                <app-input-number *ngIf='thumbstickHasMouseAxis(thumbstick)'
+                <app-input-number *ngIf='thumbstickHasScrollAxis(thumbstick)'
                     [value]='thumbstick.sens_scroll'
                     (update)='thumbstick.sens_scroll=$event; save()'
                     [unit]="'steps / second'"
