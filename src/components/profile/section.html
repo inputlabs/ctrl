@@ -836,8 +836,9 @@ Copyright (C) 2023, Input Labs Oy.
 
     <dialog id='dialog-help-rot-entry-deadzone'>
         <h3>Entry deadzone</h3>
-        <p>The angle around the entry point direction in which the input is ignored.</p>
-        <p>When output is gamepad axis the input is forced to 0%, while for mouse output (flickstick) the deadzone disables the flicking.</p>
+        <p>The angle around the entry point direction in which the input is ignored (or less relevant).</p>
+        <p>For gamepad axis, the output on the entry deadzone is 0%.</p>
+        <p>For mouse axis (flickstick), the deadzone ignores flicks.</p>
         <div class='buttons'>
             <button (click)='hideDialogHelp()'>Makes sense</button>
         </div>
@@ -855,7 +856,7 @@ Copyright (C) 2023, Input Labs Oy.
 
     <dialog id='dialog-help-rot-direction'>
         <h3>Direction</h3>
-        <p>The sweeping motion direction in which the values increase, either clockwise [↻] or anti-clockwise [↺]</p>
+        <p>The sweep motion direction in which the values increase, either clockwise [↻] or anti-clockwise [↺]</p>
         <p>Negative variants of the axis actions behave as if this setting is inverted.</p>
         <div class='buttons'>
             <button (click)='hideDialogHelp()'>Makes sense</button>
@@ -865,7 +866,7 @@ Copyright (C) 2023, Input Labs Oy.
     <dialog id='dialog-help-rot-sens-mouse'>
         <h3>Sensitivity as mouse</h3>
         <p>The output in pixels for each complete (360º) thumbstick rotation.</p>
-        <p>To facilitate flickstick configs, when the option <b>Based on gyro RWS</b> is enabled, a complete thumbstick rotation becomes 1 RWS in comparison to the RWS reference for the gyro-to-mouse emulation.</p>
+        <p><b>Based on gyro RWS:</b> When enabled, a complete thumbstick rotation becomes 1 RWS in comparison to the RWS reference for the gyro-to-mouse emulation. It makes flickstick configuration easier.</p>
         <div class='buttons'>
             <button (click)='hideDialogHelp()'>Makes sense</button>
         </div>
@@ -882,7 +883,7 @@ Copyright (C) 2023, Input Labs Oy.
     <dialog id='dialog-help-rot-sens-axis'>
         <h3>Sensitivity as axis</h3>
         <p>The output in axis percentage for each complete (360º) thumbstick rotation.</p>
-        <p>This setting applies for gamepad thumbsticks X/Y, and gamepad triggers as output.</p>
+        <p>This setting applies only for gamepad thumbsticks X/Y output, and gamepad triggers output.</p>
         <div class='buttons'>
             <button (click)='hideDialogHelp()'>Makes sense</button>
         </div>
@@ -892,7 +893,7 @@ Copyright (C) 2023, Input Labs Oy.
         <h3>Flick time</h3>
         <p>How long it takes for the mouse output to catch up with a flick (a sudden input away from the defined entry point).</p>
         <p>The emulated sweep is logarithmic, it starts fast, but slows down gradually.</p>
-        <p>The feature is disabled if the value is set to 0 milliseconds, making the flick instantaneous.
+        <!-- <p>The feature is disabled if the value is set to 0 milliseconds, making the flick instantaneous. -->
         <p>This setting applies only for mouse output, and is disabled if <b>Entry point</b> is set as "Any angle", because flicks cannot occur.</p>
         <div class='buttons'>
             <button (click)='hideDialogHelp()'>Makes sense</button>
