@@ -6,16 +6,17 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ActionSelectorComponent } from './action_selector'
 import { InputNumberComponent } from 'components/input_number/input_number'
+import { MapperComponent } from 'components/profile/mapper'
 import { WebusbService } from 'services/webusb'
 import { Profile } from 'lib/profile'
 import { CtrlSection, CtrlSectionMeta, CtrlButton, CtrlRotary, ConfigIndex } from 'lib/ctrl'
 import { CtrlThumbstick, CtrlGyro, CtrlGyroAxis, CtrlHome } from 'lib/ctrl'
 import { SectionIndex, sectionIsAnalog } from 'lib/ctrl'
 import { ThumbstickMode, GyroMode } from 'lib/ctrl'
-import { ActionGroup } from 'lib/actions'
 import { HID, isAxis, isMouseAxis, isScrollAxis, isGamepadAxis } from 'lib/hid'
 import { PinV0, PinV1 } from 'lib/pin'
 import { delay } from 'lib/delay'
+import { plotCircle, plotRamp, plotRotation } from 'lib/plot'
 
 @Component({
   selector: 'app-section',
@@ -25,6 +26,7 @@ import { delay } from 'lib/delay'
     FormsModule,
     InputNumberComponent,
     ActionSelectorComponent,
+    MapperComponent,
   ],
   templateUrl: './section.html',
   styleUrls: ['./section.sass']
@@ -33,25 +35,25 @@ export class SectionComponent {
   @Input() profileIndex: number = 0
   @Input() section: CtrlSection = new CtrlSectionMeta(0, SectionIndex.META, '', 0, 0, 0, 0)
   @Input() analog: boolean = false
-  dialogKeyPicker: any
-  pickerGroup = 0
-  pickerProfile = 1
-  pickerRotary = 0
-  pickerMacro = 1
-  pickerTune = 0
+  @ViewChild('mapper') mapper!: MapperComponent
   profileOverwriteIndex = 0
   profiles = this.webusb.getProfiles()!
   globalDeadzone = 0
   tab = 0
-  canvasCircle!: ElementRef<HTMLCanvasElement>
-  canvasRamp!: ElementRef<HTMLCanvasElement>
-  green = 'hsl(160deg, 100%, 50%)'
-  purple = 'hsl(266deg, 100%, 50%)'
+  dialogHelp!: HTMLDialogElement
+
   // Template aliases.
   HID = HID
   SectionIndex = SectionIndex
   GyroMode = GyroMode
   ThumbstickMode = ThumbstickMode
+
+  // Plots.
+  canvasCircle!: ElementRef<HTMLCanvasElement>
+  canvasRamp!: ElementRef<HTMLCanvasElement>
+  canvasRotation!: ElementRef<HTMLCanvasElement>
+  green = 'hsl(160deg, 100%, 50%)'
+  purple = 'hsl(266deg, 100%, 50%)'
 
   constructor(
     public webusb: WebusbService,
@@ -61,6 +63,10 @@ export class SectionComponent {
 
   async afterConstructor() {
     this.globalDeadzone = await this.fetchGlobalDeadzone()
+  }
+
+  ngAfterViewChecked() {
+    this.plot()
   }
 
   sectionIsMeta = () => this.section instanceof CtrlSectionMeta
@@ -87,6 +93,12 @@ export class SectionComponent {
   @ViewChild('_canvasRamp') set _canvasRamp(canvas: ElementRef<HTMLCanvasElement>) {
     if (!canvas) return
     this.canvasRamp = canvas
+    this.plot()
+  }
+
+  @ViewChild('_canvasRotation') set _canvasRotation(canvas: ElementRef<HTMLCanvasElement>) {
+    if (!canvas) return
+    this.canvasRotation = canvas
     this.plot()
   }
 
@@ -201,6 +213,15 @@ export class SectionComponent {
     return profile.thumbstickHasAxis(thumbstick, isGamepadAxis)
   }
 
+  thumbstickHasOneAnalogAction(thumbstick: CtrlThumbstick) {
+    const profile = this.profiles.profiles[this.profileIndex]
+    const actions = profile.thumbstickGetActions(thumbstick)
+    const actionsPrimary = [...actions.up[0], ...actions.down[0], ...actions.left[0], ...actions.right[0]]
+    if (actionsPrimary.length !== 1) return false
+    if (!isAxis(actionsPrimary[0])) return false
+    return true
+  }
+
   buttonsCanHaveModifiers(button: CtrlButton) {
     const sectionName = SectionIndex[button.sectionIndex]
     const is_cardinal = (
@@ -220,270 +241,9 @@ export class SectionComponent {
   }
 
   plot() {
-    this.plotCircle()
-    this.plotRamp()
-  }
-
-  plotCircle = () => {
-    if (!this.canvasCircle) return
-    const ctx = this.canvasCircle.nativeElement.getContext('2d')!
-    const thumbstick = this.getSectionAsThumbstick()
-    const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
-    let overlap = thumbstick.overlap
-    if (overlap == 0) overlap = -2.5  // Force a visual gap when value is zero.
-    const outer = this.canvasCircle.nativeElement.getAttribute('plot_outer') == 'true'
-    const size = this.canvasCircle.nativeElement.width
-    const mid = size / 2
-    const max = size * 0.4
-    let overlapDeg = (50-overlap) / 100 * 90
-    let overlapDegNeg = -overlap / 100 * 90
-    // Helper functions.
-    const deg = (angle: number) => {
-      return angle * (Math.PI / 180)
-    }
-    const drawArc = (stroke: number, angle: number, size: number) => {
-      let half = size / 2
-      ctx.beginPath();
-      ctx.arc(mid, mid, max, angle-half, angle+half)
-      ctx.strokeStyle = this.green
-      ctx.lineWidth = stroke
-      ctx.stroke()
-    }
-    const drawCircle = (radius: number, lineWidth: number) => {
-      ctx.beginPath()
-      ctx.arc(mid, mid, radius, 0, deg(360))
-      ctx.strokeStyle = this.purple
-      ctx.lineWidth = lineWidth
-      ctx.stroke()
-    }
-    // Draw.
-    ctx.clearRect(0, 0, size, size);
-    if (overlap > 0) {
-      drawArc(3, deg(0), deg(45+overlapDeg))
-      drawArc(3, deg(90), deg(45+overlapDeg))
-      drawArc(3, deg(180), deg(45+overlapDeg))
-      drawArc(3, deg(270), deg(45+overlapDeg))
-    }
-    if (overlap > 0) {
-      drawArc(1, deg(45+0), deg(45-overlapDeg))
-      drawArc(1, deg(45+90), deg(45-overlapDeg))
-      drawArc(1, deg(45+180), deg(45-overlapDeg))
-      drawArc(1, deg(45+270), deg(45-overlapDeg))
-    }
-    if (overlap < 0) {
-      drawArc(3, deg(0), deg(90-overlapDegNeg))
-      drawArc(3, deg(90), deg(90-overlapDegNeg))
-      drawArc(3, deg(180), deg(90-overlapDegNeg))
-      drawArc(3, deg(270), deg(90-overlapDegNeg))
-    }
-    drawCircle(deadzone*max/100, 3)
-    if (outer) drawCircle(thumbstick.outer_threshold*max/100, 3)
-  }
-
-  plotRamp = () => {
-    if (!this.canvasRamp) return
-    const ctx = this.canvasRamp.nativeElement.getContext('2d')!
-    const thumbstick = this.getSectionAsThumbstick()
-    const deadzone = thumbstick.deadzone_override ? thumbstick.deadzone : this.globalDeadzone
-    const outer = this.canvasCircle.nativeElement.getAttribute('plot_outer') == 'true'
-    const size = this.canvasRamp.nativeElement.width
-    const min = 2
-    const max = size - 2
-    type Point = {x: number, y:number}
-    const pointA = {x: min, y: min}
-    const pointB = {x: min + deadzone/100*max, y: min}
-    const pointC = {x: pointB.x, y: min + thumbstick.antideadzone/100*max}
-    let pointD = {x: thumbstick.saturation/100*max, y: max}
-    if (!outer) pointD = {x: pointC.x, y: max}  // Force vertical.
-    const pointE = {x: max, y: max}
-    // Accel curve.
-    const curvePoints = 20
-    const startX = min + (deadzone / 100) * max
-    const startY = min + (thumbstick.antideadzone / 100) * max
-    const endX = (thumbstick.saturation / 100) * max
-    const scaleX = endX - startX
-    const scaleY = max - startY
-    // Helper functions.
-    const drawVert = (x: number) => {
-      ctx.beginPath();
-      ctx.moveTo(x, min);
-      ctx.lineTo(x, max);
-      ctx.strokeStyle = this.purple;
-      ctx.lineWidth = 3;
-      ctx.stroke();
-    }
-    const drawLines = (points: Point[]) => {
-      ctx.beginPath()
-      ctx.moveTo(points[0].x, points[0].y)
-      for (const point of points.slice(1)) {
-        ctx.lineTo(point.x, point.y)
-      }
-      ctx.strokeStyle = this.green
-      ctx.lineWidth = 3
-      ctx.stroke()
-    }
-    const felixCurve = (x: number, k: number) => {
-      return (x*k+x) / (2*x*k-k+1)
-    }
-    let pointsCtoD: Point[] = []
-    for(let i=0; i<=curvePoints; i++) {
-      const k = thumbstick.accel_curve / 100
-      let x = i / curvePoints
-      let y = felixCurve(x, k)
-      x *= scaleX
-      y *= scaleY
-      x += startX
-      y += startY
-      pointsCtoD.push({x, y})
-    }
-    // Draw.
-    ctx.clearRect(0, 0, size, size);
-    drawVert(outer ? pointB.x : pointB.x-4)  // Offset so both verticals are visible.
-    if (outer) drawVert(thumbstick.outer_threshold / 100 * max)
-    drawLines([pointA, pointB, pointC])
-    if (outer) drawLines(pointsCtoD)  // Curve.
-    else drawLines([pointC, pointD])
-    drawLines([pointD, pointE])
-  }
-
-  showDialogKeypicker = (pickerGroup: number) => {
-    this.pickerGroup = pickerGroup
-    const section = this.section as (CtrlButton | CtrlRotary | CtrlGyroAxis)
-    for(let action of section.actions[pickerGroup].actions) {
-      if (action >= HID.PROC_PROFILE_0 && action <= HID.PROC_PROFILE_12) {
-        this.pickerProfile = action - HID.PROC_PROFILE_0
-      }
-      if (action >= HID.PROC_ROTARY_MODE_0 && action <= HID.PROC_ROTARY_MODE_5) {
-        this.pickerRotary = action - HID.PROC_ROTARY_MODE_0
-      }
-      if (action >= HID.PROC_MACRO_1 && action <= HID.PROC_MACRO_8) {
-        this.pickerMacro = action - HID.PROC_MACRO_1 + 1
-      }
-      if (action >= HID.PROC_TUNE_OS && action <= HID.PROC_TUNE_DEADZONE) {
-        this.pickerTune = action - HID.PROC_TUNE_OS
-      }
-    }
-    this.dialogKeyPicker = document.getElementById('dialog-keypicker')
-    this.dialogKeyPicker.showModal()
-  }
-
-  hideDialogKeypicker(): boolean {
-    this.dialogKeyPicker.close()
-    return true
-  }
-
-  hideDialogKeypickerOutbound(event: MouseEvent, dialog: HTMLDialogElement) {
-    const rect = dialog.getBoundingClientRect()
-    const isInsideDialog = (
-      event.clientX >= rect.left &&
-      event.clientX <= rect.right &&
-      event.clientY >= rect.top &&
-      event.clientY <= rect.bottom
-    )
-    if (!isInsideDialog) dialog.close();
-  }
-
-  private _pickToggle(actions: ActionGroup, key: HID) {
-    if(actions.has(key)) {
-      this._pickRemove(actions, key)
-    } else {
-      this._pickAdd(actions, key)
-    }
-    return actions
-  }
-
-  private _pickAdd(actions: ActionGroup, key: HID) {
-    actions.add(key)
-    this.save()
-  }
-
-  private _pickRemove(actions: ActionGroup, key: HID) {
-    actions.delete(key)
-    this.save()
-  }
-
-  private _pickSelect(
-    increment = 0,
-    procBase: number,
-    wrapMin: number,
-    wrapMax: number,
-    valueGet: number,
-    valueSet: (x:number)=>void,
-  ) {
-    const targetActions = this.getActions()[this.pickerGroup]
-    let wrap = valueGet + increment
-    if (wrap < wrapMin) wrap = wrap + (wrapMax - wrapMin + 1)
-    else if (wrap > wrapMax) wrap = wrap - (wrapMax - wrapMin + 1)
-    if (increment == 0) this.pick(procBase + wrap)
-    else {
-      this._pickRemove(targetActions, procBase + valueGet)
-      this._pickAdd(targetActions, procBase + wrap)
-      valueSet(wrap)
-    }
-  }
-
-  pick(key: HID) {
-    const targetActions = this.getActions()[this.pickerGroup]
-    this._pickToggle(targetActions, key)
-  }
-
-  pickProfile(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_PROFILE_0,
-      1,  // First profile.
-      12,  // Last profile.
-      this.pickerProfile,
-      (x) => this.pickerProfile=x,
-    )
-  }
-
-  pickRotary(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_ROTARY_MODE_0,
-      0,  // First rotary mode.
-      4,  // Last rotary mode.
-      this.pickerRotary,
-      (x) => this.pickerRotary=x,
-    )
-  }
-
-  pickMacro(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_MACRO_1 - 1,
-      1,  // First macro.
-      8,  // Last macro.
-      this.pickerMacro,
-      (x) => this.pickerMacro=x,
-    )
-  }
-
-  pickTune(increment = 0) {
-    this._pickSelect(
-      increment,
-      HID.PROC_TUNE_OS,
-      0,  // First tune index.
-      3,  // Last tune index.
-      this.pickerTune,
-      (x) => this.pickerTune=x,
-    )
-  }
-
-  // Colors in the picker UI.
-  pickCls(action: HID) {
-    const actions = this.getActions()[this.pickerGroup]
-    let cls = 'pressBG'
-    if (this.section instanceof CtrlButton) {
-      if (this.pickerGroup==1 && this.section.hold) cls += ' holdBG'
-      if (this.pickerGroup==2 && this.section.double) cls += ' doubleBG'
-    }
-    if (this.analog && sectionIsAnalog(this.section.sectionIndex) && isAxis(action)) {
-      cls += ' analogBG'
-    }
-    if (actions.has(action)) return cls
-    return ''
+    plotCircle(this)
+    plotRamp(this)
+    plotRotation(this)
   }
 
   // Colors in the sidebar action selector.
@@ -501,6 +261,16 @@ export class SectionComponent {
 
   save = async () => {
     await this.webusb.trySetSection(this.profileIndex, this.section)
+  }
+
+  showDialogHelp(key: string) {
+    const elementId = 'dialog-help-' + key
+    this.dialogHelp = document.getElementById(elementId) as HTMLDialogElement
+    this.dialogHelp.showModal()
+  }
+
+  hideDialogHelp() {
+    this.dialogHelp.close()
   }
 }
 

@@ -21,7 +21,7 @@ export class ActionSelectorComponent {
   @Input() actions: ActionGroup[] = []
   @Input() labels: string[] = []
   @Input() groupIndex: number = 0
-  @Input() showDialogKeypicker: Function = ()=>{}
+  @Input() showDialog: Function = ()=>{}
   @Input() save: Function = ()=>{}
   @Input() cls: Function = ()=>{}
   // Template aliases.

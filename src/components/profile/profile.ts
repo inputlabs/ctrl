@@ -99,7 +99,7 @@ export class ProfileComponent {
   getAdditionalClass(sectionIndex: SectionIndex): string {
     let cls = ''
     if (sectionIsHome(sectionIndex)) cls += ' centered'
-    if (sectionIsGyroAxis(sectionIndex)) cls += ' centered'
+    // if (sectionIsGyroAxis(sectionIndex)) cls += ' centered'
     return cls
   }
 
@@ -242,7 +242,7 @@ export class ProfileComponent {
   }
 
   showDialogPicker() {
-    this.section?.showDialogKeypicker(0)
+    this.section?.mapper.showDialog(0)
   }
 }
 

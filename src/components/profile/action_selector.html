@@ -8,7 +8,7 @@ Copyright (C) 2023, Input Labs Oy.
     <div *ngIf='actions[groupIndex].actions.size == 0'>
         <div
             class='action placeholder'
-            (click)='showDialogKeypicker(groupIndex)'
+            (click)='showDialog(groupIndex)'
             >
             Add actions
         </div>
@@ -19,7 +19,7 @@ Copyright (C) 2023, Input Labs Oy.
             <div
                 class='action press'
                 [ngClass]='cls(groupIndex, action)'
-                (click)='showDialogKeypicker(groupIndex)'
+                (click)='showDialog(groupIndex)'
                 >
                 {{HID[action]}}
             </div>
