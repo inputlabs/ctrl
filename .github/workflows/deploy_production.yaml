@@ -17,6 +17,7 @@ jobs:
       - run: npm install @angular/cli
       - run: npx ng build
       - run: cp _redirects dist/ctrl/_redirects
+      - run: cp _headers dist/ctrl/_headers
       - uses: cloudflare/wrangler-action@v3
         with:
           wranglerVersion: '3'
