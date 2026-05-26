@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2023, Input Labs Oy.
 
-import { Component, OnInit } from '@angular/core'
+import { Component, NgZone } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker'
@@ -13,6 +13,7 @@ import { MINUMUM_FIRMWARE_VERSION } from 'lib/version'
 const FW_RELEASES_LINK = 'https://github.com/inputlabs/alpakka_firmware/releases'
 const APP_RELEASES_LINK = 'https://github.com/inputlabs/ctrl/releases'
 const FIRMWARE_ACK = 'firmware_ack'
+const PWA_UPDATE_CHECK_FREQ = 1000 * 60
 
 @Component({
   selector: 'app-header',
@@ -41,6 +42,7 @@ export class HeaderComponent {
     private router: Router,
     public webusb: WebusbService,
     private swUpdate: SwUpdate,
+    private ngZone: NgZone,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -57,13 +59,29 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
+    this.PWAUpdateWatch()
+  }
+
+  PWAUpdateWatch() {
     if (this.swUpdate.isEnabled) {
+      // First check.
+      this.swUpdate.checkForUpdate()
+      // Polling loop outside Angular's zone so no change detection is triggered.
+      this.ngZone.runOutsideAngular(() => {
+        setInterval(() => {
+          this.swUpdate.checkForUpdate()
+        }, PWA_UPDATE_CHECK_FREQ)
+      })
+      // Listen for the ready event.
       this.swUpdate.versionUpdates
         .pipe(
           filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
         )
         .subscribe(() => {
-          this.PWAUpdateAvailable = true
+          // Move back inside the zone so changes are detected.
+          this.ngZone.run(() => {
+            this.PWAUpdateAvailable = true
+          })
         })
     }
   }
