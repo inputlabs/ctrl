@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker'
 import { interval, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators'
 import { WebusbService } from 'services/webusb'
 import { MINUMUM_FIRMWARE_VERSION } from 'lib/version'
 
