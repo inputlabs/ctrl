@@ -257,7 +257,7 @@ Copyright (C) 2023, Input Labs Oy.
         </div>
         <div class='block' *ngIf='thumbstick.mode==ThumbstickMode.DIR4'>
             <div class='subtitle'>
-                Outer threshold:
+                Inner/outer threshold:
                 <div class='material' (click)='showDialogHelp("4dir-outer-threshold")'>live_help</div>
             </div>
             <div class='island'>
@@ -750,7 +750,7 @@ Copyright (C) 2023, Input Labs Oy.
     </dialog>
 
     <dialog id='dialog-help-4dir-outer-threshold'>
-        <h3>Outer threshold</h3>
+        <h3>Inner/outer threshold</h3>
         <p>The circular threshold that divides what is considered inner ring vs outer ring.</p>
         <p>Thumbstick input below this threshold (and above the deadzone) triggers the inner ring action defined in the profile.</p>
         <p>Thumbstick input above this threshold triggers the outer ring action defined in the profile.</p>
