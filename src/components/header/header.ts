@@ -4,12 +4,16 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker'
+import { interval, Subscription } from 'rxjs';
 import { WebusbService } from 'services/webusb'
 import { MINUMUM_FIRMWARE_VERSION } from 'lib/version'
 
 
-const RELEASES_LINK = 'https://github.com/inputlabs/alpakka_firmware/releases'
+const FW_RELEASES_LINK = 'https://github.com/inputlabs/alpakka_firmware/releases'
+const APP_RELEASES_LINK = 'https://github.com/inputlabs/ctrl/releases'
 const FIRMWARE_ACK = 'firmware_ack'
+const PWA_UPDATE_CHECK_FREQ = 1000 * 60 * 5  // 5 Minutes.
 
 @Component({
   selector: 'app-header',
@@ -28,13 +32,17 @@ export class HeaderComponent {
   lastRouteForTools = ''
   lastRouteForProfiles = '/profiles/0'
   lastRouteForSettings = '/'
+  PWAUpdateAvailable = false
+  PWATimerSub!: Subscription
   // Template aliases.
   LATEST_FIRMWARE = MINUMUM_FIRMWARE_VERSION
-  RELEASES_LINK = RELEASES_LINK
+  FW_RELEASES_LINK = FW_RELEASES_LINK
+  APP_RELEASES_LINK = APP_RELEASES_LINK
 
   constructor(
     private router: Router,
     public webusb: WebusbService,
+    private swUpdate: SwUpdate,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -46,8 +54,36 @@ export class HeaderComponent {
         if (this.route.startsWith('/settings') || this.route == '/') {
           this.lastRouteForSettings = this.route
         }
+        // Check for PWA updates on each router navigation.
+        if (this.swUpdate.isEnabled) {
+          this.swUpdate.checkForUpdate()
+        }
       }
     })
+  }
+
+  ngOnInit() {
+    this.PWAUpdateWatch()
+  }
+
+  PWAUpdateWatch() {
+    // Check for new PWA versions regularly (in case no router navigation).
+    this.PWATimerSub = interval(PWA_UPDATE_CHECK_FREQ).subscribe(() => {
+      if (this.swUpdate.isEnabled) {
+        this.swUpdate.checkForUpdate()
+      }
+    })
+    // Subscribe to PWA version changes.
+    this.swUpdate.versionUpdates.subscribe(evt => {
+      console.log('PWA update event', evt.type, evt)
+      if (evt.type === 'VERSION_READY') {
+        this.PWAUpdateAvailable = true
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this.PWATimerSub.unsubscribe()
   }
 
   ngAfterViewChecked() {
@@ -106,5 +142,9 @@ export class HeaderComponent {
     if (!this.webusb.selectedDevice.isConnected) return false
     if (!this.webusb.selectedDevice.isController()) return false
     return !this.webusb.selectedDevice.canReadSerialNumber()
+  }
+
+  pwaRefresh() {
+    document.location.reload()
   }
 }

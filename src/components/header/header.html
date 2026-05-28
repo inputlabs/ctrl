@@ -40,6 +40,10 @@ Copyright (C) 2023, Input Labs Oy.
         <span class='material'>emergency_home</span>
     </div>
 
+    <div class='notification' *ngIf='PWAUpdateAvailable' (click)='showDialog("pwa")'>
+        <span class='material'>emergency_home</span>
+    </div>
+
     <div class='notification' *ngIf='shouldNotifySerial()' (click)='showDialog("serial")'>
         <span class='material'>emergency_home</span>
     </div>
@@ -66,15 +70,26 @@ Copyright (C) 2023, Input Labs Oy.
 <dialog id='dialog-firmware' *ngIf='webusb.isConnected()'>
     <h3>Firmware update required</h3>
     <div>
-        {{webusb.selectedDevice!.getConnectorName()}} firmware is outdated, the Ctrl app won't work correctly.<br/>
+        The firmware in your {{webusb.selectedDevice!.getConnectorName()}} controller is outdated, so the Ctrl app won't work correctly.<br/>
         <br/>
         Current {{webusb.selectedDevice!.getConnectorName()}}
         firmware: <span class='em'>{{firmwareAsString(webusb.getFirmwareVersion())}}</span><br/>
         Minimum recommended firmware: <span class='em'>{{firmwareAsString(LATEST_FIRMWARE)}}+</span><br/>
-        <a [href]='RELEASES_LINK' target='_blank'>Check latest firmware releases</a>
+        <a [href]='FW_RELEASES_LINK' target='_blank'>Check latest firmware releases</a>
     </div>
     <div class='buttons'>
         <button (click)='hideDialog() && firmwareAck()'>Got it!</button>
+    </div>
+</dialog>
+
+<dialog id='dialog-pwa' *ngIf='webusb.isConnected()'>
+    <h3>App update available</h3>
+    <p>A new version of the Ctrl app is available, and has been already downloaded.</p>
+    <p>Refresh the app to enjoy the <a [href]='APP_RELEASES_LINK' target='_blank'>New features</a>.</p>
+    <p><i>(App version is shown in the bottom-left corner)</i></p>
+    <div class='buttons'>
+        <button (click)='hideDialog()' class='flat'>Not now</button>
+        <button (click)='pwaRefresh()'>Refresh</button>
     </div>
 </dialog>
 
