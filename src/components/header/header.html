@@ -86,7 +86,9 @@ Copyright (C) 2023, Input Labs Oy.
     <h3>App update available</h3>
     <p>A new version of the Ctrl app is available, and has been already downloaded.</p>
     <p>Refresh the app to enjoy the <a [href]='APP_RELEASES_LINK' target='_blank'>New features</a>.</p>
+    <p><i>(App version is shown in the bottom-left corner)</i></p>
     <div class='buttons'>
+        <button (click)='hideDialog()' class='flat'>Not now</button>
         <button (click)='pwaRefresh()'>Refresh</button>
     </div>
 </dialog>
